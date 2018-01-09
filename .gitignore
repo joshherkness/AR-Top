@@ -1,0 +1,4 @@
+**/__pycache__
+
+# Ignore the dev-env used by the server
+**/dev-env
