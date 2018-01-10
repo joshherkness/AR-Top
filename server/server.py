@@ -38,8 +38,7 @@ def create_user():
 
 # Routes
 @app.route('/')
-def index():
-    return render_template('index.html')
+def index(): return render_template('index.html')
 
 @app.route('/protected')
 @login_required
