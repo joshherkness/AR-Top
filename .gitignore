@@ -2,3 +2,8 @@
 
 # Ignore the dev-env used by the server
 **/dev-env
+
+*.log
+
+/server/static
+/server/templates
