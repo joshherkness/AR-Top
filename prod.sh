@@ -25,7 +25,7 @@ case "${unameOut}" in
     MINGW*)     echo "Unsupported machine";;
     *)          echo "Unsupported machine"
 esac
-echo "If you want to view the mongod logs. Tail out mongo-log.txt.."
+echo "If you want to view the mongod logs. Tail out mongo-log.log..."
 
 echo "Creating a virtual environment (for python)..."
 virtualenv dev-en

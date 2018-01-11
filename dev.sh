@@ -23,13 +23,11 @@ case "${unameOut}" in
     *)          echo "Unsupported machine"
 esac
 
-echo "If you want to view the mongod logs. Tail out mongo-log.txt.."
-
-#mongod > mongo.log 2>&1 & #Pipes stdout and stderr to txt file.
+echo "If you want to view the mongod logs. Tail out mongo-log.log..."
 
 echo "Starting Flask server.."
-python server.py > flask.log 2>&1 & #Pipe flask stdout and stderr to txt file.
-echo "If you want to view the Flask logs. Tail out flask-log.txt..."
+python server.py > flask.log 2>&1 & #Pipe flask stdout and stderr to log file.
+echo "If you want to view the Flask logs. Tail out flask-log.log..."
 
 echo "Going to the Vue directory..."
 cd ../vue
