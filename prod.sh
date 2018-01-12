@@ -40,3 +40,5 @@ echo "Starting flask server"
 python server.py
 
 eval $npmInstall && $npmBuild && eval $copyHTML && eval $copyJS && eval $copyCSS && cd ../server && eval $server
+
+trap 'kill $(jobs -p)' EXIT
