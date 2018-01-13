@@ -28,7 +28,7 @@ esac
 echo "If you want to view the mongod logs. Tail out mongo-log.log..."
 
 echo "Creating a virtual environment (for python)..."
-virtualenv dev-en
+virtualenv dev-env
 
 echo "Activating the virtual environment..."
 . dev-env/bin/activate

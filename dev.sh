@@ -5,7 +5,7 @@ echo "Going to server directory..."
 cd server
 
 echo "Creating a virtual environment (for python)..."
-virtualenv dev-en
+virtualenv dev-env
 
 echo "Activating the virtual environment..."
 . dev-env/bin/activate
