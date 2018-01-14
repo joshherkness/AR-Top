@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, url_for
 from flask_mongoengine import MongoEngine
+from flask import request, jsonify
+from flask_cors import CORS
 from flask_security import Security, MongoEngineUserDatastore, \
     UserMixin, RoleMixin, login_required
 from secrets import SECRET_KEY
@@ -13,6 +15,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 app.config['MONGODB_DB'] = 'mydatabase'
 app.config['MONGODB_HOST'] = 'localhost'
 app.config['MONGODB_PORT'] = 27017
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Create database connection object
 db = MongoEngine(app)
@@ -58,6 +61,12 @@ def register():
 @login_required
 def protected():
     return 'This is a protected route.'
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    email = request.form.get("email")
+    password = request.form.get("password")
+    return jsonify("")
 
 if __name__ == '__main__':
     app.run()

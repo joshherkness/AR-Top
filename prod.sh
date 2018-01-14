@@ -28,7 +28,12 @@ esac
 echo "If you want to view the mongod logs. Tail out mongo-log.log..."
 
 echo "Creating a virtual environment (for python)..."
-virtualenv dev-en
+if [ -n "$(which python3)" ]; then
+	virtualenv --python=$(which python3) dev-env
+else
+	virtualenv dev-env
+fi
+
 
 echo "Activating the virtual environment..."
 . dev-env/bin/activate
@@ -38,7 +43,5 @@ pip install -r requirements.txt
 
 echo "Starting flask server"
 python server.py
-
-eval $npmInstall && $npmBuild && eval $copyHTML && eval $copyJS && eval $copyCSS && cd ../server && eval $server
 
 trap 'kill $(jobs -p)' EXIT

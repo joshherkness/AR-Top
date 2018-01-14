@@ -5,7 +5,7 @@ echo "Going to server directory..."
 cd server
 
 echo "Creating a virtual environment (for python)..."
-virtualenv dev-en
+virtualenv dev-env
 
 echo "Activating the virtual environment..."
 . dev-env/bin/activate
@@ -37,7 +37,5 @@ npm install
 
 echo "Starting npm dev environment..."
 npm run dev
-
-#eval $virtualEnv && eval $activateVirtualEnv && eval $pip && eval $mongo && eval $server && cd ../vue && eval $npmInstall && eval $npmDev
 
 trap 'kill $(jobs -p)' EXIT
