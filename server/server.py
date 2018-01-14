@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from flask_mongoengine import MongoEngine
 from flask_security import Security, MongoEngineUserDatastore, \
     UserMixin, RoleMixin, login_required
@@ -44,6 +44,25 @@ def index(): return render_template('index.html')
 @login_required
 def protected():
     return 'This is a protected route.'
+
+@app.route('/auth', methods=['POST'])
+def authenticate():
+    error = None
+    if request.method == 'POST':
+        app.logger.debug("" + request.args.get('email'))
+        if valid_login(request.args.get('email'), 
+                      request.args.get('password')):
+            auth_token = '123456'
+            return jsonify({'email': request.args.get('email'), 'auth_token': auth_token}), 200, {'Content-Type': 'application/json'} #return username and auth token
+        else:
+            return jsonify({'error': "Incorrect email or password"}), 422, {'Content-Type': 'application/json'}
+
+
+    #if successful
+    #if not
+
+def valid_login(email, password):
+    return False
 
 if __name__ == '__main__':
     app.run()
