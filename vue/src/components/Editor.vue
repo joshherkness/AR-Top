@@ -4,36 +4,50 @@
 
 <script>
 import * as THREE from 'three'
+import { VoxelMapModel, Map } from './EditorHelpers'
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 export default {
   name: 'Editor',
-  data () {
+  data: function () {
     return {
       camera: null,
+      cameraFov: 45,
       controls: null,
-      scene: null,
       renderer: null,
-      objects: []
+      isShiftDown: false,
+      raycaster: null,
+      mouse: null,
+      map: null,
+      selectedColor: new THREE.Color(0xffffff)
     }
   },
   mounted () {
-    this.init()
+    this.setup()
     this.onWindowResize()
     this.render()
 
     // Attach event listeners to the document
+    document.addEventListener('mousemove', this.onDocumentMouseMove, false)
+    document.addEventListener('mousedown', this.onDocumentMouseDown, false)
+    document.addEventListener('mouseup', this.onDocumentMouseUp, false)
+    document.addEventListener('keydown', this.onDocumentKeyDown, false)
+    document.addEventListener('keyup', this.onDocumentKeyUp, false)
     window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
-    init () {
+    setup () {
+      // Create map
+      this.map = new Map(16, 3, 50, this.render)
+
       // Create the renderer
       this.renderer = new THREE.WebGLRenderer()
       this.renderer.setPixelRatio(window.devicePixelRatio)
 
       // Create the camera
-      this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000)
-      this.camera.position.set(500, 800, 1300)
+      this.camera = new THREE.PerspectiveCamera(this.cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
+      console.log((new THREE.Vector3(1, 1, 1)).multiplyScalar(this.map.actualSize))
+      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.map.actualSize))
       this.camera.lookAt(new THREE.Vector3())
 
       // Add orbit controls
@@ -42,48 +56,93 @@ export default {
       this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
       this.controls.addEventListener('change', this.render)
 
-      // Create the scene
-      this.scene = new THREE.Scene()
-      this.scene.background = new THREE.Color(0xffffff)
-
-      // Add lighting
-      var ambientLight = new THREE.AmbientLight(0x606060)
-      this.scene.add(ambientLight)
-
-      var directionalLight = new THREE.DirectionalLight(0xffffff)
-      directionalLight.position.set(1, 0.75, 0.5).normalize()
-      this.scene.add(directionalLight)
-
-      // Create the grid
-      let gridHelper = new THREE.GridHelper(1000, 20, 0xafafaf, 0xafafaf)
-      this.scene.add(gridHelper)
-
-      // Create the plane
-      var geometry = new THREE.PlaneBufferGeometry(1000, 1000)
-      geometry.rotateX(-Math.PI / 2)
-      let plane = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ visible: false }))
-      this.scene.add(plane)
-      this.objects.push(plane)
-
-      // Create the base
-      let base = new THREE.Mesh(new THREE.CubeGeometry(1000, 50, 1000), new THREE.MeshBasicMaterial({color: 0xf9f9f9}))
-      base.position.y = -26
-      this.scene.add(base)
-
       let container = this.$refs.canvas
       container.appendChild(this.renderer.domElement)
+
+      this.raycaster = new THREE.Raycaster()
+      this.mouse = new THREE.Vector2()
     },
     render () {
-      this.renderer.render(this.scene, this.camera)
+      this.renderer.render(this.map.scene, this.camera)
     },
     onWindowResize () {
       this.camera.aspect = window.innerWidth / window.innerHeight
       this.camera.updateProjectionMatrix()
       this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.render()
+    },
+    /**
+     * Gets called when the 'mousemove' event has occured on the document.
+     */
+    onDocumentMouseMove (event) {
+      event.preventDefault()
+
+      // Update the cursor position
+      let intersect = this.getIntersecting()
+      if (!intersect || !intersect.face) {
+        return
+      }
+
+      let position = intersect.point.add(intersect.face.normal)
+      this.map.setActualCursorPosition(position)
+    },
+    onDocumentMouseDown (event) {
+      event.preventDefault()
+    },
+    onDocumentMouseUp (event) {
+      let intersect = this.getIntersecting()
+      if (!intersect) {
+        return
+      }
+
+      let position = intersect.point.add(intersect.face.normal)
+      let unitPosition = this.map.getUnitPosition(position.clone())
+      let model = new VoxelMapModel(unitPosition, this.map.unitSize, this.selectedColor)
+      this.map.add(model)
+    },
+    onDocumentKeyDown (event) {
+      switch (event.keyCode) {
+        case 16: this.isShiftDown = true
+          break
+        case 49: this.selectedColor = new THREE.Color(0xffffff) // White
+          break
+        case 50: this.selectedColor = new THREE.Color(0x242424) // Black
+          break
+        case 51: this.selectedColor = new THREE.Color(0x19345A) // Blue
+          break
+        case 52: this.selectedColor = new THREE.Color(0xFFD966) // Yellow
+          break
+        case 53: this.selectedColor = new THREE.Color(0x7C9658) // Green
+          break
+        case 54: this.selectedColor = new THREE.Color(0xBF4E51) // Red
+          break
+        case 190: this.isGridEnabled = !this.isGridEnabled
+          break
+      }
+    },
+    onDocumentKeyUp (event) {
+      switch (event.keyCode) {
+        case 16: this.isShiftDown = false
+          break
+      }
+    },
+    getIntersecting () {
+      this.mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1)
+      this.raycaster.setFromCamera(this.mouse, this.camera)
+      let modelObjects = this.map.models.map((model) => { return model.object })
+
+      let grid = this.map.scene.getObjectByName('grid')
+      let intersects = this.raycaster.intersectObjects(modelObjects.concat([grid]), true)
+      return intersects[0] || null
     }
   },
   destroyed () {
     // Remove event listeners
+    document.removeEventListener('mousemove', this.onDocumentMouseMove, false)
+    document.removeEventListener('mousedown', this.onDocumentMouseDown, false)
+    document.removeEventListener('mouseup', this.onDocumentMouseUp, false)
+    document.removeEventListener('keydown', this.onDocumentKeyDown, false)
+    document.removeEventListener('keyup', this.onDocumentKeyUp, false)
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 }
