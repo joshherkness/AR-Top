@@ -46,8 +46,6 @@ export default {
   },
   methods: {
     signup: function () {
-      console.log(this.email)
-      console.log(this.password)
       axios.post('http://localhost:5000/api/register',
         qs.stringify({
           'email': this.email,
