@@ -14,8 +14,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "bulma": "^0.6.2",
     "axios": "^0.17.1",
+    "bulma": "^0.6.2",
+    "node-sass": "^4.7.2",
+    "qs": "^6.5.1",
+    "sass-loader": "^6.0.6",
     "three": "^0.89.0",
     "three-orbit-controls": "^82.1.0",
     "vue": "^2.5.2",
