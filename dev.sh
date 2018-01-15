@@ -38,6 +38,4 @@ npm install
 echo "Starting npm dev environment..."
 npm run dev
 
-#eval $virtualEnv && eval $activateVirtualEnv && eval $pip && eval $mongo && eval $server && cd ../vue && eval $npmInstall && eval $npmDev
-
 trap 'kill $(jobs -p)' EXIT

@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_mongoengine import MongoEngine
+from flask import request, jsonify
+from flask_cors import CORS
 from flask_security import Security, MongoEngineUserDatastore, \
     UserMixin, RoleMixin, login_required
 from passlib.apps import custom_app_context as pwd_context
@@ -16,6 +18,7 @@ app.config['SECRET_KEY'] = 'super-secret'
 app.config['MONGODB_DB'] = 'mydatabase'
 app.config['MONGODB_HOST'] = 'localhost'
 app.config['MONGODB_PORT'] = 27017
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Create database connection object
 db = MongoEngine(app)
@@ -96,7 +99,7 @@ def valid_login(email, password):
     if email_pattern.match(email.encode('utf-8')) and len(email.encode('utf-8')) <= max_email_length:
         if str.isalnum(password.encode('utf-8')) and len(password.encode('utf-8')) <= max_password_length:
             return True
-    return False        
+    return False
 
 if __name__ == '__main__':
     app.run()
