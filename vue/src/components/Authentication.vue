@@ -29,6 +29,15 @@
           </div>
         </div>
       </div>
+      <article class="message is-danger" v-bind:class="{ 'is-invisible': active }">
+        <div class="message-header">
+          <p>Error</p>
+          <button v-on:click="toggle" class="delete" aria-label="delete"></button>
+        </div>
+        <div class="message-body">
+          {{ message }}
+        </div>
+      </article>
     </div>
   </div>
 </template>
@@ -42,11 +51,14 @@ export default {
   data: function () {
     return {
       email: '',
-      password: ''
+      password: '',
+      message: '',
+      active: true
     }
   },
   methods: {
     signin: function () {
+      let vue = this
       axios.post('http://localhost:5000/api/auth',
         qs.stringify({
           'email': this.email,
@@ -56,8 +68,14 @@ export default {
           router.push('/') // Redirect home
         })
         .catch(function (error) {
-          console.log(error)
+          let response = error.response
+          vue.active = !vue.active
+          vue.message = response.data.error
         })
+    },
+
+    toggle: function () {
+      this.active = !this.active
     }
   }
 }
@@ -80,5 +98,9 @@ export default {
 
 .input {
   width: 90%;
+}
+
+.message {
+  margin-top: 1em;
 }
 </style>
