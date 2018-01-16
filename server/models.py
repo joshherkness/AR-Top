@@ -1,15 +1,34 @@
-from flask_mongoengine import MongoEngine
-from flask_security import Security, MongoEngineUserDatastore, \
-    UserMixin, RoleMixin, login_required
+from mongoengine import *
+from flask_security import Security, MongoEngineUserDatastore, UserMixin, RoleMixin, login_required
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
-class Role(MongoEngine.Document, RoleMixin):
-    name = db.StringField(max_length=80, unique=True)
-    description = db.StringField(max_length=255)
+class Role(Document, RoleMixin):
+	name = StringField(max_length=80, unique=True)
+	description = StringField(max_length=255)
 
-class User(MongoEngine.Document, UserMixin):
-    email = db.StringField(max_length=255)
-    password = db.StringField(max_length=255)
-    active = db.BooleanField(default=True)
-    confirmed_at = db.DateTimeField()
-    roles = db.ListField(db.ReferenceField(Role), default=[])
-    verified = db.BooleanField(default=False)
+class User(Document, UserMixin):
+	email = StringField(max_length=255)
+	password = StringField(max_length=255)
+	active = BooleanField(default=True)
+	confirmed_at = DateTimeField()
+	roles = ListField(ReferenceField(Role), default=[])
+	verified = BooleanField(default=False)
+
+	def verify_password(self, password):
+		return password == self.password
+		
+	def generate_auth_token(self, expiration = 600):
+		s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
+		return s.dumps({'id': self.email})
+	
+	@staticmethod
+	def verify_auth_token(token):
+		s = Serializer(app.config['SECRET_KEY'])
+		try:
+			data = s.loads(token)
+		except SignatureExpired:
+			return None # valid token, but expired
+		except BadSignature:
+			return None # invalid token
+		user = User.query.get(data['id'])
+		return user
