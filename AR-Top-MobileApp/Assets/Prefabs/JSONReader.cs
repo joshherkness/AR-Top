@@ -24,9 +24,9 @@ public class JSONReader : MonoBehaviour {
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-	""width"": 16,
+	""width"": 8,
 	""height"": 2,
-	""depth"": 16,
+	""depth"": 8,
 	""base_color"": 
 	{
 		""r"": 0.2,
@@ -201,7 +201,10 @@ public class JSONReader : MonoBehaviour {
 		}
 
 		MapItem grid = JsonUtility.FromJson<MapItem> (JSONSTRING);
-
+		Vector3 gridVector = new Vector3 (-0.5f, 0, -0.5f);
+		GridMesh gridMaker = Instantiate (gridPrefab, gridVector, Quaternion.identity).GetComponent <GridMesh>();
+		gridMaker.transform.SetParent (gridLayout.transform);
+		gridMaker.setSize (grid.width);
 		buildMap (grid);
 
 	}
@@ -219,9 +222,11 @@ public class JSONReader : MonoBehaviour {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				//Create a grid.
-				Vector3 gridVector = new Vector3 (i, .52f, j);
+				/*Vector3 gridVector = new Vector3 (i, .52f, j);
 				GameObject gridspace = Instantiate (gridPrefab, gridVector, Quaternion.identity);
 				gridspace.transform.SetParent (gridLayout.transform);
+				SpriteRenderer sprite = gridspace.GetComponentInChildren <SpriteRenderer> ();
+				sprite.color = new Color (0f, 0f, 0f, 1f);*/
 				//Create the plane.
 				Vector3 tilesVector = new Vector3 (i, 0f, j);
 				GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
@@ -229,14 +234,16 @@ public class JSONReader : MonoBehaviour {
 				fillColor (obj, tile);
 			}
 		}
-		for (int k = 0; k <= height; k++) {
+		/*for (int k = 0; k <= height; k++) {
 			if (k % gridHeightGap == 0) {
 				Vector3 gridVector = new Vector3 (getGridSize (row) - 1, k + .52f, getGridSize (col) - 1);
 				GameObject gridOutline = Instantiate (gridPrefab, gridVector, Quaternion.identity);
 				gridOutline.transform.SetParent (gridLayout.transform);
 				gridOutline.transform.localScale = new Vector3 (row, 1, col);
+				SpriteRenderer sprite = gridOutline.GetComponentInChildren <SpriteRenderer> ();
+				sprite.color = new Color (0f, 0f, 0f, 1f);
 			}
-		}
+		}*/
 
 		foreach (GridItem model in obj.models) {
 			buildPiece (model);
