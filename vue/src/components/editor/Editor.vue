@@ -4,7 +4,9 @@
 
 <script>
 import * as THREE from 'three'
-import { VoxelMapModel, Map } from './EditorHelpers'
+import { Map } from './Map'
+import { MapUtils } from './MapUtils'
+import { VoxelMapModel } from './MapModel'
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 export default {
@@ -12,20 +14,27 @@ export default {
   data: function () {
     return {
       camera: null,
-      cameraFov: 45,
       controls: null,
       renderer: null,
-      isShiftDown: false,
       raycaster: null,
       mouse: null,
       map: null,
-      selectedColor: new THREE.Color(0xffffff)
+      isShiftDown: false,
+      selectedColor: null
+    }
+  },
+  watch: {
+    selectedColor (color) {
+      this.updateCursorModel()
     }
   },
   mounted () {
     this.setup()
     this.onWindowResize()
     this.render()
+
+    // Set current color (random, for now)
+    this.selectedColor = (new THREE.Color()).setHex(Math.random() * 0xffffff)
 
     // Attach event listeners to the document
     document.addEventListener('mousemove', this.onDocumentMouseMove, false)
@@ -38,15 +47,19 @@ export default {
   methods: {
     setup () {
       // Create map
-      this.map = new Map(16, 3, 50, this.render)
+      this.map = new Map(16, 3, 50)
+      this.map.addEventListener('redraw', (event) => {
+        this.render()
+        this.updateCursorPosition()
+      })
 
       // Create the renderer
       this.renderer = new THREE.WebGLRenderer()
       this.renderer.setPixelRatio(window.devicePixelRatio)
 
       // Create the camera
-      this.camera = new THREE.PerspectiveCamera(this.cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-      console.log((new THREE.Vector3(1, 1, 1)).multiplyScalar(this.map.actualSize))
+      let cameraFov = 45
+      this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
       this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.map.actualSize))
       this.camera.lookAt(new THREE.Vector3())
 
@@ -56,6 +69,7 @@ export default {
       this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
       this.controls.addEventListener('change', this.render)
 
+      // Attach to the container
       let container = this.$refs.canvas
       container.appendChild(this.renderer.domElement)
 
@@ -65,38 +79,47 @@ export default {
     render () {
       this.renderer.render(this.map.scene, this.camera)
     },
+    updateCursorPosition () {
+      let object = this.map.getFirstIntersectObject(this.raycaster)
+      
+      if (!object || !object.face) return
+
+      // update cursor position
+      let actualPosition = object.point.add(object.face.normal)
+      this.map.setCursorActualPosition(actualPosition)
+    },
+    updateCursorModel () {
+      let cursorPosition = this.map.cursorModel ? this.map.cursorModel.position : new THREE.Vector3(999, 999, 999)
+      let cursorModel = new VoxelMapModel(cursorPosition, this.map.unitSize, this.selectedColor)
+      this.map.setCursorModel(cursorModel)
+    },
     onWindowResize () {
       this.camera.aspect = window.innerWidth / window.innerHeight
       this.camera.updateProjectionMatrix()
       this.renderer.setSize(window.innerWidth, window.innerHeight)
       this.render()
     },
-    /**
-     * Gets called when the 'mousemove' event has occured on the document.
-     */
     onDocumentMouseMove (event) {
       event.preventDefault()
 
-      // Update the cursor position
-      let intersect = this.getIntersecting()
-      if (!intersect || !intersect.face) {
-        return
-      }
+      // Update mouse and raycaster
+      this.mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1)
+      this.raycaster.setFromCamera(this.mouse, this.camera)
 
-      let position = intersect.point.add(intersect.face.normal)
-      this.map.setActualCursorPosition(position)
+      // Update the cursor position
+      this.updateCursorPosition()
     },
     onDocumentMouseDown (event) {
       event.preventDefault()
     },
     onDocumentMouseUp (event) {
-      let intersect = this.getIntersecting()
-      if (!intersect) {
-        return
-      }
+      event.preventDefault()
 
-      let position = intersect.point.add(intersect.face.normal)
-      let unitPosition = this.map.getUnitPosition(position.clone())
+      let object = this.map.getFirstIntersectObject(this.raycaster)
+      if (!object || !object.face) return
+
+      let position = object.point.add(object.face.normal)
+      let unitPosition = MapUtils.convertActualToUnitPosition(this.map, position)
       let model = new VoxelMapModel(unitPosition, this.map.unitSize, this.selectedColor)
       this.map.add(model)
     },
@@ -116,8 +139,6 @@ export default {
           break
         case 54: this.selectedColor = new THREE.Color(0xBF4E51) // Red
           break
-        case 190: this.isGridEnabled = !this.isGridEnabled
-          break
       }
     },
     onDocumentKeyUp (event) {
@@ -125,18 +146,15 @@ export default {
         case 16: this.isShiftDown = false
           break
       }
-    },
-    getIntersecting () {
-      this.mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1)
-      this.raycaster.setFromCamera(this.mouse, this.camera)
-      let modelObjects = this.map.models.map((model) => { return model.object })
-
-      let grid = this.map.scene.getObjectByName('grid')
-      let intersects = this.raycaster.intersectObjects(modelObjects.concat([grid]), true)
-      return intersects[0] || null
     }
   },
   destroyed () {
+    // Remove event listeners from orbit controls
+    this.controls.dispose()
+
+    // Remove event listeners from map
+    this.map.removeEventListener('update', this.render, false)
+
     // Remove event listeners
     document.removeEventListener('mousemove', this.onDocumentMouseMove, false)
     document.removeEventListener('mousedown', this.onDocumentMouseDown, false)
