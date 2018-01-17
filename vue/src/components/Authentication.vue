@@ -2,6 +2,15 @@
   <div class="columns">
     <div class="container column">
       <div class="container is-fluid">
+      <article class="message is-success" v-bind:class="{ 'is-invisible': success, 'is-displayed': success }">
+        <div class="message-header">
+          <p>Success</p>
+        </div>
+        <div class="message-body">
+          {{ message }}
+          <p>You'll be redirected to the homepage in 15 seconds...</p>
+        </div>
+      </article>
         <div class="card">
           <div class="card-header">
             <h1 class="card-header-title">Authenticate</h1>
@@ -53,7 +62,8 @@ export default {
       email: '',
       password: '',
       message: '',
-      active: true
+      active: true,
+      success: true
     }
   },
   methods: {
@@ -65,11 +75,15 @@ export default {
           'password': this.password
         }))
         .then(function (response) {
-          router.push('/') // Redirect home
+          vue.success = false
+          vue.message = response.data.success
+          setTimeout(function () { router.push('/') }, 15000)
         })
         .catch(function (error) {
           let response = error.response
-          vue.active = !vue.active
+          if (vue.active === false) {
+            vue.active = !vue.active
+          }
           vue.message = response.data.error
         })
     },
@@ -102,5 +116,13 @@ export default {
 
 .message {
   margin-top: 1em;
+}
+
+.message.is-success {
+  margin-bottom: 1em;
+}
+
+.is-displayed {
+  display: none;
 }
 </style>
