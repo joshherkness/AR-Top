@@ -7,11 +7,10 @@
           <p>Success</p>
         </div>
         <div class="message-body">
-          {{ message }}
-          <p>You'll be redirected to the homepage in 15 seconds...</p>
+          <p>You'll be redirected to the homepage in 5 seconds...</p>
         </div>
       </article>
-        <div class="card">
+        <div class="card is-primary">
           <div class="card-header">
             <h1 class="card-header-title">Authenticate</h1>
           </div>
@@ -30,7 +29,7 @@
             </div>
             <div class="field">
               <p class="control">
-              <button  v-on:click="signin" class="button is-info">
+              <button  v-on:click="signin" class="button is-primary">
                 Sign In
               </button>
               </p>
@@ -54,6 +53,7 @@
 <script>
 import axios from 'axios'
 import router from './../router/index.js'
+import { mapActions } from 'vuex'
 var qs = require('qs')
 export default {
   name: 'Authentication',
@@ -67,8 +67,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'updateUser'
+    ]),
     signin: function () {
       let vue = this
+      console.log(this)
       axios.post('http://localhost:5000/api/auth',
         qs.stringify({
           'email': this.email,
@@ -76,12 +80,14 @@ export default {
         }))
         .then(function (response) {
           vue.success = false
-          vue.message = response.data.success
-          setTimeout(function () { router.push('/') }, 15000)
+          vue.updateUser(response.data)
+          setTimeout(function () { router.push('/') }, 5000)
         })
         .catch(function (error) {
+          console.log(error)
           let response = error.response
-          if (vue.active === false) {
+          console.log(response.data.error)
+          if (vue.active === true) {
             vue.active = !vue.active
           }
           vue.message = response.data.error
@@ -99,7 +105,7 @@ export default {
 @import '~bulma/bulma.sass';
 
 .card-header {
-  background-color: $cyan;
+  background-color: $blue;
 }
 
 .card-header-title {

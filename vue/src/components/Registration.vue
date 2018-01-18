@@ -30,7 +30,7 @@
             </div>
             <div class="field">
               <p class="control">
-              <button  v-on:click="signup" class="button is-info">
+              <button  v-on:click="signup" class="button is-primary">
                 Sign up
               </button>
               </p>
@@ -100,7 +100,7 @@ export default {
 @import '~bulma/bulma.sass';
 
 .card-header {
-  background-color: $cyan;
+  background-color: $blue;
 }
 
 .card-header-title {
