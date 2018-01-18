@@ -1,9 +1,8 @@
 import { Vector3 } from 'three'
-import { Map } from './Map'
 
 /**
  * Class used to define static utility functions for a map object.
- * 
+ *
  * @export
  * @class MapUtils
  */

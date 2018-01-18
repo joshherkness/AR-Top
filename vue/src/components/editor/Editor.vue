@@ -81,7 +81,7 @@ export default {
     },
     updateCursorPosition () {
       let object = this.map.getFirstIntersectObject(this.raycaster)
-      
+
       if (!object || !object.face) return
 
       // update cursor position

@@ -40,7 +40,7 @@ class AbstractMapModel {
    * setup after construction.
    *
    * - Note that this function **must** be implemented.
-   * 
+   *
    * @private
    *
    * @memberOf AbstractMapModel
@@ -62,7 +62,7 @@ class AbstractMapModel {
 export class VoxelMapModel extends AbstractMapModel {
   /**
    * Creates an instance of VoxelMapModel.
-   * 
+   *
    * @param {number} position
    * @param {number} scale
    * @param {THREE.Color} color
@@ -82,7 +82,7 @@ export class VoxelMapModel extends AbstractMapModel {
   /**
    * This function is used to create a THREE.Object3D representing
    * a voxel for this model
-   * 
+   *
    * @private
    *
    * @memberOf VoxelMapModel

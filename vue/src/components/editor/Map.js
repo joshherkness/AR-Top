@@ -156,12 +156,12 @@ export class Map extends THREE.EventDispatcher {
   /**
    * Update the cursor position based on actual position coordinates within
    * the THREE.Scene.
-   * 
+   *
    * - Note that we simply convert it to its respective unit position, and
    *   update the position of the cursor only if needed.
-   * 
-   * @param {THREE.Vector3} actualPosition 
-   * 
+   *
+   * @param {THREE.Vector3} actualPosition
+   *
    * @memberOf Map
    */
   setCursorActualPosition (actualPosition) {
@@ -178,12 +178,12 @@ export class Map extends THREE.EventDispatcher {
   /**
    * Update the cursor position based on the unit position coordinates within
    * the map.
-   * 
+   *
    * - Note that an out of bounds position will not be used to update the
    *   cursor position.
-   * 
-   * @param {THREE.Vector3} unitPosition 
-   * 
+   *
+   * @param {THREE.Vector3} unitPosition
+   *
    * @memberOf Map
    */
   setCursorUnitPosition (unitPosition) {
@@ -208,12 +208,12 @@ export class Map extends THREE.EventDispatcher {
 
   /**
    * Update the model used for the cursor.
-   * 
+   *
    * - Note that the position of the specified model will be ignored, and
    *   replaced with the current cursor model position.
-   * 
-   * @param {AbstractMapModel} model 
-   * 
+   *
+   * @param {AbstractMapModel} model
+   *
    * @memberOf Map
    */
   setCursorModel (model) {
@@ -241,17 +241,16 @@ export class Map extends THREE.EventDispatcher {
    * Search model objects within the map, and return the first one that the
    * specified raycaster intersects with. Otherwise, a value of _undefined_
    * will be returned.
-   * 
+   *
    * - Note that the 'grid-plane' object should be included in the search,
    *   so that the user can interact with the grid.
-   * 
-   * @param {THREE.Raycaster} raycaster 
+   *
+   * @param {THREE.Raycaster} raycaster
    * @returns {THREE.Object3D}
-   * 
+   *
    * @memberOf Map
    */
-  getFirstIntersectObject(raycaster) {
-
+  getFirstIntersectObject (raycaster) {
     if (!raycaster) {
       throw new Error('Raycaster must be defined')
     }
@@ -276,21 +275,21 @@ export class Map extends THREE.EventDispatcher {
   /**
    * This function should be used internally to dsipatch events targeted
    * toward redraw of the map.
-   * 
+   *
    * @memberOf Map
    */
-  _needsRedraw() {
+  _needsRedraw () {
     this.dispatchEvent({
-      type: 'redraw', 
+      type: 'redraw',
       message: 'Map has been updated, and a redraw is required.'
     })
   }
 
   /**
    * This function should be used internally to setup the scene.
-   * 
+   *
    * @private
-   * 
+   *
    * @memberOf Map
    */
   _setupScene () {
@@ -304,9 +303,9 @@ export class Map extends THREE.EventDispatcher {
   /**
    * This function should be used internally to setup lighting within
    * the scene.
-   * 
+   *
    * @private
-   * 
+   *
    * @memberOf Map
    */
   _setupLighting () {
@@ -339,9 +338,9 @@ export class Map extends THREE.EventDispatcher {
    * the scene. This includes the creation of the grid lines by using
    * THREE.GridHelper class, as well as the creation of the grid plane
    * overlapping the lines in order to allow user interaction.
-   * 
+   *
    * @private
-   * 
+   *
    * @memberOf Map
    */
   _setupGrid () {
@@ -365,12 +364,12 @@ export class Map extends THREE.EventDispatcher {
   /**
    * This function should be used internally to setup the grid base within
    * the scene.
-   * 
-   * - Note that this is purely for asthetics, and serves no functional 
+   *
+   * - Note that this is purely for asthetics, and serves no functional
    *   purpose.
-   * 
+   *
    * @private
-   * 
+   *
    * @memberOf Map
    */
   _setupGridBase () {
