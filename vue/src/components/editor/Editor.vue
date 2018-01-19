@@ -39,6 +39,7 @@ export default {
   name: 'Editor',
   data: function () {
     return {
+      canvas: null,
       camera: null,
       controls: null,
       renderer: null,
@@ -72,8 +73,8 @@ export default {
     this.render()
 
     // Attach event listeners to the document
-    document.addEventListener('mousemove', this.onDocumentMouseMove, false)
-    document.addEventListener('mouseup', this.onDocumentMouseUp, false)
+    this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
     document.addEventListener('keyup', this.onDocumentKeyUp, false)
     window.addEventListener('resize', this.onWindowResize, false)
@@ -110,8 +111,8 @@ export default {
       this.controls.addEventListener('change', this.render)
 
       // Attach to the container
-      let container = this.$refs.canvas
-      container.appendChild(this.renderer.domElement)
+      this.canvas = this.$refs.canvas
+      this.canvas.appendChild(this.renderer.domElement)
 
       this.raycaster = new THREE.Raycaster()
       this.mouse = new THREE.Vector2()
@@ -150,7 +151,7 @@ export default {
     },
     onDocumentMouseMove (event) {
       // Update mouse and raycaster
-      this.mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1)
+      this.mouse.set((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
       this.raycaster.setFromCamera(this.mouse, this.camera)
 
       // Update the cursor position
@@ -211,8 +212,8 @@ export default {
     this.map.removeEventListener('update', this.render, false)
 
     // Remove event listeners
-    document.removeEventListener('mousemove', this.onDocumentMouseMove, false)
-    document.removeEventListener('mouseup', this.onDocumentMouseUp, false)
+    this.canvas.removeEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.removeEventListener('mouseup', this.onDocumentMouseUp, false)
     document.removeEventListener('keydown', this.onDocumentKeyDown, false)
     document.removeEventListener('keyup', this.onDocumentKeyUp, false)
     window.removeEventListener('resize', this.onWindowResize, false)

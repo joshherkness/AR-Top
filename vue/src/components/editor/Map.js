@@ -213,7 +213,7 @@ export class Map extends THREE.EventDispatcher {
    */
   _setupScene () {
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color(0xbbbbbb)
+    this.scene.background = new THREE.Color(0xffffff)
     this._setupLighting()
     this._setupGrid()
     this._setupGridBase()
@@ -295,7 +295,7 @@ export class Map extends THREE.EventDispatcher {
     // Ensure teh scene exists
     if (!this.scene) return
 
-    let baseColor = new THREE.Color(0x545d67)
+    let baseColor = new THREE.Color(0xB1B1B1)
     let baseMaterial = new THREE.MeshLambertMaterial({color: baseColor})
     let baseGeometry = new THREE.CubeGeometry(this.actualSize, this.unitSize, this.actualSize)
     let base = new THREE.Mesh(baseGeometry, baseMaterial)
