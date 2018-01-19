@@ -1,13 +1,23 @@
 <template>
-  <div ref='canvas' id='canvas'></div>
+  <div>
+    <div ref='canvas' id='canvas'></div>
+    <div>
+      <div class="card is-pulled-right">
+        <sketch-picker v-model="color"></sketch-picker>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import { Map } from './Map'
 import { MapUtils } from './MapUtils'
 import { VoxelMapModel } from './MapModel'
 var OrbitControls = require('three-orbit-controls')(THREE)
+
+let defaultColor = { hex: '#ffffff' }
 
 export default {
   name: 'Editor',
@@ -20,11 +30,19 @@ export default {
       mouse: null,
       map: null,
       isShiftDown: false,
-      selectedColor: null
+      color: defaultColor
+    }
+  },
+  components: {
+    'sketch-picker': Sketch
+  },
+  computed: {
+    hexColor () {
+      return this.color.hex
     }
   },
   watch: {
-    selectedColor (color) {
+    color (color) {
       this.updateCursorModel()
     }
   },
@@ -33,12 +51,8 @@ export default {
     this.onWindowResize()
     this.render()
 
-    // Set current color (random, for now)
-    this.selectedColor = (new THREE.Color()).setHex(Math.random() * 0xffffff)
-
     // Attach event listeners to the document
     document.addEventListener('mousemove', this.onDocumentMouseMove, false)
-    document.addEventListener('mousedown', this.onDocumentMouseDown, false)
     document.addEventListener('mouseup', this.onDocumentMouseUp, false)
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
     document.addEventListener('keyup', this.onDocumentKeyUp, false)
@@ -75,6 +89,9 @@ export default {
 
       this.raycaster = new THREE.Raycaster()
       this.mouse = new THREE.Vector2()
+
+      // Initialize the cursor model
+      this.updateCursorModel()
     },
     render () {
       this.renderer.render(this.map.scene, this.camera)
@@ -90,7 +107,7 @@ export default {
     },
     updateCursorModel () {
       let cursorPosition = this.map.cursorModel ? this.map.cursorModel.position : new THREE.Vector3(999, 999, 999)
-      let cursorModel = new VoxelMapModel(cursorPosition, this.map.unitSize, this.selectedColor)
+      let cursorModel = new VoxelMapModel(cursorPosition, this.map.unitSize, this.hexColor)
       this.map.setCursorModel(cursorModel)
     },
     onWindowResize () {
@@ -100,8 +117,6 @@ export default {
       this.render()
     },
     onDocumentMouseMove (event) {
-      event.preventDefault()
-
       // Update mouse and raycaster
       this.mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1)
       this.raycaster.setFromCamera(this.mouse, this.camera)
@@ -109,35 +124,18 @@ export default {
       // Update the cursor position
       this.updateCursorPosition()
     },
-    onDocumentMouseDown (event) {
-      event.preventDefault()
-    },
     onDocumentMouseUp (event) {
-      event.preventDefault()
-
       let object = this.map.getFirstIntersectObject(this.raycaster)
       if (!object || !object.face) return
 
       let position = object.point.add(object.face.normal)
       let unitPosition = MapUtils.convertActualToUnitPosition(this.map, position)
-      let model = new VoxelMapModel(unitPosition, this.map.unitSize, this.selectedColor)
+      let model = new VoxelMapModel(unitPosition, this.map.unitSize, this.hexColor)
       this.map.add(model)
     },
     onDocumentKeyDown (event) {
       switch (event.keyCode) {
         case 16: this.isShiftDown = true
-          break
-        case 49: this.selectedColor = new THREE.Color(0xffffff) // White
-          break
-        case 50: this.selectedColor = new THREE.Color(0x242424) // Black
-          break
-        case 51: this.selectedColor = new THREE.Color(0x19345A) // Blue
-          break
-        case 52: this.selectedColor = new THREE.Color(0xFFD966) // Yellow
-          break
-        case 53: this.selectedColor = new THREE.Color(0x7C9658) // Green
-          break
-        case 54: this.selectedColor = new THREE.Color(0xBF4E51) // Red
           break
       }
     },
@@ -157,7 +155,6 @@ export default {
 
     // Remove event listeners
     document.removeEventListener('mousemove', this.onDocumentMouseMove, false)
-    document.removeEventListener('mousedown', this.onDocumentMouseDown, false)
     document.removeEventListener('mouseup', this.onDocumentMouseUp, false)
     document.removeEventListener('keydown', this.onDocumentKeyDown, false)
     document.removeEventListener('keyup', this.onDocumentKeyUp, false)
@@ -166,7 +163,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~bulma/bulma.sass';
+
 #canvas {
   position: absolute;
   top: 0;
