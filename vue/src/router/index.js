@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+import Home from '@/components/home/Home'
 import Editor from '@/components/editor/Editor'
-import Registration from '@/components/Registration'
-import Authentication from '@/components/Authentication'
+import Registration from '@/components/user/Registration'
+import Authentication from '@/components/user/Authentication'
 
 Vue.use(Router)
 

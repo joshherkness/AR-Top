@@ -13,6 +13,10 @@ const getters = {
 const actions = {
   updateUser ({ commit }, user) {
     commit(types.SET_USER, user)
+  },
+
+  signOutUser ({ commit }) {
+    commit(types.UNSET_USER)
   }
 }
 
@@ -20,6 +24,11 @@ const mutations = {
   [types.SET_USER] ({ commit }, user) {
     state.email = user.email
     state.token = user.auth_token
+  },
+
+  [types.UNSET_USER] ({ commit }) {
+    state.email = ''
+    state.token = ''
   }
 }
 

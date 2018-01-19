@@ -7,12 +7,13 @@
           <p>Success</p>
         </div>
         <div class="message-body">
+          {{ message }}
           <p>You'll be redirected to the homepage in 5 seconds...</p>
         </div>
       </article>
-        <div class="card is-primary">
+        <div class="card">
           <div class="card-header">
-            <h1 class="card-header-title">Authenticate</h1>
+            <h1 class="card-header-title">Register</h1>
           </div>
           <div class="card-content">
             <div class="field">
@@ -29,8 +30,8 @@
             </div>
             <div class="field">
               <p class="control">
-              <button  v-on:click="signin" class="button is-primary">
-                Sign In
+              <button  v-on:click="signup" class="button is-primary">
+                Sign up
               </button>
               </p>
             </div>
@@ -52,11 +53,11 @@
 
 <script>
 import axios from 'axios'
-import router from './../router/index.js'
 import { mapActions } from 'vuex'
+import router from './../../router/index.js'
 var qs = require('qs')
 export default {
-  name: 'Authentication',
+  name: 'Registration',
   data: function () {
     return {
       email: '',
@@ -70,23 +71,28 @@ export default {
     ...mapActions([
       'updateUser'
     ]),
-    signin: function () {
+    signup: function () {
       let vue = this
-      console.log(this)
-      axios.post('http://localhost:5000/api/auth',
+      axios.post('http://localhost:5000/api/register',
         qs.stringify({
           'email': this.email,
           'password': this.password
         }))
         .then(function (response) {
           vue.success = false
-          vue.updateUser(response.data)
+          vue.message = response.data.success
+
+          const usr = {
+            auth_token: response.data.auth_token,
+            email: vue.email
+          }
+
+          vue.updateUser(usr)
           setTimeout(function () { router.push('/') }, 5000)
         })
         .catch(function (error) {
           console.log(error)
           let response = error.response
-          console.log(response.data.error)
           if (vue.active === true) {
             vue.active = !vue.active
           }

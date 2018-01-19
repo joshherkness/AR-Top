@@ -1,25 +1,31 @@
 <template>
   <nav class="navbar is-link">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" to="/">
         AR-Top
       </a>
     </div>
     <div class="navbar-end">
-      <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': active }"
-           v-on:click="toggle_dropdown()" v-if="token">
+      <div class="navbar-item" v-if="token">
+        <div class="field is-grouped">
+          <p class="control">
+            <router-link class="button is-primary" to="/editor">
+              Editor
+            </router-link>
+          </p>
+          <p class="control">
+            <router-link class="button is-primary" to="/maps">
+              Maps
+            </router-link>
+          </p>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable" v-if="token">
         <a class="navbar-link">
           {{ email }}
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item">
-            Editor
-          </a>
-          <a class="navbar-item">
-            Maps
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
+          <a class="navbar-item is-danger" @click="signOutUser">
             Sign out
           </a>
         </div>
@@ -28,12 +34,12 @@
         <div class="field is-grouped">
           <p class="control">
             <router-link class="button is-primary" to="/auth">
-              SIGN IN
+              Sign in
             </router-link>
           </p>
           <p class="control">
             <router-link class="button is-primary" to="/register">
-              SIGN UP
+              Sign up
             </router-link>
           </p>
         </div>
@@ -43,14 +49,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Navbar',
-  data: function () {
-    return {
-      active: false
-    }
-  },
   computed: {
     ...mapGetters([
       'email',
@@ -58,13 +59,23 @@ export default {
     ])
   },
   methods: {
-    toggle_dropdown: function () {
-      this.active = !this.active
-    }
+    ...mapActions([
+      'signOutUser'
+    ])
   }
 }
 </script>
 
 <style lang="scss">
 @import '~bulma/bulma.sass';
+
+.is-danger {
+  color: $red;
+}
+
+.navbar-dropdown a.navbar-item.is-danger {
+  &:hover {
+    color: $red;
+  }
+}
 </style>

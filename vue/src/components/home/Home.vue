@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Navbar from './Navbar.vue'
+import Navbar from './../include/Navbar.vue'
 export default {
   name: 'Home',
   data () {
