@@ -1,6 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
+    <router-view />
   </div>
 </template>
 
@@ -8,11 +9,6 @@
 import Navbar from './../include/Navbar.vue'
 export default {
   name: 'Home',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   components: {
     Navbar
   }

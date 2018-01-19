@@ -25,7 +25,7 @@
             <div class="field">
               <label class="label">Password</label>
               <div class="control">
-                <input v-model="password" class="input" type="password" placeholder="Password">
+                <input v-on:keyup.enter="signup" v-model="password" class="input" type="password" placeholder="Password">
               </div>
             </div>
             <div class="field">

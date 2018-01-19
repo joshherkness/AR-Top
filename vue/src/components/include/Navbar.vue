@@ -1,20 +1,20 @@
 <template>
   <nav class="navbar is-link">
     <div class="navbar-brand">
-      <a class="navbar-item" to="/">
+      <router-link class="navbar-item" to="/">
         AR-Top
-      </a>
+      </router-link>
     </div>
     <div class="navbar-end">
       <div class="navbar-item" v-if="token">
         <div class="field is-grouped">
           <p class="control">
-            <router-link class="button is-primary" to="/editor">
+            <router-link class="button is-primary" to="editor">
               Editor
             </router-link>
           </p>
           <p class="control">
-            <router-link class="button is-primary" to="/maps">
+            <router-link class="button is-primary" to="maps">
               Maps
             </router-link>
           </p>

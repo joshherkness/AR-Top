@@ -167,6 +167,7 @@ export default {
 @import '~bulma/bulma.sass';
 
 #canvas {
+  margin-top: 3em;
   position: absolute;
   top: 0;
   left: 0;
