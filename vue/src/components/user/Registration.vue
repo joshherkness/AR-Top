@@ -8,7 +8,7 @@
         </div>
         <div class="message-body">
           {{ message }}
-          <p>You'll be redirected to the homepage in 15 seconds...</p>
+          <p>You'll be redirected to the homepage in 5 seconds...</p>
         </div>
       </article>
         <div class="card">
@@ -25,12 +25,12 @@
             <div class="field">
               <label class="label">Password</label>
               <div class="control">
-                <input v-model="password" class="input" type="password" placeholder="Password">
+                <input v-on:keyup.enter="signup" v-model="password" class="input" type="password" placeholder="Password">
               </div>
             </div>
             <div class="field">
               <p class="control">
-              <button  v-on:click="signup" class="button is-info">
+              <button  v-on:click="signup" class="button is-primary">
                 Sign up
               </button>
               </p>
@@ -53,7 +53,8 @@
 
 <script>
 import axios from 'axios'
-import router from './../router/index.js'
+import { mapActions } from 'vuex'
+import router from './../../router/index.js'
 var qs = require('qs')
 export default {
   name: 'Registration',
@@ -67,6 +68,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'updateUser'
+    ]),
     signup: function () {
       let vue = this
       axios.post('http://localhost:5000/api/register',
@@ -77,7 +81,14 @@ export default {
         .then(function (response) {
           vue.success = false
           vue.message = response.data.success
-          setTimeout(function () { router.push('/') }, 15000)
+
+          const usr = {
+            auth_token: response.data.auth_token,
+            email: vue.email
+          }
+
+          vue.updateUser(usr)
+          setTimeout(function () { router.push('/') }, 5000)
         })
         .catch(function (error) {
           console.log(error)
@@ -100,7 +111,7 @@ export default {
 @import '~bulma/bulma.sass';
 
 .card-header {
-  background-color: $cyan;
+  background-color: $blue;
 }
 
 .card-header-title {
