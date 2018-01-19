@@ -7,18 +7,19 @@ from itsdangerous import BadSignature, SignatureExpired
 from mongoengine import *
 from datetime import datetime
 
+# All models inherit from this. It contains the fields we
+# need for important data
 class Model(Document):
   updated = DateTimeField(default=datetime.now())
   inserted = DateTimeField(default=datetime.now())
 
   meta = {'allow_inheritance': True}
   
-  def save(*args, **kwargs):
+  def save(self, *args, **kwargs):
     updated = datetime.now()
 
     # TODO: implement the socket.IO function to send
-    
-    super.save()
+    super().save(*args, **kwargs)
     
 
 class Role(Model, RoleMixin):
