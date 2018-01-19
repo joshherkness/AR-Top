@@ -231,6 +231,7 @@ export default {
 }
 
 #canvas {
+  margin-top: 3em;
   position: absolute;
   top: 0;
   left: 0;
