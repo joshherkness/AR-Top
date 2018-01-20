@@ -1,25 +1,17 @@
 <template>
-  <nav class="navbar is-link">
+  <nav class="navbar is-white">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
       </router-link>
     </div>
     <div class="navbar-end">
-      <div class="navbar-item" v-if="token">
-        <div class="field is-grouped">
-          <p class="control">
-            <router-link class="button is-primary" to="editor">
-              Editor
-            </router-link>
-          </p>
-          <p class="control">
-            <router-link class="button is-primary" to="maps">
-              Maps
-            </router-link>
-          </p>
-        </div>
-      </div>
+      <router-link class="navbar-item" v-if="token" to="editor">
+        Editor
+      </router-link>
+      <router-link class="navbar-item" v-if="token" to="maps">
+        Maps
+      </router-link>
       <div class="navbar-item has-dropdown is-hoverable" v-if="token">
         <a class="navbar-link">
           {{ email }}
