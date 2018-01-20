@@ -5,7 +5,6 @@ import { MapUtils } from './MapUtils'
 const DEFAULT_MAP_SIZE = 40
 const DEFAULT_MAP_HEIGHT = 1000
 const DEFAULT_MAP_UNIT_SIZE = 50
-const DEFAULT_CURSOR_OPACITY = 0.5
 
 /**
  * This class represents a map.
@@ -37,8 +36,6 @@ export class Map extends THREE.EventDispatcher {
 
     // Setup the scene
     this._setupScene()
-
-    this.cursorPosition = new THREE.Vector3(-1, -1, -1)
   }
 
   /**
@@ -104,7 +101,7 @@ export class Map extends THREE.EventDispatcher {
       this.scene.remove(object)
 
       // Dispatch update event
-      this.dispatchEvent({type: 'update', message: 'Scene has been updated'})
+      this._needsRedraw()
     }
 
     return removedModel
@@ -134,7 +131,9 @@ export class Map extends THREE.EventDispatcher {
    * @memberOf Map
    */
   at (position) {
-    return this.with('position', position)
+    return this.models.find((model) => {
+      return model.position.equals(position)
+    })
   }
 
   /**
@@ -154,90 +153,6 @@ export class Map extends THREE.EventDispatcher {
   }
 
   /**
-   * Update the cursor position based on actual position coordinates within
-   * the THREE.Scene.
-   *
-   * - Note that we simply convert it to its respective unit position, and
-   *   update the position of the cursor only if needed.
-   *
-   * @param {THREE.Vector3} actualPosition
-   *
-   * @memberOf Map
-   */
-  setCursorActualPosition (actualPosition) {
-    // Convert to unit position
-    let unitPosition = MapUtils.convertActualToUnitPosition(this, actualPosition)
-
-    // Ensure that the cursor position needs to be updated
-    if (this.cursorModel && this.cursorModel.position.equals(unitPosition)) return
-
-    // Update the cursor position using converted unit position
-    this.setCursorUnitPosition(unitPosition)
-  }
-
-  /**
-   * Update the cursor position based on the unit position coordinates within
-   * the map.
-   *
-   * - Note that an out of bounds position will not be used to update the
-   *   cursor position.
-   *
-   * @param {THREE.Vector3} unitPosition
-   *
-   * @memberOf Map
-   */
-  setCursorUnitPosition (unitPosition) {
-    // Check bounds of new position
-    let isWithinBounds = MapUtils.isPositionWithinBounds(this, unitPosition)
-
-    this.cursorPosition = isWithinBounds ? unitPosition : new THREE.Vector3(-1, -1, -1)
-
-    if (this.cursorModel && this.cursorModel.position) {
-      this.cursorModel.position.copy(unitPosition)
-    }
-
-    // Retrieve and update the cursor
-    let cursor = this.scene.getObjectByName('cursor')
-    if (!cursor) return
-
-    cursor.visible = isWithinBounds
-    cursor.position.copy(MapUtils.convertUnitToActualPosition(this, unitPosition))
-
-    this._needsRedraw()
-  }
-
-  /**
-   * Update the model used for the cursor.
-   *
-   * - Note that the position of the specified model will be ignored, and
-   *   replaced with the current cursor model position.
-   *
-   * @param {AbstractMapModel} model
-   *
-   * @memberOf Map
-   */
-  setCursorModel (model) {
-    if (!model.object) return
-
-    // Remove the current cursor from the scene
-    let currentCursorObject = this.scene.getObjectByName('cursor')
-    this.scene.remove(currentCursorObject)
-
-    this.cursorModel = model
-
-    // Add cursor to scene
-    model.object.name = 'cursor'
-    model.object.visible = true
-    model.object.material.opacity = DEFAULT_CURSOR_OPACITY
-    model.object.material.transparent = true
-    model.object.position.copy(MapUtils.convertUnitToActualPosition(this, this.cursorModel.position))
-
-    this.scene.add(model.object)
-
-    this._needsRedraw()
-  }
-
-  /**
    * Search model objects within the map, and return the first one that the
    * specified raycaster intersects with. Otherwise, a value of _undefined_
    * will be returned.
@@ -250,7 +165,7 @@ export class Map extends THREE.EventDispatcher {
    *
    * @memberOf Map
    */
-  getFirstIntersectObject (raycaster) {
+  getFirstIntersectData (raycaster) {
     if (!raycaster) {
       throw new Error('Raycaster must be defined')
     }
@@ -263,13 +178,17 @@ export class Map extends THREE.EventDispatcher {
       objects.push(grid)
     }
 
-    let intersectObjects = raycaster.intersectObjects(objects, true)
+    let intersectData = raycaster.intersectObjects(objects, true)
 
-    if (intersectObjects.length === 0) {
+    if (intersectData.length === 0) {
       return undefined
     }
 
-    return intersectObjects[0]
+    // Return the first intersect that contains a face value, otherwise something
+    // like a wireframe can be returned
+    return intersectData.find((intersect) => {
+      return intersect.face
+    })
   }
 
   /**
@@ -294,7 +213,7 @@ export class Map extends THREE.EventDispatcher {
    */
   _setupScene () {
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color(0xbbbbbb)
+    this.scene.background = new THREE.Color(0xffffff)
     this._setupLighting()
     this._setupGrid()
     this._setupGridBase()
@@ -376,7 +295,7 @@ export class Map extends THREE.EventDispatcher {
     // Ensure teh scene exists
     if (!this.scene) return
 
-    let baseColor = new THREE.Color(0x545d67)
+    let baseColor = new THREE.Color(0xB1B1B1)
     let baseMaterial = new THREE.MeshLambertMaterial({color: baseColor})
     let baseGeometry = new THREE.CubeGeometry(this.actualSize, this.unitSize, this.actualSize)
     let base = new THREE.Mesh(baseGeometry, baseMaterial)
