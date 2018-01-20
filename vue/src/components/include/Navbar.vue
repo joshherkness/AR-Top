@@ -5,13 +5,15 @@
         AR-Top
       </router-link>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-start">
       <router-link class="navbar-item" v-if="token" to="editor">
         Editor
       </router-link>
       <router-link class="navbar-item" v-if="token" to="maps">
         Maps
       </router-link>
+    </div>
+    <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable" v-if="token">
         <a class="navbar-link">
           {{ email }}
