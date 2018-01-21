@@ -1,4 +1,6 @@
 import re
+# Pip
+# Our code
 import secrets
 
 from flask import Flask, jsonify, render_template, request, url_for
@@ -10,10 +12,6 @@ from passlib.apps import custom_app_context as pwd_context
 import bcrypt
 from flask_cors import CORS
 from models import *
-
-# Pip
-# Our code
-
 
 # Create app
 app = Flask(__name__)
@@ -90,7 +88,7 @@ def register():
         return jsonify(error="Email not valid."), 422, {'Content-Type': 'application/json'}
     if len(password) < 8 or len(password) > max_password_length:
         return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, {'Content-Type': 'application/json'}
-    if not str.isalnum(password):
+    if not str.isalnum(password.encode()):
         return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, {'Content-Type': 'application/json'}
 
     # Try to retrieve a user object if it exists;
@@ -102,13 +100,10 @@ def register():
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     user_datastore.create_user(email=email, password=hashed)
 
-    # So we can log user in automatically after registration
-    token = User.objects(email=email)[0].generate_auth_token()
-
     # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
     #send_email(recipients=[email], subject="ay whaddup", text="Hello from AR-top")
 
-    return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8'))
+    return jsonify(success="Account has been created! Check your email to validate your account.")
 
 
 @app.route('/api/auth', methods=['POST'])
