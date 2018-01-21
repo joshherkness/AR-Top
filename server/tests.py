@@ -24,9 +24,10 @@ class TestRegistration(unittest.TestCase):
   #=====================================================
   def request(self, page, data):
     response = self.app.post(page, data=data, follow_redirects=True)
+    print("**", response)
     json = loads(response.data.decode('utf-8'))
     return json, response.status_code
-    
+
   #=====================================================
   # Tests
   #=====================================================
@@ -64,7 +65,30 @@ class TestRegistration(unittest.TestCase):
     data = dict(email="new1Emai2lNo24bo5dyShouldHave@gmail.com", password="validPassword123")
     tester(data, "Account has been created! Check your email to validate your account.", correct_code=200, key="success")
     test_user = User.objects.get(email=data['email'])
-    print(test_user)
+    user_datastore.delete_user(test_user)
+
+  def test_authenticate(self):
+    def tester(data, string, correct_code=422, key='error'):
+      response, code = self.request('api/authenticate', data)
+      assert code == correct_code
+      assert response[key] == string
+
+    valid_email = 'validEmail@gmail.com'
+    valid_password = 'validpassword123'
+    
+    test_user = user_datastore.create_user(email=valid_email, password=valid_password)
+
+    data = dict(email=valid_email, password=valid_password)
+    response, code = self.request('api/authenticate', data)
+    assert code == 200
+    assert response.get(key) is not None
+    
+    data['password'] = 'invalidPassword'
+    tester(data, "Incorrect email or password")
+
+    data['email'] = 'invalid@email.com'
+    tester(data, "Incorrect email or password")
+    
     user_datastore.delete_user(test_user)
     
 if __name__ == "__main__":
