@@ -36,5 +36,5 @@ class User(Document, UserMixin):
             return None  # valid token, but expired
         except BadSignature:
             return None  # invalid token
-        user = User.query.get(data['id'])
+        user = User.objects(email=data['id'])
         return user
