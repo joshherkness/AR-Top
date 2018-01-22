@@ -34,6 +34,7 @@
               </button>
               </p>
             </div>
+            <router-link to="register">Don't have an account? Register</router-link>
           </div>
         </div>
       </div>
