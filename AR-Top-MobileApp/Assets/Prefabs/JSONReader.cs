@@ -24,20 +24,20 @@ public class JSONReader : MonoBehaviour {
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-	""width"": 8,
+	""width"": 16,
 	""height"": 2,
-	""depth"": 8,
+	""depth"": 16,
 	""base_color"": 
 	{
-		""r"": 0.2,
-		""g"": 0.2,
-		""b"": 0.2,
+		""r"": 0.69,
+		""g"": 0.69,
+		""b"": 0.69,
 		""a"": 1.0
 	},
 	""models"": 
 	[
 		{
-		""type"": ""character"",
+		""type"": ""voxel"",
 		""position"": 
 			{
 				""x"": 1,
@@ -46,25 +46,25 @@ public class JSONReader : MonoBehaviour {
 			},
 			""color"": 
 			{
-				""r"": 0.3,
-				""g"": 1,
-				""b"": 0.4,
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
 				""a"": 1.0
 			}
 		},
 		{
-		""type"":""npc"",
+		""type"":""voxel"",
 		""position"":
 			{
 				""x"": 3,
 				""y"": 1,
-				""z"": 3
+				""z"": 10
 			},
 			""color"":
 			{
-				""r"": 1.0,
-				""g"": 0,
-				""b"": 0,
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
 				""a"": 1.0
 			}
 		},
@@ -72,64 +72,64 @@ public class JSONReader : MonoBehaviour {
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 1,
+				""x"": 5,
 				""y"": 1,
 				""z"": 4
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		},
 		{
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 2,
-				""y"": 1,
-				""z"": 4
-			},
-			""color"":
-			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 1,
+				""x"": 15,
 				""y"": 1,
 				""z"": 5
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		},
 		{
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 2,
+				""x"": 11,
 				""y"": 1,
-				""z"": 5
+				""z"": 15
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
+			}
+		},
+		{
+		""type"":""voxel"",
+		""position"":
+			{
+				""x"": 8,
+				""y"": 1,
+				""z"": 10
+			},
+			""color"":
+			{
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		}
 	]}";
