@@ -35,6 +35,7 @@
               </button>
               </p>
             </div>
+            <router-link to="auth">Already have an account? login</router-link>
           </div>
         </div>
       </div>
