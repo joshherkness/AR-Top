@@ -10,21 +10,19 @@ class TestRegistration(unittest.TestCase):
   #=====================================================
   def setUp(self):
     self.db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-    app.config['DATABASE'] = tempfile.mkstemp()
     app.testing = True
     self.app = app.test_client()
     
   
   def tearDown(self):
     os.close(self.db_fd)
-    os.unlink(app.config['DATABASE'][1])
+    os.unlink(app.config['DATABASE'])
 
   #=====================================================
   # Helper methods
   #=====================================================
   def request(self, page, data):
     response = self.app.post(page, data=data, follow_redirects=True)
-    print("**", response)
     json = loads(response.data.decode('utf-8'))
     return json, response.status_code
 
@@ -69,19 +67,21 @@ class TestRegistration(unittest.TestCase):
 
   def test_authenticate(self):
     def tester(data, string, correct_code=422, key='error'):
-      response, code = self.request('api/authenticate', data)
+      response, code = self.request('api/auth', data)
       assert code == correct_code
       assert response[key] == string
 
-    valid_email = 'validEmail@gmail.com'
-    valid_password = 'validpassword123'
-    
-    test_user = user_datastore.create_user(email=valid_email, password=valid_password)
+    email = 'validEmail@gmail.com'
+    password = 'validpassword123'.encode('utf-8')
 
-    data = dict(email=valid_email, password=valid_password)
-    response, code = self.request('api/authenticate', data)
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    test_user = user_datastore.create_user(email=email, password=hashed)
+
+    data = dict(email=email, password=password.decode('utf-8'))
+    response, code = self.request('api/auth', data)
     assert code == 200
-    assert response.get(key) is not None
+    assert response.get('auth_token') is not None
+    assert response.get('email') == email
     
     data['password'] = 'invalidPassword'
     tester(data, "Incorrect email or password")

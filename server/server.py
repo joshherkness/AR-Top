@@ -76,13 +76,12 @@ def send_email(text, recipients, subject="AR-top"):
     app.logger.error("Failed to send message to " +
                      str(recipients) + "\n" + str(e))
     
-    
 @app.route('/api/register', methods=['POST'])
 def register():
   # Confirm the request
   email, password = None, None
   try:
-    # Don't use .get here. Too long to put in a comment about why.
+    # Use a dict access here, not ".get". The access is better with the try block.
     email = request.form["email"]
     password = request.form["password"]
   except:
@@ -116,27 +115,28 @@ def register():
 def authenticate():
   email, password = None, None
   try:
-    # TODO: switch this back to form in production
-    # Postman doesn't always work for form. So for now lets use args.
-    email = request.form.get("email")
-    password = request.form.get("password")
+    # Use a dict access here, not ".get". The access is better with the try block.
+    email = request.form["email"]
+    password = request.form["password"]
   except Exception as e:
     app.logger.error(str(e))
     return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
   
   error = None
   user = User.objects(email=email)
-  if len(user) < 1:
+  if len(user) == 0:
     error = "Incorrect email or password"
-    return jsonify({'error': error}), 422, json_tag
-
-  if bcrypt.checkpw(password.encode(), user[0].password.encode()):
-    auth_token = user[0].generate_auth_token()
-    # return username and auth token
-    return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
+  elif len(user) > 1:
+    error = "Incorrect email or password"
+    app.logger.error("Someone registered the same email twice!")
   else:
-    error = "Incorrect email or password"
-    return jsonify({'error': error}), 422, json_tag
+    if bcrypt.checkpw(password.encode(), user[0].password.encode()):
+      auth_token = user[0].generate_auth_token()
+      # return username and auth token
+      return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
+    else:
+      error = "Incorrect email or password"
+  return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
 # Main
