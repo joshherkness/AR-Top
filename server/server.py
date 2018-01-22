@@ -60,109 +60,109 @@ security = Security(app, user_datastore)
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/protected')
 @login_required
 def protected():
-  return 'This is a protected route.'
+    return 'This is a protected route.'
 
 def send_email(text, recipients, subject="AR-top"):
-  try:
-    msg = Message(subject, sender="kruk@gmail.com", recipients=recipients)
-    msg.body = text
-    mail.send(msg)
-  except Exception as e:
-    app.logger.error("Failed to send message to " +
-                     str(recipients) + "\n" + str(e))
+    try:
+        msg = Message(subject, sender="kruk@gmail.com", recipients=recipients)
+        msg.body = text
+        mail.send(msg)
+    except Exception as e:
+        app.logger.error("Failed to send message to " +
+            str(recipients) + "\n" + str(e))
     
 @app.route('/api/register', methods=['POST'])
 def register():
-  # Confirm the request
-  email, password = None, None
-  try:
-    # Use a dict access here, not ".get". The access is better with the try block.
-    email = request.form["email"]
-    password = request.form["password"]
-  except:
-    return jsonify(error="Malformed request; expecting email and password"), 422, json_tag
+    # Confirm the request
+    email, password = None, None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = request.form["email"]
+        password = request.form["password"]
+    except:
+        return jsonify(error="Malformed request; expecting email and password"), 422, json_tag
 
-  # Validate the request
-  if len(email) > max_email_length:
-    return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
-  if not email_pattern.match(email):
-    return jsonify(error="Email not valid."), 422, json_tag
-  if len(password) < 8 or len(password) > max_password_length:
-    return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, json_tag
-  if not str.isalnum(password):
-    return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, json_tag
+    # Validate the request
+    if len(email) > max_email_length:
+        return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
+    if not email_pattern.match(email):
+        return jsonify(error="Email not valid."), 422, json_tag
+    if len(password) < 8 or len(password) > max_password_length:
+        return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, json_tag
+    if not str.isalnum(password):
+        return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, json_tag
 
-  # Try to retrieve a user object if it exists;
-  user = User.objects(email=email)
-  if len(user) != 0:
-    return jsonify(error="Email already in use, please use another one"), 422, json_tag
+    # Try to retrieve a user object if it exists;
+    user = User.objects(email=email)
+    if len(user) != 0:
+        return jsonify(error="Email already in use, please use another one"), 422, json_tag
 
-  # Hash and create user
-  hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-  user_datastore.create_user(email=email, password=hashed)
+    # Hash and create user
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    user_datastore.create_user(email=email, password=hashed)
 
-  # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
-  #send_email(recipients=[email], subject="ay whaddup", text="Hello from AR-top")
+    # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
+    #send_email(recipients=[email], subject="ay whaddup", text="Hello from AR-top")
 
-  return jsonify(success="Account has been created! Check your email to validate your account."), 200, json_tag
+    return jsonify(success="Account has been created! Check your email to validate your account."), 200, json_tag
 
 @app.route('/api/auth', methods=['POST'])
 def authenticate():
-  email, password = None, None
-  try:
-    # Use a dict access here, not ".get". The access is better with the try block.
-    email = request.form["email"]
-    password = request.form["password"]
-  except Exception as e:
-    app.logger.error(str(e))
-    return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
+    email, password = None, None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = request.form["email"]
+        password = request.form["password"]
+    except Exception as e:
+        app.logger.error(str(e))
+        return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
   
-  error = None
-  user = User.objects(email=email)
-  if len(user) == 0:
-    error = "Incorrect email or password"
-  elif len(user) > 1:
-    error = "Incorrect email or password"
-    app.logger.error("Someone registered the same email twice!")
-  else:
-    if bcrypt.checkpw(password.encode(), user[0].password.encode()):
-      auth_token = user[0].generate_auth_token()
-      # return username and auth token
-      return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
+    error = None
+    user = User.objects(email=email)
+    if len(user) == 0:
+        error = "Incorrect email or password"
+    elif len(user) > 1:
+        error = "Incorrect email or password"
+        app.logger.error("Someone registered the same email twice!")
     else:
-      error = "Incorrect email or password"
-  return jsonify({'error': error}), 422, json_tag
+        if bcrypt.checkpw(password.encode(), user[0].password.encode()):
+            auth_token = user[0].generate_auth_token()
+            # return username and auth token
+            return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
+        else:
+            error = "Incorrect email or password"
+    return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
 # Main
 #=====================================================
   
 if __name__ == '__main__':
-  from argparse import ArgumentParser
+    from argparse import ArgumentParser
+    
+    parser = ArgumentParser(description="Runs flask server")
+    
+    # TODO: logic not implemented for this because we should wait
+    parser.add_argument("mode", nargs='?', choices=[
+        'd', 'p'], help="Selects whether or not you want to run development or production")
+    parser.add_argument("-e", "--email", nargs='+', type=str,
+                        help="Sends an email if you use characters commandline can understand")
+    parser.add_argument("-r", "--recipients", nargs='+',
+                        type=str, help="Who you want to send to")
+    parser.add_argument("-u", "--user", nargs=2, type=str,
+                        help="Insert a new user: takes username, password")
+    args = parser.parse_args()
 
-  parser = ArgumentParser(description="Runs flask server")
-  
-  # TODO: logic not implemented for this because we should wait
-  parser.add_argument("mode", nargs='?', choices=[
-    'd', 'p'], help="Selects whether or not you want to run development or production")
-  parser.add_argument("-e", "--email", nargs='+', type=str,
-    help="Sends an email if you use characters commandline can understand")
-  parser.add_argument("-r", "--recipients", nargs='+',
-    type=str, help="Who you want to send to")
-  parser.add_argument("-u", "--user", nargs=2, type=str,
-    help="Insert a new user: takes username, password")
-  args = parser.parse_args()
+    if args.email is not None:
+        if args.recipients is None:
+            print("You need to include recipients to email if you want to send an email.")
+        else:
+            send_email(text=' '.join(args.email), recipients=args.recipients)
+        exit()
 
-  if args.email is not None:
-    if args.recipients is None:
-      print("You need to include recipients to email if you want to send an email.")
-    else:
-      send_email(text=' '.join(args.email), recipients=args.recipients)
-    exit()
-
-  app.run()
+    app.run()
