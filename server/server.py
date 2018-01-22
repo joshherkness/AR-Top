@@ -1,5 +1,4 @@
 import re
-
 import secrets
 
 from flask import Flask, jsonify, render_template, request, url_for
@@ -21,7 +20,6 @@ json_tag = {'Content-Type': 'application/json'}
 #=====================================================
 # App skeleton
 #=====================================================
-
 # Create app
 app = Flask(__name__)
 app.config['DEBUG'] = True
