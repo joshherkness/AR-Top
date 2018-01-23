@@ -7,10 +7,13 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 
 from mongoengine import *
+from mongoengine.fields import *
 
 from datetime import datetime
 
-from sys import maxint
+import sys
+
+max_size = 1024
 
 # All models inherit from this. It contains the fields we
 # need for important data
@@ -24,18 +27,21 @@ class Model(Document):
         updated = datetime.now()
         super().save(*args, **kwargs)
 
-class ColorField(BaseField):
-    r = IntegerField(default=0, choices=range(0,256))
-    g = IntegerField(default=0, choices=range(0,256))
-    b = IntegerField(default=0, choices=range(0,256))
-    a = DecimalField(default=0, min_value=0, max_value=1)
-        
+
+# Maybe this could come in handy
+class Voxel(BaseField):
+    color = BinaryField()
+    x = IntField(required=True, choices=range(1,max_size + 1))
+    y = IntField(required=True, choices=range(1,max_size + 1))
+    z = IntField(required=True, choices=range(1,max_size + 1))
+
 class Map(Model):
-    width = IntegerField(default=16, choices=range(1,50000))
-    height = IntegerField(default=5, choices=range(1,50000))
-    depth = IntegerField(default=16, choices=range(1,50000))
-    base_color = ColorField()
-    model = ListField() #default is [], meaning empty map
+    width = IntField(default=16, choices=range(1,max_size + 1))
+    height = IntField(default=5, choices=range(1,max_size + 1))
+    depth = IntField(default=16, choices=range(1,max_size + 1))
+    base_color = BinaryField()
+    private = BooleanField(default=False)
+    models = ListField() #default is [], meaning empty map
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
