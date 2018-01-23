@@ -106,10 +106,14 @@ def register():
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     user_datastore.create_user(email=email, password=hashed)
 
+
+    # So we can log user in automatically after registration
+    token = User.objects(email=email)[0].generate_auth_token()
+
     # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
     #send_email(recipients=[email], subject="ay whaddup", text="Hello from AR-top")
 
-    return jsonify(success="Account has been created! Check your email to validate your account."), 200, json_tag
+    return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
 
 @app.route('/api/auth', methods=['POST'])
 def authenticate():
