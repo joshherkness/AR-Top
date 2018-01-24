@@ -18,15 +18,16 @@ public class JSONReader : MonoBehaviour {
 	private GameObject playerLayout;
 	private GameObject tileLayout;
 	private GameObject npcLayout;
+	private ImageTargetBehaviour imageTarget;
 
 	private int gridHeightGap = 2; //The height gap for y coordinate grid spaces. Every increment represents 5 gamefoot.
 
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-	""width"": 16,
+	""width"": 50,
 	""height"": 2,
-	""depth"": 16,
+	""depth"": 50,
 	""base_color"": 
 	{
 		""r"": 0.69,
@@ -166,6 +167,9 @@ public class JSONReader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		//Find the Image Target
+		imageTarget = GameObject.Find ("ImageTarget").GetComponent <ImageTargetBehaviour>();
+
 		//Create an empty parent GameObject to control the scale of the entire layout.
 		mapScaler = GameObject.Find ("MapScaler");
 		if (mapScaler == null) {
@@ -248,6 +252,9 @@ public class JSONReader : MonoBehaviour {
 		foreach (GridItem model in obj.models) {
 			buildPiece (model);
 		}
+
+		mapScaler.transform.SetParent (imageTarget.transform);
+		mapScaler.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
 	}
 
 	//Builds a piece based on its type. Places the piece and gives it its color.
