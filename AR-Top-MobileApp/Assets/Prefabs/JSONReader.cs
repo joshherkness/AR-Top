@@ -18,26 +18,27 @@ public class JSONReader : MonoBehaviour {
 	private GameObject playerLayout;
 	private GameObject tileLayout;
 	private GameObject npcLayout;
+	private ImageTargetBehaviour imageTarget;
 
 	private int gridHeightGap = 2; //The height gap for y coordinate grid spaces. Every increment represents 5 gamefoot.
 
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-	""width"": 8,
+	""width"": 50,
 	""height"": 2,
-	""depth"": 8,
+	""depth"": 50,
 	""base_color"": 
 	{
-		""r"": 0.2,
-		""g"": 0.2,
-		""b"": 0.2,
+		""r"": 0.69,
+		""g"": 0.69,
+		""b"": 0.69,
 		""a"": 1.0
 	},
 	""models"": 
 	[
 		{
-		""type"": ""character"",
+		""type"": ""voxel"",
 		""position"": 
 			{
 				""x"": 1,
@@ -46,25 +47,25 @@ public class JSONReader : MonoBehaviour {
 			},
 			""color"": 
 			{
-				""r"": 0.3,
-				""g"": 1,
-				""b"": 0.4,
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
 				""a"": 1.0
 			}
 		},
 		{
-		""type"":""npc"",
+		""type"":""voxel"",
 		""position"":
 			{
 				""x"": 3,
 				""y"": 1,
-				""z"": 3
+				""z"": 10
 			},
 			""color"":
 			{
-				""r"": 1.0,
-				""g"": 0,
-				""b"": 0,
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
 				""a"": 1.0
 			}
 		},
@@ -72,64 +73,64 @@ public class JSONReader : MonoBehaviour {
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 1,
+				""x"": 5,
 				""y"": 1,
 				""z"": 4
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		},
 		{
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 2,
-				""y"": 1,
-				""z"": 4
-			},
-			""color"":
-			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 1,
+				""x"": 15,
 				""y"": 1,
 				""z"": 5
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		},
 		{
 		""type"":""voxel"",
 		""position"":
 			{
-				""x"": 2,
+				""x"": 11,
 				""y"": 1,
-				""z"": 5
+				""z"": 15
 			},
 			""color"":
 			{
-				""r"": 0,
-				""g"": 0,
-				""b"": 255,
-				""a"": 255
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
+			}
+		},
+		{
+		""type"":""voxel"",
+		""position"":
+			{
+				""x"": 8,
+				""y"": 1,
+				""z"": 10
+			},
+			""color"":
+			{
+				""r"": 0.25,
+				""g"": 0.25,
+				""b"": 1,
+				""a"": 1.0
 			}
 		}
 	]}";
@@ -165,6 +166,9 @@ public class JSONReader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		//Find the Image Target
+		imageTarget = GameObject.Find ("ImageTarget").GetComponent <ImageTargetBehaviour>();
 
 		//Create an empty parent GameObject to control the scale of the entire layout.
 		mapScaler = GameObject.Find ("MapScaler");
@@ -248,6 +252,9 @@ public class JSONReader : MonoBehaviour {
 		foreach (GridItem model in obj.models) {
 			buildPiece (model);
 		}
+
+		mapScaler.transform.SetParent (imageTarget.transform);
+		mapScaler.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
 	}
 
 	//Builds a piece based on its type. Places the piece and gives it its color.
