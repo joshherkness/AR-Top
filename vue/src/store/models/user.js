@@ -17,8 +17,7 @@ const actions = {
   },
 
   // eslint-disable-next-line
-  signOutUser({ commit, state }) {
-    console.log(state)
+  signOutUser({ commit }) {
     commit(types.UNSET_USER)
   }
 }
