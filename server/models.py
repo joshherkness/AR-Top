@@ -55,7 +55,7 @@ class MapModel(EmbeddedDocument):
     This schema should be used to represent any model that can be
     placed into a map.
     """
-    type = EnumField(StringField(), 'voxel')
+    type = StringField(required=True, choices=['voxel'])
     position = EmbeddedDocumentField(Position)
     color = StringField(required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
 
