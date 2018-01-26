@@ -72,16 +72,15 @@ export default {
   },
   computed: {
     isSubmitEnabled: function () {
-      return this.name == this.params.name
+      return this.name === this.params.name
     }
   },
   methods: {
-    beforeOpened(event) {
-
+    beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
     },
-    beforeClosed(event) {
+    beforeClosed (event) {
       this.params = {}
       this.$emit('before-closed', event)
     },
