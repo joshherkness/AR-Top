@@ -23,7 +23,7 @@ export default new Router({
           component: Editor,
           meta: { requiresAuth: true },
           beforeEnter: (to, from, next) => {
-            if(Object.is(store.getters.token, '')) {
+            if (Object.is(store.getters.token, '')) {
               next('/auth')
             } else {
               next()
@@ -35,7 +35,7 @@ export default new Router({
           name: 'Maps',
           component: Maps,
           beforeEnter: (to, from, next) => {
-            if(Object.is(store.getters.token, '')) {
+            if (Object.is(store.getters.token, '')) {
               next('/auth')
             } else {
               next()
