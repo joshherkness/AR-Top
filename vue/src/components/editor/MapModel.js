@@ -7,7 +7,7 @@ const DEFAULT_WIREFRAME_LINE_WIDTH = 2
  * within a map.
  */
 export const MapModelType = Object.freeze({
-  VOXEL: Symbol('voxel')
+  VOXEL: 'voxel'
 })
 
 /**

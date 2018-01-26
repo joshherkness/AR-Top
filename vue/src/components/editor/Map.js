@@ -2,8 +2,10 @@ import * as THREE from 'three'
 
 import { MapUtils } from './MapUtils'
 
-const DEFAULT_MAP_SIZE = 40
+const DEFAULT_MAP_COLOR = '#B1B1B1'
+const DEFAULT_MAP_WIDTH = 40
 const DEFAULT_MAP_HEIGHT = 1000
+const DEFAULT_MAP_DEPTH = DEFAULT_MAP_WIDTH
 const DEFAULT_MAP_UNIT_SIZE = 50
 
 /**
@@ -20,22 +22,53 @@ export class Map extends THREE.EventDispatcher {
    *
    * @memberOf Map
    */
-  constructor (size, height, unitSize) {
+  constructor (width, height, depth, unitSize, color) {
     super()
 
     // Register member variables
-    this.size = size > 0 ? size : DEFAULT_MAP_SIZE
-    this.height = height > 0 ? height : DEFAULT_MAP_HEIGHT
+    this.width = width > 0 ? width : DEFAULT_MAP_WIDTH      // x
+    this.height = height > 0 ? height : DEFAULT_MAP_HEIGHT  // y
+    this.depth = depth > 0 ? depth : DEFAULT_MAP_DEPTH      // z
     this.unitSize = unitSize || DEFAULT_MAP_UNIT_SIZE
-
-    // Calculated variables
-    this.actualSize = this.size * this.unitSize
-    this.actualHeight = this.height * this.unitSize
+    this.color = color || DEFAULT_MAP_COLOR
 
     this.models = []
 
     // Setup the scene
     this._setupScene()
+  }
+
+  /**
+   * Actual width in terms of pixels.
+   *
+   * @returns Actual width
+   *
+   * @memberOf Map
+   */
+  getActualWidth () {
+    return this.width * this.unitSize
+  }
+
+  /**
+   * Actual height in terms of pixels.
+   *
+   * @returns Actual height
+   *
+   * @memberOf Map
+   */
+  getActualHeight () {
+    return this.height * this.unitSize
+  }
+
+  /**
+   * Actual depth in terms of pixels.
+   *
+   * @returns Actual depth
+   *
+   * @memberOf Map
+   */
+  getActualDepth () {
+    return this.depth * this.unitSize
   }
 
   /**
@@ -268,12 +301,12 @@ export class Map extends THREE.EventDispatcher {
 
     // Create the grid
     var lineColor = new THREE.Color(0x434b54)
-    var lines = new THREE.GridHelper(this.actualSize, this.size, lineColor, lineColor)
+    var lines = new THREE.GridHelper(this.getActualWidth(), this.width, lineColor, lineColor)
     lines.name = 'grid-lines'
     this.scene.add(lines)
 
     // Create the grid plane used for user interraction
-    var gridPlaneGeometry = new THREE.PlaneBufferGeometry(this.actualSize, this.actualSize)
+    var gridPlaneGeometry = new THREE.PlaneBufferGeometry(this.getActualWidth(), this.getActualDepth())
     gridPlaneGeometry.rotateX(-Math.PI / 2)
     var gridPlane = new THREE.Mesh(gridPlaneGeometry, new THREE.MeshBasicMaterial({ visible: false }))
     gridPlane.name = 'grid-plane'
@@ -295,9 +328,9 @@ export class Map extends THREE.EventDispatcher {
     // Ensure teh scene exists
     if (!this.scene) return
 
-    let baseColor = new THREE.Color(0xB1B1B1)
+    let baseColor = new THREE.Color(this.color)
     let baseMaterial = new THREE.MeshLambertMaterial({color: baseColor})
-    let baseGeometry = new THREE.CubeGeometry(this.actualSize, this.unitSize, this.actualSize)
+    let baseGeometry = new THREE.CubeGeometry(this.getActualWidth(), this.unitSize, this.getActualDepth())
     let base = new THREE.Mesh(baseGeometry, baseMaterial)
 
     // Place the base just below the grid
