@@ -70,7 +70,7 @@
                 </div>
               </form>
             </div>
-            <p>Already have an account? <router-link to="auth">Login</router-link></p>
+            <p>Already have an account? <router-link to="auth">Sign In</router-link></p>
           </div>
         </div>
       </div>
@@ -156,11 +156,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.message {
-  margin-top: 1em;
-}
-
-.message.is-success {
-  margin-bottom: 1em;
-}
 </style>
