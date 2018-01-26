@@ -30,7 +30,7 @@
                       v-validate="emailValidator"
                       class="input"
                       type="text"
-                      placeholder="e.g johnsmith@google.com"
+                      placeholder="Enter your email"
                       :class="{'is-danger': errors.has('email')}">
                   </div>
                   <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
@@ -47,7 +47,7 @@
                       v-validate="passwordValidator"
                       class="input"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Enter your password"
                       :class="{'is-danger': errors.has('password')}">
                   </div>
                   <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
