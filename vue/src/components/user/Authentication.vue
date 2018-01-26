@@ -42,7 +42,7 @@
                   <div class="control">
                     <input
                       name="password"
-                      v-on:keyup.enter="signup"
+                      v-on:keyup.enter="signin"
                       v-model="password"
                       v-validate="passwordValidator"
                       class="input"
