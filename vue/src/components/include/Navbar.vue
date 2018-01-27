@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-white">
+  <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
@@ -18,8 +18,8 @@
         <a class="navbar-link">
           {{ email }}
         </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item is-danger" @click="signOutUser">
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item has-text-danger" @click="signOutUser">
             Sign out
           </a>
         </div>
@@ -60,16 +60,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~bulma/bulma.sass';
-
-.is-danger {
-  color: $red;
-}
-
-.navbar-dropdown a.navbar-item.is-danger {
-  &:hover {
-    color: $red;
-  }
-}
 </style>

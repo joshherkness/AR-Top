@@ -7,13 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class GridMesh : MonoBehaviour
 {
-	public int GridSize;
+	private int GridSize;
 	//public int GridDepth;
-
-	void Awake()
-	{
-		//DrawGrid ();
-	}
 
 	void DrawGrid ()
 	{

@@ -22,9 +22,9 @@ export class MapUtils {
     // Ensure the the map is defined
     if (!map) throw new Error('Map must be defined.')
 
-    return ((position.x >= 0 && position.x < map.size) &&
+    return ((position.x >= 0 && position.x < map.width) &&
       (position.y >= 0 && position.y < map.height) &&
-      (position.z >= 0 && position.z < map.size))
+      (position.z >= 0 && position.z < map.depth))
   }
 
   /**
@@ -42,7 +42,7 @@ export class MapUtils {
     // Ensure the the map is defined
     if (!map) throw new Error('Map must be defined.')
 
-    let offset = new Vector3(map.actualSize / 2, 0, map.actualSize / 2)
+    let offset = new Vector3(map.getActualWidth() / 2, 0, map.getActualDepth() / 2)
     return actualPosition
       .clone()
       .add(offset)
@@ -67,11 +67,35 @@ export class MapUtils {
     // Ensure that the map is defined
     if (!map) throw new Error('Map must be defined.')
 
-    let offset = new Vector3(map.actualSize / 2, 0, map.actualSize / 2)
+    let offset = new Vector3(map.getActualWidth() / 2, 0, map.getActualDepth() / 2)
     return unitPosition
       .clone()
       .multiplyScalar(map.unitSize)
       .addScalar(map.unitSize / 2)
       .sub(offset)
+  }
+
+  /**
+   * Serialize a map object into relevant json data.
+   *
+   * @static
+   * @param {Map} map
+   * @returns serialized map json
+   *
+   * @memberOf MapUtils
+   */
+  static serialize (map) {
+    let space = 2
+    let ignoredFields = [
+      'object',
+      'scene',
+      'unitSize',
+      'actualSize',
+      'actualHeight',
+      'scale',
+      '_listeners']
+    return JSON.stringify(map, (key, value) => {
+      return ignoredFields.includes(key) ? undefined : value
+    }, space)
   }
 }

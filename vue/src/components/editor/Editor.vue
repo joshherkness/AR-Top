@@ -82,7 +82,7 @@ export default {
   methods: {
     setup () {
       // Create map
-      this.map = new Map(16, 3, 50)
+      this.map = new Map(16, 1000, 16, 50)
       this.map.addEventListener('redraw', (event) => {
         this.render()
         this.updateCursorPosition()
@@ -101,7 +101,7 @@ export default {
       // Create the camera
       let cameraFov = 45
       this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.map.actualSize))
+      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.map.getActualWidth()))
       this.camera.lookAt(new THREE.Vector3())
 
       // Add orbit controls
