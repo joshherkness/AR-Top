@@ -1,5 +1,6 @@
 import re
 import secrets
+import sys
 
 from flask import Flask, jsonify, render_template, request, url_for
 from flask_mail import Mail, Message
@@ -74,8 +75,8 @@ def send_email(text, recipients, subject="AR-top"):
         mail.send(msg)
     except Exception as e:
         app.logger.error("Failed to send message to " +
-            str(recipients) + "\n" + str(e))
-    
+                         str(recipients) + "\n" + str(e))
+
 @app.route('/api/register', methods=['POST'])
 def register():
     # Confirm the request
@@ -105,7 +106,6 @@ def register():
     # Hash and create user
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     user_datastore.create_user(email=email, password=hashed)
-
 
     # So we can log user in automatically after registration
     token = User.objects(email=email)[0].generate_auth_token()
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     
     # TODO: logic not implemented for this because we should wait
     parser.add_argument("mode", nargs='?', choices=[
-        'd', 'p'], help="Selects whether or not you want to run development or production")
+                        'd', 'p'], help="Selects whether or not you want to run development or production")
     parser.add_argument("-e", "--email", nargs='+', type=str,
                         help="Sends an email if you use characters commandline can understand")
     parser.add_argument("-r", "--recipients", nargs='+',

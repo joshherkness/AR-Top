@@ -1,5 +1,4 @@
 import secrets
-
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
                             UserMixin, login_required)
 
@@ -20,7 +19,6 @@ max_size = 1024
 class Model(Document):
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
-    
     meta = {'allow_inheritance': True}
   
     def save(self, *args, **kwargs):
@@ -85,7 +83,7 @@ class User(Model, UserMixin):
   
     def verify_password(self, password):
         return password == self.password
-  
+
     def generate_auth_token(self, expiration=600):
         s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.email})
