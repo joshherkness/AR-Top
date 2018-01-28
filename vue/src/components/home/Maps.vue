@@ -30,4 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
+.button.is-light.is-pulled-right {
+  margin: 3.5em 2em 3em 0;
+}
 </style>
