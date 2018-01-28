@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { GridDirector } from './GridDirector'
 import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import { Map } from './Map'

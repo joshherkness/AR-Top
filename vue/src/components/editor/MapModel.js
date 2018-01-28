@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { Vector3 } from 'three';
 
 const DEFAULT_WIREFRAME_LINE_WIDTH = 2
 
@@ -60,6 +61,7 @@ class AbstractMapModel {
  * @extends {AbstractMapModel}
  */
 export class VoxelMapModel extends AbstractMapModel {
+
   /**
    * Creates an instance of VoxelMapModel.
    *
@@ -126,4 +128,15 @@ function _createWireframeObjectForGeometry (geometry, color, linewidth) {
   let lineMaterial = new THREE.LineBasicMaterial({ color: color, linewidth: linewidth })
 
   return new THREE.LineSegments(edgeGeometry, lineMaterial)
+}
+
+export class MapModelBuilder {
+  build (data) {
+    switch (data.type) {
+      case MapModelType.VOXEL:
+        return new VoxelMapModel(data)
+      default:
+        return undefined
+    }
+  }
 }
