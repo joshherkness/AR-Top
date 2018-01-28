@@ -8,6 +8,8 @@ from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
 
+from json import loads
+
 import bcrypt
 from flask_cors import CORS
 from models import *
@@ -56,7 +58,7 @@ user_datastore = MongoEngineUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
 #=====================================================
-# Routes
+# Code for later in the project
 #=====================================================
 
 @app.route('/')
@@ -69,14 +71,20 @@ def protected():
     return 'This is a protected route.'
 
 def send_email(text, recipients, subject="AR-top"):
+    if type(recipients) is str:
+        recipients = [recipients]
+
     try:
-        msg = Message(subject, sender="kruk@gmail.com", recipients=recipients)
+        msg = Message(subject, sender=secrets.MAIL_USERNAME, recipients=recipients)
         msg.body = text
         mail.send(msg)
     except Exception as e:
         app.logger.error("Failed to send message to " +
                          str(recipients) + "\n" + str(e))
 
+#=====================================================
+# User related routes
+#=====================================================
 @app.route('/api/register', methods=['POST'])
 def register():
     # Confirm the request
@@ -111,7 +119,7 @@ def register():
     token = User.objects(email=email)[0].generate_auth_token()
 
     # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
-    #send_email(recipients=[email], subject="ay whaddup", text="Hello from AR-top")
+    #send_email(recipients=email, subject="ay whaddup", text="Hello from AR-top")
 
     return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
 
@@ -143,9 +151,47 @@ def authenticate():
     return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
-# Main
+# Map routes
 #=====================================================
-  
+
+@app.route("/api/map", methods=["POST"])
+def create_map():
+    email, token, map = None,None,None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = request.form["email"]
+        token = request.form["auth_token"]
+        map = request.form["map"]
+    except:
+        return jsonify(error="Malformed request"), 422, json_tag
+
+    user = User.verify_auth_token(token)
+    if user is None: return jsonify(error="Invalid token"), 401, json_tag
+
+    try:
+        map = loads(map)
+        width = map["width"]
+        height = map["height"]
+        depth = map["depth"]
+        color = map["color"]
+        private = map["private"]
+        models = map['models']
+    except:
+        return jsonify(error="Malformed request"), 422, json_tag
+
+    try:
+        new_map = Map(user=user, width=width, height=height, depth=depth,
+                      color=color, private=private, models=models)
+        new_map.save()
+    except Exception as e:
+        app.logger.error("Failed to save map for user", str(user), "\n", str(e))
+        return jsonify(error="Internal server error"), 500, json_tag
+
+    return jsonify(success="Successfully created map", map=map), 200, json_tag
+        
+#=====================================================
+# Main
+#=====================================================  
 if __name__ == '__main__':
     from argparse import ArgumentParser
     

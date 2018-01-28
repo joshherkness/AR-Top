@@ -2,10 +2,10 @@ import os
 import unittest
 from server import *
 import tempfile
-from json import loads
+from json import loads, dumps
 import bcrypt
 
-class TestRegistration(unittest.TestCase):
+class TestUserEndpoints(unittest.TestCase):
     #=====================================================
     # Skeleton (you can fold this code)
     #=====================================================
@@ -25,7 +25,7 @@ class TestRegistration(unittest.TestCase):
         response = self.app.post(page, data=data, follow_redirects=True)
         json = loads(response.data.decode('utf-8'))
         return json, response.status_code
-
+        
     #=====================================================
     # Tests
     #=====================================================
@@ -66,39 +66,84 @@ class TestRegistration(unittest.TestCase):
         user_datastore.delete_user(test_user)
 
     def test_authenticate(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
         def tester(data, string, correct_code=422, key='error'):
             response, code = self.request('api/auth', data)
             assert code == correct_code
             assert response[key] == string
-    
-    valid_email = 'validEmail@gmail.com'
-    valid_password = 'validpassword123'
-    encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
-    
-    test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
-    
-    #correct email and password
-    data = dict(email=valid_email, password=valid_password)
-    response, code = self.request('api/auth', data)
-    assert code == 200
-    assert response['email'] == valid_email
-    assert test_user.verify_auth_token(response['auth_token'])
-    
-    #wrong password
-    data['password'] = 'invalidPassword'
-    tester(data, "Incorrect email or password")
-    
-    #wrong email
-    data['email'] = 'invalid@email.com'
-    data['password'] = valid_password
-    tester(data, "Incorrect email or password")
-    
-    #wrong email and password
-    data['email'] = 'invalid@email.com'
-    data['password'] = 'invalidPassword'
-    tester(data, "Incorrect email or password")
-    
-    user_datastore.delete_user(test_user)
-    
+        
+        #correct email and password
+        data = dict(email=valid_email, password=valid_password)
+        response, code = self.request('api/auth', data)
+        assert code == 200
+        assert response['email'] == valid_email
+        assert test_user.verify_auth_token(response['auth_token'])
+        
+        #wrong password
+        data['password'] = 'invalidPassword'
+        tester(data, "Incorrect email or password")
+        
+        #wrong email
+        data['email'] = 'invalid@email.com'
+        data['password'] = valid_password
+        tester(data, "Incorrect email or password")
+        
+        #wrong email and password
+        data['email'] = 'invalid@email.com'
+        data['password'] = 'invalidPassword'
+        tester(data, "Incorrect email or password")
+
+        user_datastore.delete_user(test_user)
+
+    def test_create_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
+        data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+
+        def tester(data, correct_code):
+            request, code = self.request('/api/map', data)
+            request_match = correct_code == code
+            if not request_match: print("FAILURE, variables:", code, request)
+            assert request_match
+            return request
+
+        # Malformed request (is missing the map)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Bad token
+        correct_auth_token = data['auth_token']
+        data['map'] = "exists"
+        data['auth_token'] = "garbage"
+        assert "Invalid token" == tester(data, 401)['error']
+
+        # Map in request, but missing the key 'color'
+        data['auth_token'] = correct_auth_token
+        map_dict = dict(width=4, height=5, depth=6, private=True, models=[])
+        data['map'] = dumps(map_dict)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Correct data scenario
+        map_dict['color'] = "#fff"
+        data['map'] = dumps(map_dict)
+        map_and_success = tester(data, 200)
+
+        assert map_and_success['success'] == "Successfully created map"
+
+        map = map_and_success['map']
+        for i in map_dict.keys():
+            assert map_dict[i] == map[i]
+
+        # TODO: make sure this line is safe; idk if the maps are actually being
+        # used in the temp DB, it looks like they're actually in the dev DB.
+        Map.delete(map)
+        user_datastore.delete_user(test_user)
+
 if __name__ == "__main__":
     unittest.main()        

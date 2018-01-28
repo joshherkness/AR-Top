@@ -14,8 +14,9 @@ import sys
 
 max_size = 1024
 
-# All models inherit from this. It contains the fields we
-# need for important data
+#=====================================================
+# Superclasses
+#=====================================================
 class Model(Document):
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
@@ -25,6 +26,43 @@ class Model(Document):
         updated = datetime.now()
         super().save(*args, **kwargs)
 
+#=====================================================
+# User related models
+#=====================================================
+class Role(Document, RoleMixin):
+    name = StringField(max_length=80, unique=True)
+    description = StringField(max_length=255)
+
+class User(Model, UserMixin):
+    email = EmailField(max_length=255)
+    password = StringField(max_length=255)
+    active = BooleanField(default=True)
+    confirmed_at = DateTimeField()
+    roles = ListField(ReferenceField(Role), default=[])
+    verified = BooleanField(default=False)
+  
+    def verify_password(self, password):
+        return password == self.password
+
+    def generate_auth_token(self, expiration=600):
+        s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
+        return s.dumps({'id': self.email})
+  
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(secrets.SECRET_KEY)
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        user = User.objects.get(email=data['id'])
+        return user
+
+#=====================================================
+# Map models
+#=====================================================
 class Position(EmbeddedDocument):
     """
     This schema should be used to represent a three dimensional
@@ -58,6 +96,7 @@ class MapModel(EmbeddedDocument):
     color = StringField(required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
 
 class Map(Model):
+    user = ReferenceField(User) # this means foreign key
     width = IntField(default=16, choices=range(1,max_size + 1))
     height = IntField(default=5, choices=range(1,max_size + 1))
     depth = IntField(default=16, choices=range(1,max_size + 1))
@@ -68,34 +107,3 @@ class Map(Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         # TODO: socket.io or whatever the hell it is
-        
-class Role(Model, RoleMixin):
-    name = StringField(max_length=80, unique=True)
-    description = StringField(max_length=255)
-
-class User(Model, UserMixin):
-    email = EmailField(max_length=255)
-    password = StringField(max_length=255)
-    active = BooleanField(default=True)
-    confirmed_at = DateTimeField()
-    roles = ListField(ReferenceField(Role), default=[])
-    verified = BooleanField(default=False)
-  
-    def verify_password(self, password):
-        return password == self.password
-
-    def generate_auth_token(self, expiration=600):
-        s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
-        return s.dumps({'id': self.email})
-  
-    @staticmethod
-    def verify_auth_token(token):
-        s = Serializer(secrets.SECRET_KEY)
-        try:
-            data = s.loads(token)
-        except SignatureExpired:
-            return None  # valid token, but expired
-        except BadSignature:
-            return None  # invalid token
-        user = User.query.get(data['id'])
-        return user
