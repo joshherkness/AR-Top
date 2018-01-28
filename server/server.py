@@ -142,6 +142,13 @@ def authenticate():
             error = "Incorrect email or password"
     return jsonify({'error': error}), 422, json_tag
 
+@app.route('/api/read:id', methods=['GET'])
+def read_map():
+    try:
+        token = request.get.args("api_token")
+        
+
+
 #=====================================================
 # Main
 #=====================================================

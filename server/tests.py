@@ -99,6 +99,28 @@ class TestRegistration(unittest.TestCase):
         tester(data, "Incorrect email or password")
         
         user_datastore.delete_user(test_user)
+
+    def test_read_map(self):
+        def tester(data, string, id, correct_code=422, key="error"):
+            response, code = self.request('/api/map/:' + str(id))
+            assert code = correct_code
+            assert response[key] == string
+
+        test_email = "test@gmail.com"
+        test_password = "testPassword"
+        encrypted_password = bcrypt.hashpw(test_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=test_email, password=encrypted_password)
+        test_token = test_user.generate_auth_token()
+        test_map = Map(color="#FFFFFF", private=True, )
+        test_map.save()
+        test_id = test_map.id
+
+        # User reading map that they are the Owner of
+        data = dict(api_token=test_token)
+        tester(data, "successful", test_id, correct_code=200, key="tbd")
+
+        user_datastore.delete_user(test_user)
+
     
 if __name__ == "__main__":
     unittest.main()        
