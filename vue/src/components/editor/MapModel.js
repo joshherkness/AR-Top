@@ -129,14 +129,3 @@ function _createWireframeObjectForGeometry (geometry, color, linewidth) {
 
   return new THREE.LineSegments(edgeGeometry, lineMaterial)
 }
-
-export class MapModelBuilder {
-  build (data) {
-    switch (data.type) {
-      case MapModelType.VOXEL:
-        return new VoxelMapModel(data)
-      default:
-        return undefined
-    }
-  }
-}

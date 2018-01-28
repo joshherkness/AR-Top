@@ -24,13 +24,13 @@ const actions = {
 
 const mutations = {
   // eslint-disable-next-line
-  [types.SET_USER]({ commit }, user) {
+  [types.SET_USER](state, user) {
     state.email = user.email
     state.token = user.auth_token
   },
 
   // eslint-disable-next-line
-  [types.UNSET_USER]({ commit }) {
+  [types.UNSET_USER](state) {
     state.email = ''
     state.token = ''
   }
