@@ -7,6 +7,7 @@ from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
+from functools import wraps 
 
 import bcrypt
 from flask_cors import CORS
@@ -63,10 +64,19 @@ security = Security(app, user_datastore)
 def index():
     return render_template('index.html')
 
-@app.route('/protected')
-@login_required
-def protected():
-    return 'This is a protected route.'
+def protected(fn, *args, **kwargs):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        # TODO: auth token should be in the header instead of the payload
+        token = None
+        try:
+            token = request.form['auth_token']
+        except:
+            return jsonify(error="Malformed request"), 422, json_tag
+        user = User.verify_auth_token(token)
+        if user is None: return jsonify(error="Invalid token"), 401, json_tag
+        return fn(user, *args, **kwargs)
+    return wrapper
 
 def send_email(text, recipients, subject="AR-top"):
     try:
@@ -142,12 +152,16 @@ def authenticate():
             error = "Incorrect email or password"
     return jsonify({'error': error}), 422, json_tag
 
-@app.route('/api/read:id', methods=['GET'])
-def read_map():
-    try:
-        token = request.get.args("api_token")
-        
-
+@app.route('/api/map/<string:id>', methods=['GET'])
+@protected
+def read_map(user, id):
+    # user is passed by @protected
+    result = Map.objects(id=id)[0]
+    if result.user == user:
+        return result.to_json(), 200, json_tag
+    else: #map does not belong to user
+        error = "Error reading map"
+    return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
 # Main

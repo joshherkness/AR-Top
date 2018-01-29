@@ -21,10 +21,15 @@ class TestRegistration(unittest.TestCase):
     #=====================================================
     # Helper methods
     #=====================================================
-    def request(self, page, data):
-        response = self.app.post(page, data=data, follow_redirects=True)
-        json = loads(response.data.decode('utf-8'))
-        return json, response.status_code
+    def request(self, page, data, action='POST'):
+        if action == 'POST':
+            response = self.app.post(page, data=data, follow_redirects=True)
+            json = loads(response.data.decode('utf-8'))
+            return json, response.status_code
+        elif action == 'GET':
+            response = self.app.get(page, data=data, follow_redirects=True)
+            return response.status_code
+            # json = loads(response.data.decode('utf-8'))
 
     #=====================================================
     # Tests
@@ -101,25 +106,30 @@ class TestRegistration(unittest.TestCase):
         user_datastore.delete_user(test_user)
 
     def test_read_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
+        data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+
         def tester(data, string, id, correct_code=422, key="error"):
-            response, code = self.request('/api/map/:' + str(id))
-            assert code = correct_code
-            assert response[key] == string
-
-        test_email = "test@gmail.com"
-        test_password = "testPassword"
-        encrypted_password = bcrypt.hashpw(test_password.encode(), bcrypt.gensalt())
-        test_user = user_datastore.create_user(email=test_email, password=encrypted_password)
-        test_token = test_user.generate_auth_token()
-        test_map = Map(color="#FFFFFF", private=True, )
-        test_map.save()
-        test_id = test_map.id
-
-        # User reading map that they are the Owner of
-        data = dict(api_token=test_token)
-        tester(data, "successful", test_id, correct_code=200, key="tbd")
-
-        user_datastore.delete_user(test_user)
+            code = self.request('/api/map/' + str(id), data, 'GET')
+            print(code)
+            assert code == correct_code
+        # delete map
+        # test_map = Map.objects(color="#FFFFFF")[0]
+        # print(test_map.id)
+        # test_map.delete()
+        try:
+            test_map = Map(user=test_user, color="#FFFFFF", private=True, )
+            test_map.save()
+            test_id = test_map.id
+            # User reading map that they are the Owner of
+            tester(data, "", test_id, correct_code=200)
+            user_datastore.delete_user(test_user)
+        finally:
+            test_map.delete()
 
     
 if __name__ == "__main__":
