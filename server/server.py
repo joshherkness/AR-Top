@@ -6,6 +6,7 @@ from flask import Flask, jsonify, render_template, request, url_for
 from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
+from flask_socketio import SocketIO, send, emit
 from passlib.apps import custom_app_context as pwd_context
 
 import bcrypt
@@ -143,6 +144,25 @@ def authenticate():
     return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
+# SocketIO
+#=====================================================
+
+socketio = SocketIO(app)
+
+@socketio.on('connect')
+def handle_event():
+	print("a user connected")
+
+@socketio.on('disconnect')
+def handle_disconnect():
+	print("a user has left")
+
+@socketio.on('update')
+def handle_update(json):
+	print('received json: ' + str(json))
+	emit('update', json)
+
+#=====================================================
 # Main
 #=====================================================
   
@@ -150,7 +170,7 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
     
     parser = ArgumentParser(description="Runs flask server")
-    
+    socketio.run(app)
     # TODO: logic not implemented for this because we should wait
     parser.add_argument("mode", nargs='?', choices=[
                         'd', 'p'], help="Selects whether or not you want to run development or production")
