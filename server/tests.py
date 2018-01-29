@@ -15,6 +15,8 @@ class TestUserEndpoints(unittest.TestCase):
         self.app = app.test_client()
   
     def tearDown(self):
+        Map.objects.all().delete()
+        User.objects.all().delete()
         os.close(self.db_fd)
         os.unlink(app.config['DATABASE'])
 
@@ -140,9 +142,34 @@ class TestUserEndpoints(unittest.TestCase):
         for i in map_dict.keys():
             assert map_dict[i] == map[i]
 
-        # TODO: make sure this line is safe; idk if the maps are actually being
+        # TODO: idk if the maps are actually being
         # used in the temp DB, it looks like they're actually in the dev DB.
-        Map.delete(map)
+        # gotta confirm this at some point
+        # Map.objects.delete(id=map.id)
+        user_datastore.delete_user(test_user)
+
+    def test_update_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
+        data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        map_dict = dict(width=4, height=5, depth=6, color='#fabcde', private=True, models=[])
+        data['map'] = dumps(map_dict)
+
+        map = self.request('/api/map', data)
+        
+        def tester(data, map_id, correct_code):
+            request, code = self.request('/api/map/' + str(map_id), data)
+            request_match = correct_code == code
+            if not request_match: print("FAILURE, variables:", code, request)
+            assert request_match
+            return request
+
+        # TODO: write the goddamn tests!
+        
+        # Map.objects.delete(id=map.id)
         user_datastore.delete_user(test_user)
 
 if __name__ == "__main__":

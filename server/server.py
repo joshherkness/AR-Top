@@ -7,6 +7,7 @@ from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
+from functools import wraps
 
 from json import loads
 
@@ -60,16 +61,24 @@ security = Security(app, user_datastore)
 #=====================================================
 # Code for later in the project
 #=====================================================
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/protected')
-@login_required
-def protected():
-    return 'This is a protected route.'
-
+def protected(fn, *args, **kwargs):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        # TODO: auth token should be in the header instead of the payload
+        token = None
+        try:
+            token = request.form['auth_token']
+        except:
+            return jsonify(error="Malformed request"), 422, json_tag
+        user = User.verify_auth_token(token)
+        if user is None: return jsonify(error="Invalid token"), 401, json_tag
+        return fn(user, *args, **kwargs)
+    return wrapper
+    
 def send_email(text, recipients, subject="AR-top"):
     if type(recipients) is str:
         recipients = [recipients]
@@ -155,18 +164,15 @@ def authenticate():
 #=====================================================
 
 @app.route("/api/map", methods=["POST"])
-def create_map():
-    email, token, map = None,None,None
+@protected
+def create_map(user):
+    email, map = None,None
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
         email = request.form["email"]
-        token = request.form["auth_token"]
         map = request.form["map"]
     except:
         return jsonify(error="Malformed request"), 422, json_tag
-
-    user = User.verify_auth_token(token)
-    if user is None: return jsonify(error="Invalid token"), 401, json_tag
 
     try:
         map = loads(map)
@@ -188,7 +194,46 @@ def create_map():
         return jsonify(error="Internal server error"), 500, json_tag
 
     return jsonify(success="Successfully created map", map=map), 200, json_tag
-        
+
+@app.route('/api/map/<map_id>', methods=['POST'])
+@protected
+def update_map(user, map_id):
+    email, map = None,None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = request.form["email"]
+        map = request.form["map"]
+    except:
+        return jsonify(error="Malformed request"), 422, json_tag
+
+
+    # Make sure this user is actually the author of the map
+    # and that the ID also is an existing map
+    remote_copy = None
+    try:
+        remote_copy = Map.objects.get(id=map_id, user=user)
+    except (StopIteration, DoesNotExist) as e:
+        # Malicious user may be trying to overwrite someone's map
+        # or there actually is something wrong; treat these situations the same
+        return jsonify(error="Map does not exist"), 404, json_tag
+    except:
+        return jsonify(error='Internal server error'), 500, json_tag
+    
+    try:
+        map = loads(map)
+        remote_copy.width = map["width"]
+        remote_copy.height = map["height"]
+        remote_copy.depth = map["depth"]
+        remote_copy.color = map["color"]
+        remote_copy.private = map["private"]
+        remote_copy.models = map['models']
+    except KeyError:
+        return jsonify(error="Malformed request"), 422, json_tag
+
+    remote_copy.save()
+    
+    return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
+                       
 #=====================================================
 # Main
 #=====================================================  
