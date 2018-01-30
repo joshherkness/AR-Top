@@ -80,9 +80,10 @@
 
 <script>
 import axios from 'axios'
-import router from './../../router/index.js'
 import { mapActions } from 'vuex'
-var qs = require('qs')
+import router from './../../router/index.js'
+import { generateConfig } from './../../api/api'
+// var qs = require('qs')
 
 // Validator used for the email field
 const EMAIL_VALIDATOR = {
@@ -123,11 +124,15 @@ export default {
 
         // Attempt to register the user
         this.loading = true
+
+        // generate payload for JWT
+        const payload = {
+          email: this.email,
+          password: this.password
+        }
+
         let response = await axios.post('http://localhost:5000/api/auth',
-          qs.stringify({
-            'email': this.email,
-            'password': this.password
-          }))
+          {}, generateConfig(payload))
 
         // Update the local user
         this.updateUser(response.data)
