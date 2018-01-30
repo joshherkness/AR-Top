@@ -81,7 +81,7 @@
 <script>
 import axios from 'axios'
 import { mapActions } from 'vuex'
-import router from './../../router/index.js'
+import router from './../../router/index'
 import { generateConfig } from './../../api/api'
 
 // Validator used for the email field
