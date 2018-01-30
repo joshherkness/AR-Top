@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-const DEFAULT_WIREFRAME_LINE_WIDTH = 2
+const DEFAULT_WIREFRAME_LINE_WIDTH = 1
 
 export const GridModelType = Object.freeze({
   VOXEL: 'voxel'

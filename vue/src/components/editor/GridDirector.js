@@ -40,22 +40,23 @@ export class GridDirector extends THREE.EventDispatcher {
     }
   }
 
-  load (grid) {
-    this.grid = grid
-    this.objectMap.clear()
-    this.scene = new GridScene(this.grid, this.scale)
-    
-    var isDirty = false
-    this.grid.models.forEach((model) => {
-      let object = model.createObject(this.scale)
-      object.position.clone(this.convertUnitToActualPosition(model.position))
-      this.objectMap.set(model, object)
-      this.scene.add(object)
-      isDirty = true
-    })
+  async load (grid) {
+    try {
+      this.grid = grid
+      this.objectMap.clear()
+      this.scene = new GridScene(this.grid, this.scale)
+      
+      this.grid.models.forEach((model) => {
+        let object = model.createObject(this.scale)
+        object.position.copy(this.convertUnitToActualPosition(model.position))
+        this.objectMap.set(model, object)
+        this.scene.add(object)
+      })
 
-    if (isDirty) {
-      this._onUpdate()
+      this.initSelection()
+
+    } catch (error) {
+      throw error
     }
   }
 
@@ -67,7 +68,8 @@ export class GridDirector extends THREE.EventDispatcher {
 
     if (this.grid.add(model)) {
       let object = model.createObject(this.scale)
-      object.position.clone(this.convertUnitToActualPosition(model.position))
+      object.position.copy(this.convertUnitToActualPosition(model.position))
+      console.log(object.position)
       this.objectMap.set(model, object)
     
       if (this.scene) {
@@ -85,10 +87,105 @@ export class GridDirector extends THREE.EventDispatcher {
     if (removedModel) {
       let objectId = this.objectMap.get(removedModel).id
       let object = this.scene.getObjectById(objectId)
-      this.scene.remove(object)
+      
+      // We don't necessarily know the parent of the object, so we remove
+      // it from any parent in the scene.
+      // TODO: this could be costly on larger scenes.
+      this.scene.traverse((child) => {
+        child.remove(object)
+      })
+
       this.objectMap.delete(removedModel)
       this._onUpdate()
     }
+  }
+
+  setSelection (unitPosition, { model } = {}) {
+    // If there is no scene, we don't care about selection
+    if (!this.scene) {
+      return
+    }
+
+    this.clearSelection()
+
+    let occupyingModel = this.grid.at(unitPosition)
+    if (occupyingModel) {
+      // Add the model to the model selection group
+      let object = this.objectMap.get(occupyingModel)
+      if (!object) {
+        throw new Error('An object should exist.')
+      }
+
+      object.material.transparent = true
+      object.material.opacity = 0.5
+
+      this.scene.remove(object)
+
+      let group = this.scene.getObjectByName('model-selection')
+      group.add(object)
+    } else {
+      // Create a selection using the provided model
+      if (!model) {
+        throw new Error('Property model must be defined')
+      }
+      
+      let object = model.createObject(this.scale)
+      object.position.copy(this.convertUnitToActualPosition(unitPosition))
+      object.material.transparent = true
+      object.material.opacity = 0.5
+      let group = this.scene.getObjectByName('selection')
+      group.add(object)
+    }
+
+    this._onUpdate()
+  }
+
+  initSelection () {
+    if (!this.scene) {
+      return
+    }
+
+    let a = this.scene.getObjectByName('selection')
+    this.scene.remove(a)
+    let b = this.scene.getObjectByName('model-selection')
+    this.scene.remove(b)
+
+    let group = new THREE.Group()
+    group.name = 'selection'
+    this.scene.add(group)
+
+    let modelGroup = new THREE.Group()
+    modelGroup.name = 'model-selection'
+    this.scene.add(modelGroup)
+  }
+
+  clearSelection () {
+    if (!this.scene) {
+      return
+    }
+
+    // Clean up any current selections
+    let group = this.scene.getObjectByName('selection')
+    if (group) {
+      this.scene.remove(group)
+    }
+
+    let modelGroup = this.scene.getObjectByName('model-selection')
+    if (modelGroup) {
+      modelGroup.children.forEach((child) => {
+        if (child.material) {
+          child.material.transparent = true
+          child.material.opacity = 1.0
+        }
+        this.scene.add(child)
+        modelGroup.remove(child)
+      })
+    }
+
+    // Hard reset the selection, now that we cleaned up
+    this.initSelection()
+
+    this._onUpdate()
   }
 
   convertActualToUnitPosition (actualPosition) {
@@ -156,7 +253,7 @@ export class GridDirector extends THREE.EventDispatcher {
   }
 
   get objects () {
-    return Array.from(manager.objectMap.values())
+    return Array.from(this.objectMap.values())
   }
 
   _onUpdate () {

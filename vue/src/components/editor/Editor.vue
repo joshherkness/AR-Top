@@ -3,21 +3,36 @@
     <!-- Canvas used to render the three.js map scene-->
     <div ref='canvas' id='canvas'></div>
 
-    <span v-if="isModeAdd()" class="info">Hold shift to enter delete mode</span>
-    <span v-if="isModeDelete()" class="info">Release shift to enter add mode</span>
-
-    <!-- Color picker dropdown-->
-    <div v-if="isModeAdd()" class="dropdown is-hoverable is-right is-pulled-right">
-      <div class="dropdown-trigger">
-        <button class="button" aria-haspopup="true" aria-controls="color-picker-dropdown-menu">
-          <span>Current color</span>
-          <div style="height: 16px; width: 16px; margin-left: 16px;" v-bind:style="{'background-color': hexColor}"></div>
-        </button>
+    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;">
+      <div class="control">
+        <div class="dropdown is-hoverable is-up is-right">
+          <div class="dropdown-trigger">
+            <div class="button is-medium is-light"
+              aria-haspopup='true'
+              aria-controls='color-picker-dropdown-menu'
+              :class="{'is-active': isModeAdd()}"
+              :style="{'color': hexColor}"
+              v-on:click="setModeAdd">
+              <span class="icon is-medium">
+                <i class="mdi mdi-cube-outline"></i>
+              </span>
+              <div class="is-size-7">1</div>
+            </div>
+            <div class="dropdown-menu" role='menu'>
+              <sketch-picker v-model="color"></sketch-picker>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- Color picker -->
-      <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-        <sketch-picker v-model="color"></sketch-picker>
+      <div class="control">
+        <div class="button is-medium is-light"
+          :class="{'is-active': isModeDelete()}"
+          v-on:click="setModeDelete">
+          <span class="icon is-medium">
+            <i class="mdi mdi-eraser"></i>
+          </span>
+          <div class="is-size-7">2</div>
+        </div>
       </div>
     </div>
   </div>
@@ -25,12 +40,10 @@
 
 <script>
 import { GridDirector } from './GridDirector'
+import { Grid } from './Grid'
+import { ModelFactory } from './ModelFactory'
 import { Sketch } from 'vue-color'
 import * as THREE from 'three'
-import { Map } from './Map'
-import { MapUtils } from './MapUtils'
-import { VoxelMapModel } from './MapModel'
-import { SelectionManager } from './SelectionManager'
 import { EditorMode } from './EditorMode'
 var OrbitControls = require('three-orbit-controls')(THREE)
 
@@ -46,7 +59,7 @@ export default {
       renderer: null,
       raycaster: null,
       mouse: null,
-      map: null,
+      grid: null,
       selectionManager: null,
       color: defaultColor,
       mode: EditorMode.ADD
@@ -60,7 +73,11 @@ export default {
       return this.color.hex
     },
     model () {
-      return new VoxelMapModel(new THREE.Vector3(), this.map.unitSize, this.hexColor)
+      return ModelFactory.createModel({
+        type: 'voxel',
+        position: new THREE.Vector3(), // Should this be an actual position
+        color: this.hexColor
+      })
     }
   },
   watch: {
@@ -70,62 +87,69 @@ export default {
   },
   mounted () {
     this.setup()
-    this.onWindowResize()
-    this.render()
-
-    // Attach event listeners to the document
-    this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
-    this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
-    document.addEventListener('keydown', this.onDocumentKeyDown, false)
-    document.addEventListener('keyup', this.onDocumentKeyUp, false)
-    window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
     setup () {
       // Create map
-      this.map = new Map(16, 1000, 16, 50)
-      this.map.addEventListener('redraw', (event) => {
-        this.render()
-        this.updateCursorPosition()
+      this.grid = Grid.deserialize({
+        width: 16,
+        height: 1000,
+        depth: 16,
+        color: '#ffffff'
       })
 
-      // Create selection manager
-      this.selectionManager = new SelectionManager(this.map)
-      this.selectionManager.addEventListener('change', (event) => {
-        this.render()
+      // Create the director
+      this.director = new GridDirector({ scale: 50 })
+
+      // Finally, load the grid
+      this.director.load(this.grid).then(() => {
+
+        // Create the renderer
+        this.renderer = new THREE.WebGLRenderer()
+        this.renderer.setPixelRatio(window.devicePixelRatio)
+
+        // Create the camera
+        let cameraFov = 45
+        this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
+        this.camera.lookAt(new THREE.Vector3())
+        this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
+
+        // Add orbit controls
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+        this.controls.enablePan = false
+        this.controls.minDistance = 2 * this.director.scale || 50
+        this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+        this.controls.addEventListener('change', this.render)
+
+        // Attach to the container
+        this.canvas = this.$refs.canvas
+        this.canvas.appendChild(this.renderer.domElement)
+
+        this.raycaster = new THREE.Raycaster()
+        this.mouse = new THREE.Vector2()
+
+        this.onWindowResize()
+
+        // Attach event listeners to the document
+        this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+        this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
+        document.addEventListener('keydown', this.onDocumentKeyDown, false)
+        document.addEventListener('keyup', this.onDocumentKeyUp, false)
+        window.addEventListener('resize', this.onWindowResize, false)
+
+        this.director.addEventListener('update', (event) => {
+          this.render()
+        })
       })
-
-      // Create the renderer
-      this.renderer = new THREE.WebGLRenderer()
-      this.renderer.setPixelRatio(window.devicePixelRatio)
-
-      // Create the camera
-      let cameraFov = 45
-      this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.map.getActualWidth()))
-      this.camera.lookAt(new THREE.Vector3())
-
-      // Add orbit controls
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      this.controls.enablePan = false
-      this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
-      this.controls.addEventListener('change', this.render)
-
-      // Attach to the container
-      this.canvas = this.$refs.canvas
-      this.canvas.appendChild(this.renderer.domElement)
-
-      this.raycaster = new THREE.Raycaster()
-      this.mouse = new THREE.Vector2()
     },
     render () {
-      this.renderer.render(this.map.scene, this.camera)
+      this.renderer.render(this.director.scene, this.camera)
     },
     updateCursorPosition () {
-      let data = this.map.getFirstIntersectData(this.raycaster)
+      let data = this.director.getFirstIntersectData(this.raycaster)
 
       if (!data || !data.object) {
-        this.selectionManager.clear()
+        this.director.clearSelection()
         return
       }
 
@@ -133,7 +157,7 @@ export default {
       let actualPosition = new THREE.Vector3()
       if (this.mode === EditorMode.DELETE) {
         if (data.object.name === 'grid-plane') {
-          this.selectionManager.clear()
+          this.director.clearSelection()
           return
         }
         actualPosition.copy(data.object.position)
@@ -141,8 +165,8 @@ export default {
         actualPosition = data.point.add(data.face.normal)
       }
 
-      let unitPosition = MapUtils.convertActualToUnitPosition(this.map, actualPosition)
-      this.selectionManager.selectAt(unitPosition, this.model)
+      let unitPosition = this.director.convertActualToUnitPosition(actualPosition)
+      this.director.setSelection(unitPosition, { model: this.model })
     },
     onWindowResize () {
       this.camera.aspect = window.innerWidth / window.innerHeight
@@ -155,11 +179,11 @@ export default {
       this.mouse.set((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
       this.raycaster.setFromCamera(this.mouse, this.camera)
 
-      // Update the cursor position
+      // Update the cursor position for the selection manager
       this.updateCursorPosition()
     },
     onDocumentMouseUp (event) {
-      let data = this.map.getFirstIntersectData(this.raycaster)
+      let data = this.director.getFirstIntersectData(this.raycaster)
 
       if (!data || !data.object) {
         return
@@ -169,28 +193,32 @@ export default {
       if (this.mode === EditorMode.DELETE) {
         // Delete
         interactPosition.copy(data.object.position)
-        let unitPosition = MapUtils.convertActualToUnitPosition(this.map, interactPosition)
-        this.map.removeAt(unitPosition)
+        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
+        let model = this.grid.at(unitPosition)
+        this.director.remove(model)
       } else if (this.mode === EditorMode.ADD) {
         // Add
         if (!data.face) return
         interactPosition.copy(data.point.add(data.face.normal))
-        let unitPosition = MapUtils.convertActualToUnitPosition(this.map, interactPosition)
-        let model = new VoxelMapModel(unitPosition, this.map.unitSize, this.hexColor)
-        this.map.add(model)
+        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
+        let model = ModelFactory.createModel({
+          type: 'voxel',
+          color: this.hexColor,
+          position: unitPosition
+        })
+        this.director.add(model)
       }
     },
     onDocumentKeyDown (event) {
       switch (event.keyCode) {
-        case 16: this.mode = EditorMode.DELETE
+        case 49: this.mode = EditorMode.ADD
           break
+        case 50: this.mode = EditorMode.DELETE
+          break;
       }
     },
     onDocumentKeyUp (event) {
-      switch (event.keyCode) {
-        case 16: this.mode = EditorMode.ADD
-          break
-      }
+      console.log(this.director.grid.serialize())
     },
     isModeAdd () {
       return this.mode === EditorMode.ADD
@@ -210,7 +238,7 @@ export default {
     this.controls.dispose()
 
     // Remove event listeners from map
-    this.map.removeEventListener('update', this.render, false)
+    this.director.removeEventListener('update', this.render, false)
 
     // Remove event listeners
     this.canvas.removeEventListener('mousemove', this.onDocumentMouseMove, false)

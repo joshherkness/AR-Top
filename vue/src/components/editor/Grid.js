@@ -82,6 +82,10 @@ export class Grid {
    * @memberOf Grid
    */
   remove (model) {
+    if (!model) {
+      return new TypeError('Property model is undefined')
+    }
+
     let index = this.models.findIndex((_model) => {
       return model.equals(_model)
     })
