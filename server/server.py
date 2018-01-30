@@ -188,7 +188,7 @@ def create_map(claims):
     email, map = None, None
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
-        email = claim["email"]
+        email = claims["email"]
         map = request.form["map"]
     except:
         return jsonify(error="Malformed request"), 422, json_tag
