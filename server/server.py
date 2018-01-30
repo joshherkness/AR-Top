@@ -116,36 +116,38 @@ def register(claims):
             email = claims['email']
             password = claims['password']
             # Validate the request
-            if len(email) > max_email_length:
-                return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
-            if not email_pattern.match(email):
-                return jsonify(error="Email not valid."), 422, json_tag
-            if len(password) < 8 or len(password) > max_password_length:
-                return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, json_tag
-            if not str.isalnum(password):
-                return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, json_tag
-
-            # Try to retrieve a user object if it exists;
-            user = User.objects(email=email)
-            if len(user) != 0:
-                return jsonify(error="Email already in use, please use another one"), 422, json_tag
-
-            # Hash and create user
-            hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-            user_datastore.create_user(email=email, password=hashed)
-
-            # So we can log user in automatically after registration
-            token = User.objects(email=email)[0].generate_auth_token()
-
-            # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
-            # send_email(recipients=email, subject="ay whaddup", text="Hello from AR-top")
-
-            return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
         else:
             return jsonify(error="Forbidden"), 403, json_tag
+
     except Exception as e:
         app.logger.error(e)
         return jsonify(error="Malformed request; expecting email and password"), 422, json_tag
+
+    if len(email) > max_email_length:
+        return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
+    if not email_pattern.match(email):
+        return jsonify(error="Email not valid."), 422, json_tag
+    if len(password) < 8 or len(password) > max_password_length:
+        return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, json_tag
+    if not str.isalnum(password):
+        return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, json_tag
+
+    # Try to retrieve a user object if it exists;
+    user = User.objects(email=email)
+    if len(user) != 0:
+        return jsonify(error="Email already in use, please use another one"), 422, json_tag
+
+    # Hash and create user
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    user_datastore.create_user(email=email, password=hashed)
+
+    # So we can log user in automatically after registration
+    token = User.objects(email=email)[0].generate_auth_token()
+
+    # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
+    # send_email(recipients=email, subject="ay whaddup", text="Hello from AR-top")
+
+    return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
 
 
 @app.route('/api/auth', methods=['POST'])
@@ -157,25 +159,26 @@ def authenticate(claims):
         if claims is not None:
             email = claims['email']
             password = claims["password"]
-            user = User.objects(email=email)
-            if len(user) == 0:
-                error = "Incorrect email or password"
-            elif len(user) > 1:
-                error = "Incorrect email or password"
-                app.logger.error("Someone registered the same email twice!")
-            else:
-                if bcrypt.checkpw(password.encode(), user[0].password.encode()):
-                    auth_token = user[0].generate_auth_token()
-                    # return username and auth token
-                    return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
-                else:
-                    error = "Incorrect email or password"
-            return jsonify({'error': error}), 422, json_tag
         else:
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
         app.logger.error(str(e))
         return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
+
+    user = User.objects(email=email)
+    if len(user) == 0:
+        error = "Incorrect email or password"
+    elif len(user) > 1:
+        error = "Incorrect email or password"
+        app.logger.error("Someone registered the same email twice!")
+    else:
+        if bcrypt.checkpw(password.encode(), user[0].password.encode()):
+            auth_token = user[0].generate_auth_token()
+            # return username and auth token
+            return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
+        else:
+            error = "Incorrect email or password"
+    return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
 # Map routes
