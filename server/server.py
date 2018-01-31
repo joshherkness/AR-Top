@@ -10,6 +10,7 @@ from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
+from functools import wraps 
 
 from json import loads
 
@@ -71,7 +72,6 @@ security = Security(app, user_datastore)
 def index():
     return render_template('index.html')
 
-
 def protected(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
@@ -86,7 +86,6 @@ def protected(f):
             app.logger.error(str(e))
             return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
     return wrapper
-
 
 def send_email(text, recipients, subject="AR-top"):
     if type(recipients) is str:
@@ -179,6 +178,17 @@ def authenticate(claims):
             return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
         else:
             error = "Incorrect email or password"
+    return jsonify({'error': error}), 422, json_tag
+
+@app.route('/api/map/<string:id>', methods=['GET'])
+@protected
+def read_map(user, id):
+    # user is passed by @protected
+    result = Map.objects(id=id)[0]
+    if result.user == user:
+        return result.to_json(), 200, json_tag
+    else: #map does not belong to user
+        error = "map error"
     return jsonify({'error': error}), 422, json_tag
 
 #=====================================================
