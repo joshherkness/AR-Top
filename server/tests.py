@@ -99,5 +99,53 @@ class TestUserEndpoints(unittest.TestCase):
         data['password'] = 'invalidPassword'
         tester(data, "Incorrect email or password")
 
+        user_datastore.delete_user(test_user)
+
+    def test_create_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
+        data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+
+        def tester(data, correct_code):
+            request, code = self.request('/api/map', data)
+            request_match = correct_code == code
+            if not request_match: print("FAILURE, variables:", code, request)
+            assert request_match
+            return request
+
+        # Malformed request (is missing the map)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Bad token
+        correct_auth_token = data['auth_token']
+        data['map'] = "exists"
+        data['auth_token'] = "garbage"
+        assert "Invalid token" == tester(data, 401)['error']
+
+        # Map in request, but missing the key 'color'
+        data['auth_token'] = correct_auth_token
+        map_dict = dict(width=4, height=5, depth=6, private=True, models=[])
+        data['map'] = dumps(map_dict)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Correct data scenario
+        map_dict['color'] = "#fff"
+        data['map'] = dumps(map_dict)
+        map_and_success = tester(data, 200)
+
+        assert map_and_success['success'] == "Successfully created map"
+
+        map = map_and_success['map']
+        for i in map_dict.keys():
+            assert map_dict[i] == map[i]
+
+        # TODO: make sure this line is safe; idk if the maps are actually being
+        # used in the temp DB, it looks like they're actually in the dev DB.
+        Map.delete(map)
+        user_datastore.delete_user(test_user)
+
 if __name__ == "__main__":
     unittest.main()        

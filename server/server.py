@@ -11,6 +11,8 @@ from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
 
+from json import loads
+
 import bcrypt
 import jwt
 from flask_cors import CORS
@@ -91,6 +93,7 @@ def send_email(text, recipients, subject="AR-top"):
         recipients = [recipients]
 
     try:
+        msg = Message(subject, sender=secrets.MAIL_USERNAME, recipients=recipients)
         msg = Message(subject, sender=secrets.MAIL_USERNAME,
                       recipients=recipients)
         msg.body = text
@@ -102,8 +105,6 @@ def send_email(text, recipients, subject="AR-top"):
 #=====================================================
 # User related routes
 #=====================================================
-
-
 @app.route('/api/register', methods=['POST'])
 @protected
 def register(claims):
@@ -183,8 +184,6 @@ def authenticate(claims):
 #=====================================================
 # Map routes
 #=====================================================
-
-
 @app.route("/api/map", methods=["POST"])
 @protected
 def create_map(claims):
