@@ -21,27 +21,38 @@ export class GridDirector extends THREE.EventDispatcher {
   }
 
   /**
-   * Remove all currently tracked models from the current grid
-   * as well as their corresponding objects from the current scene.
+   * Remove all tracked models and objects from the grid and scene
+   * respectively.
    * 
    * 
    * @memberOf GridDirector
    */
   clear () {
-    var dirty = false
-    this.objectMap.forEach((key, value) => {
-      this.grid.remove(key)
-      this.scene.remove(value)
-      dirty = true
-    })
-
-    if (dirty) {
-      this._onUpdate()
+    if (this.objectMap.size <= 0) {
+      // There is nothing to clear, exit early
+      return
     }
+
+    this.objectMap.forEach((key, value) => {
+      // Remove the model from the grid
+      this.grid.remove(key)
+      // Remove the object from the scene
+      this.scene.remove(value)
+    })
   }
 
+/**
+ * Asynchronously load a grid, creating a usable scene and loading any existing
+ * models into that scene.
+ * 
+ * @param {any} grid 
+ * 
+ * @memberOf GridDirector
+ */
   async load (grid) {
     try {
+      this.initSelection()
+
       this.grid = grid
       this.objectMap.clear()
       this.scene = new GridScene(this.grid, this.scale)
@@ -52,60 +63,68 @@ export class GridDirector extends THREE.EventDispatcher {
         this.objectMap.set(model, object)
         this.scene.add(object)
       })
-
-      this.initSelection()
-
     } catch (error) {
       throw error
     }
   }
 
-  add (model) {
+  /**
+   * Adds one or more models into both the grid and scene.
+   * 
+   * @param {any} model 
+   * 
+   * @memberOf GridDirector
+   */
+  add (...models) {
     if (!this.grid) return
-    if (model.position && !this.grid.isWithinBounds(model.position)) {
-      throw new Error('Cannot add to position, position outside map bounds.')
-    }
 
-    if (this.grid.add(model)) {
-      let object = model.createObject(this.scale)
-      object.position.copy(this.convertUnitToActualPosition(model.position))
-      console.log(object.position)
-      this.objectMap.set(model, object)
-    
-      if (this.scene) {
-        this.scene.add(object)
+    models.forEach((model) => {
+      if (model.position && !this.grid.isWithinBounds(model.position)) {
+        throw new Error('Cannot add to position, position outside map bounds.')
       }
 
-      this._onUpdate()
-    }
+      if (this.grid.add(model)) {
+        let object = model.createObject(this.scale)
+        object.position.copy(this.convertUnitToActualPosition(model.position))
+        console.log(object.position)
+        this.objectMap.set(model, object)
+      
+        if (this.scene) {
+          this.scene.add(object)
+        }
+      }
+    })
+
+    this._onUpdate()
   }
 
-  remove (model) {
+  remove (...models) {
     if (!this.grid) return
 
-    let removedModel = this.grid.remove(model)
-    if (removedModel) {
-      let objectId = this.objectMap.get(removedModel).id
-      let object = this.scene.getObjectById(objectId)
-      
-      // We don't necessarily know the parent of the object, so we remove
-      // it from any parent in the scene.
-      // TODO: this could be costly on larger scenes.
-      this.scene.traverse((child) => {
-        child.remove(object)
-      })
+    models.forEach((model) => {
+      let removedModel = this.grid.remove(model)
+      if (removedModel) {
+        let objectId = this.objectMap.get(removedModel).id
+        let object = this.scene.getObjectById(objectId)
+        
+        // We don't necessarily know the parent of the object, so we remove
+        // it from any parent in the scene.
+        // TODO: this could be costly on larger scenes.
+        this.scene.traverse((child) => {
+          child.remove(object)
+        })
 
-      this.objectMap.delete(removedModel)
-      this._onUpdate()
-    }
+        this.objectMap.delete(removedModel)
+      }
+    })
+
+    this._onUpdate()
   }
 
   setSelection (unitPosition, { model } = {}) {
-    // If there is no scene, we don't care about selection
-    if (!this.scene) {
-      return
-    }
+    if (!this.scene) return
 
+    // First, we want to clear any current selection
     this.clearSelection()
 
     let occupyingModel = this.grid.at(unitPosition)
@@ -141,9 +160,7 @@ export class GridDirector extends THREE.EventDispatcher {
   }
 
   initSelection () {
-    if (!this.scene) {
-      return
-    }
+    if (!this.scene) return
 
     let a = this.scene.getObjectByName('selection')
     this.scene.remove(a)
@@ -252,10 +269,23 @@ export class GridDirector extends THREE.EventDispatcher {
     })
   }
 
+  /**
+   * Returns a complete list of the scene objects that are mapped by our models.
+   * 
+   * @readonly
+   * 
+   * @memberOf GridDirector
+   */
   get objects () {
     return Array.from(this.objectMap.values())
   }
 
+  /**
+   * Function should only be called internally to notify any event
+   * listeners that there has been an update.
+   * 
+   * @memberOf GridDirector
+   */
   _onUpdate () {
     this.dispatchEvent({
       type: 'update',
