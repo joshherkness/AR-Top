@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-transparent">
+  <nav class="navbar is-light">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
