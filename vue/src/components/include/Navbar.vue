@@ -6,11 +6,11 @@
       </router-link>
     </div>
     <div class="navbar-start">
-      <router-link class="navbar-item" v-if="token" to="editor">
-        Editor
-      </router-link>
       <router-link class="navbar-item" v-if="token" to="maps">
         Maps
+      </router-link>
+      <router-link class="navbar-item" v-if="token" to="editor">
+        Editor
       </router-link>
     </div>
     <div class="navbar-end">
