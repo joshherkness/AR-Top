@@ -15,6 +15,8 @@ class TestUserEndpoints(unittest.TestCase):
         self.app = app.test_client()
   
     def tearDown(self):
+        Map.objects.all().delete()
+        User.objects.all().delete()
         os.close(self.db_fd)
         os.unlink(app.config['DATABASE'])
 
