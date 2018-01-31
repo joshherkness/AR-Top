@@ -9,28 +9,28 @@
         </span>
         <span>Create a map</span>
       </button>
-      <button class="button is-light is-pulled-right" @click="$modal.show('delete-map-modal', {name: 'Exandria'})">
-        <span class="icon">
-          <i class="fa fa-trash"></i>
-        </span>
-        <span>Delete a map</span>
-      </button>
     </div>
+    <map-list />
   </div>
 </template>
 
 <script>
 import CreateMapModal from '../CreateMapModal'
 import DeleteMapModal from '../DeleteMapModal'
+import MapList from './MapList'
 export default {
   name: 'Maps',
   components: {
     CreateMapModal,
-    DeleteMapModal
+    DeleteMapModal,
+    MapList
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
+.button.is-light.is-pulled-right {
+  margin: 3.5em 2em 3em 0;
+}
 </style>

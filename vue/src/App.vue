@@ -13,6 +13,8 @@ export default {
 <style lang="scss">
 // Import bulma site wide
 @import '~bulma/bulma.sass';
+$mdi-font-path: '~mdi/fonts/';
+@import '~mdi/scss/materialdesignicons';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

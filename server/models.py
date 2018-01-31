@@ -34,7 +34,7 @@ class Role(Document, RoleMixin):
     description = StringField(max_length=255)
 
 class User(Model, UserMixin):
-    email = EmailField(max_length=255)
+    email = EmailField(max_length=255, unique=True)
     password = StringField(max_length=255)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField()

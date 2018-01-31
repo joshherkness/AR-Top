@@ -2,3 +2,4 @@
 SECRET_KEY = 'super_secret'
 MAIL_USERNAME = 'artopproject1@gmail.com'
 MAIL_PASSWORD = 'oaklanduniversity'
+JWT_KEY = 'CHANGEME'
