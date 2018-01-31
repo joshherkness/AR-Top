@@ -160,7 +160,7 @@ def read_map(user, id):
     if result.user == user:
         return result.to_json(), 200, json_tag
     else: #map does not belong to user
-        error = "Error reading map"
+        error = "map error"
     return jsonify({'error': error}), 422, json_tag
 
 #=====================================================

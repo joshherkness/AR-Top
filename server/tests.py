@@ -28,7 +28,8 @@ class TestRegistration(unittest.TestCase):
             return json, response.status_code
         elif action == 'GET':
             response = self.app.get(page, data=data, follow_redirects=True)
-            return response.status_code
+            json = loads(response.data.decode('utf-8'))
+            return json, response.status_code
             # json = loads(response.data.decode('utf-8'))
 
     #=====================================================
@@ -111,12 +112,18 @@ class TestRegistration(unittest.TestCase):
         encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
         test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
 
+        valid_email2 = "tests2@gmail.com"
+        valid_password2 = "testPassword2"
+        encrypted_password2 = bcrypt.hashpw(valid_password2.encode(), bcrypt.gensalt())
+        test_user2 = user_datastore.create_user(email=valid_email2, password=encrypted_password2)
+
         data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        data2 = self.request('/api/auth', dict(email=valid_email2, password=valid_password2))[0]
 
         def tester(data, string, id, correct_code=422, key="error"):
-            code = self.request('/api/map/' + str(id), data, 'GET')
-            print(code)
+            response, code = self.request('/api/map/' + str(id), data, action='GET')
             assert code == correct_code
+            return response
         # delete map
         # test_map = Map.objects(color="#FFFFFF")[0]
         # print(test_map.id)
@@ -125,12 +132,22 @@ class TestRegistration(unittest.TestCase):
             test_map = Map(user=test_user, color="#FFFFFF", private=True, )
             test_map.save()
             test_id = test_map.id
+
             # User reading map that they are the Owner of
-            tester(data, "", test_id, correct_code=200)
-            user_datastore.delete_user(test_user)
+            result_map = tester(data, "", test_id, correct_code=200)
+            assert result_map['user']['$oid'] == test_user.get_id()
+
+            # Map in response has the id that was requested
+            assert result_map['_id']['$oid'] == str(test_id)
+
+            # User reading map that they are not the Owner of
+            result_string = tester(data2, "map error", test_id, correct_code=422)['error']
+            assert result_string == "map error"
+
         finally:
             test_map.delete()
-
+            user_datastore.delete_user(test_user)
+            user_datastore.delete_user(test_user2)
     
 if __name__ == "__main__":
     unittest.main()        
