@@ -12,7 +12,7 @@ export class GridModel {
     if (this.constructor === GridModel) {
       throw new TypeError("Can not construct abstract class 'MapContent'.")
     }
-    
+
     // Check that instance methods are implemented
     if (this.createObject === GridModel.prototype.createObject) {
       throw new TypeError("Please implement abstract method 'createObject'.")
@@ -25,11 +25,11 @@ export class GridModel {
     this.position = new THREE.Vector3(position.x, position.y, position.z)
     this.type = undefined
   }
-  
+
   createObject (scale) {
     throw new TypeError("Do not call abstract method 'setup' from child.")
   }
-  
+
   equals (model) {
     if (model === undefined) {
       throw new Error('Model must be defined')
@@ -49,18 +49,17 @@ export class GridModel {
 * @extends {GridModel}
 */
 export class VoxelGridModel extends GridModel {
-  
   constructor (position, color) {
     super(position)
 
     if (color === undefined) {
       throw new TypeError('Color must be defined')
     }
-    
+
     this.color = color
     this.type = GridModelType.VOXEL
   }
-  
+
   createObject (scale = 1) {
     // Create geometry and material
     let geometry = new THREE.BoxGeometry(scale, scale, scale)
@@ -72,19 +71,19 @@ export class VoxelGridModel extends GridModel {
       polygonOffsetUnits: 1,
       overdraw: 0.5
     })
-    
+
     // Create the object
     let object = new THREE.Mesh(geometry, material)
-    
+
     // Add wireframe
     let wireframe = _createWireframeObjectForGeometry(geometry)
     if (wireframe) {
       object.add(wireframe)
     }
-    
-    return object;
+
+    return object
   }
-  
+
   equals (model) {
     return super.equals(model) && this.color === model.color
   }

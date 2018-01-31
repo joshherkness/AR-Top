@@ -1,11 +1,9 @@
 import * as THREE from 'three'
 import { GridScene } from './GridScene'
-import { ModelFactory } from './ModelFactory'
-import { Grid } from './Grid'
 
 /**
  * Acts as a mediator between a grid and a scene, keeping the two in sync.
- * 
+ *
  * @export
  * @class GridDirector
  * @extends {THREE.EventDispatcher}
@@ -13,7 +11,7 @@ import { Grid } from './Grid'
 export class GridDirector extends THREE.EventDispatcher {
   constructor ({scale = 50} = {}) {
     super()
-    
+
     this.grid = null
     this.scene = null
     this.scale = scale
@@ -23,8 +21,8 @@ export class GridDirector extends THREE.EventDispatcher {
   /**
    * Remove all tracked models and objects from the grid and scene
    * respectively.
-   * 
-   * 
+   *
+   *
    * @memberOf GridDirector
    */
   clear () {
@@ -44,9 +42,9 @@ export class GridDirector extends THREE.EventDispatcher {
 /**
  * Asynchronously load a grid, creating a usable scene and loading any existing
  * models into that scene.
- * 
- * @param {any} grid 
- * 
+ *
+ * @param {any} grid
+ *
  * @memberOf GridDirector
  */
   async load (grid) {
@@ -56,7 +54,7 @@ export class GridDirector extends THREE.EventDispatcher {
       this.grid = grid
       this.objectMap.clear()
       this.scene = new GridScene(this.grid, this.scale)
-      
+
       this.grid.models.forEach((model) => {
         let object = model.createObject(this.scale)
         object.position.copy(this.convertUnitToActualPosition(model.position))
@@ -70,9 +68,9 @@ export class GridDirector extends THREE.EventDispatcher {
 
   /**
    * Adds one or more models into both the grid and scene.
-   * 
-   * @param {any} model 
-   * 
+   *
+   * @param {any} model
+   *
    * @memberOf GridDirector
    */
   add (...models) {
@@ -88,7 +86,7 @@ export class GridDirector extends THREE.EventDispatcher {
         object.position.copy(this.convertUnitToActualPosition(model.position))
         console.log(object.position)
         this.objectMap.set(model, object)
-      
+
         if (this.scene) {
           this.scene.add(object)
         }
@@ -106,7 +104,7 @@ export class GridDirector extends THREE.EventDispatcher {
       if (removedModel) {
         let objectId = this.objectMap.get(removedModel).id
         let object = this.scene.getObjectById(objectId)
-        
+
         // We don't necessarily know the parent of the object, so we remove
         // it from any parent in the scene.
         // TODO: this could be costly on larger scenes.
@@ -147,7 +145,7 @@ export class GridDirector extends THREE.EventDispatcher {
       if (!model) {
         throw new Error('Property model must be defined')
       }
-      
+
       let object = model.createObject(this.scale)
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
       object.material.transparent = true
@@ -271,9 +269,9 @@ export class GridDirector extends THREE.EventDispatcher {
 
   /**
    * Returns a complete list of the scene objects that are mapped by our models.
-   * 
+   *
    * @readonly
-   * 
+   *
    * @memberOf GridDirector
    */
   get objects () {
@@ -283,7 +281,7 @@ export class GridDirector extends THREE.EventDispatcher {
   /**
    * Function should only be called internally to notify any event
    * listeners that there has been an update.
-   * 
+   *
    * @memberOf GridDirector
    */
   _onUpdate () {

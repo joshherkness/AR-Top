@@ -101,9 +101,7 @@ export default {
       // Create the director
       this.director = new GridDirector({ scale: 50 })
 
-      // Finally, load the grid
       this.director.load(this.grid).then(() => {
-
         // Create the renderer
         this.renderer = new THREE.WebGLRenderer()
         this.renderer.setPixelRatio(window.devicePixelRatio)
@@ -214,7 +212,7 @@ export default {
         case 49: this.mode = EditorMode.ADD
           break
         case 50: this.mode = EditorMode.DELETE
-          break;
+          break
       }
     },
     onDocumentKeyUp (event) {
