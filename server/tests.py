@@ -2,10 +2,10 @@ import os
 import unittest
 from server import *
 import tempfile
-from json import loads
+from json import loads, dumps
 import bcrypt
 
-class TestRegistration(unittest.TestCase):
+class TestUserEndpoints(unittest.TestCase):
     #=====================================================
     # Skeleton (you can fold this code)
     #=====================================================
@@ -15,6 +15,8 @@ class TestRegistration(unittest.TestCase):
         self.app = app.test_client()
   
     def tearDown(self):
+        Map.objects.all().delete()
+        User.objects.all().delete()
         os.close(self.db_fd)
         os.unlink(app.config['DATABASE'])
 
@@ -25,7 +27,7 @@ class TestRegistration(unittest.TestCase):
         response = self.app.post(page, data=data, follow_redirects=True)
         json = loads(response.data.decode('utf-8'))
         return json, response.status_code
-
+        
     #=====================================================
     # Tests
     #=====================================================
@@ -66,16 +68,15 @@ class TestRegistration(unittest.TestCase):
         user_datastore.delete_user(test_user)
 
     def test_authenticate(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
         def tester(data, string, correct_code=422, key='error'):
             response, code = self.request('api/auth', data)
             assert code == correct_code
             assert response[key] == string
-    
-        valid_email = 'validEmail@gmail.com'
-        valid_password = 'validpassword123'
-        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
-        
-        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
         
         #correct email and password
         data = dict(email=valid_email, password=valid_password)
@@ -97,8 +98,6 @@ class TestRegistration(unittest.TestCase):
         data['email'] = 'invalid@email.com'
         data['password'] = 'invalidPassword'
         tester(data, "Incorrect email or password")
-        
-        user_datastore.delete_user(test_user)
-    
+
 if __name__ == "__main__":
     unittest.main()        
