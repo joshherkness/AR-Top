@@ -1,12 +1,34 @@
 <template>
   <div class="box">
-    <h5 class="title is-5">{{ name }}</h5>
+    <div class="box-header">
+      <h5 class="is-size-4 has-text-weight-semibold">{{ name }}</h5>
+      <div class="dropdown is-hoverable is-up">
+        <div class="dropdown-trigger">
+          <p class="field">
+          <a class="button is-medium">
+            <span class="icon">
+              <i class="mdi mdi-dots-vertical" />
+            </span>
+          </a>
+          </p>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {name: name, width: width, depth: depth})">
+              Edit
+            </a>
+            <a class="dropdown-item" @click="$modal.show('delete-map-modal', {name: name})">
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="content">
       <p>Map size: {{ width *  depth }}</p> 
     </div>
     <div class="buttons is-pulled-right">
-      <span class="button is-info" @click="$modal.show('edit-map-modal', {name: name, width: width, depth: depth})">Edit</span>
-      <span class="button" @mouseover="mouseOver" @mouseleave="mouseLeave" v-bind:class="[isHovered ? 'is-danger' : 'is-light']" @click="$modal.show('delete-map-modal', {name: name})">Delete</span>
+      <span class="button is-success">Open</span>
     </div>
   </div>
 </template>
@@ -14,20 +36,7 @@
 <script>
 export default {
   name: 'MapCard',
-  props: ['name', 'width', 'depth'],
-  data: function () {
-    return {
-      isHovered: false
-    }
-  },
-  methods: {
-    mouseOver: function () {
-      this.isHovered = true
-    },
-    mouseLeave: function () {
-      this.isHovered = false
-    }
-  }
+  props: ['name', 'width', 'depth']
 }
 </script>
 
@@ -37,5 +46,16 @@ export default {
   flex: 0 0 calc((100% / 3) - 4em);
   height: 100%;
   margin: 0 2em 1em;
+}
+
+.box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field .button {
+  border-color: $white;
 }
 </style>
