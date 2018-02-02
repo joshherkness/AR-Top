@@ -57,6 +57,9 @@ class User(Model, UserMixin):
             return None  # valid token, but expired
         except BadSignature:
             return None  # invalid token
+        except Exception as e:
+            return None
+            print("ERROR IN User.verify_auth_token function")
         user = User.objects.get(email=data['id'])
         return user
 

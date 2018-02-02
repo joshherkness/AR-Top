@@ -181,10 +181,6 @@ class TestUserEndpoints(unittest.TestCase):
             response, code = self.request('/api/map/' + str(id), data, action='GET')
             assert code == correct_code
             return response
-        # delete map
-        # test_map = Map.objects(color="#FFFFFF")[0]
-        # print(test_map.id)
-        # test_map.delete()
         try:
             test_map = Map(user=test_user, color="#FFFFFF", private=True, )
             test_map.save()
@@ -212,16 +208,15 @@ class TestUserEndpoints(unittest.TestCase):
         encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
         test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
         test_user_id = test_user.id
-        api_token = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        auth_token = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        auth_token = dict(auth_token=auth_token['auth_token'])
 
         def tester(data, string, id, correct_code=422, key="error"):
             response, code = self.request('/api/maps/' + str(id), data, action='GET')
             assert code == correct_code
             return response
 
-        data = dict(api_token=api_token)
-        print(data)
-        tester(api_token, "", test_user_id, correct_code=200)
+        tester(auth_token, "", test_user_id, correct_code=200)
 
 if __name__ == "__main__":
     unittest.main()        
