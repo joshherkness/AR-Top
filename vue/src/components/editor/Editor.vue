@@ -1,9 +1,11 @@
 <template>
   <div>
     <!-- Canvas used to render the three.js map scene-->
-    <div ref='canvas' id='canvas'></div>
+    <div ref='canvas' id='canvas'
+      :class="{'is-loading': loading}"></div>
 
-    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;">
+    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;"
+      v-if="!loading">
       <div class="control">
         <div class="dropdown is-hoverable is-up is-right">
           <div class="dropdown-trigger">
@@ -39,6 +41,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { generateConfig } from '@/api/api'
+
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
 import { ModelFactory } from './ModelFactory'
@@ -62,7 +67,8 @@ export default {
       grid: null,
       selectionManager: null,
       color: defaultColor,
-      mode: EditorMode.ADD
+      mode: EditorMode.ADD,
+      loading: false
     }
   },
   components: {
@@ -86,22 +92,30 @@ export default {
     }
   },
   mounted () {
-    this.setup()
+
+    this.loading = true
+
+    // Create the director
+    this.director = new GridDirector({ scale: 50 })
+
+    let url = 'http://localhost:5000/api/map'
+    axios.get(`${url}/${this.$route.params.id}`, generateConfig({
+      email: this.$store.state.user.email
+    })).then((res) => {
+      let mapData = res.data
+      mapData.id = mapData._id['$oid']
+      this.grid = Grid.deserialize(mapData)
+      this.director.load(this.grid).then(() => {
+        this.setup()
+        this.loading = false
+      })
+    }).catch((err) => {
+      console.log(err)
+      throw err
+    })
   },
   methods: {
     setup () {
-      // Create map
-      this.grid = Grid.deserialize({
-        width: 16,
-        height: 1000,
-        depth: 16,
-        color: '#ffffff'
-      })
-
-      // Create the director
-      this.director = new GridDirector({ scale: 50 })
-
-      this.director.load(this.grid).then(() => {
         // Create the renderer
         this.renderer = new THREE.WebGLRenderer()
         this.renderer.setPixelRatio(window.devicePixelRatio)
@@ -139,7 +153,6 @@ export default {
         this.director.addEventListener('update', (event) => {
           this.render()
         })
-      })
     },
     render () {
       this.renderer.render(this.director.scene, this.camera)
@@ -168,9 +181,9 @@ export default {
       this.director.setSelection(unitPosition, { model: this.model })
     },
     onWindowResize () {
-      this.camera.aspect = window.innerWidth / window.innerHeight
+      this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight
       this.camera.updateProjectionMatrix()
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight)
       this.render()
     },
     onDocumentMouseMove (event) {
@@ -266,5 +279,20 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+
+  &.is-loading {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.5;
+        &:after {
+            @include loader;
+            position: absolute;
+            top: calc(50% - 1.0em);
+            left: calc(50% - 1.0em);
+            width: 2em;
+            height: 2em;
+            border-width: 0.25em;
+        }
+    }
 }
 </style>
