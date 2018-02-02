@@ -23,7 +23,7 @@
                 placeholder="e.g Exandria"
                 :class="{'input': true, 'is-danger': errors.has('map name') }">
             </div>
-            <span class="help">Think of a cool name for your map</span>
+            <span class="help">Think of a name for your map</span>
             <span v-show="errors.has('map name')" class="help is-danger">{{ errors.first('map name') }}</span>
           </div>
 
@@ -35,7 +35,7 @@
                 name="map size"
                 v-model="size"
                 v-validate="sizeValidator"
-                type="text"
+                type="number"
                 placeholder="e.g 32"
                 :class="{'input': true, 'is-danger': errors.has('map size') }" >
             </div>
@@ -53,7 +53,7 @@
                 v-validate="colorValidator"
                 class="input"
                 type="text"
-                placeholder="e.g #DDDDDD"
+                :placeholder="`e.g ${defaultColor}`"
                 :class="{'input': true, 'is-danger': errors.has('map color') }">
               <span class="help">This specifies the color that will be used as the base of your map</span>
               <span v-show="errors.has('map color')" class="help is-danger">{{ errors.first('map color') }}</span>
@@ -63,7 +63,7 @@
               <div class="dropdown is-hoverable is-up is-right is-pulled-right">
                 <div class="dropdown-trigger">
                   <button class="button is-static">
-                    <span class="color-swatch" :style="{'background-color': color}"></span>
+                    <span class="color-swatch" :style="{'background-color': colorData.hex}"></span>
                   </button>
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
@@ -101,6 +101,8 @@
 <script>
 import { Sketch } from 'vue-color'
 
+const DEFAULT_COLOR = '#9B9B9B'
+
 // Specifies the width of this modal
 const MODAL_WIDTH = 500
 
@@ -116,7 +118,7 @@ const SIZE_VALIDATOR = {
   required: false,
   numeric: true,
   min_value: 1,
-  max_value: 64
+  max_value: 48
 }
 
 // This validator will be used for the color field
@@ -132,12 +134,13 @@ export default {
       name: '',
       size: '',
       color: '',
-      public: true,
+      public: false,
       modalWidth: MODAL_WIDTH,
       nameValidator: NAME_VALIDATOR,
       sizeValidator: SIZE_VALIDATOR,
       colorValidator: COLOR_VALIDATOR,
-      colorData: {hex: '#ffffff'}
+      colorData: {hex: DEFAULT_COLOR},
+      defaultColor: DEFAULT_COLOR
     }
   },
   components: {
@@ -150,6 +153,13 @@ export default {
   watch: {
     colorData: function (_colorData) {
       this.color = _colorData.hex
+    },
+    color: function (_color) {
+      if (!_color) {
+        this.colorData.hex = DEFAULT_COLOR
+        return
+      }
+      this.colorData.hex = _color
     }
   },
   methods: {
