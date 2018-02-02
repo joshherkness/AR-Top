@@ -80,7 +80,7 @@ def protected(f):
             auth_header = request.headers['Authorization'].split()
             if auth_header[0] == 'Bearer':
                 claims = jwt.decode(auth_header[1], base64.b64decode(
-                    secrets.JWT_KEY.encode()), algorithm='HS512')['data']
+                    secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
             return f(claims, *args, **kwargs)
         except Exception as e:
             app.logger.error(str(e))
@@ -180,6 +180,9 @@ def authenticate(claims):
             error = "Incorrect email or password"
     return jsonify({'error': error}), 422, json_tag
 
+#=====================================================
+# Map routes
+#=====================================================
 @app.route('/api/map/<string:id>', methods=['GET'])
 @protected
 def read_map(user, id):
@@ -191,9 +194,22 @@ def read_map(user, id):
         error = "map error"
     return jsonify({'error': error}), 422, json_tag
 
-#=====================================================
-# Map routes
-#=====================================================
+@app.route("/api/maps/<string:user_id>", methods=['GET'])
+@protected
+def read_list_of_maps(claims, user_id):
+    token = claims['api_token']
+    token_user = User.verify_auth_token(token)
+    if token_user is None:
+        error = "token expired"
+        # I am assuming that the user will need to login again and I don't need to check password here
+    else:
+        if token_user.id == user_id:
+            map_list = Map.objects(user=token_user)
+            return map_list.to_json(), 200, json_tag
+        else:
+            error = "map error"
+    return jsonify({'error': error}), 422, json_tag
+
 @app.route("/api/map", methods=["POST"])
 @protected
 def create_map(claims):
