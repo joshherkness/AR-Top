@@ -84,7 +84,6 @@ export class GridDirector extends THREE.EventDispatcher {
       if (this.grid.add(model)) {
         let object = model.createObject(this.scale)
         object.position.copy(this.convertUnitToActualPosition(model.position))
-        console.log(object.position)
         this.objectMap.set(model, object)
 
         if (this.scene) {

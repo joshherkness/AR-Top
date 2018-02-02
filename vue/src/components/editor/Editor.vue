@@ -105,6 +105,7 @@ export default {
         // Create the renderer
         this.renderer = new THREE.WebGLRenderer()
         this.renderer.setPixelRatio(window.devicePixelRatio)
+        this.renderer.setClearColor(0xffffff)
 
         // Create the camera
         let cameraFov = 45
