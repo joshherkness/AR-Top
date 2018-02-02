@@ -103,7 +103,6 @@
 <script>
 import { Sketch } from 'vue-color'
 import axios from 'axios'
-import * as qs from 'qs'
 import { generateConfig } from '@/api/api'
 import router from '@/router/index'
 
@@ -143,7 +142,7 @@ export default {
         name: '',
         size: '',
         color: '',
-        private: true,
+        private: true
       },
       modalWidth: MODAL_WIDTH,
       nameValidator: NAME_VALIDATOR,
@@ -190,7 +189,7 @@ export default {
 
         this.loading = true
 
-        let data = { 
+        let data = {
           map: {
             name: this.form.name,
             width: this.form.size || DEFAULT_SIZE,
@@ -206,7 +205,7 @@ export default {
         let response = await axios.post(url, data, generateConfig({
           email: this.$store.state.user.email
         }))
-        
+
         // Close this modal
         this.close(true)
 

@@ -92,7 +92,6 @@ export default {
     }
   },
   mounted () {
-
     this.loading = true
 
     // Create the director
@@ -116,43 +115,43 @@ export default {
   },
   methods: {
     setup () {
-        // Create the renderer
-        this.renderer = new THREE.WebGLRenderer()
-        this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0xffffff)
+      // Create the renderer
+      this.renderer = new THREE.WebGLRenderer()
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setClearColor(0xffffff)
 
-        // Create the camera
-        let cameraFov = 45
-        this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-        this.camera.lookAt(new THREE.Vector3())
-        this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
+      // Create the camera
+      let cameraFov = 45
+      this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
+      this.camera.lookAt(new THREE.Vector3())
+      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
 
-        // Add orbit controls
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-        this.controls.enablePan = false
-        this.controls.minDistance = 2 * this.director.scale || 50
-        this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
-        this.controls.addEventListener('change', this.render)
+      // Add orbit controls
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      this.controls.enablePan = false
+      this.controls.minDistance = 2 * this.director.scale || 50
+      this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+      this.controls.addEventListener('change', this.render)
 
-        // Attach to the container
-        this.canvas = this.$refs.canvas
-        this.canvas.appendChild(this.renderer.domElement)
+      // Attach to the container
+      this.canvas = this.$refs.canvas
+      this.canvas.appendChild(this.renderer.domElement)
 
-        this.raycaster = new THREE.Raycaster()
-        this.mouse = new THREE.Vector2()
+      this.raycaster = new THREE.Raycaster()
+      this.mouse = new THREE.Vector2()
 
-        this.onWindowResize()
+      this.onWindowResize()
 
-        // Attach event listeners to the document
-        this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
-        this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
-        document.addEventListener('keydown', this.onDocumentKeyDown, false)
-        document.addEventListener('keyup', this.onDocumentKeyUp, false)
-        window.addEventListener('resize', this.onWindowResize, false)
+      // Attach event listeners to the document
+      this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+      this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
+      document.addEventListener('keydown', this.onDocumentKeyDown, false)
+      document.addEventListener('keyup', this.onDocumentKeyUp, false)
+      window.addEventListener('resize', this.onWindowResize, false)
 
-        this.director.addEventListener('update', (event) => {
-          this.render()
-        })
+      this.director.addEventListener('update', (event) => {
+        this.render()
+      })
     },
     render () {
       this.renderer.render(this.director.scene, this.camera)
