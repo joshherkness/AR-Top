@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { GridHelpers } from './GridHelpers'
-import { GridHelper } from 'three';
 
 const DEFAULT_WIREFRAME_LINE_WIDTH = 1
 
@@ -74,12 +73,9 @@ export class VoxelGridModel extends GridModel {
       overdraw: 0.5,
       transparent: true
     })
-    material.flatShading = true
 
     // Create the object
     let object = new THREE.Mesh(geometry, material)
-    object.receiveShadow = true
-    object.castShadow = true
 
     // Add wireframe
     let wireframe = _createWireframeObjectForGeometry(geometry, GridHelpers.darken(this.color))

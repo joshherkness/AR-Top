@@ -23,11 +23,17 @@ class TestUserEndpoints(unittest.TestCase):
     #=====================================================
     # Helper methods
     #=====================================================
-    def request(self, page, data):
-        response = self.app.post(page, data=data, follow_redirects=True)
-        json = loads(response.data.decode('utf-8'))
-        return json, response.status_code
-        
+    def request(self, page, data, action='POST'):
+        if action == 'POST':
+            response = self.app.post(page, data=data, follow_redirects=True)
+            json = loads(response.data.decode('utf-8'))
+            return json, response.status_code
+        elif action == 'GET':
+            response = self.app.get(page, data=data, follow_redirects=True)
+            json = loads(response.data.decode('utf-8'))
+            return json, response.status_code
+            # json = loads(response.data.decode('utf-8'))
+
     #=====================================================
     # Tests
     #=====================================================
@@ -98,6 +104,97 @@ class TestUserEndpoints(unittest.TestCase):
         data['email'] = 'invalid@email.com'
         data['password'] = 'invalidPassword'
         tester(data, "Incorrect email or password")
+
+        user_datastore.delete_user(test_user)
+
+    def test_create_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+
+        data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+
+        def tester(data, correct_code):
+            request, code = self.request('/api/map', data)
+            request_match = correct_code == code
+            if not request_match: print("FAILURE, variables:", code, request)
+            assert request_match
+            return request
+
+        # Malformed request (is missing the map)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Bad token
+        correct_auth_token = data['auth_token']
+        data['map'] = "exists"
+        data['auth_token'] = "garbage"
+        assert "Invalid token" == tester(data, 401)['error']
+
+        # Map in request, but missing the key 'color'
+        data['auth_token'] = correct_auth_token
+        map_dict = dict(width=4, height=5, depth=6, private=True, models=[])
+        data['map'] = dumps(map_dict)
+        assert "Malformed request" == tester(data, 422)['error']
+
+        # Correct data scenario
+        map_dict['color'] = "#fff"
+        data['map'] = dumps(map_dict)
+        map_and_success = tester(data, 200)
+
+        assert map_and_success['success'] == "Successfully created map"
+
+        map = map_and_success['map']
+        for i in map_dict.keys():
+            assert map_dict[i] == map[i]
+
+        # TODO: make sure this line is safe; idk if the maps are actually being
+        # used in the temp DB, it looks like they're actually in the dev DB.
+        Map.delete(map)
+        user_datastore.delete_user(test_user)
+
+        def test_read_map(self):
+            valid_email = "validEmail@gmail.com"
+            valid_password = "validPassword123"
+            encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+            test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+            
+            valid_email2 = "tests2@gmail.com"
+            valid_password2 = "testPassword2"
+            encrypted_password2 = bcrypt.hashpw(valid_password2.encode(), bcrypt.gensalt())
+            test_user2 = user_datastore.create_user(email=valid_email2, password=encrypted_password2)
+            
+            data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+            data2 = self.request('/api/auth', dict(email=valid_email2, password=valid_password2))[0]
+            
+            def tester(data, string, id, correct_code=422, key="error"):
+                response, code = self.request('/api/map/' + str(id), data, action='GET')
+                assert code == correct_code
+                return response
+            # delete map
+            # test_map = Map.objects(color="#FFFFFF")[0]
+            # print(test_map.id)
+            # test_map.delete()
+            try:
+                test_map = Map(user=test_user, color="#FFFFFF", private=True, )
+                test_map.save()
+                test_id = test_map.id
+                
+                # User reading map that they are the Owner of
+                result_map = tester(data, "", test_id, correct_code=200)
+                assert result_map['user']['$oid'] == test_user.get_id()
+                
+                # Map in response has the id that was requested
+                assert result_map['_id']['$oid'] == str(test_id)
+                
+                # User reading map that they are not the Owner of
+                result_string = tester(data2, "map error", test_id, correct_code=422)['error']
+                assert result_string == "map error"
+            
+            finally:
+                test_map.delete()
+                user_datastore.delete_user(test_user)
+                user_datastore.delete_user(test_user2)
 
 if __name__ == "__main__":
     unittest.main()        

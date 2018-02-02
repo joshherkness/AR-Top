@@ -149,7 +149,6 @@ export class GridDirector extends THREE.EventDispatcher {
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
       object.material.transparent = true
       object.material.opacity = 0.5
-      object.castShadow = false
       let group = this.scene.getObjectByName('selection')
       group.add(object)
     }

@@ -17,20 +17,6 @@ export function GridScene (grid, scale) {
 
     var ambientLight = new THREE.AmbientLight(0xf4f4f4)
     scene.add(ambientLight)
-
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1.0)
-    directionalLight.position.x = 1
-    directionalLight.position.y = 1
-    directionalLight.position.z = 0.75
-    directionalLight.position.normalize()
-    //scene.add(directionalLight)
-
-    directionalLight = new THREE.DirectionalLight(0x808080)
-    directionalLight.position.x = -1
-    directionalLight.position.y = 1
-    directionalLight.position.z = -0.75
-    directionalLight.position.normalize()
-    //scene.add(directionalLight)
   }
 
   let _setupGridLines = function (scene) {
