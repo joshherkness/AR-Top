@@ -15,15 +15,15 @@
             <label class="label">Map name</label>
             <div class="control">
               <input
-                name="form.color"
+                name="name"
                 v-model="form.name"
                 v-validate="nameValidator"
                 type="text"
                 placeholder="e.g Exandria"
-                :class="{'input': true, 'is-danger': errors.has('form.color') }">
+                :class="{'input': true, 'is-danger': errors.has('name') }">
             </div>
             <span class="help">Think of a name for your map</span>
-            <span v-show="errors.has('form.color')" class="help is-danger">{{ errors.first('form.color') }}</span>
+            <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
           </div>
 
           <!-- Map size -->
@@ -31,15 +31,15 @@
             <label class="label">Map size (optional)</label>
             <div class="control">
               <input
-                name="form.size"
+                name="size"
                 v-model="form.size"
                 v-validate="sizeValidator"
                 type="number"
                 placeholder="e.g 32"
-                :class="{'input': true, 'is-danger': errors.has('form.size') }" >
+                :class="{'input': true, 'is-danger': errors.has('size') }" >
             </div>
             <span class="help">This specifies how large your map will be</span>
-            <span v-show="errors.has('form.size')" class="help is-danger">{{ errors.first('form.size') }}</span>
+            <span v-show="errors.has('size')" class="help is-danger">{{ errors.first('size') }}</span>
           </div>
 
           <!-- Map color -->
@@ -47,15 +47,15 @@
           <div class="field has-addons">
             <div class="control is-expanded">
               <input
-                name="form.color"
+                name="color"
                 v-model="form.color"
                 v-validate="colorValidator"
                 class="input"
                 type="text"
                 :placeholder="`e.g ${defaultColor}`"
-                :class="{'input': true, 'is-danger': errors.has('form.color') }">
+                :class="{'input': true, 'is-danger': errors.has('color') }">
               <span class="help">This specifies the color that will be used as the base of your map</span>
-              <span v-show="errors.has('form.color')" class="help is-danger">{{ errors.first('form.color') }}</span>
+              <span v-show="errors.has('color')" class="help is-danger">{{ errors.first('color') }}</span>
             </div>
             <!-- Color picker dropdown -->
             <div class="control">
