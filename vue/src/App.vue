@@ -1,12 +1,21 @@
 <template>
   <div id="app">
+    <create-map-modal/>
+    <delete-map-modal/>
     <router-view/>
   </div>
 </template>
 
 <script>
+import CreateMapModal from '@/components/CreateMapModal'
+import DeleteMapModal from '@/components/DeleteMapModal'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    CreateMapModal,
+    DeleteMapModal
+  }
 }
 </script>
 
