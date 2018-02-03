@@ -58,8 +58,8 @@ class User(Model, UserMixin):
         except BadSignature:
             return None  # invalid token
         except Exception as e:
-            return None
             print("ERROR IN User.verify_auth_token function")
+            return None
         user = User.objects.get(email=data['id'])
         return user
 
