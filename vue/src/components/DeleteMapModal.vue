@@ -29,8 +29,8 @@
         <div class="field">
           <div class="control">
             <input
-              name="map name"
-              v-model="name"
+              name="name"
+              v-model="form.name"
               type="text"
               placeholder="Type the map name"
               class="input">
@@ -43,9 +43,8 @@
             <button 
               v-on:click="submit" 
               class="button is-danger" 
-              type="submit"
               :disabled="!isSubmitEnabled">Delete</button>
-            <button v-on:click="cancel" class="button is-white">Cancel</button>
+            <button v-on:click="close" class="button is-white">Cancel</button>
           </p>
         </div>
       </div>
@@ -54,6 +53,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { generateConfig } from '@/api/api'
+
 // Specifies the width of this modal
 const MODAL_WIDTH = 500
 
@@ -61,9 +63,15 @@ export default {
   name: 'DeleteMapModal',
   data: function () {
     return {
-      name: '',
-      params: {},
-      modalWidth: MODAL_WIDTH
+      modalWidth: MODAL_WIDTH,
+      params: {
+        id: '',
+        name: '',
+        onSuccess: (id) => {}
+      },
+      form : {
+        name: ''
+      }
     }
   },
   created: function () {
@@ -72,7 +80,7 @@ export default {
   },
   computed: {
     isSubmitEnabled: function () {
-      return this.name === this.params.name
+      return this.form.name === this.params.name
     }
   },
   methods: {
@@ -84,11 +92,48 @@ export default {
       this.params = {}
       this.$emit('before-closed', event)
     },
-    submit: function () {
-      // Delete map here
-      console.log('Delete')
+
+    /**
+     * Function is called when the form is submitted
+     */
+    submit: async function () {
+      try {
+        // Ensure that name and id params have been passed
+        if (!this.params.name || !this.params.id) {
+          throw new Error(`Params must be defined on component 'DeleteMapModal'`)
+        }
+
+        // Ensure that the name field and param match
+        if (!this.isSubmitEnabled) {
+          throw new Error(`Provided name field and actual name do not match`)
+        }
+
+        // Issue the request
+        let url = `http://localhost:5000/api/map/${this.params.id}`
+        let response = axios.delete(url, generateConfig({
+          email: this.$store.state.user.email
+        }))
+
+        // Successful callback
+        if (this.params.onSuccess) {
+          this.params.onSuccess(this.params.id)
+        }
+
+        // Close this modal
+        this.close()
+      } catch (err) {
+        throw err
+      }
     },
-    cancel: function () {
+
+    /**
+     * Close this modal
+     */
+    close: function (clear = false) {
+      if (clear) {
+        Object.assign(this.$data, this.$options.data())
+      }
+
       this.$modal.hide('delete-map-modal')
     }
   }
