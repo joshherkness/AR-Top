@@ -18,7 +18,7 @@ export default new Router({
       component: Home,
       children: [
         {
-          path: 'editor',
+          path: 'editor/:id',
           name: 'Editor',
           component: Editor,
           meta: { requiresAuth: true },
