@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33304271774144782}
   - component: {fileID: 64487651414968546}
   - component: {fileID: 23735210272625016}
+  - component: {fileID: 114977103320224640}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -126,3 +127,27 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114977103320224640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471956295053126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7abbac048f81d44bafe6a4fb1135b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderBased: 0
+  permanent: 1
+  lineColor: {r: 0, g: 0, b: 0, a: 0.74}
+  colliderBound:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  colliderBoundOffset: {x: 0, y: 0, z: 0}
+  meshBound:
+    m_Center: {x: 0, y: 0.5, z: 0}
+    m_Extent: {x: 0.5, y: 0, z: 0.5}
+  meshBoundOffset: {x: 0, y: 0, z: 0}
+  setupOnAwake: 0
+  startingScale: {x: 0.1, y: 0.1, z: 0.1}

@@ -389,7 +389,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 255543131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a917f0af64a6423093132dab321c15f, type: 3}
+  m_Script: {fileID: 11500000, guid: b9282b0d344bec64a8afb2b2675c7362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &255543136
@@ -852,6 +852,7 @@ GameObject:
   - component: {fileID: 628510327}
   - component: {fileID: 628510326}
   - component: {fileID: 628510325}
+  - component: {fileID: 628510330}
   m_Layer: 0
   m_Name: ARCamera
   m_TagString: Untagged
@@ -939,6 +940,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 84, y: -38, z: 0}
+--- !u!114 &628510330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 628510324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23c6dd63ee3df746907c41141f3bfaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineMaterial: {fileID: 2100000, guid: 982b0c6dd4bcd894b9576f123b17edd3, type: 2}
+  lColor: {r: 0, g: 0, b: 0, a: 1}
+  colors: []
 --- !u!1 &688795510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2077555232
 RectTransform:
   m_ObjectHideFlags: 0

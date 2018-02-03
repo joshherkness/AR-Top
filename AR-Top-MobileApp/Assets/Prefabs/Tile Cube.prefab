@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33251564107445144}
   - component: {fileID: 65860256638912500}
   - component: {fileID: 23407866438833530}
+  - component: {fileID: 114144090911802300}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -50,8 +51,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1298530040818706}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.45, y: 8.18, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647927139836742}
@@ -64,7 +65,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594492509052378}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -124,3 +125,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114144090911802300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594492509052378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7abbac048f81d44bafe6a4fb1135b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderBased: 0
+  permanent: 0
+  lineColor: {r: 0, g: 0, b: 0, a: 1}
+  colliderBound:
+    m_Center: {x: 13.45, y: 8.18, z: 0.65}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+  colliderBoundOffset: {x: 0, y: 0, z: 0}
+  meshBound:
+    m_Center: {x: 13.45, y: 8.18, z: 0.65}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+  meshBoundOffset: {x: 0, y: 0, z: 0}
+  setupOnAwake: 0
+  startingScale: {x: 1, y: 1, z: 1}

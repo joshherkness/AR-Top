@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4333109426162624}
   m_Layer: 0
-  m_Name: PlayerCharacter 1
+  m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33661430347096204}
   - component: {fileID: 65402446843721902}
   - component: {fileID: 23850023857404824}
+  - component: {fileID: 114410305195922422}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -55,6 +56,7 @@ GameObject:
   - component: {fileID: 33175312210818944}
   - component: {fileID: 65860498015962390}
   - component: {fileID: 23806063997298036}
+  - component: {fileID: 114850627587079140}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -209,3 +211,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114410305195922422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614734828623604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7abbac048f81d44bafe6a4fb1135b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderBased: 0
+  permanent: 1
+  lineColor: {r: 0, g: 0, b: 0, a: 0.74}
+  colliderBound:
+    m_Center: {x: 0, y: -0.35, z: 0}
+    m_Extent: {x: 0.5, y: 0.15, z: 0.5}
+  colliderBoundOffset: {x: 0, y: 0, z: 0}
+  meshBound:
+    m_Center: {x: 0, y: -0.35, z: 0}
+    m_Extent: {x: 0.5, y: 0.15, z: 0.5}
+  meshBoundOffset: {x: 0, y: 0, z: 0}
+  setupOnAwake: 0
+  startingScale: {x: 1, y: 0.3, z: 1}
+--- !u!114 &114850627587079140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857210305230064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7abbac048f81d44bafe6a4fb1135b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderBased: 0
+  permanent: 1
+  lineColor: {r: 0, g: 0, b: 0, a: 0.74}
+  colliderBound:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.25, y: 0.5, z: 0.25}
+  colliderBoundOffset: {x: 0, y: 0, z: 0}
+  meshBound:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.25, y: 0.5, z: 0.25}
+  meshBoundOffset: {x: 0, y: 0, z: 0}
+  setupOnAwake: 0
+  startingScale: {x: 0.5, y: 1, z: 0.5}

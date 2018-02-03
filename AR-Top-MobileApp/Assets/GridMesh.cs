@@ -17,8 +17,8 @@ public class GridMesh : MonoBehaviour
 		var verticies = new List<Vector3> ();
 		var indicies = new List<int> ();
 		for (int i = 0; i <= GridSize; i++) {
-			verticies.Add (new Vector3 (i, .52f, 0));
-			verticies.Add (new Vector3 (i, .52f, GridSize));
+			verticies.Add (new Vector3 (i, -.5f, 0));
+			verticies.Add (new Vector3 (i, -.5f, GridSize));
 			if (!indicies.Contains (4 * i + 0))
 				indicies.Add (4 * i + 0);
 			if (!indicies.Contains (4 * i + 1))
@@ -29,8 +29,8 @@ public class GridMesh : MonoBehaviour
 			//indicies.Add (4 * i + 3);
 			//}
 			//for (int i = 0; i <= GridDepth; i++) {
-			verticies.Add (new Vector3 (0, .52f, i));
-			verticies.Add (new Vector3 (GridSize, .52f, i));
+			verticies.Add (new Vector3 (0, -.5f, i));
+			verticies.Add (new Vector3 (GridSize, -.5f, i));
 			//if (!indicies.Contains (4 * i + 0))
 			//	indicies.Add (4 * i + 0);
 			//if (!indicies.Contains (4 * i + 1))

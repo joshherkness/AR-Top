@@ -25,115 +25,2218 @@ public class JSONReader : MonoBehaviour {
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-	""width"": 50,
-	""height"": 2,
-	""depth"": 50,
-	""base_color"": 
-	{
-		""r"": 0.69,
-		""g"": 0.69,
-		""b"": 0.69,
-		""a"": 1.0
-	},
-	""models"": 
-	[
-		{
-		""type"": ""voxel"",
-		""position"": 
-			{
-				""x"": 1,
-				""y"": 1,
-				""z"": 1
-			},
-			""color"": 
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 3,
-				""y"": 1,
-				""z"": 10
-			},
-			""color"":
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 5,
-				""y"": 1,
-				""z"": 4
-			},
-			""color"":
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 15,
-				""y"": 1,
-				""z"": 5
-			},
-			""color"":
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 11,
-				""y"": 1,
-				""z"": 15
-			},
-			""color"":
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		},
-		{
-		""type"":""voxel"",
-		""position"":
-			{
-				""x"": 8,
-				""y"": 1,
-				""z"": 10
-			},
-			""color"":
-			{
-				""r"": 0.25,
-				""g"": 0.25,
-				""b"": 1,
-				""a"": 1.0
-			}
-		}
-	]}";
+  ""width"": 16,
+  ""height"": 1000,
+  ""depth"": 16,
+  ""color"": ""#417505"",
+  ""models"": [
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 0,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 0,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 0,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#8B572A""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 1,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 1,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 5
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 2
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 2,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 8,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 10,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 1,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 2,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 2,
+        ""z"": 12
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 14,
+        ""y"": 2,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 6,
+        ""y"": 2,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 2,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 2,
+        ""z"": 11
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 2,
+        ""z"": 9
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 4,
+        ""y"": 2,
+        ""z"": 7
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 2,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 2,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 1,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 3,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 2,
+        ""z"": 1
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 2,
+        ""z"": 4
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 13,
+        ""y"": 2,
+        ""z"": 3
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 5,
+        ""y"": 2,
+        ""z"": 6
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 2,
+        ""z"": 8
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 2,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 2,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 2,
+        ""z"": 10
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 11,
+        ""y"": 2,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 12,
+        ""y"": 2,
+        ""z"": 14
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 9,
+        ""y"": 2,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    },
+    {
+      ""position"": {
+        ""x"": 7,
+        ""y"": 2,
+        ""z"": 13
+      },
+      ""type"": ""voxel"",
+      ""color"": ""#B8B8B8""
+    }
+  ]
+}";
 
 	//GridItem is serializable to make it JSON friendly.
 	//GridItems represent individual pieces to place on the board.
@@ -145,7 +2248,7 @@ public class JSONReader : MonoBehaviour {
 
 		//Vector3 position coordinates, and Vector4 color values.
 		public Vector3 position = new Vector3 (0f, 0f, 0f);
-		public Color color = new Color (1f, 1f, 1f, 1f);
+		public string color = "FFFFFF";
 	}
 
 	//MapItem is serializable to make it JSON friendly.
@@ -157,12 +2260,10 @@ public class JSONReader : MonoBehaviour {
 		public int height = 1;
 		public int depth = 1;
 
-		public Color base_color = new Color(1f, 1f, 1f, 1f);
+		public string color = "#FFFFFF";
 
 		public GridItem[] models = null;
 	}
-
-
 
 	// Use this for initialization
 	void Start () {
@@ -206,9 +2307,9 @@ public class JSONReader : MonoBehaviour {
 
 		MapItem grid = JsonUtility.FromJson<MapItem> (JSONSTRING);
 		Vector3 gridVector = new Vector3 (-0.5f, 0, -0.5f);
-		GridMesh gridMaker = Instantiate (gridPrefab, gridVector, Quaternion.identity).GetComponent <GridMesh>();
-		gridMaker.transform.SetParent (gridLayout.transform);
-		gridMaker.setSize (grid.width);
+		//GridMesh gridMaker = Instantiate (gridPrefab, gridVector, Quaternion.identity).GetComponent <GridMesh>();
+		//gridMaker.transform.SetParent (gridLayout.transform);
+		//gridMaker.setSize (grid.width);
 		buildMap (grid);
 
 	}
@@ -232,7 +2333,7 @@ public class JSONReader : MonoBehaviour {
 				SpriteRenderer sprite = gridspace.GetComponentInChildren <SpriteRenderer> ();
 				sprite.color = new Color (0f, 0f, 0f, 1f);*/
 				//Create the plane.
-				Vector3 tilesVector = new Vector3 (i, 0f, j);
+				Vector3 tilesVector = new Vector3 (i, -1f, j);
 				GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
 				tile.transform.SetParent (tileLayout.transform);
 				fillColor (obj, tile);
@@ -240,7 +2341,7 @@ public class JSONReader : MonoBehaviour {
 		}
 		/*for (int k = 0; k <= height; k++) {
 			if (k % gridHeightGap == 0) {
-				Vector3 gridVector = new Vector3 (getGridSize (row) - 1, k + .52f, getGridSize (col) - 1);
+				Vector3 gridVector = new Vector3 (getGridSize (row) - 1, k - .52f, getGridSize (col) - 1);
 				GameObject gridOutline = Instantiate (gridPrefab, gridVector, Quaternion.identity);
 				gridOutline.transform.SetParent (gridLayout.transform);
 				gridOutline.transform.localScale = new Vector3 (row, 1, col);
@@ -253,7 +2354,13 @@ public class JSONReader : MonoBehaviour {
 			buildPiece (model);
 		}
 
+		StartCoroutine (scaleMap ());
 		mapScaler.transform.SetParent (imageTarget.transform);
+
+	}
+
+	IEnumerator scaleMap(){
+		yield return new WaitForSeconds (0.1f);
 		mapScaler.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
 	}
 
@@ -297,8 +2404,10 @@ public class JSONReader : MonoBehaviour {
 		//Foreach loop colors the tiles with the appropriate color.
 		foreach (MeshRenderer mesh in meshes) {
 			Renderer rend = mesh.GetComponent<Renderer> ();
-			Color color = piece.color;
-			rend.material.color = color;
+			Color color;
+			if (ColorUtility.TryParseHtmlString (piece.color, out color)) {
+				rend.material.color = color;
+			}
 		}
 	}
 
@@ -309,8 +2418,10 @@ public class JSONReader : MonoBehaviour {
 		//Foreach loop colors the tiles with the appropriate color.
 		foreach (MeshRenderer mesh in meshes) {
 			Renderer rend = mesh.GetComponent<Renderer> ();
-			Color color = piece.base_color;
-			rend.material.color = color;
+			Color color;
+			if (ColorUtility.TryParseHtmlString (piece.color, out color)) {
+				rend.material.color = color;
+			}
 		}
 	}
 
