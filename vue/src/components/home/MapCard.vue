@@ -14,10 +14,10 @@
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
-            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {name: name, width: width, depth: depth})">
+            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {id: oid, name: name, color: color})">
               Edit
             </a>
-            <a class="dropdown-item" @click="$modal.show('delete-map-modal', {name: name})">
+            <a class="dropdown-item" @click="$modal.show('delete-map-modal', {id: oid, name: name})">
               Delete
             </a>
           </div>
@@ -28,7 +28,7 @@
       <p>Map size: {{ width *  depth }}</p> 
     </div>
     <div class="buttons is-pulled-right">
-      <span class="button is-success">Open</span>
+      <router-link class="button is-success" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@
 <script>
 export default {
   name: 'MapCard',
-  props: ['name', 'width', 'depth']
+  props: ['name', 'oid', 'color', 'width', 'depth']
 }
 </script>
 

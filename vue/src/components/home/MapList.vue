@@ -5,6 +5,8 @@
       <map-card v-for="map in maps"
         :key="map.name"
         v-bind:name="map.name"
+        v-bind:oid="map._id.$oid"
+        v-bind:color="map.color"
         v-bind:depth="map.depth"
         v-bind:width="map.width" />
     </div>
