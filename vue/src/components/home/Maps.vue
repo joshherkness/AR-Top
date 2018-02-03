@@ -1,9 +1,7 @@
 <template>
   <div>
-    <create-map-modal/>
-    <delete-map-modal/>
     <div>
-      <button class="button is-light is-pulled-right" @click="$modal.show('create-map-modal', {test: 'josh'})">
+      <button class="button is-light is-pulled-right" @click="$modal.show('create-map-modal')">
         <span class="icon">
           <i class="fa fa-plus"></i>
         </span>
@@ -15,14 +13,10 @@
 </template>
 
 <script>
-import CreateMapModal from '../CreateMapModal'
-import DeleteMapModal from '../DeleteMapModal'
 import MapList from './MapList'
 export default {
   name: 'Maps',
   components: {
-    CreateMapModal,
-    DeleteMapModal,
     MapList
   }
 }

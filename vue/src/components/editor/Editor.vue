@@ -1,9 +1,11 @@
 <template>
   <div>
     <!-- Canvas used to render the three.js map scene-->
-    <div ref='canvas' id='canvas'></div>
+    <div ref='canvas' id='canvas'
+      :class="{'is-loading': loading}"></div>
 
-    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;">
+    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;"
+      v-if="!loading">
       <div class="control">
         <div class="dropdown is-hoverable is-up is-right">
           <div class="dropdown-trigger">
@@ -39,6 +41,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { generateConfig } from '@/api/api'
+
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
 import { ModelFactory } from './ModelFactory'
@@ -62,7 +67,8 @@ export default {
       grid: null,
       selectionManager: null,
       color: defaultColor,
-      mode: EditorMode.ADD
+      mode: EditorMode.ADD,
+      loading: false
     }
   },
   components: {
@@ -86,58 +92,65 @@ export default {
     }
   },
   mounted () {
-    this.setup()
+    this.loading = true
+
+    // Create the director
+    this.director = new GridDirector({ scale: 50 })
+
+    let url = 'http://localhost:5000/api/map'
+    axios.get(`${url}/${this.$route.params.id}`, generateConfig({
+      email: this.$store.state.user.email
+    })).then((res) => {
+      let mapData = res.data
+      mapData.id = mapData._id['$oid']
+      this.grid = Grid.deserialize(mapData)
+      this.director.load(this.grid).then(() => {
+        this.setup()
+        this.loading = false
+      })
+    }).catch((err) => {
+      console.log(err)
+      throw err
+    })
   },
   methods: {
     setup () {
-      // Create map
-      this.grid = Grid.deserialize({
-        width: 16,
-        height: 1000,
-        depth: 16,
-        color: '#ffffff'
-      })
+      // Create the renderer
+      this.renderer = new THREE.WebGLRenderer()
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setClearColor(0xffffff)
 
-      // Create the director
-      this.director = new GridDirector({ scale: 50 })
+      // Create the camera
+      let cameraFov = 45
+      this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
+      this.camera.lookAt(new THREE.Vector3())
+      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
 
-      this.director.load(this.grid).then(() => {
-        // Create the renderer
-        this.renderer = new THREE.WebGLRenderer()
-        this.renderer.setPixelRatio(window.devicePixelRatio)
+      // Add orbit controls
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      this.controls.enablePan = false
+      this.controls.minDistance = 2 * this.director.scale || 50
+      this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+      this.controls.addEventListener('change', this.render)
 
-        // Create the camera
-        let cameraFov = 45
-        this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-        this.camera.lookAt(new THREE.Vector3())
-        this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
+      // Attach to the container
+      this.canvas = this.$refs.canvas
+      this.canvas.appendChild(this.renderer.domElement)
 
-        // Add orbit controls
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-        this.controls.enablePan = false
-        this.controls.minDistance = 2 * this.director.scale || 50
-        this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
-        this.controls.addEventListener('change', this.render)
+      this.raycaster = new THREE.Raycaster()
+      this.mouse = new THREE.Vector2()
 
-        // Attach to the container
-        this.canvas = this.$refs.canvas
-        this.canvas.appendChild(this.renderer.domElement)
+      this.onWindowResize()
 
-        this.raycaster = new THREE.Raycaster()
-        this.mouse = new THREE.Vector2()
+      // Attach event listeners to the document
+      this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+      this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
+      document.addEventListener('keydown', this.onDocumentKeyDown, false)
+      document.addEventListener('keyup', this.onDocumentKeyUp, false)
+      window.addEventListener('resize', this.onWindowResize, false)
 
-        this.onWindowResize()
-
-        // Attach event listeners to the document
-        this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
-        this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
-        document.addEventListener('keydown', this.onDocumentKeyDown, false)
-        document.addEventListener('keyup', this.onDocumentKeyUp, false)
-        window.addEventListener('resize', this.onWindowResize, false)
-
-        this.director.addEventListener('update', (event) => {
-          this.render()
-        })
+      this.director.addEventListener('update', (event) => {
+        this.render()
       })
     },
     render () {
@@ -167,9 +180,9 @@ export default {
       this.director.setSelection(unitPosition, { model: this.model })
     },
     onWindowResize () {
-      this.camera.aspect = window.innerWidth / window.innerHeight
+      this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight
       this.camera.updateProjectionMatrix()
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight)
       this.render()
     },
     onDocumentMouseMove (event) {
@@ -265,5 +278,20 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+
+  &.is-loading {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.5;
+        &:after {
+            @include loader;
+            position: absolute;
+            top: calc(50% - 1.0em);
+            left: calc(50% - 1.0em);
+            width: 2em;
+            height: 2em;
+            border-width: 0.25em;
+        }
+    }
 }
 </style>
