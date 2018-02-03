@@ -1,9 +1,12 @@
 import os
-import unittest
-from server import *
+import secrets
 import tempfile
-from json import loads, dumps
+import unittest
+from json import dumps, loads
+
 import bcrypt
+from server import *
+
 
 class TestUserEndpoints(unittest.TestCase):
     #=====================================================
@@ -24,14 +27,21 @@ class TestUserEndpoints(unittest.TestCase):
     # Helper methods
     #=====================================================
     def request(self, page, data, action='POST'):
+        headers = {
+                'Authorization': 'Bearer ' + jwt.encode(dict(data=data), base64.b64decode(secrets.JWT_KEY), algorithm='HS512').decode()
+        }
         if action == 'POST':
-            response = self.app.post(page, data=data, follow_redirects=True)
-            json = loads(response.data.decode('utf-8'))
-            return json, response.status_code
+            # NOTE: The data dictionary is not being used by
+            # the auth or register routes at all as the
+            # data that is necessary for those request are being
+            # included in the JWT.
+
+            response = self.app.post(
+                page, data={}, follow_redirects=True, headers=headers)
         elif action == 'GET':
-            response = self.app.get(page, data=data, follow_redirects=True)
-            json = loads(response.data.decode('utf-8'))
-            return json, response.status_code
+            response = self.app.get(page, data={}, follow_redirects=True, headers=headers)
+        json = loads(response.data.decode('utf-8'))
+        return json, response.status_code
             # json = loads(response.data.decode('utf-8'))
 
     #=====================================================
@@ -153,48 +163,60 @@ class TestUserEndpoints(unittest.TestCase):
         Map.delete(map)
         user_datastore.delete_user(test_user)
 
-        def test_read_map(self):
-            valid_email = "validEmail@gmail.com"
-            valid_password = "validPassword123"
-            encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
-            test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+    def test_read_map(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+        
+        valid_email2 = "tests2@gmail.com"
+        valid_password2 = "testPassword2"
+        encrypted_password2 = bcrypt.hashpw(valid_password2.encode(), bcrypt.gensalt())
+        test_user2 = user_datastore.create_user(email=valid_email2, password=encrypted_password2)
+        
+        api_token1 = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        api_token2 = self.request('/api/auth', dict(email=valid_email2, password=valid_password2))[0]
+        
+        def tester(data, string, id, correct_code=422, key="error"):
+            response, code = self.request('/api/map/' + str(id), data, action='GET')
+            assert code == correct_code
+            return response
+        try:
+            test_map = Map(user=test_user, color="#FFFFFF", private=True, )
+            test_map.save()
+            test_id = test_map.id
             
-            valid_email2 = "tests2@gmail.com"
-            valid_password2 = "testPassword2"
-            encrypted_password2 = bcrypt.hashpw(valid_password2.encode(), bcrypt.gensalt())
-            test_user2 = user_datastore.create_user(email=valid_email2, password=encrypted_password2)
+            # User reading map that they are the Owner of
+            result_map = tester(data, "", test_id, correct_code=200)
+            assert result_map['user']['$oid'] == test_user.get_id()
             
-            data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
-            data2 = self.request('/api/auth', dict(email=valid_email2, password=valid_password2))[0]
+            # Map in response has the id that was requested
+            assert result_map['_id']['$oid'] == str(test_id)
             
-            def tester(data, string, id, correct_code=422, key="error"):
-                response, code = self.request('/api/map/' + str(id), data, action='GET')
-                assert code == correct_code
-                return response
-            # delete map
-            # test_map = Map.objects(color="#FFFFFF")[0]
-            # print(test_map.id)
-            # test_map.delete()
-            try:
-                test_map = Map(user=test_user, color="#FFFFFF", private=True, )
-                test_map.save()
-                test_id = test_map.id
-                
-                # User reading map that they are the Owner of
-                result_map = tester(data, "", test_id, correct_code=200)
-                assert result_map['user']['$oid'] == test_user.get_id()
-                
-                # Map in response has the id that was requested
-                assert result_map['_id']['$oid'] == str(test_id)
-                
-                # User reading map that they are not the Owner of
-                result_string = tester(data2, "map error", test_id, correct_code=422)['error']
-                assert result_string == "map error"
-            
-            finally:
-                test_map.delete()
-                user_datastore.delete_user(test_user)
-                user_datastore.delete_user(test_user2)
+            # User reading map that they are not the Owner of
+            result_string = tester(data2, "map error", test_id, correct_code=422)['error']
+            assert result_string == "map error"
+        
+        finally:
+            test_map.delete()
+            user_datastore.delete_user(test_user)
+            user_datastore.delete_user(test_user2)
+
+    def test_read_list_of_maps(self):
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
+        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+        test_user_id = test_user.id
+        auth_token = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
+        auth_token = dict(auth_token=auth_token['auth_token'])
+
+        def tester(data, string, id, correct_code=422, key="error"):
+            response, code = self.request('/api/maps/' + str(id), data, action='GET')
+            assert code == correct_code
+            return response
+
+        tester(auth_token, "", test_user_id, correct_code=200)
 
 if __name__ == "__main__":
     unittest.main()        
