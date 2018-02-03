@@ -11,20 +11,19 @@
       <div class="card-content">
         <h1 class="title is-4">Create a new map</h1>
         <!-- Map name -->
-        <form @submit.prevent="validateBeforeSubmit">
           <div class="field">
             <label class="label">Map name</label>
             <div class="control">
               <input
-                name="map name"
-                v-model="name"
+                name="name"
+                v-model="form.name"
                 v-validate="nameValidator"
                 type="text"
                 placeholder="e.g Exandria"
-                :class="{'input': true, 'is-danger': errors.has('map name') }">
+                :class="{'input': true, 'is-danger': errors.has('name') }">
             </div>
             <span class="help">Think of a name for your map</span>
-            <span v-show="errors.has('map name')" class="help is-danger">{{ errors.first('map name') }}</span>
+            <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
           </div>
 
           <!-- Map size -->
@@ -32,15 +31,15 @@
             <label class="label">Map size (optional)</label>
             <div class="control">
               <input
-                name="map size"
-                v-model="size"
+                name="size"
+                v-model="form.size"
                 v-validate="sizeValidator"
                 type="number"
                 placeholder="e.g 32"
-                :class="{'input': true, 'is-danger': errors.has('map size') }" >
+                :class="{'input': true, 'is-danger': errors.has('size') }" >
             </div>
             <span class="help">This specifies how large your map will be</span>
-            <span v-show="errors.has('map size')" class="help is-danger">{{ errors.first('map size') }}</span>
+            <span v-show="errors.has('size')" class="help is-danger">{{ errors.first('size') }}</span>
           </div>
 
           <!-- Map color -->
@@ -48,15 +47,15 @@
           <div class="field has-addons">
             <div class="control is-expanded">
               <input
-                name="map color"
-                v-model="color"
+                name="color"
+                v-model="form.color"
                 v-validate="colorValidator"
                 class="input"
                 type="text"
                 :placeholder="`e.g ${defaultColor}`"
-                :class="{'input': true, 'is-danger': errors.has('map color') }">
+                :class="{'input': true, 'is-danger': errors.has('color') }">
               <span class="help">This specifies the color that will be used as the base of your map</span>
-              <span v-show="errors.has('map color')" class="help is-danger">{{ errors.first('map color') }}</span>
+              <span v-show="errors.has('color')" class="help is-danger">{{ errors.first('color') }}</span>
             </div>
             <!-- Color picker dropdown -->
             <div class="control">
@@ -79,8 +78,8 @@
             <label class="label">Other settings</label>
             <div class="control">
               <label class="checkbox">
-                <input v-model="public" class="checkbox" type="checkbox">
-                Public
+                <input v-model="form.private" class="checkbox" type="checkbox">
+                Private
               </label>
             </div>
           </div>
@@ -88,11 +87,14 @@
           <!-- Buttons -->
           <div class="field is-grouped is-grouped-right">
             <p class="control">
-              <button v-on:click="submit" class="button is-link" type="submit" :disabled="errors.any()">Submit</button>
-              <button v-on:click="cancel" class="button is-white">Cancel</button>
+              <button v-on:click="submit"
+                class="button is-link" 
+                :class="{'is-loading': loading}"
+                :disabled="errors.any()">Submit</button>
+              <button v-on:click="close" 
+              class="button is-white">Cancel</button>
             </p>
           </div>
-        </form>
       </div>
     </div>
   </modal>
@@ -100,8 +102,13 @@
 
 <script>
 import { Sketch } from 'vue-color'
+import axios from 'axios'
+import { generateConfig } from '@/api/api'
+import router from '@/router/index'
 
 const DEFAULT_COLOR = '#9B9B9B'
+const DEFAULT_SIZE = 32
+const DEFAULT_HEIGHT = 48
 
 // Specifies the width of this modal
 const MODAL_WIDTH = 500
@@ -131,16 +138,21 @@ export default {
   name: 'CreateMapModal',
   data: function () {
     return {
-      name: '',
-      size: '',
-      color: '',
-      public: false,
+      form: {
+        name: '',
+        size: '',
+        color: '',
+        private: true
+      },
       modalWidth: MODAL_WIDTH,
       nameValidator: NAME_VALIDATOR,
       sizeValidator: SIZE_VALIDATOR,
       colorValidator: COLOR_VALIDATOR,
-      colorData: {hex: DEFAULT_COLOR},
-      defaultColor: DEFAULT_COLOR
+      colorData: {
+        hex: DEFAULT_COLOR
+      },
+      defaultColor: DEFAULT_COLOR,
+      loading: false
     }
   },
   components: {
@@ -152,37 +164,71 @@ export default {
   },
   watch: {
     colorData: function (_colorData) {
-      this.color = _colorData.hex
+      this.form.color = _colorData.hex
     },
-    color: function (_color) {
-      if (!_color) {
-        this.colorData.hex = DEFAULT_COLOR
-        return
-      }
-      this.colorData.hex = _color
+    form: {
+      handler: function (data) {
+        if (!data.color) {
+          this.colorData.hex = DEFAULT_COLOR
+          return
+        }
+        this.colorData.hex = data.color
+      },
+      deep: true
     }
   },
   methods: {
-    validateBeforeSubmit: function () {
-      this.$validator.validateAll()
-    },
-    submit: function () {
-      // Ensure there are no errors in any of the fields
-      if (this.errors.any()) {
-        return
+    /**
+     * Submit the form, creating the map
+     */
+    submit: async function () {
+      try {
+        // Determine if there are any validation errors
+        let result = await this.$validator.validateAll()
+        if (!result) return
+
+        this.loading = true
+
+        let data = {
+          map: {
+            name: this.form.name,
+            width: this.form.size || DEFAULT_SIZE,
+            height: DEFAULT_HEIGHT,
+            depth: this.form.size || DEFAULT_SIZE,
+            color: this.form.color || DEFAULT_COLOR,
+            private: this.form.private,
+            models: []
+          }
+        }
+
+        let url = 'http://localhost:5000/api/map'
+        let response = await axios.post(url, data, generateConfig({
+          email: this.$store.state.user.email
+        }))
+
+        // Close this modal
+        this.close(true)
+
+        // Route the user to their newly created map
+        let map = response.data.map
+        router.push({name: 'Editor', params: {id: map._id.$oid}})
+
+        // Navigate to the editor here
+      } catch (err) {
+        throw err
       }
 
-      let mapData = {
-        name: this.name,
-        size: this.size,
-        color: this.color,
-        public: this.public
+      this.loading = false
+    },
+
+    /**
+     * Close this modal
+     */
+    close: function (clear = false) {
+      if (clear) {
+        Object.assign(this.$data, this.$options.data())
       }
 
-      // Create map here
-      console.log(mapData)
-    },
-    cancel: function () {
       this.$modal.hide('create-map-modal')
     }
   }

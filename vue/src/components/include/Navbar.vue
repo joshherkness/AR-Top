@@ -6,12 +6,12 @@
       </router-link>
     </div>
     <div class="navbar-start">
-      <router-link class="navbar-item" v-if="token" to="maps">
+      <router-link class="navbar-item" v-if="token" :to="{'path': '/maps'}" replace>
         Maps
       </router-link>
-      <router-link class="navbar-item" v-if="token" to="editor">
+      <a class="navbar-item" v-if="token" @click="$modal.show('create-map-modal')">
         Editor
-      </router-link>
+      </a>
     </div>
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable" v-if="token">

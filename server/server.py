@@ -10,9 +10,6 @@ from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
-from functools import wraps 
-
-from json import loads
 
 import bcrypt
 import jwt
@@ -92,7 +89,6 @@ def send_email(text, recipients, subject="AR-top"):
         recipients = [recipients]
 
     try:
-        msg = Message(subject, sender=secrets.MAIL_USERNAME, recipients=recipients)
         msg = Message(subject, sender=secrets.MAIL_USERNAME,
                       recipients=recipients)
         msg.body = text
@@ -180,16 +176,27 @@ def authenticate(claims):
             error = "Incorrect email or password"
     return jsonify({'error': error}), 422, json_tag
 
-@app.route('/api/map/<string:id>', methods=['GET'])
+
+@app.route('/api/map/<id>', methods=['GET'])
 @protected
-def read_map(user, id):
-    # user is passed by @protected
-    result = Map.objects(id=id)[0]
-    if result.user == user:
-        return result.to_json(), 200, json_tag
-    else: #map does not belong to user
-        error = "map error"
-    return jsonify({'error': error}), 422, json_tag
+def read_map(claims, id):
+    email, user, map = None, None, None
+    try:
+        email = claims["email"]
+        user = User.objects(email=email).first()
+    except Exception as e:
+        return jsonify(error="Malformed request"), 422, json_tag
+
+    try:
+        map = Map.objects.get(id=id, user=user)
+    except (StopIteration, DoesNotExist) as e:
+        # Malicious user may be trying to overwrite someone's map
+        # or there actually is something wrong; treat these situations the same
+        return jsonify(error="Map does not exist"), 404, json_tag
+    except:
+        return jsonify(error='Internal server error'), 500, json_tag
+
+    return map.to_json(), 200, json_tag
 
 #=====================================================
 # Map routes
@@ -197,23 +204,25 @@ def read_map(user, id):
 @app.route("/api/map", methods=["POST"])
 @protected
 def create_map(claims):
-    email, map = None, None
+    email, map, user = None, None, None
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
         email = claims["email"]
-        map = request.form["map"]
-    except:
+        user = User.objects(email=email).first()
+        map = request.json['map']
+    except Exception as e:
+        app.logger.error(str(e))
         return jsonify(error="Malformed request"), 422, json_tag
 
     try:
-        map = loads(map)
         width = map["width"]
         height = map["height"]
         depth = map["depth"]
         color = map["color"]
         private = map["private"]
         models = map['models']
-    except:
+    except Exception as e:
+        app.logger.error(str(e))
         return jsonify(error="Malformed request"), 422, json_tag
 
     try:
@@ -225,7 +234,7 @@ def create_map(claims):
                          str(user), "\n", str(e))
         return jsonify(error="Internal server error"), 500, json_tag
 
-    return jsonify(success="Successfully created map", map=map), 200, json_tag
+    return jsonify(success="Successfully created map", map=new_map), 200, json_tag
 
 
 @app.route('/api/map/<map_id>', methods=['POST'])
