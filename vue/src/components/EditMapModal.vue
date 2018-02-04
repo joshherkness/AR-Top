@@ -39,7 +39,7 @@
               v-validate="colorValidator"
               class="input"
               type="text"
-              :placeholder="`e.g ${color}`"
+              :placeholder="`e.g ${params.color}`"
               :class="{'input': true, 'is-danger': errors.has('color') }">
             <span class="help">Change the color that will be used as the base of your map</span>
             <span v-show="errors.has('color')" class="help is-danger">{{ errors.first('color') }}</span>
