@@ -50,11 +50,15 @@ class TestUserEndpoints(unittest.TestCase):
     def test_register(self):
         def tester(data, string, correct_code=422, key='error'):
             response, code = self.request('api/register', data)
-            assert code == correct_code
-            assert response[key] == string
+            x = code == correct_code
+            if not x: print("FAILURE:", code)
+            assert x
+            x = response[key] == string
+            if not x: print("FAILURE:", response[key])
+            assert x
 
         data = dict(email="malformed", passwd="request")
-        tester(data, "Malformed request; expecting email and password")
+        tester(data, "Malformed request")
 
         data = dict(email="a" * (max_email_length + 1), password="email too long")
         tester(data, "Email can't be over " + str(max_email_length) + " characters.")
@@ -218,5 +222,8 @@ class TestUserEndpoints(unittest.TestCase):
 
         tester(auth_token, "", test_user_id, correct_code=200)
 
+    def test_update_map(self):
+        pass
+        
 if __name__ == "__main__":
     unittest.main()        
