@@ -1,13 +1,19 @@
 <template>
   <div>
     <div>
-      <button class="button is-light is-pulled-right" @click="$modal.show('create-map-modal')">
-        <span class="icon">
-          <i class="fa fa-plus"></i>
-        </span>
-        <span>Create a map</span>
-      </button>
+      <div class="title is-5">
+        <span>My Library</span>
+        <button 
+          class="button is-light is-pulled-right" 
+          @click="$modal.show('create-map-modal')">
+          <span class="icon">
+            <i class="fa fa-plus"></i>
+          </span>
+          <span>Create a map</span>
+        </button>
+      </div>
     </div>
+    <hr>
     <map-list />
   </div>
 </template>
@@ -24,7 +30,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
-.button.is-light.is-pulled-right {
-  margin: 3.5em 2em 3em 0;
-}
 </style>

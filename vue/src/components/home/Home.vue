@@ -1,7 +1,14 @@
 <template>
   <div>
-    <navbar></navbar>
-    <router-view />
+    <div class="hero">
+      <div class="hero-head">
+        <navbar></navbar>
+        <hr class="is-marginless">
+      </div>
+      <div class="hero-body">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
