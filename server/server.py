@@ -302,6 +302,11 @@ def delete_map(claims, map_id):
         return malformed_request()
 
     try:
+        user = User(email=email)
+    except:
+        return internal_error()
+        
+    try:
         remote_copy = Map.objects.get(id=map_id, user=user)
         remote_copy.delete()
     except (StopIteration, DoesNotExist) as e:
