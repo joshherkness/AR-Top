@@ -1,34 +1,22 @@
-import base64
-import re
 import secrets
-import sys
+import traceback
 from functools import wraps
 from json import loads
 
-from flask import Flask, jsonify, render_template, request, url_for
+from flask import Blueprint, Flask, jsonify, render_template, request, url_for
 from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
 
-import bcrypt
-import jwt
+from constants import internal_error, json_tag, malformed_request
 from flask_cors import CORS
+from helper import *
 from models import *
 
 #=====================================================
 # Constants
 #=====================================================
-
-json_tag = {'Content-Type': 'application/json'}
-
-
-def malformed_request(): return jsonify(
-    error="Malformed request"), 422, json_tag
-
-
-def internal_error(): return jsonify(error="Internal server error"), 500, json_tag
-
 
 #=====================================================
 # App skeleton
@@ -59,14 +47,12 @@ mail = Mail(app)
 # Create database connection object
 db = MongoEngine(app)
 
-# Define valid email, password patterns
-email_pattern = re.compile('[\\w.]+@[\\w]+.[\\w]+', re.IGNORECASE)
-max_email_length = 255
-max_password_length = 255
-
 # Setup Flask-Security
 user_datastore = MongoEngineUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
+
+# Create Blueprint
+api = Blueprint("api", "api", url_prefix="/api")
 
 #=====================================================
 # Code for later in the project
@@ -83,13 +69,10 @@ def protected(f):
     def wrapper(*args, **kwargs):
         claims = None
         try:
-            auth_header = request.headers['Authorization'].split()
-            if auth_header[0] == 'Bearer':
-                claims = jwt.decode(auth_header[1], base64.b64decode(
-                    secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
+            claims = Helper.verify_jwt(request)
             return f(claims, *args, **kwargs)
         except Exception as e:
-            app.logger.error(str(e))
+            app.logger.error(traceback.format_exc())
             return jsonify(error="Malformed request"), 422, json_tag
     return wrapper
 
@@ -112,7 +95,7 @@ def send_email(text, recipients, subject="AR-top"):
 #=====================================================
 
 
-@app.route('/api/register', methods=['POST'])
+@api.route('/register', methods=['POST'])
 @protected
 def register(claims):
     # Confirm the request
@@ -126,29 +109,18 @@ def register(claims):
         else:
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
-        app.logger.error(e)
+        app.logger.error(str(e))
         return malformed_request()
 
-    if len(email) > max_email_length:
-        return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
-    if not email_pattern.match(email):
-        return jsonify(error="Email not valid."), 422, json_tag
-    if len(password) < 8 or len(password) > max_password_length:
-        return jsonify(error="Password must be between 8-" + str(max_password_length) + " characters."), 422, json_tag
-    if not str.isalnum(password):
-        return jsonify(error="Only alphanumeric characters are allowed in a password."), 422, json_tag
-
-    # Try to retrieve a user object if it exists;
-    user = User.objects(email=email)
-    if len(user) != 0:
-        return jsonify(error="Email already in use, please use another one"), 422, json_tag
+    validation = Helper.validate_register(email, password)
+    if validation[0] is True:
+        return jsonify(error=validation[1]), 422, json_tag
 
     # Hash and create user
-    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-    user_datastore.create_user(email=email, password=hashed)
+    user_datastore.create_user(email=email, password=Helper.hashpw(password))
 
     # So we can log user in automatically after registration
-    token = User.objects(email=email)[0].generate_auth_token()
+    token = User.objects(email=email).first().generate_auth_token()
 
     # TODO: error handle this and if it doesn't work do something else besides the success in jsonify
     # send_email(recipients=email, subject="ay whaddup", text="Hello from AR-top")
@@ -156,7 +128,7 @@ def register(claims):
     return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
 
 
-@app.route('/api/auth', methods=['POST'])
+@api.route('/auth', methods=['POST'])
 @protected
 def authenticate(claims):
     email, password, error = None, None, None
@@ -169,29 +141,22 @@ def authenticate(claims):
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
         app.logger.error(str(e))
-        return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
+        return jsonify(error="Malformed Request; expecting email and password"), 422, json_tag
 
-    user = User.objects(email=email)
-    if len(user) == 0:
-        error = "Incorrect email or password"
-    elif len(user) > 1:
-        error = "Incorrect email or password"
-        app.logger.error("Someone registered the same email twice!")
+    validator = Helper.validate_auth(email, password)
+
+    if validator[0] is True:
+        return jsonify(error=validator[1]), 422, json_tag
     else:
-        if bcrypt.checkpw(password.encode(), user[0].password.encode()):
-            auth_token = user[0].generate_auth_token()
-            # return username and auth token
-            return jsonify({'email': user[0].email, 'auth_token': auth_token.decode('utf-8')}), 200, json_tag
-        else:
-            error = "Incorrect email or password"
-    return jsonify({'error': error}), 422, json_tag
+        return jsonify(email=email, auth_token=validator[2]), 200, json_tag
+
 
 #=====================================================
 # Map routes
 #=====================================================
 
 
-@app.route('/api/map/<id>', methods=['GET'])
+@api.route('/map/<id>', methods=['GET'])
 @protected
 def read_map(claims, id):
     email, user, map = None, None, None
@@ -213,7 +178,7 @@ def read_map(claims, id):
     return map.to_json(), 200, json_tag
 
 
-@app.route("/api/maps/<string:user_id>", methods=['GET'])
+@api.route("/maps/<string:user_id>", methods=['GET'])
 @protected
 def read_list_of_maps(claims, user_id):
     token = claims['auth_token']
@@ -228,10 +193,10 @@ def read_list_of_maps(claims, user_id):
             error = "map error"
         else:
             return map_list.to_json(), 200, json_tag
-    return jsonify({'error': error}), 422, json_tag
+    return jsonify(error=error), 422, json_tag
 
 
-@app.route("/api/map", methods=["POST"])
+@api.route("/map", methods=["POST"])
 @protected
 def create_map(claims):
     email, map, user = None, None, None
@@ -268,7 +233,7 @@ def create_map(claims):
     return jsonify(success="Successfully created map", map=new_map), 200, json_tag
 
 
-@app.route('/api/map/<map_id>', methods=['POST'])
+@api.route('/map/<map_id>', methods=['POST'])
 @protected
 def update_map(claims, map_id):
     try:
@@ -305,12 +270,11 @@ def update_map(claims, map_id):
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
 
-@app.route('/api/map/<map_id>', methods=['DELETE'])
+@api.route('/map/<map_id>', methods=['DELETE'])
 @protected
 def delete_map(claims, map_id):
     email = None
     try:
-        # Use a dict access here, not ".get". The access is better with the try block.
         email = claims["email"]
     except:
         return malformed_request()
@@ -358,5 +322,5 @@ if __name__ == '__main__':
         else:
             send_email(text=' '.join(args.email), recipients=args.recipients)
         exit()
-
+    app.register_blueprint(api)
     app.run()
