@@ -1,4 +1,5 @@
 import * as types from './../mutation-types.js'
+import router from './../../router/index'
 
 const state = {
   email: '',
@@ -19,6 +20,7 @@ const actions = {
   // eslint-disable-next-line
   signOutUser({ commit }) {
     commit(types.UNSET_USER)
+    router.push('/')
   }
 }
 

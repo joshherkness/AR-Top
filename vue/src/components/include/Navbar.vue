@@ -1,17 +1,17 @@
 <template>
-  <nav class="navbar is-transparent">
+  <nav class="navbar is-light">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
       </router-link>
     </div>
     <div class="navbar-start">
-      <router-link class="navbar-item" v-if="token" to="editor">
-        Editor
-      </router-link>
-      <router-link class="navbar-item" v-if="token" to="maps">
+      <router-link class="navbar-item" v-if="token" :to="{'path': '/maps'}" replace>
         Maps
       </router-link>
+      <a class="navbar-item" v-if="token" @click="$modal.show('create-map-modal')">
+        Editor
+      </a>
     </div>
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable" v-if="token">
