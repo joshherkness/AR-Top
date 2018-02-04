@@ -24,7 +24,7 @@ class Model(Document):
   
     def save(self, *args, **kwargs):
         updated = datetime.now()
-        super().save(*args, **kwargs)
+        super(Model, self).save(*args, **kwargs)
 
 #=====================================================
 # User related models

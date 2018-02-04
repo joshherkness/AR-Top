@@ -21,8 +21,8 @@ from models import *
 #=====================================================
 
 json_tag = {'Content-Type': 'application/json'}
-malformed_request = lambda: jsonify(error="Malformed request"), 422, json_tag
-internal_error = lambda: jsonify(error="Internal server error"), 500, json_tag
+malformed_request = lambda: (jsonify(error="Malformed request"), 422, json_tag)
+internal_error = lambda: (jsonify(error="Internal server error"), 500, json_tag)
 
 #=====================================================
 # App skeleton
@@ -79,11 +79,11 @@ def protected(f):
             auth_header = request.headers['Authorization'].split()
             if auth_header[0] == 'Bearer':
                 claims = jwt.decode(auth_header[1], base64.b64decode(
-                    secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
+                secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
             return f(claims, *args, **kwargs)
         except Exception as e:
-            app.logger.error(str(e))
-            return jsonify(error="Malformed request"), 422, json_tag
+            if not app.testing: app.logger.error(str(e))
+            return malformed_request()
     return wrapper
 
 def send_email(text, recipients, subject="AR-top"):
@@ -110,13 +110,12 @@ def register(claims):
     try:
         if claims is not None:
             # Use a dict access here, not ".get". The access is better with the try block.
-            email = claims['email']
-            password = claims['password']
-            # Validate the request
+            email = str(claims['email'])
+            password = str(claims['password'])
         else:
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
-        app.logger.error(e)
+        if not app.testing: app.logger.error(e)
         return malformed_request()
 
     if len(email) > max_email_length:
@@ -226,7 +225,7 @@ def create_map(claims):
         user = User.objects(email=email).first()
         map = request.json['map']
     except Exception as e:
-        app.logger.error(str(e))
+        if not app.testing: app.logger.error(str(e))
         return malformed_request()
 
     try:
@@ -259,7 +258,7 @@ def update_map(claims, map_id):
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
         email = claims["email"]
-        map = request.form["map"]
+        map = request.json["map"]
     except:
         return malformed_request()
 
@@ -276,18 +275,13 @@ def update_map(claims, map_id):
         return internal_error()
 
     try:
-        map = loads(map)
-    except:
-        return malformed_request()
-
-    try:
         for i in ["name", "width", "height", "depth", "color", "private", 'models']:
             attr = map.get(i)
             if attr: remote_copy[i] = attr
+
+        remote_copy.save()
     except:
         return internal_error()
-
-    remote_copy.save()
 
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 

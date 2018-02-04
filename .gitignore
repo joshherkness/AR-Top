@@ -1,6 +1,9 @@
 .DS_Store
 **/__pycache__
 
+# Ignore cache files
+*.pyc
+
 # Ignore the dev-env used by the server
 **/dev-env
 
