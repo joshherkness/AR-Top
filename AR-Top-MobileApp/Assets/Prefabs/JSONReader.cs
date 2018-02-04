@@ -2357,6 +2357,8 @@ public class JSONReader : MonoBehaviour {
 			buildPiece (model);
 		}
 
+		Vector3 position = new Vector3 ((mapScaler.transform.position.x - (obj.width / 2))*.1f, mapScaler.transform.position.y*.1f, (mapScaler.transform.position.z - (obj.depth / 2))*.1f);
+		mapScaler.transform.Translate (position);
 		StartCoroutine (scaleMap ());
 		mapScaler.transform.SetParent (imageTarget.transform);
 
