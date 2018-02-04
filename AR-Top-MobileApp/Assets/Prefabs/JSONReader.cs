@@ -2268,6 +2268,9 @@ public class JSONReader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		//Set anti-aliasing to highest value
+		QualitySettings.antiAliasing = 8;
+
 		//Find the Image Target
 		imageTarget = GameObject.Find ("ImageTarget").GetComponent <ImageTargetBehaviour>();
 
