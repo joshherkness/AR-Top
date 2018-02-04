@@ -178,13 +178,13 @@ export default {
           email: this.$store.state.user.email
         }))
 
-        // Close this modal
-        this.close(true)
-
         let map = response.data.map
         if (this.params.onSuccess) {
           this.params.onSuccess(map)
         }
+
+        // Close this modal
+        this.close(true)
       } catch (err) {
         throw err
       }
