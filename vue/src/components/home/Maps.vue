@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>
+  <div class="section">
+    <div class="container">
       <div class="title is-5">
         <span>My Library</span>
         <button 

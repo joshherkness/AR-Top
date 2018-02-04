@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div class="hero">
-      <div class="hero-head">
-        <navbar></navbar>
-      </div>
-      <div class="hero-body">
-        <router-view />
-      </div>
-    </div>
+    <navbar></navbar>
+    <router-view />
   </div>
 </template>
 

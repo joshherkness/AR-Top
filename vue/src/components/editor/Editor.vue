@@ -264,13 +264,6 @@ export default {
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
 
-.info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 20px;
-}
-
 #canvas {
   position: absolute;
   top: 0;
