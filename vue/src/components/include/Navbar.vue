@@ -1,13 +1,15 @@
 <template>
-  <nav class="navbar is-light">
+  <nav class="navbar has-shadow" style="z-index: 1000">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
       </router-link>
     </div>
     <div class="navbar-start">
-      <router-link class="navbar-item" v-if="token" :to="{'path': '/maps'}" replace>
-        Maps
+      <router-link 
+        class="navbar-item" 
+        v-if="token" :to="{'path': '/maps'}" replace>
+        My Library
       </router-link>
       <a class="navbar-item" v-if="token" @click="$modal.show('create-map-modal')">
         Editor
