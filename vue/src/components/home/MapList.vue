@@ -8,7 +8,9 @@
         v-bind:oid="map._id.$oid"
         v-bind:color="map.color"
         v-bind:depth="map.depth"
-        v-bind:width="map.width" />
+        v-bind:width="map.width"
+        v-bind:onDeleteSuccess="onDeleteSuccess"
+        v-bind:onEditSuccess="onEditSuccess" />
     </div>
 
     <!-- Error message -->
@@ -61,6 +63,26 @@ export default {
       } else {
         this.message = msg
         this.error = true
+      }
+    }
+  },
+  methods: {
+    onDeleteSuccess: function (id) {
+      let index = this.maps.findIndex((map) => {
+        return map._id.$oid === id
+      })
+
+      if (index !== -1) {
+        this.maps.splice(index, 1)
+      }
+    },
+    onEditSuccess: function (newMap) {
+      let index = this.maps.findIndex((map) => {
+        return map._id.$oid === newMap._id.$oid
+      })
+
+      if (index !== -1) {
+        this.maps.splice(index, 1, newMap)
       }
     }
   }

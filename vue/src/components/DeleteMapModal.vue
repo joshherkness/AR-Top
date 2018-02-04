@@ -120,7 +120,7 @@ export default {
         }
 
         // Close this modal
-        this.close()
+        this.close(true)
       } catch (err) {
         throw err
       }
