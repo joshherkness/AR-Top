@@ -21,6 +21,8 @@ from models import *
 #=====================================================
 
 json_tag = {'Content-Type': 'application/json'}
+malformed_request = lambda: jsonify(error="Malformed request"), 422, json_tag
+internal_error = lambda: jsonify(error="Internal server error"), 500, json_tag
 
 #=====================================================
 # App skeleton
@@ -82,7 +84,7 @@ def protected(f):
             return f(claims, *args, **kwargs)
         except Exception as e:
             app.logger.error(str(e))
-            return jsonify({"error": "Malformed Request; expecting email and password"}), 422, json_tag
+            return jsonify(error="Malformed request"), 422, json_tag
     return wrapper
 
 
@@ -111,17 +113,15 @@ def register(claims):
     email, password = None, None
     try:
         if claims is not None:
-
             # Use a dict access here, not ".get". The access is better with the try block.
             email = claims['email']
             password = claims['password']
             # Validate the request
         else:
             return jsonify(error="Forbidden"), 403, json_tag
-
     except Exception as e:
         app.logger.error(e)
-        return jsonify(error="Malformed request; expecting email and password"), 422, json_tag
+        return malformed_request()
 
     if len(email) > max_email_length:
         return jsonify(error="Email can't be over " + str(max_email_length) + " characters."), 422, json_tag
@@ -193,7 +193,7 @@ def read_map(claims, id):
         email = claims["email"]
         user = User.objects(email=email).first()
     except Exception as e:
-        return jsonify(error="Malformed request"), 422, json_tag
+        return malformed_request()
 
     try:
         map = Map.objects.get(id=id, user=user)
@@ -202,7 +202,7 @@ def read_map(claims, id):
         # or there actually is something wrong; treat these situations the same
         return jsonify(error="Map does not exist"), 404, json_tag
     except:
-        return jsonify(error='Internal server error'), 500, json_tag
+        return internal_error()
 
     return map.to_json(), 200, json_tag
 
@@ -236,7 +236,7 @@ def create_map(claims):
         map = request.json['map']
     except Exception as e:
         app.logger.error(str(e))
-        return jsonify(error="Malformed request"), 422, json_tag
+        return malformed_request()
 
     try:
         width = map["width"]
@@ -247,7 +247,7 @@ def create_map(claims):
         models = map['models']
     except Exception as e:
         app.logger.error(str(e))
-        return jsonify(error="Malformed request"), 422, json_tag
+        return malformed_request()
 
     try:
         new_map = Map(user=user, width=width, height=height, depth=depth,
@@ -256,7 +256,7 @@ def create_map(claims):
     except Exception as e:
         app.logger.error("Failed to save map for user",
                          str(user), "\n", str(e))
-        return jsonify(error="Internal server error"), 500, json_tag
+        return internal_error()
 
     return jsonify(success="Successfully created map", map=new_map), 200, json_tag
 
@@ -270,7 +270,7 @@ def update_map(claims, map_id):
         email = claims["email"]
         map = request.form["map"]
     except:
-        return jsonify(error="Malformed request"), 422, json_tag
+        return malformed_request()
 
     # Make sure this user is actually the author of the map
     # and that the ID also is an existing map
@@ -282,22 +282,50 @@ def update_map(claims, map_id):
         # or there actually is something wrong; treat these situations the same
         return jsonify(error="Map does not exist"), 404, json_tag
     except:
-        return jsonify(error='Internal server error'), 500, json_tag
+        return internal_error()
 
     try:
         map = loads(map)
-        remote_copy.width = map["width"]
-        remote_copy.height = map["height"]
-        remote_copy.depth = map["depth"]
-        remote_copy.color = map["color"]
-        remote_copy.private = map["private"]
-        remote_copy.models = map['models']
-    except KeyError:
-        return jsonify(error="Malformed request"), 422, json_tag
+    except:
+        return malformed_request()
+
+    try:
+        for i in ["name", "width", "height", "depth", "color", "private", 'models']:
+            attr = map.get(i)
+            if attr: remote_copy[i] = attr
+    except:
+        return internal_error()
 
     remote_copy.save()
 
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
+
+@app.route('/api/map/<map_id>', methods=['DELETE'])
+@protected
+def delete_map(claims, map_id):
+    email = None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = claims["email"]
+    except:
+        return malformed_request()
+
+    try:
+        user = User(email=email)
+    except:
+        return internal_error()
+        
+    try:
+        remote_copy = Map.objects.get(id=map_id, user=user)
+        remote_copy.delete()
+    except (StopIteration, DoesNotExist) as e:
+        # Malicious user may be trying to overwrite someone's map
+        # or there actually is something wrong; treat these situations the same
+        return jsonify(error="Map does not exist"), 404, json_tag
+    except:
+        return internal_error()
+
+    return jsonify(success=map_id), 200, json_tag
 
 
 #=====================================================

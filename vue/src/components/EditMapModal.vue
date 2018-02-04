@@ -14,46 +14,62 @@
         <h1 class="title is-4">Edit map</h1>
 
         <!-- Map name -->
-        <form @submit.prevent="validateBeforeSubmit">
-          <div class="field">
-            <label class="label">Map name</label>
-            <div class="control">
-              <input
-                name="map name"
-                v-model="name"
-                v-validate="nameValidator"
-                type="text"
-                v-bind:placeholder="params.name"
-                :class="{'input': true, 'is-danger': errors.has('map name') }">
-            </div>
-            <span class="help">Think of a cool name for your map</span>
-            <span v-show="errors.has('map name')" class="help is-danger">{{ errors.first('map name') }}</span>
+        <div class="field">
+          <label class="label">Map name</label>
+          <div class="control">
+            <input
+              name="name"
+              v-model="form.name"
+              v-validate="nameValidator"
+              type="text"
+              v-bind:placeholder="params.name"
+              :class="{'input': true, 'is-danger': errors.has('name') }">
           </div>
+          <span class="help">Think of a cool name for your map</span>
+          <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
+        </div>
 
-          <!-- Map size -->
-          <div class="field">
-            <label class="label">Map size (optional)</label>
-            <div class="control">
-              <input
-                name="map size"
-                v-model="size"
-                v-validate="sizeValidator"
-                type="text"
-                v-bind:placeholder="params.depth * params.width"
-                :class="{'input': true, 'is-danger': errors.has('map size') }" >
+        <!-- Map color -->
+        <label class="label">Map color (optional)</label>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input
+              name="color"
+              v-model="form.color"
+              v-validate="colorValidator"
+              class="input"
+              type="text"
+              :placeholder="`e.g ${defaultColor}`"
+              :class="{'input': true, 'is-danger': errors.has('color') }">
+            <span class="help">This specifies the color that will be used as the base of your map</span>
+            <span v-show="errors.has('color')" class="help is-danger">{{ errors.first('color') }}</span>
+          </div>
+          <!-- Color picker dropdown -->
+          <div class="control">
+            <div class="dropdown is-hoverable is-up is-right is-pulled-right">
+              <div class="dropdown-trigger">
+                <button class="button is-static">
+                  <span class="color-swatch" :style="{'background-color': colorData.hex}"></span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <sketch-picker v-model="colorData"></sketch-picker>
+              </div>
             </div>
-            <span class="help">This specifies how large your map will be</span>
-            <span v-show="errors.has('map size')" class="help is-danger">{{ errors.first('map size') }}</span>
           </div>
+        </div>
 
-          <!-- Buttons -->
-          <div class="field is-grouped is-grouped-right">
-            <p class="control">
-              <button v-on:click="submit" class="button is-link" type="submit" :disabled="errors.any()">Submit</button>
-              <button v-on:click="cancel" class="button is-white">Cancel</button>
-            </p>
-          </div>
-        </form>
+        <!-- Buttons -->
+        <div class="field is-grouped is-grouped-right">
+          <p class="control">
+            <button v-on:click="submit"
+              class="button is-link" 
+              :class="{'is-loading': loading}"
+              :disabled="errors.any()">Submit</button>
+            <button v-on:click="close" 
+            class="button is-white">Cancel</button>
+          </p>
+        </div>
       </div>
     </div>
   </modal>
@@ -61,8 +77,11 @@
 
 <script>
 import { Sketch } from 'vue-color'
+import axios from 'axios'
+import { generateConfig } from '@/api/api'
 
 const MODAL_WIDTH = 500
+const DEFAULT_COLOR = '#9B9B9B'
 
 // This validator will be used for the name field
 const NAME_VALIDATOR = {
@@ -71,33 +90,54 @@ const NAME_VALIDATOR = {
   max: 16
 }
 
-// This validator will be used for the size field
-const SIZE_VALIDATOR = {
-  required: false,
-  numeric: true,
-  min_value: 1,
-  max_value: 64
-}
-
 export default {
   name: 'EditMapModal',
   data: function () {
     return {
-      name: '',
-      size: '',
-      color: '',
-      params: {},
+      form: {
+        name: null,
+        color: null
+      },
+      params: {
+        id: null,
+        name: null,
+        color: null,
+        onSuccess: (data) => {}
+      },
+      colorData: {
+        hex: null
+      },
       modalWidth: MODAL_WIDTH,
       nameValidator: NAME_VALIDATOR,
-      sizeValidator: SIZE_VALIDATOR
+      loading: false
     }
   },
   components: {
     'sketch-picker': Sketch
   },
   created: function () {
-    this.modalWidth =
-      window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+  },
+  watch: {
+    colorData: function (_colorData) {
+      this.form.color = _colorData.hex
+    },
+    form: {
+      handler: function (data) {
+        if (!data.color) {
+          this.colorData.hex = DEFAULT_COLOR
+          return
+        }
+        this.colorData.hex = data.color
+      },
+      deep: true
+    },
+    params: {
+      handler: function (data) {
+        this.form.name = data.name
+        this.form.color = data.color
+      }
+    }
   },
   methods: {
     beforeOpened (event) {
@@ -111,9 +151,48 @@ export default {
     validateBeforeSubmit: function () {
       this.$validator.validateAll()
     },
-    submit: function () {
+    submit: async function () {
+      try {
+        // Determine if there are any validation errors
+        let result = await this.$validator.validateAll()
+        if (!result) return
+
+        this.loading = true
+
+        let data = {
+          map: {
+            name: this.form.name || this.params.name,
+            color: this.form.color || this.params.color
+          }
+        }
+
+        let url = `http://localhost:5000/api/map/${this.params.id}`
+        let response = axios.post(url, data, generateConfig({
+          email: this.$store.state.user.email
+        }))
+
+        // Close this modal
+        this.close(true)
+
+        let map = response.data.map
+        if (this.params.onSuccess) {
+          this.para.onSuccess(map)
+        }
+      } catch (err) {
+        throw err
+      }
+
+      this.loading = false
     },
-    cancel: function () {
+
+    /**
+     * Close this modal
+     */
+    close: function (clear = false) {
+      if (clear) {
+        Object.assign(this.$data, this.$options.data())
+      }
+
       this.$modal.hide('edit-map-modal')
     }
   }
