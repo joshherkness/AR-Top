@@ -25,7 +25,7 @@
               v-bind:placeholder="params.name"
               :class="{'input': true, 'is-danger': errors.has('name') }">
           </div>
-          <span class="help">Think of a cool name for your map</span>
+          <span class="help">Think of another cool name for your map</span>
           <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
         </div>
 
@@ -39,9 +39,9 @@
               v-validate="colorValidator"
               class="input"
               type="text"
-              :placeholder="`e.g ${defaultColor}`"
+              :placeholder="`e.g ${params.color}`"
               :class="{'input': true, 'is-danger': errors.has('color') }">
-            <span class="help">This specifies the color that will be used as the base of your map</span>
+            <span class="help">Change the color that will be used as the base of your map</span>
             <span v-show="errors.has('color')" class="help is-danger">{{ errors.first('color') }}</span>
           </div>
           <!-- Color picker dropdown -->
@@ -90,6 +90,12 @@ const NAME_VALIDATOR = {
   max: 16
 }
 
+// This validator will be used for the color field
+const COLOR_VALIDATOR = {
+  required: false,
+  regex: `^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$` // Hex color without alpha
+}
+
 export default {
   name: 'EditMapModal',
   data: function () {
@@ -105,10 +111,11 @@ export default {
         onSuccess: (data) => {}
       },
       colorData: {
-        hex: null
+        hex: DEFAULT_COLOR
       },
       modalWidth: MODAL_WIDTH,
       nameValidator: NAME_VALIDATOR,
+      colorValidator: COLOR_VALIDATOR,
       loading: false
     }
   },
@@ -199,3 +206,19 @@ export default {
 
 }
 </script>
+
+<style lang="scss" scoped>
+.color-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+  cursor: pointer;
+}
+
+.color-picker {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+</style>
