@@ -99,6 +99,7 @@ class MapModel(EmbeddedDocument):
     color = StringField(required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
 
 class Map(Model):
+    name = StringField(max_length=255)
     user = ReferenceField(User) # this means foreign key
     width = IntField(default=16, choices=range(1,max_size + 1))
     height = IntField(default=5, choices=range(1,max_size + 1))
