@@ -21,8 +21,14 @@ from models import *
 #=====================================================
 
 json_tag = {'Content-Type': 'application/json'}
-malformed_request = lambda: jsonify(error="Malformed request"), 422, json_tag
-internal_error = lambda: jsonify(error="Internal server error"), 500, json_tag
+
+
+def malformed_request(): return jsonify(
+    error="Malformed request"), 422, json_tag
+
+
+def internal_error(): return jsonify(error="Internal server error"), 500, json_tag
+
 
 #=====================================================
 # App skeleton
@@ -239,6 +245,7 @@ def create_map(claims):
         return malformed_request()
 
     try:
+        name = map["name"]
         width = map["width"]
         height = map["height"]
         depth = map["depth"]
@@ -250,7 +257,7 @@ def create_map(claims):
         return malformed_request()
 
     try:
-        new_map = Map(user=user, width=width, height=height, depth=depth,
+        new_map = Map(name=name, user=user, width=width, height=height, depth=depth,
                       color=color, private=private, models=models)
         new_map.save()
     except Exception as e:
@@ -292,13 +299,15 @@ def update_map(claims, map_id):
     try:
         for i in ["name", "width", "height", "depth", "color", "private", 'models']:
             attr = map.get(i)
-            if attr: remote_copy[i] = attr
+            if attr:
+                remote_copy[i] = attr
     except:
         return internal_error()
 
     remote_copy.save()
 
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
+
 
 @app.route('/api/map/<map_id>', methods=['DELETE'])
 @protected
@@ -314,7 +323,7 @@ def delete_map(claims, map_id):
         user = User(email=email)
     except:
         return internal_error()
-        
+
     try:
         remote_copy = Map.objects.get(id=map_id, user=user)
         remote_copy.delete()
