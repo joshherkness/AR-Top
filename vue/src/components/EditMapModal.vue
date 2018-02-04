@@ -207,7 +207,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .color-swatch {
   display: inline-block;
   width: 16px;
@@ -220,5 +220,9 @@ export default {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.v--modal-overlay .v--modal-box {
+  overflow: visible !important;
 }
 </style>
