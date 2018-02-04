@@ -291,6 +291,28 @@ def update_map(claims, map_id):
 
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
+@app.route('/api/map/<map_id>', methods=['DELETE'])
+@protected
+def delete_map(claims, map_id):
+    email = None
+    try:
+        # Use a dict access here, not ".get". The access is better with the try block.
+        email = claims["email"]
+    except:
+        return malformed_request()
+
+    try:
+        remote_copy = Map.objects.get(id=map_id, user=user)
+        remote_copy.delete()
+    except (StopIteration, DoesNotExist) as e:
+        # Malicious user may be trying to overwrite someone's map
+        # or there actually is something wrong; treat these situations the same
+        return jsonify(error="Map does not exist"), 404, json_tag
+    except:
+        return internal_error()
+
+    return jsonify(success=map_id), 200, json_tag
+
 
 #=====================================================
 # Main
