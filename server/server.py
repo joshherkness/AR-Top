@@ -344,4 +344,4 @@ if __name__ == '__main__':
         else:
             send_email(text=' '.join(args.email), recipients=args.recipients)
         exit()
-app.run()
+		app.run()
