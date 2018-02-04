@@ -174,7 +174,7 @@ export default {
         }
 
         let url = `http://localhost:5000/api/map/${this.params.id}`
-        let response = axios.post(url, data, generateConfig({
+        let response = await axios.post(url, data, generateConfig({
           email: this.$store.state.user.email
         }))
 
@@ -183,7 +183,7 @@ export default {
 
         let map = response.data.map
         if (this.params.onSuccess) {
-          this.para.onSuccess(map)
+          this.params.onSuccess(map)
         }
       } catch (err) {
         throw err

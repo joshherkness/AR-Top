@@ -271,11 +271,11 @@ def create_map(claims):
 @app.route('/api/map/<map_id>', methods=['POST'])
 @protected
 def update_map(claims, map_id):
-    email, map = None, None
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
         email = claims["email"]
-        map = request.form["map"]
+        map = request.json['map']
+        user = User.objects(email=email).first()
     except:
         return malformed_request()
 
@@ -288,13 +288,9 @@ def update_map(claims, map_id):
         # Malicious user may be trying to overwrite someone's map
         # or there actually is something wrong; treat these situations the same
         return jsonify(error="Map does not exist"), 404, json_tag
-    except:
+    except Exception as e:
+        app.logger.error(str(e))
         return internal_error()
-
-    try:
-        map = loads(map)
-    except:
-        return malformed_request()
 
     try:
         for i in ["name", "width", "height", "depth", "color", "private", 'models']:
@@ -320,7 +316,7 @@ def delete_map(claims, map_id):
         return malformed_request()
 
     try:
-        user = User(email=email)
+        user = User.objects(email=email).first()
     except:
         return internal_error()
 
