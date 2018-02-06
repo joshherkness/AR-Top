@@ -4,8 +4,6 @@
       <router-link class="navbar-item" to="/">
         AR-Top
       </router-link>
-    </div>
-    <div class="navbar-start">
       <router-link 
         class="navbar-item" 
         v-if="token" :to="{'path': '/maps'}" replace>
@@ -14,30 +12,40 @@
       <a class="navbar-item" v-if="token" @click="$modal.show('create-map-modal')">
         Editor
       </a>
-    </div>
-    <div class="navbar-end">
-      <div class="navbar-item has-dropdown is-hoverable" v-if="token">
-        <a class="navbar-link">
-          {{ email }}
-        </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item has-text-danger" @click="signOutUser">
-            Sign out
-          </a>
-        </div>
+      <div 
+        class="navbar-burger burger" 
+        @click="toggleCollapse"
+        :class="{ 'is-active': collapseActive }">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <div class="navbar-item" v-else="token">
-        <div class="field is-grouped">
-          <p class="control">
-            <router-link class="button is-primary" to="/auth">
-              Sign in
-            </router-link>
-          </p>
-          <p class="control">
-            <router-link class="button is-primary" to="/register">
-              Sign up
-            </router-link>
-          </p>
+    </div>
+    <div class="navbar-menu" :class="{ 'is-active': collapseActive }">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable" v-if="token">
+          <a class="navbar-link is-hidden-touch">
+            {{ email }}
+          </a>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item has-text-danger" @click="signOutUser">
+              Sign out
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item" v-else="token">
+          <div class="field is-grouped">
+            <p class="control">
+              <router-link class="button is-primary" to="/auth">
+                Sign in
+              </router-link>
+            </p>
+            <p class="control">
+              <router-link class="button is-primary" to="/register">
+                Sign up
+              </router-link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -48,6 +56,11 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Navbar',
+  data: function () {
+    return {
+      collapseActive: false
+    }
+  },
   computed: {
     ...mapGetters([
       'email',
@@ -57,7 +70,10 @@ export default {
   methods: {
     ...mapActions([
       'signOutUser'
-    ])
+    ]),
+    toggleCollapse: function () {
+      this.collapseActive = !this.collapseActive
+    }
   }
 }
 </script>
