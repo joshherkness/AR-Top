@@ -77,8 +77,8 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import axios from 'axios'
-import { generateConfig } from '@/api/api'
+import { mapActions } from 'vuex'
+import { API } from '@/api/api'
 
 const MODAL_WIDTH = 500
 const DEFAULT_COLOR = '#9B9B9B'
@@ -107,8 +107,7 @@ export default {
       params: {
         id: null,
         name: null,
-        color: null,
-        onSuccess: (data) => {}
+        color: null
       },
       colorData: {
         hex: DEFAULT_COLOR
@@ -147,6 +146,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'updateMap'
+    ]),
+
     beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
@@ -173,18 +176,12 @@ export default {
           }
         }
 
-        let url = `http://localhost:5000/api/map/${this.params.id}`
-        let response = await axios.post(url, data, generateConfig({
-          email: this.$store.state.user.email
-        }))
+        let map = await API.updateMap(this.params.id, data)
+
+        this.updateMap(map)
 
         // Close this modal
         this.close(true)
-
-        let map = response.data.map
-        if (this.params.onSuccess) {
-          this.params.onSuccess(map)
-        }
       } catch (err) {
         throw err
       }

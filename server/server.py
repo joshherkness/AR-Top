@@ -4,13 +4,13 @@ from functools import wraps
 from json import loads
 
 from flask import Blueprint, Flask, jsonify, render_template, request, url_for
+from flask_cors import CORS
 from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security, login_required
 from passlib.apps import custom_app_context as pwd_context
 
 from constants import internal_error, json_tag, malformed_request
-from flask_cors import CORS
 from helper import *
 from models import *
 
@@ -72,8 +72,9 @@ def protected(f):
             claims = Helper.verify_jwt(request)
             return f(claims, *args, **kwargs)
         except Exception as e:
-            app.logger.error(traceback.format_exc())
-            return jsonify(error="Malformed request"), 422, json_tag
+            if not app.testing:
+                app.logger.error(traceback.format_exc())
+            return malformed_request()
     return wrapper
 
 
@@ -103,13 +104,13 @@ def register(claims):
     try:
         if claims is not None:
             # Use a dict access here, not ".get". The access is better with the try block.
-            email = claims['email']
-            password = claims['password']
-            # Validate the request
+            email = str(claims['email'])
+            password = str(claims['password'])
         else:
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
-        app.logger.error(str(e))
+        if not app.testing:
+            app.logger.error(e)
         return malformed_request()
 
     validation = Helper.validate_register(email, password)
@@ -206,7 +207,8 @@ def create_map(claims):
         user = User.objects(email=email).first()
         map = request.json['map']
     except Exception as e:
-        app.logger.error(str(e))
+        if not app.testing:
+            app.logger.error(str(e))
         return malformed_request()
 
     try:
@@ -265,8 +267,6 @@ def update_map(claims, map_id):
     except:
         return internal_error()
 
-    remote_copy.save()
-
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
 
@@ -315,7 +315,6 @@ if __name__ == '__main__':
     parser.add_argument("-u", "--user", nargs=2, type=str,
                         help="Insert a new user: takes username, password")
     args = parser.parse_args()
-
     if args.email is not None:
         if args.recipients is None:
             print("You need to include recipients to email if you want to send an email.")

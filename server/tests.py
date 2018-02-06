@@ -26,23 +26,14 @@ class TestUserEndpoints(unittest.TestCase):
     #=====================================================
     # Helper methods
     #=====================================================
-    def request(self, page, data, action='POST'):
+    def request(self, page, data=None, method='POST'):
         headers = {
                 'Authorization': 'Bearer ' + jwt.encode(dict(data=data), base64.b64decode(secrets.JWT_KEY), algorithm='HS512').decode()
         }
-        if action == 'POST':
-            # NOTE: The data dictionary is not being used by
-            # the auth or register routes at all as the
-            # data that is necessary for those request are being
-            # included in the JWT.
 
-            response = self.app.post(
-                page, data={}, follow_redirects=True, headers=headers)
-        elif action == 'GET':
-            response = self.app.get(page, data={}, follow_redirects=True, headers=headers)
+        response = self.app.open(page, method=method, data=data, follow_redirects=True, headers=headers)
         json = loads(response.data.decode('utf-8'))
         return json, response.status_code
-            # json = loads(response.data.decode('utf-8'))
 
     #=====================================================
     # Tests
@@ -50,12 +41,8 @@ class TestUserEndpoints(unittest.TestCase):
     def test_register(self):
         def tester(data, string, correct_code=422, key='error'):
             response, code = self.request('api/register', data)
-            x = code == correct_code
-            if not x: print("FAILURE:", code)
-            assert x
-            x = response[key] == string
-            if not x: print("FAILURE:", response[key])
-            assert x
+            self.assertEqual(code, correct_code)
+            self.assertEqual(string, response[key])
 
         data = dict(email="malformed", passwd="request")
         tester(data, "Malformed request")
@@ -73,7 +60,7 @@ class TestUserEndpoints(unittest.TestCase):
         data = dict(email="valid@email.com", password="a" * (max_password_length + 1))
         tester(data, "Password must be between 8-" + str(max_password_length) + " characters.")
 
-        data = dict(email="valid@email.com", password="notalphanumeric!@#$")
+        data = dict(email="valid@email.com", password="notalphanumeric_")
         tester(data, "Only alphanumeric characters are allowed in a password.")
 
         User.objects.all().delete()
@@ -129,42 +116,39 @@ class TestUserEndpoints(unittest.TestCase):
 
         data = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
 
-        def tester(data, correct_code):
+        def tester(data, correct_code, key, string):
             request, code = self.request('/api/map', data)
-            request_match = correct_code == code
-            if not request_match: print("FAILURE, variables:", code, request)
-            assert request_match
+            self.assertEqual(correct_code, code)
+            self.assertEqual(string, request[key])
             return request
 
         # Malformed request (is missing the map)
-        assert "Malformed request" == tester(data, 422)['error']
+        tester(data, 422, 'error', "Malformed request")
 
         # Bad token
         correct_auth_token = data['auth_token']
-        data['map'] = "exists"
+        data['map'] = dumps({})
         data['auth_token'] = "garbage"
-        assert "Invalid token" == tester(data, 401)['error']
+        tester(string="Invalid token", data=data, correct_code=401, key='error')
 
         # Map in request, but missing the key 'color'
         data['auth_token'] = correct_auth_token
         map_dict = dict(width=4, height=5, depth=6, private=True, models=[])
         data['map'] = dumps(map_dict)
-        assert "Malformed request" == tester(data, 422)['error']
+        tester(string="Malformed request",data=data, correct_code=422, key='error')
 
         # Correct data scenario
         map_dict['color'] = "#fff"
         data['map'] = dumps(map_dict)
-        map_and_success = tester(data, 200)
-
-        assert map_and_success['success'] == "Successfully created map"
+        map = tester(data=data, correct_code=200, key='success', string="Successfully created map")
 
         map = map_and_success['map']
         for i in map_dict.keys():
-            assert map_dict[i] == map[i]
+            self.assertEqual(map_dict[i], map[i])
 
         # TODO: make sure this line is safe; idk if the maps are actually being
         # used in the temp DB, it looks like they're actually in the dev DB.
-        Map.delete(map)
+        # Map.delete(map)
         user_datastore.delete_user(test_user)
 
     def test_read_map(self):
@@ -182,7 +166,7 @@ class TestUserEndpoints(unittest.TestCase):
         api_token2 = self.request('/api/auth', dict(email=valid_email2, password=valid_password2))[0]
         
         def tester(data, string, id, correct_code=422, key="error"):
-            response, code = self.request('/api/map/' + str(id), data, action='GET')
+            response, code = self.request('/api/map/' + str(id), data, method='GET')
             assert code == correct_code
             return response
         try:
@@ -216,7 +200,7 @@ class TestUserEndpoints(unittest.TestCase):
         auth_token = dict(auth_token=auth_token['auth_token'])
 
         def tester(data, string, id, correct_code=422, key="error"):
-            response, code = self.request('/api/maps/' + str(id), data, action='GET')
+            response, code = self.request('/api/maps/' + str(id), data, method='GET')
             assert code == correct_code
             return response
 

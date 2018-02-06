@@ -79,10 +79,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions } from 'vuex'
 import router from './../../router/index'
-import { generateConfig } from './../../api/api'
+import { API } from './../../api/api'
 
 // Validator used for the email field
 const EMAIL_VALIDATOR = {
@@ -130,11 +129,10 @@ export default {
           password: this.password
         }
 
-        let response = await axios.post('http://localhost:5000/api/auth',
-          {}, generateConfig(payload))
+        let user = await API.authenticate(payload)
 
         // Update the local user
-        this.updateUser(response.data)
+        this.updateUser(user)
 
         // Navigate to home route
         router.push('/')

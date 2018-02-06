@@ -1,8 +1,8 @@
 <template>
   <div class="box">
     <div class="box-header">
-      <h5 class="is-size-4 has-text-weight-semibold">{{ name }}</h5>
-      <div class="dropdown is-hoverable is-up">
+      <div class="title is-6">{{ name }}</div>
+      <div class="dropdown is-hoverable is-right">
         <div class="dropdown-trigger">
           <p class="field">
           <a class="button is-medium">
@@ -17,7 +17,7 @@
             <a class="dropdown-item" @click="$modal.show('edit-map-modal', {id: oid, name: name, color: color})">
               Edit
             </a>
-            <a class="dropdown-item" @click="$modal.show('delete-map-modal', {id: oid, name: name})">
+            <a class="dropdown-item has-text-danger" @click="$modal.show('delete-map-modal', {id: oid, name: name})">
               Delete
             </a>
           </div>
@@ -25,10 +25,15 @@
       </div>
     </div>
     <div class="content">
-      <p>Map size: {{ width *  depth }}</p> 
+      <p class="subtitle is-6">
+        Size: <span class="tag is-light"> {{ width }} x {{depth}}</span>
+      </p>
+      <p>
+        Color: <span class="tag is-light"> {{ color }}</span>
+      </p>
     </div>
     <div class="buttons is-pulled-right">
-      <router-link class="button is-success" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
+      <router-link class="button is-link" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
     </div>
   </div>
 </template>
@@ -43,9 +48,14 @@ export default {
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
 .box {
-  flex: 0 0 calc((100% / 3) - 4em);
+  flex: 0 0 25%;
   height: 100%;
-  margin: 0 2em 1em;
+
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .box-header {
