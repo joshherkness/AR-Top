@@ -77,8 +77,7 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import axios from 'axios'
-import { generateConfig } from '@/api/api'
+import { API } from '@/api/api'
 
 const MODAL_WIDTH = 500
 const DEFAULT_COLOR = '#9B9B9B'
@@ -173,12 +172,8 @@ export default {
           }
         }
 
-        let url = `http://localhost:5000/api/map/${this.params.id}`
-        let response = await axios.post(url, data, generateConfig({
-          email: this.$store.state.user.email
-        }))
+        let map = await API.updateMap(this.params.id, data)
 
-        let map = response.data.map
         if (this.params.onSuccess) {
           this.params.onSuccess(map)
         }

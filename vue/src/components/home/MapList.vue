@@ -28,10 +28,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MapCard from './MapCard'
 import EditMapModal from '../EditMapModal'
-import { generateConfig } from './../../api/api'
+import { API } from '@/api/api'
 export default {
   name: 'MapList',
   data: function () {
@@ -47,12 +46,9 @@ export default {
   },
   mounted: async function () {
     try {
-      const url = 'http://localhost:5000/api/maps/' + this.$store.state.user.token
-      const response = await axios.get(url, generateConfig({auth_token: this.$store.state.user.token}))
-      if (response.data.length === 0) {
+      this.maps = await API.getMaps()
+      if (this.maps.length === 0) {
         this.error = true
-      } else {
-        this.maps = response.data
       }
     } catch (err) {
       let msg = err.response.data.error
