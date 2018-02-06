@@ -5,52 +5,74 @@
       <map-card v-for="map in maps"
         :key="map.name"
         v-bind:name="map.name"
+        v-bind:oid="map._id.$oid"
+        v-bind:color="map.color"
         v-bind:depth="map.depth"
-        v-bind:width="map.width" />
+        v-bind:width="map.width"/>
     </div>
 
     <!-- Error message -->
-    <article class="message is-danger" v-show="error">
-      <div class="message-header">
-        <p>Error</p>
-      </div>
-      <div class="message-body">
-        You currently have no maps.
-      </div>
-    </article>
+    <div class="container is-fluid">
+      <article class="message is-danger" v-show="error">
+        <div class="message-header">
+          <p>Error</p>
+        </div>
+        <div class="message-body has-text-centered">
+          {{ message }}
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import MapCard from './MapCard'
 import EditMapModal from '../EditMapModal'
+import { mapActions, mapGetters } from 'vuex'
+import { API } from '@/api/api'
+
 export default {
   name: 'MapList',
   data: function () {
     return {
-      maps: [],
-      error: false
+      error: false,
+      message: 'You currently have no maps.'
     }
   },
   components: {
     MapCard,
     EditMapModal
   },
-  created: async function () {
+  mounted: async function () {
     try {
-      // Still need correct URL
-      const response = await axios.get('http://localhost:5000/api/maps/' + this.$store.state.user.token)
-      if (response.data.maps.length === 0) {
+      const maps = await API.getMaps()
+      if (maps.length === 0) {
         this.error = true
       } else {
-        this.maps = response.data.maps
+        this.setMaps(maps)
       }
     } catch (err) {
-      console.error(err)
+      let msg = err.response.data.error
+      if (msg === 'token expired') {
+        this.$store.dispatch('signOutUser')
+      } else if (msg === 'map error') {
+        this.error = true
+      } else {
+        this.message = msg
+        this.error = true
+      }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'maps'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'setMaps'
+    ])
   }
-
 }
 </script>
 

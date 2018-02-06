@@ -1,12 +1,39 @@
 <template>
   <div class="box">
-    <h5 class="title is-5">{{ name }}</h5>
+    <div class="box-header">
+      <div class="title is-6">{{ name }}</div>
+      <div class="dropdown is-hoverable is-right">
+        <div class="dropdown-trigger">
+          <p class="field">
+          <a class="button is-medium">
+            <span class="icon">
+              <i class="mdi mdi-dots-vertical" />
+            </span>
+          </a>
+          </p>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {id: oid, name: name, color: color})">
+              Edit
+            </a>
+            <a class="dropdown-item has-text-danger" @click="$modal.show('delete-map-modal', {id: oid, name: name})">
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="content">
-      <p>Map size: {{ width *  depth }}</p> 
+      <p class="subtitle is-6">
+        Size: <span class="tag is-light"> {{ width }} x {{depth}}</span>
+      </p>
+      <p>
+        Color: <span class="tag is-light"> {{ color }}</span>
+      </p>
     </div>
     <div class="buttons is-pulled-right">
-      <span class="button is-info" @click="$modal.show('edit-map-modal', {name: name, width: width, depth: depth})">Edit</span>
-      <span class="button" @mouseover="mouseOver" @mouseleave="mouseLeave" v-bind:class="[isHovered ? 'is-danger' : 'is-light']" @click="$modal.show('delete-map-modal', {name: name})">Delete</span>
+      <router-link class="button is-link" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
     </div>
   </div>
 </template>
@@ -14,28 +41,31 @@
 <script>
 export default {
   name: 'MapCard',
-  props: ['name', 'width', 'depth'],
-  data: function () {
-    return {
-      isHovered: false
-    }
-  },
-  methods: {
-    mouseOver: function () {
-      this.isHovered = true
-    },
-    mouseLeave: function () {
-      this.isHovered = false
-    }
-  }
+  props: ['name', 'oid', 'color', 'width', 'depth']
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
 .box {
-  flex: 0 0 calc((100% / 3) - 4em);
+  flex: 0 0 25%;
   height: 100%;
-  margin: 0 2em 1em;
+
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field .button {
+  border-color: $white;
 }
 </style>

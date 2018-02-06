@@ -21,8 +21,13 @@ from models import *
 #=====================================================
 
 json_tag = {'Content-Type': 'application/json'}
-malformed_request = lambda: (jsonify(error="Malformed request"), 422, json_tag)
-internal_error = lambda: (jsonify(error="Internal server error"), 500, json_tag)
+
+
+def malformed_request(): return (jsonify(error="Malformed request"), 422, json_tag)
+
+
+def internal_error(): return (jsonify(error="Internal server error"), 500, json_tag)
+
 
 #=====================================================
 # App skeleton
@@ -71,6 +76,7 @@ security = Security(app, user_datastore)
 def index():
     return render_template('index.html')
 
+
 def protected(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
@@ -79,12 +85,14 @@ def protected(f):
             auth_header = request.headers['Authorization'].split()
             if auth_header[0] == 'Bearer':
                 claims = jwt.decode(auth_header[1], base64.b64decode(
-                secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
+                    secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
             return f(claims, *args, **kwargs)
         except Exception as e:
-            if not app.testing: app.logger.error(str(e))
+            if not app.testing:
+                app.logger.error(str(e))
             return malformed_request()
     return wrapper
+
 
 def send_email(text, recipients, subject="AR-top"):
     if type(recipients) is str:
@@ -102,6 +110,8 @@ def send_email(text, recipients, subject="AR-top"):
 #=====================================================
 # User related routes
 #=====================================================
+
+
 @app.route('/api/register', methods=['POST'])
 @protected
 def register(claims):
@@ -115,7 +125,8 @@ def register(claims):
         else:
             return jsonify(error="Forbidden"), 403, json_tag
     except Exception as e:
-        if not app.testing: app.logger.error(e)
+        if not app.testing:
+            app.logger.error(e)
         return malformed_request()
 
     if len(email) > max_email_length:
@@ -178,6 +189,8 @@ def authenticate(claims):
 #=====================================================
 # Map routes
 #=====================================================
+
+
 @app.route('/api/map/<id>', methods=['GET'])
 @protected
 def read_map(claims, id):
@@ -199,21 +212,24 @@ def read_map(claims, id):
 
     return map.to_json(), 200, json_tag
 
+
 @app.route("/api/maps/<string:user_id>", methods=['GET'])
 @protected
 def read_list_of_maps(claims, user_id):
     token = claims['auth_token']
     token_user = User.verify_auth_token(token)
+    map_list = None
     if token_user is None:
         error = "token expired"
     # I am assuming that the user will need to login again and I don't need to check password here
     else:
-        if str(token_user.id) == str(user_id):
-            map_list = Map.objects(user=token_user)
-            return map_list.to_json(), 200, json_tag
-        else:
+        map_list = Map.objects(user=token_user)
+        if map_list == None:
             error = "map error"
+        else:
+            return map_list.to_json(), 200, json_tag
     return jsonify({'error': error}), 422, json_tag
+
 
 @app.route("/api/map", methods=["POST"])
 @protected
@@ -225,10 +241,12 @@ def create_map(claims):
         user = User.objects(email=email).first()
         map = request.json['map']
     except Exception as e:
-        if not app.testing: app.logger.error(str(e))
+        if not app.testing:
+            app.logger.error(str(e))
         return malformed_request()
 
     try:
+        name = map["name"]
         width = map["width"]
         height = map["height"]
         depth = map["depth"]
@@ -240,7 +258,7 @@ def create_map(claims):
         return malformed_request()
 
     try:
-        new_map = Map(user=user, width=width, height=height, depth=depth,
+        new_map = Map(name=name, user=user, width=width, height=height, depth=depth,
                       color=color, private=private, models=models)
         new_map.save()
     except Exception as e:
@@ -254,11 +272,11 @@ def create_map(claims):
 @app.route('/api/map/<map_id>', methods=['POST'])
 @protected
 def update_map(claims, map_id):
-    email, map = None, None
     try:
         # Use a dict access here, not ".get". The access is better with the try block.
         email = claims["email"]
-        map = request.json["map"]
+        map = request.json['map']
+        user = User.objects(email=email).first()
     except:
         return malformed_request()
 
@@ -271,19 +289,20 @@ def update_map(claims, map_id):
         # Malicious user may be trying to overwrite someone's map
         # or there actually is something wrong; treat these situations the same
         return jsonify(error="Map does not exist"), 404, json_tag
-    except:
+    except Exception as e:
+        app.logger.error(str(e))
         return internal_error()
 
     try:
         for i in ["name", "width", "height", "depth", "color", "private", 'models']:
             attr = map.get(i)
-            if attr: remote_copy[i] = attr
-
-        remote_copy.save()
+            if attr:
+                remote_copy[i] = attr
     except:
         return internal_error()
 
     return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
+
 
 @app.route('/api/map/<map_id>', methods=['DELETE'])
 @protected
@@ -296,10 +315,10 @@ def delete_map(claims, map_id):
         return malformed_request()
 
     try:
-        user = User(email=email)
+        user = User.objects(email=email).first()
     except:
         return internal_error()
-        
+
     try:
         remote_copy = Map.objects.get(id=map_id, user=user)
         remote_copy.delete()
@@ -331,11 +350,11 @@ if __name__ == '__main__':
     parser.add_argument("-u", "--user", nargs=2, type=str,
                         help="Insert a new user: takes username, password")
     args = parser.parse_args()
-
     if args.email is not None:
         if args.recipients is None:
             print("You need to include recipients to email if you want to send an email.")
         else:
             send_email(text=' '.join(args.email), recipients=args.recipients)
         exit()
+
     app.run()

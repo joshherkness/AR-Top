@@ -7,6 +7,8 @@
 # Ignore the dev-env used by the server
 **/dev-env
 
+*.pyc
+
 *.log
 
 server/static

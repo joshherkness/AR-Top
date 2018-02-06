@@ -104,6 +104,7 @@
 import { Sketch } from 'vue-color'
 import axios from 'axios'
 import { generateConfig } from '@/api/api'
+import { mapActions } from 'vuex'
 import router from '@/router/index'
 
 const DEFAULT_COLOR = '#9B9B9B'
@@ -178,6 +179,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'addMap'
+    ]),
     /**
      * Submit the form, creating the map
      */
@@ -211,6 +215,7 @@ export default {
 
         // Route the user to their newly created map
         let map = response.data.map
+        this.addMap(map)
         router.push({name: 'Editor', params: {id: map._id.$oid}})
 
         // Navigate to the editor here
