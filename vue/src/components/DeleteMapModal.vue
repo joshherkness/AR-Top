@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { API } from '@/api/api'
 
 // Specifies the width of this modal
@@ -65,8 +66,7 @@ export default {
       modalWidth: MODAL_WIDTH,
       params: {
         id: '',
-        name: '',
-        onSuccess: (id) => {}
+        name: ''
       },
       form: {
         name: ''
@@ -83,6 +83,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'removeMap'
+    ]),
     beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
@@ -110,10 +113,7 @@ export default {
         // Issue the request
         let id = await API.deleteMap(this.params.id)
 
-        // Successful callback
-        if (this.params.onSuccess) {
-          this.params.onSuccess(id)
-        }
+        this.removeMap(id)
 
         // Close this modal
         this.close(true)

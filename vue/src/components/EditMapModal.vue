@@ -77,6 +77,7 @@
 
 <script>
 import { Sketch } from 'vue-color'
+import { mapActions } from 'vuex'
 import { API } from '@/api/api'
 
 const MODAL_WIDTH = 500
@@ -106,8 +107,7 @@ export default {
       params: {
         id: null,
         name: null,
-        color: null,
-        onSuccess: (data) => {}
+        color: null
       },
       colorData: {
         hex: DEFAULT_COLOR
@@ -146,6 +146,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'updateMap'
+    ]),
+
     beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
@@ -174,9 +178,7 @@ export default {
 
         let map = await API.updateMap(this.params.id, data)
 
-        if (this.params.onSuccess) {
-          this.params.onSuccess(map)
-        }
+        this.updateMap(map)
 
         // Close this modal
         this.close(true)

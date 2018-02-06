@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './models/user.js'
+import map from './models/map'
 import * as Cookies from 'js-cookie'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -8,7 +9,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    user
+    user,
+    map
   },
   plugins: [
     createPersistedState({
