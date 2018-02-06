@@ -77,7 +77,6 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import axios from 'axios'
 import { API } from '@/api/api'
 
 const MODAL_WIDTH = 500

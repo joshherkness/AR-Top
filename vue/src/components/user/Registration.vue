@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions } from 'vuex'
 import router from './../../router/index'
 import { API } from './../../api/api'
@@ -130,11 +129,11 @@ export default {
           password: this.password
         }
 
-        let auth_token = await API.register(payload)
+        let authToken = await API.register(payload)
 
         // Update the local user
         this.updateUser({
-          auth_token: auth_token,
+          auth_token: authToken,
           email: this.email
         })
 

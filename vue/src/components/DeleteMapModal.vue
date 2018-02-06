@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { API } from '@/api/api'
 
 // Specifies the width of this modal
@@ -113,7 +112,7 @@ export default {
 
         // Successful callback
         if (this.params.onSuccess) {
-          this.params.onSuccess(this.params.id)
+          this.params.onSuccess(id)
         }
 
         // Close this modal

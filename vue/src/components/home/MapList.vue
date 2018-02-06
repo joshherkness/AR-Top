@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MapCard from './MapCard'
 import EditMapModal from '../EditMapModal'
 import { API } from '@/api/api'

@@ -1,6 +1,6 @@
 import { SECRET } from './secrets'
 import axios from 'axios'
-import store from '@/store/store';
+import store from '@/store/store'
 var r = require('jsrsasign')
 
 /**
@@ -39,31 +39,41 @@ export const generateConfig = data => {
 
 const API_ROOT = 'http://localhost:5000/api'
 const ENDPOINTS = {
-  authenticate: `${ API_ROOT }/auth`,
-  register: `${ API_ROOT }/register`,
-  map: `${ API_ROOT }/map`,
-  maps: `${ API_ROOT }/maps`
+  authenticate: `${API_ROOT}/auth`,
+  register: `${API_ROOT}/register`,
+  map: `${API_ROOT}/map`,
+  maps: `${API_ROOT}/maps`
 }
 
 export class API {
-  static async authenticate({email, password}) {
+  // eslint-disable-next-line
+  static async authenticate({ email, password }) {
     try {
-      let response = await axios.post(ENDPOINTS.authenticate, {}, generateConfig({
-        email: email,
-        password: password
-      }))
+      let response = await axios.post(
+        ENDPOINTS.authenticate,
+        {},
+        generateConfig({
+          email: email,
+          password: password
+        })
+      )
       return response.data
     } catch (err) {
       throw err
     }
   }
 
-  static async register({email, password}) {
+  // eslint-disable-next-line
+  static async register({ email, password }) {
     try {
-      let response = await axios.post(ENDPOINTS.register, {}, generateConfig({
-        email: email,
-        password: password
-      }))
+      let response = await axios.post(
+        ENDPOINTS.register,
+        {},
+        generateConfig({
+          email: email,
+          password: password
+        })
+      )
       // Why doesn't this endpoint return the email also?
       return response.data.auth_token
     } catch (err) {
@@ -71,49 +81,67 @@ export class API {
     }
   }
 
-  static async getMaps () {
+  // eslint-disable-next-line
+  static async getMaps() {
     try {
-      let auth_token = store.state.user.token 
-      let url = `${ ENDPOINTS.maps }/${ auth_token }`
-      let response = await axios.get(url, generateConfig({
-        auth_token: auth_token
-      }))
+      let authToken = store.state.user.token
+      let url = `${ENDPOINTS.maps}/${authToken}`
+      let response = await axios.get(
+        url,
+        generateConfig({
+          auth_token: authToken
+        })
+      )
       return response.data
     } catch (err) {
       throw err
     }
   }
 
-  static async getMap (id) {
+  // eslint-disable-next-line
+  static async getMap(id) {
     try {
-      let url = `${ ENDPOINTS.map }/${ id }`
-      let response = await axios.get(url, generateConfig({
-        email: store.state.user.email
-      }))
+      let url = `${ENDPOINTS.map}/${id}`
+      let response = await axios.get(
+        url,
+        generateConfig({
+          email: store.state.user.email
+        })
+      )
       return response.data
     } catch (err) {
-      let auth_token 
+      // eslint-disable-next-line
+      let authToken
     }
   }
 
-  static async deleteMap (id) {
+  // eslint-disable-next-line
+  static async deleteMap(id) {
     try {
-      let url = `${ ENDPOINTS.map }/${ id }`
-      let response = await axios.delete(url, generateConfig({
-        email: store.state.user.email
-      }))
+      let url = `${ENDPOINTS.map}/${id}`
+      let response = await axios.delete(
+        url,
+        generateConfig({
+          email: store.state.user.email
+        })
+      )
       return response.data.success
     } catch (err) {
       throw err
     }
   }
 
-  static async updateMap (id, data) {
+  // eslint-disable-next-line
+  static async updateMap(id, data) {
     try {
-      let url = `${ ENDPOINTS.map }/${ id }`
-      let response = await axios.post(url, data, generateConfig({
-        email: store.state.user.email
-      }))
+      let url = `${ENDPOINTS.map}/${id}`
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          email: store.state.user.email
+        })
+      )
       return response.data.map
     } catch (err) {
       throw err
