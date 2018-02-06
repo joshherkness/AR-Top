@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="box-header">
-      <h5 class="is-size-4 has-text-weight-semibold">{{ name }}</h5>
+      <div class="title is-6">{{ name }}</div>
       <div class="dropdown is-hoverable is-right">
         <div class="dropdown-trigger">
           <p class="field">
@@ -25,7 +25,12 @@
       </div>
     </div>
     <div class="content">
-      <p>Map size: {{ width *  depth }}</p> 
+      <p class="subtitle is-6">
+        Size: <span class="tag is-light"> {{ width }} x {{depth}}</span>
+      </p>
+      <p>
+        Color: <span class="tag is-light"> {{ color }}</span>
+      </p>
     </div>
     <div class="buttons is-pulled-right">
       <router-link class="button is-link" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
