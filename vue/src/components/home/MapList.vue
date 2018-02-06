@@ -45,11 +45,11 @@ export default {
   },
   mounted: async function () {
     try {
-      this.maps = await API.getMaps()
-      if (this.maps.length === 0) {
+      const maps = await API.getMaps()
+      if (maps.length === 0) {
         this.error = true
       } else {
-        this.setMaps(response.data)
+        this.setMaps(maps)
       }
     } catch (err) {
       let msg = err.response.data.error

@@ -178,7 +178,7 @@ export default {
 
         let map = await API.updateMap(this.params.id, data)
 
-        this.updateMap(response.data.map)
+        this.updateMap(map)
 
         // Close this modal
         this.close(true)

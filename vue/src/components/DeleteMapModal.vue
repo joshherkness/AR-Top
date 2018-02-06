@@ -86,7 +86,6 @@ export default {
     ...mapActions([
       'removeMap'
     ]),
-    
     beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
@@ -114,7 +113,7 @@ export default {
         // Issue the request
         let id = await API.deleteMap(this.params.id)
 
-        this.removeMap(this.params.id)
+        this.removeMap(id)
 
         // Close this modal
         this.close(true)
