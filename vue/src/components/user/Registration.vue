@@ -82,7 +82,7 @@
 import axios from 'axios'
 import { mapActions } from 'vuex'
 import router from './../../router/index'
-import { generateConfig } from './../../api/api'
+import { API } from './../../api/api'
 
 // Validator used for the email field
 const EMAIL_VALIDATOR = {
@@ -130,12 +130,11 @@ export default {
           password: this.password
         }
 
-        let response = await axios.post('http://localhost:5000/api/register',
-          {}, generateConfig(payload))
+        let auth_token = await API.register(payload)
 
         // Update the local user
         this.updateUser({
-          auth_token: response.data.auth_token,
+          auth_token: auth_token,
           email: this.email
         })
 

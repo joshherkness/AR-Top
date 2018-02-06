@@ -42,7 +42,7 @@
 
 <script>
 import axios from 'axios'
-import { generateConfig } from '@/api/api'
+import { API } from '@/api/api'
 
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
@@ -97,13 +97,9 @@ export default {
     // Create the director
     this.director = new GridDirector({ scale: 50 })
 
-    let url = 'http://localhost:5000/api/map'
-    axios.get(`${url}/${this.$route.params.id}`, generateConfig({
-      email: this.$store.state.user.email
-    })).then((res) => {
-      let mapData = res.data
-      mapData.id = mapData._id['$oid']
-      this.grid = Grid.deserialize(mapData)
+    API.getMap(this.$route.params.id).then((map) => {
+      map.id = map._id['$oid']
+      this.grid = Grid.deserialize(map)
       this.director.load(this.grid).then(() => {
         this.setup()
         this.loading = false

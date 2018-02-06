@@ -54,7 +54,7 @@
 
 <script>
 import axios from 'axios'
-import { generateConfig } from '@/api/api'
+import { API } from '@/api/api'
 
 // Specifies the width of this modal
 const MODAL_WIDTH = 500
@@ -109,10 +109,7 @@ export default {
         }
 
         // Issue the request
-        let url = `http://localhost:5000/api/map/${this.params.id}`
-        axios.delete(url, generateConfig({
-          email: this.$store.state.user.email
-        }))
+        let id = await API.deleteMap(this.params.id)
 
         // Successful callback
         if (this.params.onSuccess) {
