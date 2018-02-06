@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios'
 import { generateConfig } from '@/api/api'
+import { mapActions } from 'vuex'
 
 // Specifies the width of this modal
 const MODAL_WIDTH = 500
@@ -66,8 +67,7 @@ export default {
       modalWidth: MODAL_WIDTH,
       params: {
         id: '',
-        name: '',
-        onSuccess: (id) => {}
+        name: ''
       },
       form: {
         name: ''
@@ -84,6 +84,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'removeMap'
+    ]),
+    
     beforeOpened (event) {
       this.params = event.params || {}
       this.$emit('before-opened', event)
@@ -114,10 +118,7 @@ export default {
           email: this.$store.state.user.email
         }))
 
-        // Successful callback
-        if (this.params.onSuccess) {
-          this.params.onSuccess(this.params.id)
-        }
+        this.removeMap(this.params.id)
 
         // Close this modal
         this.close(true)

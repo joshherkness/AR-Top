@@ -8,9 +8,7 @@
         v-bind:oid="map._id.$oid"
         v-bind:color="map.color"
         v-bind:depth="map.depth"
-        v-bind:width="map.width"
-        v-bind:onDeleteSuccess="onDeleteSuccess"
-        v-bind:onEditSuccess="onEditSuccess" />
+        v-bind:width="map.width"/>
     </div>
 
     <!-- Error message -->
@@ -32,11 +30,12 @@ import axios from 'axios'
 import MapCard from './MapCard'
 import EditMapModal from '../EditMapModal'
 import { generateConfig } from './../../api/api'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'MapList',
   data: function () {
     return {
-      maps: [],
       error: false,
       message: 'You currently have no maps.'
     }
@@ -52,7 +51,7 @@ export default {
       if (response.data.length === 0) {
         this.error = true
       } else {
-        this.maps = response.data
+        this.setMaps(response.data)
       }
     } catch (err) {
       let msg = err.response.data.error
@@ -66,25 +65,15 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'maps'
+    ])
+  },
   methods: {
-    onDeleteSuccess: function (id) {
-      let index = this.maps.findIndex((map) => {
-        return map._id.$oid === id
-      })
-
-      if (index !== -1) {
-        this.maps.splice(index, 1)
-      }
-    },
-    onEditSuccess: function (newMap) {
-      let index = this.maps.findIndex((map) => {
-        return map._id.$oid === newMap._id.$oid
-      })
-
-      if (index !== -1) {
-        this.maps.splice(index, 1, newMap)
-      }
-    }
+    ...mapActions([
+      'setMaps'
+    ])
   }
 }
 </script>

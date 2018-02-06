@@ -14,10 +14,10 @@
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
-            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {id: oid, name: name, color: color, onSuccess: onEditSuccess})">
+            <a class="dropdown-item" @click="$modal.show('edit-map-modal', {id: oid, name: name, color: color})">
               Edit
             </a>
-            <a class="dropdown-item has-text-danger" @click="$modal.show('delete-map-modal', {id: oid, name: name, onSuccess: onDeleteSuccess})">
+            <a class="dropdown-item has-text-danger" @click="$modal.show('delete-map-modal', {id: oid, name: name})">
               Delete
             </a>
           </div>
@@ -36,7 +36,7 @@
 <script>
 export default {
   name: 'MapCard',
-  props: ['name', 'oid', 'color', 'width', 'depth', 'onDeleteSuccess', 'onEditSuccess']
+  props: ['name', 'oid', 'color', 'width', 'depth']
 }
 </script>
 
