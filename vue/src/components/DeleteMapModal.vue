@@ -21,7 +21,7 @@
             </div>
           </article>
           <p class="m-b-10">This action <b>CANNOT</b> be undone. 
-          This will delete the <b>{{params.name}}</b> map perminently.</p>
+          This will delete the <b>{{params.name}}</b> map permanently.</p>
           <p>Please type in the name of the map to confirm.</p>
         </div>
 
