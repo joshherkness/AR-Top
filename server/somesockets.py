@@ -29,5 +29,15 @@ def handle_RoomNotFound(json):
 	emit('RoomNotFound', json)
 	print ('Room Not Found!')
 
-if __name__ == '__main__':
-    socketio.run(app)
+if __name__ == "__main__":
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser(description="Socket server for ARTop")
+    parser.add_argument("port", type=int, help="The port you want the server to run on", default=5000)
+    args = parser.parse_args()
+
+    if args.port < 50:
+        print("Port can't be negative or privileged!")
+        exit()
+    
+    socketio.run(app, port=args.port)
