@@ -94,3 +94,26 @@ class Api():
             return internal_error()
 
         return map.to_json(), 200, json_tag
+
+    def read_list_of_maps(claims, user_id):
+        """Gather all maps associated with a user.
+
+        Keyword arguments:
+        claims -- The JWT claims that are being passed to this methods. Must include email.
+        id -- The ID that is associated with the requested map.
+
+        Returns a HTTP response.
+        """
+        token = claims['auth_token']
+        token_user = User.verify_auth_token(token)
+        map_list = None
+        if token_user is None:
+            error = "token expired"
+        # I am assuming that the user will need to login again and I don't need to check password here
+        else:
+            map_list = Map.objects(user=token_user)
+            if map_list == None:
+                error = "map error"
+            else:
+                return map_list.to_json(), 200, json_tag
+        return jsonify(error=error), 422, json_tag

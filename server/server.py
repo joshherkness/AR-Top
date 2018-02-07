@@ -100,26 +100,14 @@ def authenticate(claims):
 
 @api.route('/map/<id>', methods=['GET'])
 @protected
-def read_maps(claims, id):
-    return Api.read_maps(claims, id)
+def read_map(claims, id):
+    return Api.read_map(claims, id)
 
 
 @api.route("/maps/<string:user_id>", methods=['GET'])
 @protected
 def read_list_of_maps(claims, user_id):
-    token = claims['auth_token']
-    token_user = User.verify_auth_token(token)
-    map_list = None
-    if token_user is None:
-        error = "token expired"
-    # I am assuming that the user will need to login again and I don't need to check password here
-    else:
-        map_list = Map.objects(user=token_user)
-        if map_list == None:
-            error = "map error"
-        else:
-            return map_list.to_json(), 200, json_tag
-    return jsonify(error=error), 422, json_tag
+    return Api.read_list_of_maps(claims, user_id)
 
 
 @api.route("/map", methods=["POST"])
