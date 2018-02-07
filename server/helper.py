@@ -1,10 +1,10 @@
 import base64
 
+import bcrypt
+import jwt
 from flask import current_app
 from flask_mail import Mail, Message
 
-import bcrypt
-import jwt
 from constants import *
 from models import *
 
@@ -50,6 +50,7 @@ class Helper():
     def validate_auth(email, password):
         """Validate an authentication attempt.
 
+        Keyword arguments:
         email -- Email that will be used to query the database.
         password -- Password that will be used to verify against salted and hashed password in database.
 
@@ -73,6 +74,7 @@ class Helper():
     def verify_jwt(request):
         """Verify that a JWT is valid.
 
+        Keyword arguments:
         request -- The incoming request that is attempting to hit a protected endpoint
 
         Return the claims inside the JWT.
@@ -91,6 +93,7 @@ class Helper():
     def send_email(text, recipients, subject="AR-top"):
         """Send email to user.
 
+        Keyword arguments:
         text -- Message that will be sent to recipients.
         recipients -- Who will receive the email.
         subject -- Subject of email. Default = AR-Top

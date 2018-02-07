@@ -17,6 +17,12 @@ from constants import max_size
 
 
 class Model(Document):
+    """ Base model for all models
+
+    Keyword arguments:
+    Document -- The base class used for defining the structure and properties of collections of documents stored in MongoDB.
+
+    """
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
     meta = {'allow_inheritance': True}
@@ -31,11 +37,25 @@ class Model(Document):
 
 
 class Role(Document, RoleMixin):
+    """ Model for what roles a user can have.
+
+    Keyword arguments:
+    Document -- The base class used for defining the structure and properties of collections of documents stored in MongoDB.
+    RoleMixin -- Mixin for Role model definitions.
+
+    """
     name = StringField(max_length=80, unique=True)
     description = StringField(max_length=255)
 
 
 class User(Model, UserMixin):
+    """ Model for what fields a user can have in Mongo.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+    UserMixin -- Mixin for User model definitions.
+
+    """
     email = EmailField(max_length=255, unique=True)
     password = StringField(max_length=255)
     active = BooleanField(default=True)
@@ -44,14 +64,17 @@ class User(Model, UserMixin):
     verified = BooleanField(default=False)
 
     def verify_password(self, password):
+        """ Verify password match """
         return password == self.password
 
     def generate_auth_token(self, expiration=600):
+        """ Generate a JWS token for the user. """
         s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.email})
 
     @staticmethod
     def verify_auth_token(token):
+        """ Verify token is still valid for user. """
         s = Serializer(secrets.SECRET_KEY)
         try:
             data = s.loads(token)
@@ -71,9 +94,10 @@ class User(Model, UserMixin):
 
 
 class Position(EmbeddedDocument):
-    """
-    This schema should be used to represent a three dimensional
-    position using x, y, and z integer coordinates.
+    """ This schema should be used to represent a three dimensional position using x, y, and z integer coordinates.
+
+    Keywoard arguments:
+    EmbeddedDocument -- Representation of a One-To-Many Relationship.
 
     TODO: Make this more modular, and independent of max_size
     """
@@ -83,9 +107,11 @@ class Position(EmbeddedDocument):
 
 
 class MapModel(EmbeddedDocument):
-    """
-    This schema should be used to represent any model that can be
-    placed into a map.
+    """ This schema should be used to represent any model that can be placed into a map.
+
+    Keywoard arguments:
+    EmbeddedDocument -- Representation of a One-To-Many Relationship.
+
     """
     type = StringField(required=True, choices=['voxel'])
     position = EmbeddedDocumentField(Position)
@@ -94,6 +120,12 @@ class MapModel(EmbeddedDocument):
 
 
 class Map(Model):
+    """ Model for what fields a map can have in Mongo.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+
+    """
     name = StringField(max_length=255)
     user = ReferenceField(User)  # this means foreign key
     width = IntField(default=16, choices=range(1, max_size + 1))
