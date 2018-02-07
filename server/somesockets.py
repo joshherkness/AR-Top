@@ -13,21 +13,21 @@ socketio = SocketIO(app)
 
 @socketio.on('connect')
 def handle_connect():
-	print("a user connected")
+    print("a user connected")
 
 @socketio.on('disconnect')
 def handle_disconnect():
-	print("a user has left")
+    print("a user has left")
 
 @socketio.on('update')
 def handle_update(json):
-	print('received json: ' + str(json))
-	emit('update', json)
+    print('received json: ' + str(json))
+    emit('update', json)
 
 #TODO: Send this in the event the submitted room code isn't found
 def handle_RoomNotFound(json):
-	emit('RoomNotFound', json)
-	print ('Room Not Found!')
+    emit('RoomNotFound', json)
+    print ('Room Not Found!')
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
