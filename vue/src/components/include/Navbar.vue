@@ -28,7 +28,7 @@
             {{ email }}
           </a>
           <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item has-text-danger" @click="signOutUser">
+            <a class="navbar-item has-text-danger" @click="clearStore">
               Sign out
             </a>
           </div>
@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import store from '@/store/store'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Navbar',
   data: function () {
@@ -68,11 +69,12 @@ export default {
     ])
   },
   methods: {
-    ...mapActions([
-      'signOutUser'
-    ]),
     toggleCollapse: function () {
       this.collapseActive = !this.collapseActive
+    },
+    clearStore: function () {
+      store.dispatch('signOutUser')
+      store.dispatch('removeAllMaps')
     }
   }
 }
