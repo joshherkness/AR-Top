@@ -32,12 +32,14 @@ public class Connector : MonoBehaviour {
 		Dictionary<string, string> data = new Dictionary<string, string>();
 		data["email"] = "some@email.com";
 		data["pass"] = "1234";
+		data ["first"] = "Ronald";
+		data ["last"] = "Pimsley";
 		socket.Emit ("update", new JSONObject (data));
 		//socket.Emit ("RoomNotFound", new JSONObject (data));
 	}
 
-	public void connection(SocketIOEvent e){
-		socket.Emit ("RoomNotFound", new JSONObject (e.data));
+	public void connection(JSONObject js){
+		socket.Emit ("FindRoom", js);
 	}
 
 	public void TestBoop(SocketIOEvent e){
