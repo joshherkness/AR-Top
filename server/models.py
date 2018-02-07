@@ -82,19 +82,6 @@ class Position(EmbeddedDocument):
     z = IntField(required=True, choices=range(1, max_size + 1))
 
 
-class RGBColor(EmbeddedDocument):
-    """
-    This schema should be used to represent an rgb color, where
-    each rgb value must be within a normalized range of 0 to 1.
-
-    TODO: Don't know if we want to use this vs. hex value, but
-    it is created just in case.
-    """
-    r = DecimalField(required=True, min_value=0, max_value=1, precision=3)
-    g = DecimalField(required=True, min_value=0, max_value=1, precision=3)
-    b = DecimalField(required=True, min_value=0, max_value=1, precision=3)
-
-
 class MapModel(EmbeddedDocument):
     """
     This schema should be used to represent any model that can be
