@@ -25,6 +25,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}},
 db = MongoEngine(app)
 
 # Instantiate Api to use DB Connection for user_datastore.
+# To remove circular dependency.
 Api(db)
 
 # Create Blueprint
@@ -47,6 +48,7 @@ def index():
 @api.route('/register', methods=['POST'])
 @protected
 def register(claims):
+    """ Register user with credentials in claims. """
     # This is to remove the circular dependency.
     api = Api(db)
     return api.register(claims)
@@ -55,6 +57,7 @@ def register(claims):
 @api.route('/auth', methods=['POST'])
 @protected
 def authenticate(claims):
+    """ Log user in with credentials in claims. """
     return Api.authenticate(claims)
 
 #=====================================================
@@ -65,30 +68,35 @@ def authenticate(claims):
 @api.route('/map/<id>', methods=['GET'])
 @protected
 def read_map(claims, id):
+    """ Return a single map by id. """
     return Api.read_map(claims, id)
 
 
 @api.route("/maps/<string:user_id>", methods=['GET'])
 @protected
 def read_list_of_maps(claims, user_id):
+    """ Get all maps for a user. """
     return Api.read_list_of_maps(claims, user_id)
 
 
 @api.route("/map", methods=["POST"])
 @protected
 def create_map(claims):
+    """ Creates a map. """
     return Api.create_map(claims)
 
 
 @api.route('/map/<map_id>', methods=['POST'])
 @protected
 def update_map(claims, map_id):
+    """ Updates a maps name or color by id. """
     return Api.update_map(claims, map_id)
 
 
 @api.route('/map/<map_id>', methods=['DELETE'])
 @protected
 def delete_map(claims, map_id):
+    """ Deletes a specified map by id. """
     return Api.delete_map(claims, map_id)
 
 

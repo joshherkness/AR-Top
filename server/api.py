@@ -11,6 +11,13 @@ from helper import *
 
 class Api():
     def __init__(self, db):
+        """Init function for Api class.
+
+        Keyword arguments:
+        db -- The DB connection for the Flask app.
+
+        Sets the instance variable.
+        """
         self.user_datastore = MongoEngineUserDatastore(db, User, Role)
 
     def register(self, claims):

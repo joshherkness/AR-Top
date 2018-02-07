@@ -7,6 +7,13 @@ from helper import *
 
 
 def expiration_check(f):
+    """A decorator for checking if the user's token has expired
+
+    Keyword arguments:
+    f -- The incoming function to be wrapped.
+
+    Return the wrapper function.
+    """
     @wraps(f)
     def wrapper(claims, *args, **kwargs):
         try:
@@ -22,6 +29,13 @@ def expiration_check(f):
 
 
 def protected(f):
+    """A decorator for checking if the incoming request has a valid JWT.
+
+    Keyword arguments:
+    f -- The incoming function to be wrapped.
+
+    Returns the wrapper function.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         claims = None
