@@ -1,6 +1,7 @@
 import base64
 
 from flask import current_app
+from flask_mail import Mail, Message
 
 import bcrypt
 import jwt
@@ -43,7 +44,7 @@ class Helper():
                 message = "Email already in use, please use another one"
                 invalid = False
         except Exception as e:
-            app.logger.error(e)
+            current_app.logger.error(e)
         return invalid, message
 
     def validate_auth(email, password):
@@ -66,7 +67,7 @@ class Helper():
                 if bcrypt.checkpw(password.encode(), user.password.encode()):
                     auth_token = user.generate_auth_token().decode('utf-8')
         except Exception as e:
-            app.logger.error(e)
+            current_app.logger.error(e)
         return invalid, message, auth_token
 
     def verify_jwt(request):
@@ -86,3 +87,23 @@ class Helper():
     def hashpw(password):
         """ Hash and salt the incoming string. """
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
+    def send_email(text, recipients, subject="AR-top"):
+        """Send email to user.
+
+        text -- Message that will be sent to recipients.
+        recipients -- Who will receive the email.
+        subject -- Subject of email. Default = AR-Top
+
+        """
+        if type(recipients) is str:
+            recipients = [recipients]
+
+        try:
+            msg = Message(subject, sender=secrets.MAIL_USERNAME,
+                          recipients=recipients)
+            msg.body = text
+            mail.send(msg)
+        except Exception as e:
+            current_app.logger.error("Failed to send message to " +
+                                     str(recipients) + "\n" + str(e))
