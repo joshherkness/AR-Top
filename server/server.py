@@ -38,6 +38,7 @@ api = Blueprint("api", "api", url_prefix="/api")
 
 @app.route('/')
 def index():
+    """ Entry point to site for production. """
     return render_template('index.html')
 
 
