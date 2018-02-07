@@ -94,7 +94,7 @@ export default {
     this.loading = true
 
     // Create the director
-    this.director = new GridDirector({ scale: 50 })
+    this.director = new GridDirector({ scale: 16 })
 
     API.getMap(this.$route.params.id).then((map) => {
       map.id = map._id['$oid']
@@ -166,7 +166,7 @@ export default {
           this.director.clearSelection()
           return
         }
-        actualPosition.copy(data.object.position)
+        actualPosition.setFromMatrixPosition(data.object.matrixWorld)
       } else if (this.mode === EditorMode.ADD) {
         actualPosition = data.point.add(data.face.normal)
       }
@@ -198,7 +198,7 @@ export default {
       let interactPosition = new THREE.Vector3()
       if (this.mode === EditorMode.DELETE) {
         // Delete
-        interactPosition.copy(data.object.position)
+        interactPosition.setFromMatrixPosition(data.object.matrixWorld)
         let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
         let model = this.grid.at(unitPosition)
         this.director.remove(model)

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GridScene } from './GridScene'
+import { setTimeout } from 'timers';
 
 /**
  * Acts as a mediator between a grid and a scene, keeping the two in sync.
@@ -132,8 +133,11 @@ export class GridDirector extends THREE.EventDispatcher {
         throw new Error('An object should exist.')
       }
 
-      object.material.transparent = true
-      object.material.opacity = 0.5
+      object.traverse((node) => {
+        if (node.material) {
+          node.material.opacity = 0.5
+        }
+      })
 
       this.scene.remove(object)
 
@@ -147,8 +151,11 @@ export class GridDirector extends THREE.EventDispatcher {
 
       let object = model.createObject(this.scale)
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
-      object.material.transparent = true
-      object.material.opacity = 0.5
+      object.traverse((node) => {
+        if (node.material) {
+          node.material.opacity = 0.5
+        }
+      })
       let group = this.scene.getObjectByName('selection')
       group.add(object)
     }
@@ -187,10 +194,11 @@ export class GridDirector extends THREE.EventDispatcher {
     let modelGroup = this.scene.getObjectByName('model-selection')
     if (modelGroup) {
       modelGroup.children.forEach((child) => {
-        if (child.material) {
-          child.material.transparent = true
-          child.material.opacity = 1.0
-        }
+        child.traverse((node) => {
+          if (node.material) {
+            node.material.opacity = 1.0
+          }
+        })
         this.scene.add(child)
         modelGroup.remove(child)
       })

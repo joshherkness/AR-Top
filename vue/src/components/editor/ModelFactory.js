@@ -1,4 +1,4 @@
-import { GridModelType, VoxelGridModel } from './GridModels'
+import { GridModelType, VoxelGridModel , TileFloorGridModel} from './GridModels'
 
 /**
  * Factory used to create instances of map models based on
@@ -25,7 +25,8 @@ export class ModelFactory {
 
     // Create the type based instance of our model
     if (data.type === GridModelType.VOXEL && data.color) {
-      return new VoxelGridModel(data.position, data.color)
+      return new TileFloorGridModel(data.position)
+      //return new VoxelGridModel(data.position, data.color)
     }
 
     return null
