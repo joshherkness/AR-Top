@@ -24,6 +24,10 @@ def handle_update(json):
     print('received json: ' + str(json))
     emit('update', json)
 
+@socketio.on('FindRoom')
+def handle_FindRoom(json):
+    print('received room: ' + str(json))
+    
 #TODO: Send this in the event the submitted room code isn't found
 def handle_RoomNotFound(json):
     emit('RoomNotFound', json)
