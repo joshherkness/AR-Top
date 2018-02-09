@@ -67,6 +67,8 @@ class GameMap(Document):
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
     private = BooleanField(default=False)
     voxels = EmbeddedDocumentListField(Voxel)
+    updated = DateTimeField(default=datetime.now())
+    inserted = DateTimeField(default=datetime.now())
 
 
 class User(Document, UserMixin):
@@ -85,6 +87,8 @@ class User(Document, UserMixin):
     confirmed_at = DateTimeField()
     roles = ListField(ReferenceField(Role), default=[])
     verified = BooleanField(default=False)
+    updated = DateTimeField(default=datetime.now())
+    inserted = DateTimeField(default=datetime.now())
 
     def verify_password(self, password):
         """ Verify password match """

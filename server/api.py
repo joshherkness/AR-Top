@@ -1,4 +1,5 @@
 import traceback
+from datetime import datetime
 
 from flask import current_app, jsonify, request
 from flask_mongoengine import MongoEngine
@@ -212,6 +213,7 @@ class Api():
         try:
             remote_copy.name = map["name"]
             remote_copy.color = map["color"]
+            remote_copy.updated = datetime.now()
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
