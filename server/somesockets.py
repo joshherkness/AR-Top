@@ -37,7 +37,8 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
 
     parser = ArgumentParser(description="Socket server for ARTop")
-    parser.add_argument("port", type=int, help="The port you want the server to run on", default=5000)
+    parser.add_argument("host", type=str, nargs='?', help="The IP addr you want to listen for", default='127.0.0.1')
+    parser.add_argument("port", type=int, nargs='?', help="The port you want the server to run on", default=5000)
     args = parser.parse_args()
 
     if args.port < 50:
