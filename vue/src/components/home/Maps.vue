@@ -21,17 +21,17 @@
         </div>
       </div>
       <hr>
-      <map-list />
+      <map-container />
     </div>
   </div>
 </template>
 
 <script>
-import MapList from './MapList'
+import MapContainer from './MapContainer'
 export default {
   name: 'Maps',
   components: {
-    MapList
+    MapContainer
   }
 }
 </script>
