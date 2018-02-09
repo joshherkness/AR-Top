@@ -70,6 +70,10 @@ class GameMap(Document):
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
 
+    def save(self, *args, **kwargs):
+        self.updated = datetime.now()
+        super(GameMap, self).save(*args, **kwargs)
+
 
 class User(Document, UserMixin):
     """ Model for what fields a user can have in Mongo.
@@ -89,6 +93,10 @@ class User(Document, UserMixin):
     verified = BooleanField(default=False)
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
+
+    def save(self, *args, **kwargs):
+        self.updated = datetime.now()
+        super(User, self).save(*args, **kwargs)
 
     def verify_password(self, password):
         """ Verify password match """

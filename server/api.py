@@ -7,8 +7,6 @@ from flask_security import MongoEngineUserDatastore, Security
 
 from helper import *
 
-# from server import user_datastore
-
 
 class Api():
     def __init__(self, db):
