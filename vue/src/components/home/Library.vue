@@ -48,6 +48,7 @@
       <!-- Library content here -->
       <map-grid v-show="layout === 'grid'" v-bind:maps="maps"/>
       <map-list v-show="layout === 'list'" v-bind:maps="maps"/>
+      <div v-show="loading" class="loading"></div>
     </div>
   </div>
 </template>
@@ -63,6 +64,7 @@ export default {
   name: 'Library',
   data: function () {
     return {
+      loading: false,
       error: false,
       message: 'You currently have no maps.'
     }
@@ -85,6 +87,9 @@ export default {
   },
   mounted: async function () {
     try {
+      // Set as loading
+      this.loading = true
+
       const maps = await API.getMaps()
       if (maps.length === 0) {
         this.error = true
@@ -102,10 +107,19 @@ export default {
         this.error = true
       }
     }
+
+    this.loading = false
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
+
+.loading {
+  @include loader;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
 </style>
