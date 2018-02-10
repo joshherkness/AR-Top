@@ -2,6 +2,7 @@
   <div id="app">
     <create-map-modal/>
     <delete-map-modal/>
+    <edit-map-modal/>
     <router-view/>
   </div>
 </template>
@@ -9,12 +10,14 @@
 <script>
 import CreateMapModal from '@/components/CreateMapModal'
 import DeleteMapModal from '@/components/DeleteMapModal'
+import EditMapModal from '@/components/EditMapModal'
 
 export default {
   name: 'app',
   components: {
     CreateMapModal,
-    DeleteMapModal
+    DeleteMapModal,
+    EditMapModal
   }
 }
 </script>

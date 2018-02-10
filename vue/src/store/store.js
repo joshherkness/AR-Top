@@ -4,6 +4,7 @@ import user from './models/user.js'
 import map from './models/map'
 import * as Cookies from 'js-cookie'
 import createPersistedState from 'vuex-persistedstate'
+import * as types from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,27 @@ export default new Vuex.Store({
   modules: {
     user,
     map
+  },
+  state: {
+    layout: 'grid'
+  },
+  actions: {
+    // eslint-disable-next-line
+    setLayout({ commit }, layout) {
+      commit(types.SET_LAYOUT, layout)
+    }
+  },
+  mutations: {
+    // eslint-disable-next-line
+    [types.SET_LAYOUT](state, layout) {
+      state.layout = layout
+    }
+  },
+  getters: {
+    // eslint-disable-next-line
+    layout(state) {
+      return state.layout
+    }
   },
   plugins: [
     createPersistedState({
