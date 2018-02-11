@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MapCard from './MapCard'
+import MapCard from '@/components/MapCard'
 
 export default {
   name: 'MapGrid',

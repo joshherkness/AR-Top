@@ -1,58 +1,81 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/home/Home'
-import Library from '@/components/home/Library'
+import Home from '@/components/Home'
+import Library from '@/components/Library'
 import Editor from '@/components/editor/Editor'
-import Registration from '@/components/user/Registration'
-import Authentication from '@/components/user/Authentication'
+import Registration from '@/components/Registration'
+import Authentication from '@/components/Authentication'
 import store from './../store/store.js'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home,
-      children: [
-        {
-          path: 'editor/:id',
-          name: 'Editor',
-          component: Editor,
-          meta: { requiresAuth: true },
-          beforeEnter: (to, from, next) => {
-            if (Object.is(store.getters.token, '')) {
-              next('/auth')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: 'maps',
-          name: 'Maps',
-          component: Library,
-          beforeEnter: (to, from, next) => {
-            if (Object.is(store.getters.token, '')) {
-              next('/auth')
-            } else {
-              next()
-            }
-          }
-        }
-      ]
+      meta: {
+        requiresAuth: true,
+        requiresNavbar: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Authentication,
+      meta: {
+        requiresAuth: false,
+        requiresNavbar: false
+      }
     },
     {
       path: '/register',
-      name: 'Registration',
-      component: Registration
+      name: 'register',
+      component: Registration,
+      meta: {
+        requiresAuth: false,
+        requiresNavbar: false
+      }
     },
     {
-      path: '/auth',
-      name: 'Authentication',
-      component: Authentication
+      path: '/library',
+      name: 'library',
+      component: Library,
+      meta: {
+        requiresAuth: true,
+        requiresNavbar: true
+      }
+    },
+    {
+      path: '/editor/:id',
+      name: 'editor',
+      component: Editor,
+      meta: {
+        requiresAuth: true,
+        requiresNavbar: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Determine if the user is authenticated
+    // TODO: Verify the token here
+    let isAuthenticated = !Object.is(store.getters.token, '')
+    if (!isAuthenticated) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
+export default router
