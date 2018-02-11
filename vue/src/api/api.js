@@ -42,7 +42,8 @@ const ENDPOINTS = {
   authenticate: `${API_ROOT}/auth`,
   register: `${API_ROOT}/register`,
   map: `${API_ROOT}/map`,
-  maps: `${API_ROOT}/maps`
+  maps: `${API_ROOT}/maps`,
+  session: `${API_ROOT}/sessions`
 }
 
 export class API {
@@ -184,7 +185,7 @@ export class API {
   static async createSession({ map_id }) {
     try {
       let url = `${ENDPOINTS.session}`
-      let data =  { map_id }
+      let data = { map_id }
       let response = await axios.post(
         url,
         data,
