@@ -23,6 +23,24 @@
     </div>
     <div class="navbar-menu" :class="{ 'is-active': collapseActive }">
       <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable" v-if="session">
+          <a class="navbar-link is-hidden-touch">
+            Map Session
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item is-expanded">
+              <p>Invite code: <span class="tag is-link">{{ code }}</span></p>
+            </a>
+            <hr class="dropdown-divider">
+            <a class="navbar-item is-expanded">
+              <p>Displayed map: <span class="tag is-link">{{ mapName }}</span></p>
+            </a>
+            <hr class="dropdown-divider">
+            <a class="navbar-item has-text-danger" @click="removeSession">
+              Close session
+            </a>
+          </div>
+        </div>
         <div class="navbar-item has-dropdown is-hoverable" v-if="token">
           <a class="navbar-link is-hidden-touch">
             {{ email }}
