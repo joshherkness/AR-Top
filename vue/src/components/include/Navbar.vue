@@ -25,15 +25,15 @@
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable" v-if="session">
           <a class="navbar-link is-hidden-touch">
-            Map Session
+            Session
           </a>
           <div class="navbar-dropdown">
             <a class="navbar-item is-expanded">
-              <p>Invite code: <span class="tag is-link">{{ code }}</span></p>
+              <p>Invite code: <span class="tag is-link">{{ session.code }}</span></p>
             </a>
             <hr class="dropdown-divider">
             <a class="navbar-item is-expanded">
-              <p>Displayed map: <span class="tag is-link">{{ mapName }}</span></p>
+              <p>Displayed map: <span class="tag is-link">{{ session.mapName }}</span></p>
             </a>
             <hr class="dropdown-divider">
             <a class="navbar-item has-text-danger" @click="removeSession">
@@ -72,7 +72,7 @@
 
 <script>
 import store from '@/store/store'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Navbar',
   data: function () {
@@ -83,10 +83,14 @@ export default {
   computed: {
     ...mapGetters([
       'email',
-      'token'
+      'token',
+      'session'
     ])
   },
   methods: {
+    ...mapActions([
+      'removeSession'
+    ]),
     toggleCollapse: function () {
       this.collapseActive = !this.collapseActive
     },
