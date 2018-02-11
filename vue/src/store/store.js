@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './models/user.js'
 import map from './models/map'
+import session from './models/session'
 import * as Cookies from 'js-cookie'
 import createPersistedState from 'vuex-persistedstate'
 import * as types from './mutation-types'
@@ -11,7 +12,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     user,
-    map
+    map,
+    session
   },
   state: {
     layout: 'grid'
