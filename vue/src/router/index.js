@@ -5,7 +5,7 @@ import Library from '@/components/Library'
 import Editor from '@/components/editor/Editor'
 import Registration from '@/components/Registration'
 import Authentication from '@/components/Authentication'
-import store from './../store/store.js'
+import { API } from '@/api/api'
 
 Vue.use(Router)
 
@@ -62,17 +62,22 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Determine if the user is authenticated
-    // TODO: Verify the token here
-    let isAuthenticated = !Object.is(store.getters.token, '')
-    if (!isAuthenticated) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
+    // Fetch the current user using auth token
+    API.getCurrentUser().then((user) => {
+      // We successfully retrieved the current user, therefore we can route the
+      // user
       next()
-    }
+    }).catch((err) => {
+      // Route the user to login page if error status is 401 (unauthorized)
+      if (err.response.status === 401) {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        })
+      } else {
+        throw err
+      }
+    })
   } else {
     next() // make sure to always call next()!
   }
