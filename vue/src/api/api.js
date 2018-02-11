@@ -42,7 +42,8 @@ const ENDPOINTS = {
   authenticate: `${API_ROOT}/auth`,
   register: `${API_ROOT}/register`,
   map: `${API_ROOT}/map`,
-  maps: `${API_ROOT}/maps`
+  maps: `${API_ROOT}/maps`,
+  session: `${API_ROOT}/sessions`
 }
 
 export class API {
@@ -143,6 +144,73 @@ export class API {
         })
       )
       return response.data.map
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async getSession(id) {
+    try {
+      let url = `${ENDPOINTS.session}/${id}`
+      let response = await axios.get(
+        url,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async deleteSession(id) {
+    try {
+      let url = `${ENDPOINTS.session}/${id}`
+      let response = await axios.delete(
+        url,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async createSession({ map_id }) {
+    try {
+      let url = `${ENDPOINTS.session}`
+      let data = { map_id }
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async updateSession(session) {
+    try {
+      let url = `${ENDPOINTS.session}`
+      let response = await axios.post(
+        url,
+        session,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
     } catch (err) {
       throw err
     }
