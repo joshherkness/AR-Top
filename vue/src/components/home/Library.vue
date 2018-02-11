@@ -6,6 +6,10 @@
           <div class="level-item">
             <span class="title is-5">My Library</span>
           </div>
+          <!-- Loading spinner -->
+          <div v-if="loading" class="level-item">
+            <span class="loader"></span>
+          </div>
         </div>
         <div class="level-right">
           <!-- Grid layout control -->
@@ -46,8 +50,10 @@
       <hr>
       
       <!-- Library content here -->
-      <map-grid v-show="layout === 'grid'" v-bind:maps="maps"/>
-      <map-list v-show="layout === 'list'" v-bind:maps="maps"/>
+      <div v-if="!loading">
+        <map-grid v-show="layout === 'grid'" v-bind:maps="maps"/>
+        <map-list v-show="layout === 'list'" v-bind:maps="maps"/>
+      </div>
     </div>
   </div>
 </template>
@@ -63,6 +69,7 @@ export default {
   name: 'Library',
   data: function () {
     return {
+      loading: false,
       error: false,
       message: 'You currently have no maps.'
     }
@@ -85,6 +92,9 @@ export default {
   },
   mounted: async function () {
     try {
+      // Set as loading
+      this.loading = true
+
       const maps = await API.getMaps()
       if (maps.length === 0) {
         this.error = true
@@ -102,6 +112,8 @@ export default {
         this.error = true
       }
     }
+
+    this.loading = false
   }
 }
 </script>
