@@ -5,13 +5,17 @@ echo "Going to server directory..."
 cd server
 
 echo "Creating a virtual environment (for python)..."
-virtualenv dev-env
+if [ -n "$(which python3)" ]; then
+	virtualenv --python=$(which python3) dev-env
+else
+	virtualenv dev-env
+fi
 
 echo "Activating the virtual environment..."
 . dev-env/bin/activate
 
 echo "Installing the required python packages..."
-pip install -r requirements.txt
+./dev-env/bin/pip3 install -r requirements.txt
 
 echo "Starting mongo in the background..."
 unameOut="$(uname -s)"
@@ -26,7 +30,7 @@ esac
 echo "If you want to view the mongod logs. Tail out mongo-log.log..."
 
 echo "Starting Flask server.."
-python server.py > flask.log 2>&1 & #Pipe flask stdout and stderr to log file.
+./dev-env/bin/python3 server.py > flask.log 2>&1 & #Pipe flask stdout and stderr to log file.
 echo "If you want to view the Flask logs. Tail out flask-log.log..."
 
 echo "Going to the Vue directory..."
