@@ -36,7 +36,7 @@ export default {
   methods: {
     ...mapActions([
       'removeSession'
-    ]),
+    ])
   }
 }
 </script>
