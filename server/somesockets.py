@@ -11,28 +11,64 @@ socketio = SocketIO(app)
 
 socketio = SocketIO(app)
 
+# What we want to do here is when a user connects,
+#   open_rooms[room] = List-of-users
+# so we can see all the users in O(1)
+# We also want to have this when a user disconnects
+#   room_user_is_in = bijection[request.sid]
+#   open_rooms[room_user_is_in].remove(request.sid)
+# so we can delete a user in O(1)
+open_rooms = dict()
+bijection = dict()
+
+
 @socketio.on('connect')
-def handle_connect():
-    print("a user connected")
+def handle_connect(json):
+    try:
+        room = json['roomNumber']
+    except:
+        emit('Malformed request')
+        return
+
+    if room not in open_rooms:
+        emit('RoomNotFound', json)
+        return
+
+    open_rooms[room] += [request.sid]
+    bijection[request.sid] = room
+    emit('Connect', dict(message="Another user connected"), room=room)
+
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    print("a user has left")
+    room = bijection[request.sid]
+    open_rooms[room].remove(request.sid)
+    del bijection[request.sid]
+    emit('Disconnect', dict(message="User disconnected"), room=room)
+
 
 @socketio.on('update')
 def handle_update(json):
-    print('received json: ' + str(json))
-    emit('update', json)
+    try:
+        room = json['roomNumber']
+        map = json['map']
+    except:
+        send('Malformed request')
+        
+    emit('update', json=map, room=room)
 
-@socketio.on('FindRoom')
-def handle_FindRoom(json):
-    print('received room: ' + str(json))
     
-#TODO: Send this in the event the submitted room code isn't found
-def handle_RoomNotFound(json):
-    emit('RoomNotFound', json)
-    print ('Room Not Found!')
-
+@socketio.on('changeRoom')
+def handle_update(json):
+    try:
+        room = json['roomNumber']
+        map = json['map']
+    except:
+        send('Malformed request')
+        
+    emit('update', json=map, room=room)
+    
+    
 if __name__ == "__main__":
     from argparse import ArgumentParser
 
@@ -41,8 +77,8 @@ if __name__ == "__main__":
     parser.add_argument("port", type=int, nargs='?', help="The port you want the server to run on", default=5000)
     args = parser.parse_args()
 
-    if args.port < 50:
+    if args.port < 80:
         print("Port can't be negative or privileged!")
         exit()
     
-    socketio.run(app, port=args.port)
+    socketio.run(app, host=args.host, port=args.port)
