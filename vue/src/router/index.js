@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/Home'
-import Maps from '@/components/home/Maps'
+import Library from '@/components/home/Library'
 import Editor from '@/components/editor/Editor'
 import Registration from '@/components/user/Registration'
 import Authentication from '@/components/user/Authentication'
@@ -33,7 +33,7 @@ export default new Router({
         {
           path: 'maps',
           name: 'Maps',
-          component: Maps,
+          component: Library,
           beforeEnter: (to, from, next) => {
             if (Object.is(store.getters.token, '')) {
               next('/auth')
