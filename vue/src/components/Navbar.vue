@@ -23,6 +23,7 @@
     </div>
     <div class="navbar-menu" :class="{ 'is-active': collapseActive }">
       <div class="navbar-end">
+        <session-manager/>
         <div class="navbar-item has-dropdown is-hoverable" v-if="token">
           <a class="navbar-link is-hidden-touch">
             {{ email }}
@@ -54,7 +55,8 @@
 
 <script>
 import store from '@/store/store'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import SessionManager from '@/components/SessionManager'
 export default {
   name: 'Navbar',
   data: function () {
@@ -69,6 +71,9 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'removeSession'
+    ]),
     toggleCollapse: function () {
       this.collapseActive = !this.collapseActive
     },
@@ -76,6 +81,9 @@ export default {
       store.dispatch('signOutUser')
       store.dispatch('removeAllMaps')
     }
+  },
+  components: {
+    SessionManager
   }
 }
 </script>
