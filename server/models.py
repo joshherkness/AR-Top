@@ -38,7 +38,7 @@ class Position(EmbeddedDocument):
     z = IntField(required=True, choices=range(1, max_size + 1))
 
 
-class Voxel(EmbeddedDocument):
+class GameModel(EmbeddedDocument):
     """ This schema should be used to represent any model that can be placed into a map.
 
     Keywoard arguments:
@@ -66,7 +66,7 @@ class GameMap(Document):
     color = StringField(
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
     private = BooleanField(default=False)
-    voxels = EmbeddedDocumentListField(Voxel)
+    models = EmbeddedDocumentListField(GameModel)
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
 
