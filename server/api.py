@@ -209,13 +209,8 @@ class Api():
             return internal_error()
 
         try:
-            data = {
-                'name': map['name'],
-                'color': map['color'],
-                'models': map['models'],
-                'updated': datetime.now()
-            }
-            remote_copy.update(**data)
+            remote_copy.update(**map)
+            remote_copy.updated = datetime.now()
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
