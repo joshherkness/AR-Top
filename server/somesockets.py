@@ -10,14 +10,6 @@ socketio = SocketIO(app)
 #=====================================================
 
 socketio = SocketIO(app)
-
-# What we want to do here is when a user connects,
-#   open_rooms[room] = List-of-users
-# so we can see all the users in O(1)
-# We also want to have this when a user disconnects
-#   room_user_is_in = bijection[request.sid]
-#   open_rooms[room_user_is_in].remove(request.sid)
-# so we can delete a user in O(1)
 open_rooms = dict()
 bijection = dict()
 
@@ -59,10 +51,9 @@ def handle_update(json):
 
     
 @socketio.on('changeRoom')
-def handle_update(json):
+def switch_dungeon(json):
     try:
         room = json['roomNumber']
-        map = json['map']
     except:
         send('Malformed request')
         
