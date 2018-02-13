@@ -15,7 +15,7 @@
     <td class="is-narrow">
       <div class="field is-grouped">
         <p class="control">
-          <router-link class="button is-link level-item" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
+          <router-link class="button is-link level-item" :to="{ name: 'editor', params: { id: oid }}">Open</router-link>
         </p>
         <div class="dropdown is-hoverable is-right">
           <div class="dropdown-trigger">

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import MapRow from './MapRow'
+import MapRow from '@/components/MapRow'
 
 export default {
   name: 'MapList',

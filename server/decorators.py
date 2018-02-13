@@ -20,11 +20,11 @@ def expiration_check(f):
             token = claims['auth_token']
             token_user = User.verify_auth_token(token)
             if token_user is None:
-                return jsonify(error="token expired"), 422, json_tag
+                return jsonify(error="token expired"), 401, json_tag
             return f(claims, token_user, *args, **kwargs)
         except Exception as e:
             current_app.logger.error(str(e))
-            return jsonify(error="token expired."), 422, json_tag
+            return jsonify(error="token expired."), 401, json_tag
     return wrapper
 
 
