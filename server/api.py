@@ -161,14 +161,14 @@ class Api():
             depth = map["depth"]
             color = map["color"]
             private = map["private"]
-            voxels = map['models']
+            models = map['models']
         except Exception as e:
             current_app.logger.error(str(e))
             return malformed_request()
 
         try:
             new_game_map = GameMap(owner=user.id, name=name, width=width, height=height,
-                                   depth=depth, color=color, private=private, voxels=voxels)
+                                   depth=depth, color=color, private=private, models=models)
             new_game_map.save()
         except Exception as e:
             current_app.logger.error("Failed to save map for user",
@@ -211,6 +211,7 @@ class Api():
         try:
             remote_copy.name = map["name"]
             remote_copy.color = map["color"]
+            remote_copy.models = map["models"]
             remote_copy.updated = datetime.now()
         except Exception as e:
             current_app.logger.error(str(e))
