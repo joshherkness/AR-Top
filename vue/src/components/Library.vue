@@ -62,8 +62,8 @@
 import { mapActions, mapGetters } from 'vuex'
 import { API } from '@/api/api'
 
-import MapGrid from './MapGrid'
-import MapList from './MapList'
+import MapGrid from '@/components/MapGrid'
+import MapList from '@/components/MapList'
 
 export default {
   name: 'Library',
