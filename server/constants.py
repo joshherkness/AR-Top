@@ -6,7 +6,7 @@ email_pattern = re.compile('[\\w.]+@[\\w]+.[\\w]+', re.IGNORECASE)
 json_tag = {'Content-Type': 'application/json'}
 max_email_length = 255
 max_password_length = 255
-max_size = 1024
+max_size = 48
 
 
 def malformed_request(): return jsonify(
