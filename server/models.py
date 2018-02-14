@@ -34,12 +34,12 @@ class Position(EmbeddedDocument):
 
     TODO: Make this more modular, and independent of max_size
     """
-    x = IntField(required=True, choices=range(1, max_size + 1))
-    y = IntField(required=True, choices=range(1, max_size + 1))
-    z = IntField(required=True, choices=range(1, max_size + 1))
+    x = IntField(required=True, choices=range(0, max_size))
+    y = IntField(required=True, choices=range(0, max_size))
+    z = IntField(required=True, choices=range(0, max_size))
 
 
-class Voxel(EmbeddedDocument):
+class GameModel(EmbeddedDocument):
     """ This schema should be used to represent any model that can be placed into a map.
 
     Keywoard arguments:
@@ -67,7 +67,7 @@ class GameMap(Document):
     color = StringField(
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
     private = BooleanField(default=False)
-    voxels = EmbeddedDocumentListField(Voxel)
+    models = EmbeddedDocumentListField(GameModel)
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
 
@@ -135,18 +135,19 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ReferenceField(User)
-    map_id = ReferenceField(GameMap)
-    code = StringField(regex='^([A-Za-z0-9]{5})$', unique=True)
+    user = ReferenceField(User)#, required=True)
+    map = ReferenceField(GameMap)#, required=True)
+    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
     def save(self, *args, **kwargs):
-        code_try = ''
-        for i in range(0,5):
-            code_try += random.choice(session_code_choices)
-        while len(Session.objects(code=code_try)) != 0:
+        if self.code == None:
             code_try = ''
             for i in range(0,5):
                 code_try += random.choice(session_code_choices)
-        self.code = code_try
+            while len(Session.objects(code=code_try)) != 0:
+                code_try = ''
+                for i in range(0,5):
+                    code_try += random.choice(session_code_choices)
+            self.code = code_try
         super().save(*args, **kwargs)
