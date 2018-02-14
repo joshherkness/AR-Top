@@ -1,5 +1,6 @@
 import secrets
 import sys
+import random
 from datetime import datetime
 
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
@@ -9,7 +10,7 @@ from itsdangerous import BadSignature, SignatureExpired
 from mongoengine import *
 from mongoengine.fields import *
 
-from constants import max_size
+from constants import max_size, session_code_choices
 
 #=====================================================
 # Superclasses
@@ -139,3 +140,29 @@ class Map(Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         # TODO: socket.io or whatever the hell it is
+
+#=====================================================
+# Session model
+#=====================================================
+class Session(Document):
+    """ Model for sessions.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+
+    """
+    user = ReferenceField(User)
+    map_id = ReferenceField(Map)
+    code = StringField(regex='^([A-Za-z0-9]{5})$', unique=True)
+
+    def save(self, *args, **kwargs):
+        code_try = ''
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        for i in range(0,5):
+            code_try += random.choice(session_code_choices)
+        while len(Session.objects(code=code_try)) != 0:
+            code_try = ''
+            for i in range(0,5):
+                code_try += random.choice(session_code_choices)
+        self.code = code_try
+        super().save(*args, **kwargs)
