@@ -1,5 +1,6 @@
 import secrets
 import sys
+import random
 from datetime import datetime
 
 from bson import ObjectId
@@ -10,7 +11,7 @@ from itsdangerous import BadSignature, SignatureExpired
 from mongoengine import *
 from mongoengine.fields import *
 
-from constants import max_size
+from constants import max_size, session_code_choices
 
 
 class Role(Document, RoleMixin):
@@ -122,3 +123,30 @@ class User(Document, UserMixin):
             return None
         user = User.objects.get(email=data['id'])
         return user
+
+
+#=====================================================
+# Session model
+#=====================================================
+class Session(Document):
+    """ Model for sessions.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+
+    """
+    user = ReferenceField(User)
+    map_id = ReferenceField(GameMap)
+    code = StringField(regex='^([A-Za-z0-9]{5})$', unique=True)
+    created_at = DateTimeField(default=datetime.now())
+
+    def save(self, *args, **kwargs):
+        code_try = ''
+        for i in range(0,5):
+            code_try += random.choice(session_code_choices)
+        while len(Session.objects(code=code_try)) != 0:
+            code_try = ''
+            for i in range(0,5):
+                code_try += random.choice(session_code_choices)
+        self.code = code_try
+        super().save(*args, **kwargs)
