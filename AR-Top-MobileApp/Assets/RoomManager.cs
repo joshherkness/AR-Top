@@ -11,12 +11,15 @@ public class RoomManager : MonoBehaviour {
 	public Text errorLabel; //The label to print out user error
 	public Text serverErrorLabel; //The label to display a server error e.g. "Room code doesn't exist!"
 
+	private Connector con;
+
 	private string code;
 	private const int ROOMCODELENGTH = 5; //The alphanumeric length of the room code
 
 	// Use this for initialization
 	void Start () {
-		
+		con = FindObjectOfType<Connector> ();
+		roomcode.contentType = InputField.ContentType.Alphanumeric;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +32,10 @@ public class RoomManager : MonoBehaviour {
 		errorLabel.text = "";
 		if (roomcode.text.Length == ROOMCODELENGTH) {
 			code = roomcode.text;
-			panel.gameObject.SetActive (false);
+			Dictionary<string, string> r = new Dictionary<string, string> ();
+			r ["roomNumber"] = code;
+			con.connection (new JSONObject (r));
+			//panel.gameObject.SetActive (false);
 		} else {
 			errorLabel.text = "Room code must be " + ROOMCODELENGTH + " characters long.";
 		}
