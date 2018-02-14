@@ -135,8 +135,8 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ReferenceField(User)
-    map_id = ReferenceField(GameMap)
+    user = ReferenceField(User, required=True)
+    map = ReferenceField(GameMap, required=True)
     code = StringField(regex='^([A-Za-z0-9]{5})$', unique=True)
     created_at = DateTimeField(default=datetime.now())
 

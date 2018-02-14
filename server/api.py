@@ -249,3 +249,39 @@ class Api():
         except:
             return internal_error()
         return jsonify(success=map_id), 200, json_tag
+
+    def create_session(claims):
+        """Create session and save to database.
+
+        Keyword arguments:
+        claims -- The JWT claims that are being passed to this methods. Must include email.
+        """
+        map_id, user = None
+        try:
+            map_id = request.json['map_id']
+            user = token_user
+        except:
+            return malformed_request()
+
+        # Make sure this user is actually the author of the map with map_id
+        # and that the map_id is of an existing map
+        remote_copy = None
+        try:
+            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
+        except (StopIteration, DoesNotExist) as e:
+            # Malicious user may be trying to overwrite someone's map
+            # or there actually is something wrong; treat these situations the same
+            return jsonify(error="Map does not exist"), 404, json_tag
+        except Exception as e:
+            current_app.logger.error(str(e))
+            return internal_error()
+
+        try:
+            new_session = Session(user=user, map=map)
+            new_session.save()
+        except Exception as e:
+            current_app.logger.error("Failed to save session for user",
+                                     str(user), "and map ", str(map_id), str(e))
+            return internal_error()
+
+        return jsonify(success="Successfully created session", session=new_session), 200, json_tag
