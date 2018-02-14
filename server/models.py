@@ -135,18 +135,19 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ReferenceField(User)
-    map_id = ReferenceField(GameMap)
-    code = StringField(regex='^([A-Za-z0-9]{5})$', unique=True)
+    user = ReferenceField(User)#, required=True)
+    map = ReferenceField(GameMap)#, required=True)
+    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
     def save(self, *args, **kwargs):
-        code_try = ''
-        for i in range(0,5):
-            code_try += random.choice(session_code_choices)
-        while len(Session.objects(code=code_try)) != 0:
+        if self.code == None:
             code_try = ''
             for i in range(0,5):
                 code_try += random.choice(session_code_choices)
-        self.code = code_try
+            while len(Session.objects(code=code_try)) != 0:
+                code_try = ''
+                for i in range(0,5):
+                    code_try += random.choice(session_code_choices)
+            self.code = code_try
         super().save(*args, **kwargs)
