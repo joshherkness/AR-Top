@@ -19,6 +19,7 @@ public class RoomManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		con = FindObjectOfType<Connector> ();
+		roomcode.contentType = InputField.ContentType.Alphanumeric;
 	}
 	
 	// Update is called once per frame
@@ -34,7 +35,7 @@ public class RoomManager : MonoBehaviour {
 			Dictionary<string, string> r = new Dictionary<string, string> ();
 			r ["roomNumber"] = code;
 			con.connection (new JSONObject (r));
-			panel.gameObject.SetActive (false);
+			//panel.gameObject.SetActive (false);
 		} else {
 			errorLabel.text = "Room code must be " + ROOMCODELENGTH + " characters long.";
 		}
