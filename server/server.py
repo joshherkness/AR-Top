@@ -106,7 +106,6 @@ def delete_map(claims, map_id):
     """ Deletes a specified map by id. """
     return Api.delete_map(claims, map_id)
 
-
 #=====================================================
 # Main
 #=====================================================
@@ -133,3 +132,5 @@ if __name__ == '__main__':
         exit()
     app.register_blueprint(api)
     app.run()
+
+GameMap.drop_collection()
