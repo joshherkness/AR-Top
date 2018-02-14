@@ -70,7 +70,7 @@
                 </div>
               </form>
             </div>
-            <p>Need an account? <router-link to="register">Register</router-link></p>
+            <p>Need an account? <router-link :to="{name: 'register'}">Register</router-link></p>
           </div>
         </div>
       </div>
@@ -80,8 +80,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import router from './../../router/index'
-import { API } from './../../api/api'
+import router from '@/router'
+import { API } from '@/api/api'
 
 // Validator used for the email field
 const EMAIL_VALIDATOR = {

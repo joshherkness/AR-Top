@@ -216,7 +216,7 @@ export default {
         // Route the user to their newly created map
         let map = response.data.map
         this.addMap(map)
-        router.push({name: 'Editor', params: {id: map._id.$oid}})
+        router.push({name: 'editor', params: {id: map._id.$oid}})
 
         // Navigate to the editor here
       } catch (err) {

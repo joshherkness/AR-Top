@@ -2,6 +2,10 @@
   <div id="app">
     <create-map-modal/>
     <delete-map-modal/>
+    <edit-map-modal/>
+
+    <!-- Only show the navbar for required routes-->
+    <Navbar v-if="$route.meta.requiresNavbar"/>
     <router-view/>
   </div>
 </template>
@@ -9,12 +13,16 @@
 <script>
 import CreateMapModal from '@/components/CreateMapModal'
 import DeleteMapModal from '@/components/DeleteMapModal'
+import EditMapModal from '@/components/EditMapModal'
+import Navbar from '@/components/Navbar'
 
 export default {
   name: 'app',
   components: {
     CreateMapModal,
-    DeleteMapModal
+    DeleteMapModal,
+    EditMapModal,
+    Navbar
   }
 }
 </script>

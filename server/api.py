@@ -1,12 +1,11 @@
 import traceback
+from datetime import datetime
 
 from flask import current_app, jsonify, request
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
 
 from helper import *
-
-# from server import user_datastore
 
 
 class Api():
@@ -93,7 +92,7 @@ class Api():
 
         Returns a HTTP response.
         """
-        email, user, map = None, None, None
+        email, user, game_map = None, None, None
         try:
             email = claims["email"]
             user = User.objects(email=email).first()
@@ -101,15 +100,17 @@ class Api():
             return malformed_request()
 
         try:
-            map = Map.objects.get(id=id, user=user)
+            game_map = GameMap.objects(id=id).first()
         except (StopIteration, DoesNotExist) as e:
+            current_app.logger.error(e)
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
             return jsonify(error="Map does not exist"), 404, json_tag
-        except:
+        except Exception as e:
+            current_app.logger.error(e)
             return internal_error()
 
-        return map.to_json(), 200, json_tag
+        return jsonify(game_map), 200, json_tag
 
     def read_list_of_maps(claims, user_id):
         """Gather all maps associated with a user.
@@ -127,11 +128,11 @@ class Api():
             error = "token expired"
         # I am assuming that the user will need to login again and I don't need to check password here
         else:
-            map_list = Map.objects(user=token_user)
+            map_list = GameMap.objects(owner=token_user.id)
             if map_list == None:
                 error = "map error"
             else:
-                return map_list.to_json(), 200, json_tag
+                return jsonify(map_list), 200, json_tag
         return jsonify(error=error), 422, json_tag
 
     def create_map(claims):
@@ -160,21 +161,21 @@ class Api():
             depth = map["depth"]
             color = map["color"]
             private = map["private"]
-            models = map['models']
+            voxels = map['models']
         except Exception as e:
             current_app.logger.error(str(e))
             return malformed_request()
 
         try:
-            new_map = Map(name=name, user=user, width=width, height=height, depth=depth,
-                          color=color, private=private, models=models)
-            new_map.save()
+            new_game_map = GameMap(owner=user.id, name=name, width=width, height=height,
+                                   depth=depth, color=color, private=private, voxels=voxels)
+            new_game_map.save()
         except Exception as e:
             current_app.logger.error("Failed to save map for user",
                                      str(user), "\n", str(e))
             return internal_error()
 
-        return jsonify(success="Successfully created map", map=new_map), 200, json_tag
+        return jsonify(success="Successfully created map", map=new_game_map), 200, json_tag
 
     def update_map(claims, map_id):
         """Update a maps name or base color.
@@ -198,7 +199,7 @@ class Api():
         # and that the ID also is an existing map
         remote_copy = None
         try:
-            remote_copy = Map.objects.get(id=map_id, user=user)
+            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
         except (StopIteration, DoesNotExist) as e:
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
@@ -208,10 +209,9 @@ class Api():
             return internal_error()
 
         try:
-            for i in ["name", "width", "height", "depth", "color", "private", 'models']:
-                attr = map.get(i)
-                if attr:
-                    remote_copy[i] = attr
+            remote_copy.name = map["name"]
+            remote_copy.color = map["color"]
+            remote_copy.updated = datetime.now()
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
@@ -240,7 +240,7 @@ class Api():
             return internal_error()
 
         try:
-            remote_copy = Map.objects.get(id=map_id, user=user)
+            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
             remote_copy.delete()
         except (StopIteration, DoesNotExist) as e:
             # Malicious user may be trying to overwrite someone's map
@@ -248,5 +248,4 @@ class Api():
             return jsonify(error="Map does not exist"), 404, json_tag
         except:
             return internal_error()
-
         return jsonify(success=map_id), 200, json_tag
