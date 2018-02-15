@@ -249,7 +249,7 @@ class Api():
             return internal_error()
         return jsonify(success=map_id), 200, json_tag
 
-    def create_session(claims,token_user):
+    def create_session(claims, token_user):
         """Create session and save to database.
 
         Keyword arguments:
