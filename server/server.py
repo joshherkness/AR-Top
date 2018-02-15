@@ -116,7 +116,7 @@ def create_session(claims):
 @api.route('/sessions/', methods=['POST'])
 @protected
 @expiration_check
-def create_session(claims,token_user):
+def create_session(claims, token_user):
     """ Creates a session with the given map_id and token user's id """
     return Api.create_session(claims,token_user)
 
