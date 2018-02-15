@@ -285,7 +285,7 @@ class Api():
 
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 
-    def read_session(claims, id):
+    def read_session(claims, token_user, id):
         """ Returns the session with the given id """
         user = None
         try:
