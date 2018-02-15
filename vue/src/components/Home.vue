@@ -74,11 +74,16 @@
             <h1 class="title is-4">
               <span class="has-text-info">Step 4:</span> Print the target image
             </h1>
-            <p>
-              This image will be used by the mobile application to display an
-              augmented render of your map, that can be seen by anyone in your
-              session.
-            </p>
+            <div class="content">
+              <p>
+                This image will be used by the mobile application to display an
+                augmented render of your map, that can be seen by anyone in your
+                session.
+              </p>
+            </div>
+            <button class="button is-link" v-on:click="openImageTarget">
+              Print image target
+            </button>
             <figure class="image is-128x128" style="margin: 1rem;">
               <img src="@/assets/image-target.jpg">
             </figure>
@@ -105,8 +110,16 @@
   </div>
 </template>
 <script>
+import imageTarget from '@/assets/image-target.jpg'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  methods: {
+    openImageTarget: function () {
+      let imageWindow = window.open(imageTarget)
+      imageWindow.print()
+    }
+  }
 }
 </script>
 
