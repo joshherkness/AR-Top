@@ -19,15 +19,16 @@ public class JSONReader : MonoBehaviour {
 	private GameObject tileLayout;
 	private GameObject npcLayout;
 	private ImageTargetBehaviour imageTarget;
+	//private AnchorStageBehaviour anchorStage;
 
 	private int gridHeightGap = 2; //The height gap for y coordinate grid spaces. Every increment represents 5 gamefoot.
 
 	//A test JSON string to use until we pull directly from the server.
 	private string JSONSTRING = @"
 	{
-  ""width"": 16,
-  ""height"": 1000,
-  ""depth"": 16,
+  ""width"": 32,
+  ""height"": 10,
+  ""depth"": 32,
   ""color"": ""#417505"",
   ""models"": [
     {
@@ -2269,47 +2270,20 @@ public class JSONReader : MonoBehaviour {
 	void Start () {
 
 		//Set anti-aliasing to highest value
-		QualitySettings.antiAliasing = 8;
+		QualitySettings.antiAliasing = 2;
 
 		//Find the Image Target
 		imageTarget = GameObject.Find ("ImageTarget").GetComponent <ImageTargetBehaviour>();
+		//anchorStage = GameObject.Find ("Ground Plane Stage").GetComponent <AnchorStageBehaviour> (); 
 
-		//Create an empty parent GameObject to control the scale of the entire layout.
-		mapScaler = GameObject.Find ("MapScaler");
-		if (mapScaler == null) {
-			mapScaler = new GameObject ("MapScaler");
-		}
+		buildChildren ();
 
-		//Create an empty parent for the grid.
-		gridLayout = GameObject.Find ("GridLayout");
-		if (gridLayout == null){
-			gridLayout = new GameObject("GridLayout");
-			gridLayout.transform.SetParent (mapScaler.transform);
-		}
 
-		//Create an empty parent for the Player Character pieces.
-		playerLayout = GameObject.Find ("PlayerLayout");
-		if (playerLayout == null) {
-			playerLayout = new GameObject ("PlayerLayout");
-			playerLayout.transform.SetParent (mapScaler.transform);
-		}
 
-		//Create an empty parent for the NPC pieces.
-		npcLayout = GameObject.Find ("NPCLayout");
-		if (npcLayout == null) {
-			npcLayout = new GameObject ("NPCLayout");
-			npcLayout.transform.SetParent (mapScaler.transform);
-		}
 
-		//Create an empty parent for the Tile pieces.
-		tileLayout = GameObject.Find ("TileLayout");
-		if (tileLayout == null) {
-			tileLayout = new GameObject ("TileLayout");
-			tileLayout.transform.SetParent (mapScaler.transform);
-		}
 
 		MapItem grid = JsonUtility.FromJson<MapItem> (JSONSTRING);
-		Vector3 gridVector = new Vector3 (-0.5f, 0, -0.5f);
+		//Vector3 gridVector = new Vector3 (-0.5f, 0, -0.5f);
 		//GridMesh gridMaker = Instantiate (gridPrefab, gridVector, Quaternion.identity).GetComponent <GridMesh>();
 		//gridMaker.transform.SetParent (gridLayout.transform);
 		//gridMaker.setSize (grid.width);
@@ -2320,6 +2294,46 @@ public class JSONReader : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void UpdateJSON (string JSONstring){
+		Destroy (mapScaler);
+		buildChildren ();
+		MapItem map = JsonUtility.FromJson<MapItem> (JSONstring);
+		buildMap (map);
+	}
+
+	void buildChildren ()
+	{
+		//Create an empty parent GameObject to control the scale of the entire layout.
+		mapScaler = GameObject.Find ("MapScaler");
+		if (mapScaler == null) {
+			mapScaler = new GameObject ("MapScaler");
+		}
+		//Create an empty parent for the grid.
+		gridLayout = GameObject.Find ("GridLayout");
+		if (gridLayout == null) {
+			gridLayout = new GameObject ("GridLayout");
+			gridLayout.transform.SetParent (mapScaler.transform);
+		}
+		//Create an empty parent for the Player Character pieces.
+		playerLayout = GameObject.Find ("PlayerLayout");
+		if (playerLayout == null) {
+			playerLayout = new GameObject ("PlayerLayout");
+			playerLayout.transform.SetParent (mapScaler.transform);
+		}
+		//Create an empty parent for the NPC pieces.
+		npcLayout = GameObject.Find ("NPCLayout");
+		if (npcLayout == null) {
+			npcLayout = new GameObject ("NPCLayout");
+			npcLayout.transform.SetParent (mapScaler.transform);
+		}
+		//Create an empty parent for the Tile pieces.
+		tileLayout = GameObject.Find ("TileLayout");
+		if (tileLayout == null) {
+			tileLayout = new GameObject ("TileLayout");
+			tileLayout.transform.SetParent (mapScaler.transform);
+		}
 	}
 
 	void buildMap (MapItem obj){

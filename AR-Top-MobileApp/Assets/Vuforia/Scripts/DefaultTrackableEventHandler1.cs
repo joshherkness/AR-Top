@@ -28,6 +28,7 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
+
     }
 
     #endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -73,9 +74,9 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-		var drawLines = FindObjectOfType<DrawLines> ();
+		//var drawLines  = FindObjectOfType<DrawLines> ();
 
-		drawLines.enabled = true;
+		//drawLines.enabled = true;
 		
 		// Enable rendering:
         foreach (var component in rendererComponents)
@@ -96,9 +97,9 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-		var drawLines = FindObjectOfType<DrawLines> ();
+		//var drawLines  = FindObjectOfType<DrawLines> ();
 
-		drawLines.enabled = false;
+		//drawLines.enabled = false;
 
         // Disable rendering:
         foreach (var component in rendererComponents)
