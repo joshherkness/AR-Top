@@ -110,9 +110,9 @@ def delete_map(claims, map_id):
 @api.route('/sessions/', methods=['POST'])
 @protected
 @expiration_check
-def create_session(claims):
+def create_session(claims,token_user):
     """ Creates a session with the given map_id and token user's id """
-    return Api.create_session(claims)
+    return Api.create_session(claims,token_user)
 
 
 #=====================================================
