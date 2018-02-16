@@ -1,29 +1,35 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
 from secrets import SOCKETIO_SECRET_KEY
+from models import Session
+from flask_mongoengine import MongoEngine
 
+#=====================================================
+# Global vars
+#=====================================================
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SOCKETIO_SECRET_KEY
+app.config.from_object('config')
 
-#=====================================================
-# SocketIO
-#=====================================================
+db = MongoEngine(app)
 
 socketio = SocketIO(app)
 open_rooms = dict()
 bijection = dict()
 
-
+#=====================================================
+# SocketIO
+#=====================================================
 @socketio.on('connect')
-def handle_connect(json):
-    try:
-        room = json['roomNumber']
-    except:
-        emit('Malformed request')
+def handle_connect():
+    room = request.query_string.decode()
+    if room == "":
+        send('Malformed request')
         return
 
-    if room not in open_rooms:
-        emit('RoomNotFound', json)
+    session = Session.objects(code=room).first()
+    if session is None:
+        send('Room not found')
         return
 
     open_rooms[room] += [request.sid]
