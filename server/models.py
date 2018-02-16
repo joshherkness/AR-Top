@@ -103,7 +103,7 @@ class User(Document, UserMixin):
         """ Verify password match """
         return password == self.password
 
-    def generate_auth_token(self, expiration=600):
+    def generate_auth_token(self, expiration=86400):
         """ Generate a JWS token for the user. """
         s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.email})
