@@ -125,7 +125,7 @@ def read_session(claims, token_user, id):
 @expiration_check
 def create_session(claims, token_user):
     """ Creates a session with the given map_id and token user's id """
-    return Api.create_session(claims,token_user)
+    return Api.create_session(claims, token_user)
 
 
 #=====================================================
