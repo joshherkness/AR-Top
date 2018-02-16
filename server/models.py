@@ -1,5 +1,6 @@
 import secrets
 import sys
+import random
 from datetime import datetime
 
 from bson import ObjectId
@@ -10,7 +11,7 @@ from itsdangerous import BadSignature, SignatureExpired
 from mongoengine import *
 from mongoengine.fields import *
 
-from constants import max_size
+from constants import max_size, session_code_choices
 
 
 class Role(Document, RoleMixin):
@@ -33,12 +34,12 @@ class Position(EmbeddedDocument):
 
     TODO: Make this more modular, and independent of max_size
     """
-    x = IntField(required=True, choices=range(1, max_size + 1))
-    y = IntField(required=True, choices=range(1, max_size + 1))
-    z = IntField(required=True, choices=range(1, max_size + 1))
+    x = IntField(required=True, choices=range(0, max_size))
+    y = IntField(required=True, choices=range(0, max_size))
+    z = IntField(required=True, choices=range(0, max_size))
 
 
-class Voxel(EmbeddedDocument):
+class GameModel(EmbeddedDocument):
     """ This schema should be used to represent any model that can be placed into a map.
 
     Keywoard arguments:
@@ -66,7 +67,7 @@ class GameMap(Document):
     color = StringField(
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
     private = BooleanField(default=False)
-    voxels = EmbeddedDocumentListField(Voxel)
+    models = EmbeddedDocumentListField(GameModel)
     updated = DateTimeField(default=datetime.now())
     inserted = DateTimeField(default=datetime.now())
 
@@ -102,7 +103,7 @@ class User(Document, UserMixin):
         """ Verify password match """
         return password == self.password
 
-    def generate_auth_token(self, expiration=600):
+    def generate_auth_token(self, expiration=86400):
         """ Generate a JWS token for the user. """
         s = Serializer(secrets.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.email})
@@ -122,3 +123,31 @@ class User(Document, UserMixin):
             return None
         user = User.objects.get(email=data['id'])
         return user
+
+
+#=====================================================
+# Session model
+#=====================================================
+class Session(Document):
+    """ Model for sessions.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+
+    """
+    user = ReferenceField(User)#, required=True)
+    map = ReferenceField(GameMap)#, required=True)
+    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
+    created_at = DateTimeField(default=datetime.now())
+
+    def save(self, *args, **kwargs):
+        if self.code == None:
+            code_try = ''
+            for i in range(0,5):
+                code_try += random.choice(session_code_choices)
+            while len(Session.objects(code=code_try)) != 0:
+                code_try = ''
+                for i in range(0,5):
+                    code_try += random.choice(session_code_choices)
+            self.code = code_try
+        super().save(*args, **kwargs)

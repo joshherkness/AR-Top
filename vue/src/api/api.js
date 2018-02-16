@@ -43,7 +43,8 @@ const ENDPOINTS = {
   register: `${API_ROOT}/register`,
   map: `${API_ROOT}/map`,
   maps: `${API_ROOT}/maps`,
-  session: `${API_ROOT}/sessions`
+  session: `${API_ROOT}/sessions`,
+  authenticated: `${API_ROOT}/authenticated`
 }
 
 export class API {
@@ -77,6 +78,22 @@ export class API {
       )
       // Why doesn't this endpoint return the email also?
       return response.data.auth_token
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async getCurrentUser() {
+    try {
+      let authToken = store.state.user.token
+      let response = await axios.get(
+        ENDPOINTS.authenticated,
+        generateConfig({
+          auth_token: authToken
+        })
+      )
+      return response.data.user
     } catch (err) {
       throw err
     }

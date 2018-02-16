@@ -778,6 +778,7 @@ Material:
     m_Floats: []
     m_Colors:
     - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
+<<<<<<< HEAD
 --- !u!1 &2077555231
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,3 +852,5 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2077555231}
+=======
+>>>>>>> origin/development

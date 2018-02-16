@@ -61,6 +61,12 @@ def authenticate(claims):
     """ Log user in with credentials in claims. """
     return Api.authenticate(claims)
 
+@api.route('/authenticated', methods=['GET'])
+@protected
+@expiration_check
+def authenticated(claims, token_user):
+    return jsonify(user=token_user), 200, json_tag
+
 #=====================================================
 # Map routes
 #=====================================================
@@ -100,6 +106,20 @@ def delete_map(claims, map_id):
     """ Deletes a specified map by id. """
     return Api.delete_map(claims, map_id)
 
+@api.route('/sessions/', methods=['POST'])
+@protected
+@expiration_check
+def create_session(claims):
+    """ Creates a session with the given map_id and token user's id """
+    return Api.create_session(claims)
+
+@api.route('/sessions/', methods=['POST'])
+@protected
+@expiration_check
+def create_session(claims, token_user):
+    """ Creates a session with the given map_id and token user's id """
+    return Api.create_session(claims,token_user)
+
 
 #=====================================================
 # Main
@@ -127,3 +147,5 @@ if __name__ == '__main__':
         exit()
     app.register_blueprint(api)
     app.run()
+
+GameMap.drop_collection()

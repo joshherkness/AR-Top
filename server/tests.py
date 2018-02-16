@@ -20,6 +20,7 @@ class TestUserEndpoints(unittest.TestCase):
     def tearDown(self):
         Map.objects.all().delete()
         User.objects.all().delete()
+        Session.objects.all().delete()
         os.close(self.db_fd)
         os.unlink(app.config['DATABASE'])
 
@@ -208,6 +209,7 @@ class TestUserEndpoints(unittest.TestCase):
 
     def test_update_map(self):
         pass
+
         
 if __name__ == "__main__":
     unittest.main()        
