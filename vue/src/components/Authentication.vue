@@ -135,7 +135,7 @@ export default {
         this.updateUser(user)
 
         // Navigate to home route
-        router.push('/')
+        router.push('/library')
       } catch (err) {
         this.error = err.response.data.error
       }

@@ -37,12 +37,12 @@
         <div class="navbar-item" v-else="token">
           <div class="field is-grouped">
             <p class="control">
-              <router-link class="button is-primary" :to="{ name : 'login'}">
+              <router-link class="button is-link" :to="{ name : 'login'}">
                 Sign in
               </router-link>
             </p>
             <p class="control">
-              <router-link class="button is-primary" to="{ name : 'register'}">
+              <router-link class="button is-light" :to="{ name : 'register'}">
                 Sign up
               </router-link>
             </p>
