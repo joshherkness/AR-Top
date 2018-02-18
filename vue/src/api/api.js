@@ -199,10 +199,10 @@ export class API {
   }
 
   // eslint-disable-next-line
-  static async createSession({ map_id }) {
+  static async createSession(mapID) {
     try {
       let url = `${ENDPOINTS.session}`
-      let data = { map_id }
+      let data = { mapID: mapID }
       let response = await axios.post(
         url,
         data,

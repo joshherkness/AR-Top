@@ -1,42 +1,103 @@
 <template>
-  <div class="navbar-item has-dropdown is-hoverable">
-    <a class="navbar-link is-hidden-touch">
-      Session
-    </a>
-    <div class="navbar-dropdown" v-if="session">
-      <a class="navbar-item is-expanded">
-        <p>Invite code: <span class="tag is-link">{{ session.code }}</span></p>
-      </a>
-      <hr class="dropdown-divider">
-      <a class="navbar-item is-expanded">
-        <p>Displayed map: <span class="tag is-link">{{ session.mapName }}</span></p>
-      </a>
-      <hr class="dropdown-divider">
-      <a class="navbar-item has-text-danger" @click="removeSession">
-        Close session
-      </a>
+  <nav class="navbar has-shadow level" style="z-index: 999">
+    <div class="level-left">
+      <div class="level-item">
+        <div class="container is-fluid">
+          <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button is-small is-link" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span>{{ name }}</span>
+                <span class="icon is-small">
+                  <i class="mdi mdi-chevron-down" />
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div class="dropdown-content">
+                <nav class="panel">
+                  <div class="panel-block">
+                    <p class="control has-icons-left">
+                    <input class="input is-small" type="text" placeholder="search" v-model="search">
+                    <span class="icon is-small is-left">
+                      <i class="mdi mdi-magnify" />
+                    </span>
+                    </p>
+                  </div>
+                  <router-link class="panel-block" v-for="map in searchList"
+                    :key="map._id.$oid" 
+                    @click.native="setOpen(map._id.$oid)"
+                    :to="{ name: 'editor', params: { id: map._id.$oid }}">
+                    <span class="panel-icon" v-if="map._id.$oid === session.session.game_map_id.$oid">
+                      <i class="mdi mdi-check"/>
+                    </span>
+                    {{ map.name }}
+                  </router-link>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="level-item" v-if="$route.name === 'editor'">
+        <a class="button is-small is-link is-inverted" @click="showParty">Show party</a>
+      </div>
     </div>
-    <div class="navbar-dropdown" v-else="session" @click="">
-      <a class="navbar-item has-text-link">
-        Open session
-      </a>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="container is-fluid">
+          <div class="tags has-addons">
+            <span class="tag">Invitation code</span>
+            <span class="tag is-link">{{ session.session.code }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="level-item">
+        <div class="container is-fluid">
+          <a class="button is-small is-white has-text-danger" @click="remove">Close session</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { API } from '@/api/api'
+import store from '@/store/store'
+import { mapGetters } from 'vuex'
 export default {
   name: 'SessionManager',
+  data: function () {
+    return {
+      search: '',
+      queuedID: null
+    }
+  },
   computed: {
     ...mapGetters([
-      'session'
-    ])
+      'session',
+      'maps'
+    ]),
+    name: function () {
+      const mapID = store.state.session.session.session.game_map_id.$oid
+      return store.state.map.maps.filter(map => map._id.$oid === mapID)[0].name
+    },
+    searchList: function () {
+      return store.state.map.maps.filter(map => {
+        return map.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
   methods: {
-    ...mapActions([
-      'removeSession'
-    ])
+    remove: async function () {
+      await API.deleteSession(store.state.session.session.session._id.$oid)
+      store.dispatch('removeSession')
+    },
+    showParty: function () {
+      // TODO: emit to party
+    },
+    setOpen: function (id) {
+      this.queuedID = id
+    }
   }
 }
 </script>
