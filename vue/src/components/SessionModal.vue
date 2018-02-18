@@ -76,11 +76,9 @@ export default {
   },
   methods: {
     beforeOpened (event) {
-      this.params = event.params || {}
       this.$emit('before-opened', event)
     },
     beforeClosed (event) {
-      this.params = {}
       this.$emit('before-closed', event)
     },
     submit: async function () {

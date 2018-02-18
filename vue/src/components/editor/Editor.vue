@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;"
+    <div class="field has-addons" style="position: absolute; bottom: 80px; right: 20px;"
       v-if="!loading">
       <div class="control">
         <div class="dropdown is-hoverable is-up is-right">

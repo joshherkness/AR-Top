@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'has-shadow': !session}" style="z-index: 1000">
+  <nav class="navbar" style="z-index: 1000">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top

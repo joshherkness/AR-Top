@@ -210,7 +210,7 @@ export class API {
           auth_token: store.state.user.token
         })
       )
-      return response.data
+      return response.data.session
     } catch (err) {
       throw err
     }
