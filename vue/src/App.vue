@@ -7,6 +7,7 @@
 
     <!-- Only show the navbar for required routes-->
     <Navbar v-if="$route.meta.requiresNavbar"/>
+    <hr class="is-marginless">
     <SessionManager v-if="$route.meta.requiresManager && session"/>
     <router-view/>
   </div>
