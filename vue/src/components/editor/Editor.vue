@@ -4,6 +4,17 @@
     <div ref='canvas' id='canvas'
       :class="{'is-loading': loading}"></div>
 
+    <!-- Save button -->
+    <div class="field is-pulled-right" style="margin: 10px">
+      <div class="control">
+        <div class="button is-link"
+             :class="{'is-loading': saving}"
+             v-on:click="save">
+          <span>Save</span>
+        </div>
+      </div>
+    </div>
+
     <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;"
       v-if="!loading">
       <div class="control">
@@ -67,7 +78,8 @@ export default {
       selectionManager: null,
       color: defaultColor,
       mode: EditorMode.ADD,
-      loading: false
+      loading: false,
+      saving: false
     }
   },
   components: {
@@ -237,6 +249,29 @@ export default {
     },
     setModeDelete () {
       this.mode = EditorMode.DELETE
+    },
+    save () {
+      if (!this.grid) {
+        return
+      }
+
+      const id = this.grid.id
+      if (!id) {
+        throw new Error(`Grid property 'id' must be defined.`)
+      }
+
+      const data = {
+        map: JSON.parse(this.grid.serialize())
+      }
+
+      this.saving = true
+      API.updateMap(id, data).then((response) => {
+        this.saving = false
+        console.log(response)
+      }).catch((err) => {
+        this.saving = false
+        console.log(err.response)
+      })
     }
   },
   destroyed () {

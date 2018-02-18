@@ -36,7 +36,7 @@
       <div class="level">
         <div class="level-left"></div>
         <div class="level-right">
-          <router-link class="button is-link level-item" :to="{ name: 'Editor', params: { id: oid }}">Open</router-link>
+          <router-link class="button is-link level-item" :to="{ name: 'editor', params: { id: oid }}">Open</router-link>
         </div>
       </div>
     </div>

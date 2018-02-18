@@ -6,7 +6,7 @@
       </router-link>
       <router-link 
         class="navbar-item" 
-        v-if="token" :to="{'path': '/maps'}" replace>
+        v-if="token" :to="{'name': 'library'}" replace>
         My Library
       </router-link>
       <a class="navbar-item" v-if="token" @click="$modal.show('create-map-modal')">
@@ -37,12 +37,12 @@
         <div class="navbar-item" v-else="token">
           <div class="field is-grouped">
             <p class="control">
-              <router-link class="button is-primary" to="/auth">
+              <router-link class="button is-link" :to="{ name : 'login'}">
                 Sign in
               </router-link>
             </p>
             <p class="control">
-              <router-link class="button is-primary" to="/register">
+              <router-link class="button is-light" :to="{ name : 'register'}">
                 Sign up
               </router-link>
             </p>

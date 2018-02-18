@@ -16,6 +16,8 @@ export class GridDirector extends THREE.EventDispatcher {
     this.scene = null
     this.scale = scale
     this.objectMap = new Map()
+
+    this.selectedPosition = null
   }
 
   /**
@@ -121,8 +123,14 @@ export class GridDirector extends THREE.EventDispatcher {
   setSelection (unitPosition, { model } = {}) {
     if (!this.scene) return
 
+    if (this.selectedPosition && this.selectedPosition.equals(unitPosition)) {
+      return
+    }
+
     // First, we want to clear any current selection
-    this.clearSelection()
+    this.clearSelection(true)
+
+    this.selectedPosition = unitPosition.clone()
 
     let occupyingModel = this.grid.at(unitPosition)
     if (occupyingModel) {
@@ -173,10 +181,16 @@ export class GridDirector extends THREE.EventDispatcher {
     this.scene.add(modelGroup)
   }
 
-  clearSelection () {
+  clearSelection (supressUpdate = false) {
     if (!this.scene) {
       return
     }
+
+    if (!this.selectedPosition) {
+      return
+    }
+
+    this.selectedPosition = null
 
     // Clean up any current selections
     let group = this.scene.getObjectByName('selection')
@@ -199,7 +213,9 @@ export class GridDirector extends THREE.EventDispatcher {
     // Hard reset the selection, now that we cleaned up
     this.initSelection()
 
-    this._onUpdate()
+    if (!supressUpdate) {
+      this._onUpdate()
+    }
   }
 
   convertActualToUnitPosition (actualPosition) {

@@ -8,15 +8,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -2067402452, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
+  m_Script: {fileID: -2067402452, guid: 8a9a760f95896c34689febc965510927, type: 3}
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
     vuforiaLicenseKey: AfeFN4f/////AAAAmWvCodxwZEKFuzyoDVdX5csviCPTDoyj/NS6dysYO6/8uEGWKEK/vz5CcIm5NV09A/5xJ+j6rJ+ykMaDAjowfF2OXoLCwuZYOdYSG1VF6rWPT/IebP+ImDvmVC20gXx9v0dCNGggSB4wN7EsVeSOTFvDMv+PNsR0EeFTWzpOCTBXu+OuzoAFuRsocuv9pJkSUq8Z2eWb3RwqhYOYGkqwRnxtDYl9N/8x0VDZyW9ttv7A4b7NXuPF7kf4j3c2ONTF4tbQmaYVvXaHbrlEXQeaetvBt4bb1K8mpuTm+978icC2utk3CsrkkbB5ynbC0ccw84kbAnT8hBIUGOe1pMPtWDepUiRy5ErXvemRCVh2ne58
-    ufoLicenseKey: QVpseWFuNy8vLy8vQUFBQUtOKzNxRmpTVTBpUmhPbnJ0TG9tY2Z4ekJUK3luRGQveDQ1QkJKaW5mMzhVbHJWc2ZaSUhaanM4UnBDMDRTb24ya0RqY3JMYXZMRDh5NXR4bnBmcGdTVzR3VExUVWN1SlRiVUdSZm1JVHNhVStMeFhmQWxBQmtkQjdlbU5CSGEySTVkNktoeGt4cHAzcWZySlBrK0MxaW5ONFBWakRJallFcDVRbHJoKzVEeE81Wk4rLzlrTXNqbG0yUm9BY05jcklOeFIvTHNYM2F4eEt1SFFTQkh3bTRTU1JLc2dQeXFGTUFkeHBwUWZURzJVZENQd1E0dk40QlpVbjVxTmZINFQ2VGdVVFRhWUNvYVlranUzaHNsWW53bkdkVHBzMkR0V29VOElWOTFMNlE5TFdhWUgyU1k2Q3Rmc2xEMUFTTExURTZFZ1pBaWxnSEJ4VzJnMWxONlpncU96a0RrN05yY3pLRVU1TTlyWWtlUU4=
+    ufoLicenseKey: QVptSVVkVC8vLy8vQUFBQUtDSzJ4LzJCOGtweWlZZzhHQUtDekdON0tPYjFHOUFsY2pGK1hyakdmVlpDdy9FK0FVN0xGeTRHcVpEVGRlN3V1TTlYNUJPL2RVM0MrRlMwVVphOGhtZ1pDc3EyejhlbXFTK3h3azgxWTZyNlpJbGFEN1ZSNjBTVVlXZUZqdDNHb0EwWkkvTnNYZVc3VUJHSktzbnRRcll0VURaeUV1Z3JWWTZHR1FvRjdTV3pYVFFHYWxhV3FJR2RkcTAwRXpDUTNoaEJiYXpCS2xiQUMyNHAzeGV2ZmpjditvSkZxcXVEVi8zOFR6eDI3cnE5N05NUW5PMmtic25IZzE2QnlhYlFpdVBUUERMdU5VY3k2dUlxTGF4NUlEOGNoeGprNm9MaTZkRVNoL2JGak9TTHBJc1dmWHU1bnRhTkdwNlpVRTlsYkJEZ2plRkN3bWtrSXZnNlBKb2pldE5xY09OTnRCOUd4Q0lGdlJ1Q3lkVzM=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
-    maxSimultaneousImageTargets: 1
+    maxSimultaneousImageTargets: 4
     maxSimultaneousObjectTargets: 1
     useDelayedLoadingObjectTargets: 0
     cameraDirection: 0
@@ -45,12 +45,8 @@ MonoBehaviour:
   databaseLoad:
     dataSetsToLoad:
     - Augmented_Tabletop
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
     dataSetsToActivate:
     - Augmented_Tabletop
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
   videoBackground:
     clippingMode: 0
     numDivisions: 2
