@@ -254,6 +254,7 @@ class Api():
 
         Keyword arguments:
         claims -- The JWT claims that are being passed to this methods. Must include email.
+        token_user -- the user of the token sent in the JWT header, provided by @expiration_check
         """
         map_id, user = None, None
         try:
@@ -277,7 +278,7 @@ class Api():
             return internal_error()
 
         try:
-            new_session = Session(user=user, map=remote_map)
+            new_session = Session(user=user.id, map=map_id)
             new_session.save()
         except Exception as e:
             current_app.logger.error("Failed to save session for user",
@@ -285,4 +286,3 @@ class Api():
             return internal_error()
 
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
-

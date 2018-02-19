@@ -124,7 +124,6 @@ class User(Document, UserMixin):
         user = User.objects.get(email=data['id'])
         return user
 
-
 #=====================================================
 # Session model
 #=====================================================
@@ -135,8 +134,8 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ReferenceField(User)#, required=True)
-    map = ReferenceField(GameMap)#, required=True)
+    user = ObjectIdField()
+    map = ObjectIdField()
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
