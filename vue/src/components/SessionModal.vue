@@ -15,11 +15,7 @@
 
         <!-- Content field -->
         <div class="field content">
-          <article class="message is-warning">
-            <div class="message-body">
-              Create a session to show your map to your party.
-            </div>
-          </article>
+          <p>Create a session to show your map to your party.</p>
         </div>
 
         <!-- Map dropdown -->

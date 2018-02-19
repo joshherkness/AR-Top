@@ -23,7 +23,7 @@
     </div>
     <div class="navbar-menu" :class="{ 'is-active': collapseActive }">
       <div class="navbar-end">
-        <a class="navbar-item" v-if="token && !session" @click="$modal.show('session-modal')">
+        <a class="navbar-item" v-if="token && !session_id" @click="$modal.show('session-modal')">
           Open Session
         </a>
         <div class="navbar-item has-dropdown is-hoverable" v-if="token">
@@ -69,7 +69,7 @@ export default {
     ...mapGetters([
       'email',
       'token',
-      'session'
+      'session_id'
     ])
   },
   methods: {

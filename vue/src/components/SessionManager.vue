@@ -26,7 +26,7 @@
                   :key="map._id.$oid" 
                   @click.native="setOpen(map._id.$oid)"
                   :to="{ name: 'editor', params: { id: map._id.$oid }}">
-                  <span class="panel-icon" v-if="map._id.$oid === session.game_map_id.$oid">
+                  <span class="panel-icon" v-if="map._id.$oid === game_map_id">
                     <i class="mdi mdi-check"/>
                   </span>
                   {{ map.name }}
@@ -44,7 +44,7 @@
       <div class="level-item">
         <div class="tags has-addons">
           <span class="tag is-medium">Invitation code</span>
-          <span class="tag is-medium is-link">{{ session.code }}</span>
+          <span class="tag is-medium is-link">{{ code }}</span>
         </div>
       </div>
       <div class="level-item">
@@ -85,11 +85,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'session',
-      'maps'
+      'maps',
+      'code',
+      'session_id',
+      'game_map_id'
     ]),
     name: function () {
-      const mapID = store.state.session.session.game_map_id.$oid
+      const mapID = store.state.session.game_map_id
       return store.state.map.maps.filter(map => map._id.$oid === mapID)[0].name
     },
     searchList: function () {
@@ -100,7 +102,7 @@ export default {
   },
   methods: {
     remove: async function () {
-      await API.deleteSession(store.state.session.session._id.$oid)
+      await API.deleteSession(store.state.session.session_id)
       store.dispatch('removeSession')
     },
     showParty: function () {
