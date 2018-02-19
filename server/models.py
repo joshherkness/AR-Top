@@ -136,7 +136,7 @@ class Session(Document):
     """
     user = ObjectIdField()
     map = ObjectIdField()
-    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
+    code = StringField(regex='^([a-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
     def save(self, *args, **kwargs):
