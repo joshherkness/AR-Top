@@ -1,0 +1,12178 @@
+{
+  "width": 16,
+  "height": 48,
+  "depth": 16,
+  "color": "#FFFFFF",
+  "id": "5a8a420d2a74a062699e6076",
+  "name": "Medium Shell",
+  "models": [
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#3c6574"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0d7bf0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b52126"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4c543d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ffc4b4"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#cb09d3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c041a6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#de0dd6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#91f6bd"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ac8893"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e4bce2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#89c832"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f7a82a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#70213a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d0ded6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#becc81"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#342ffd"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#1280b0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#ace0d9"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#991f46"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#af4a31"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#7e96c7"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#a10202"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#0e39e1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#02bc1c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#0e368f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#1ae2bf"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#63a015"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#acee55"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#5dcb04"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#92c3c9"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#482b5e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e51832"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#d623b8"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#f34e2d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#bc0306"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#630c5c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e30245"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#6ad238"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#dd7dfb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#f09c6b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#3c029a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#a9af64"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#043676"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#093b9a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#49944c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#621d32"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#2e3f52"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#35b408"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#6589d5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#2835e1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#feb593"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#422f68"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#8ded54"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#7b3b63"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#f7726e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#a53a7b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#d224d5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#9923da"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#b3bcdd"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#0d2836"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#ad5b3d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#0ab191"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#7154bb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#f9432a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#c9e8f3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#d95d21"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#4b10c5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#6a55dd"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#955c46"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#dae98c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#7756bb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#695754"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#3fd019"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#5420a7"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#fbbd12"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#188ef0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#432c2d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#a00622"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#fba98a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#c5b748"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#92c274"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#189362"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#1ee4f5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#9e542d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#b36198"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#eb0f4b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#aa2b8f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#fdf281"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#f4bfa7"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#8bbf74"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#fac6c0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#01cbaa"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#d71860"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#e5559a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#063ba3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#b8e051"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#935458"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#f9efaf"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#d8864f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#612a05"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#6aa580"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#04c168"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#2b1018"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#764841"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#75e22f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#e0d1c6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#de0681"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#afb293"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#5e702e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#c6a37b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#735eb0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4d562e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#04f27f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#cd2094"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ba3cb3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ccf479"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#d427f0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#3caaee"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4d8165"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#eda1e0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4ce664"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#5dc760"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#6eb033"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#adeb70"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#34ea3d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#f7b40f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#2af62c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#4f0063"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#88bb5b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#5aaca5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#0a60f6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#d05183"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#62124f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#7ea5c2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#17ea35"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#1def43"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#9fce58"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#7678e1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#aea156"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#406f12"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#71f20b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#9c48c8"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#debe79"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#2bb3ab"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#4ec4f2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#e5a1c1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#6e495f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#e6f414"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#60650e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#bd6aec"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#88ba2f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#4dfa2c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#3a44a1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#ada2a2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#1fa964"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b9252f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#82b70a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b9f132"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b20613"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#2d3222"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#1f08e3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#cbebf9"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#360bab"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#02dc1f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#b2e681"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#922bf2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#b042b1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#fe2e5d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#2cdab7"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#153df6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#39ba4d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#776fee"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#0f6bd4"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#2b8d8e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#11a653"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#b4f905"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#24f52d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#f88350"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#2e5130"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#6f9ff6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#585a40"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#6357ff"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#b658ba"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#c31f2b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#d51301"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#042365"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#1fb0bb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#c69841"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#8bab68"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#023981"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#55d4fe"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#c52b2f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#80bd7b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#52d3b0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#b11495"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#d84778"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#f229cb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#739d1f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#6dea93"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#e3d35f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#89ece3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#f28a49"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#1e5be0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#88878a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#91a118"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#106c5f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#0d837f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#10f22e"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#84b80b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#510be5"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#c62825"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#936a3a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b6a6cd"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#423883"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#45e19a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#04c14a"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#a9f2a1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#d96740"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#ace0b3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b96c62"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#d8c5e9"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#ecedba"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#f14a57"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#152d71"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#803377"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#6a7201"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#efda26"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#7a3b92"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#97f993"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#554cf6"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#7b49d2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#2bb71b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#c82b32"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#fbe60d"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#20a303"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#130c1c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#660031"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#a776b0"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#bce4ef"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#355de3"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#894cd9"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#16162c"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7e6c51"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#abcfe1"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#384e9f"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2e750b"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#85f222"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d7d610"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#405237"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#93e010"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7995c2"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#cce7fa"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#df2ebb"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#3f7b32"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8a1f21"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d29b4e"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2fa3e5"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#774537"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#7fca8e"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2f6713"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#bfc2fb"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8247cc"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d69513"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2cbd4e"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#6fbeee"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2b24b6"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#babcea"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f08e48"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0d9126"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c19a01"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#26e877"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#ac704f"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#3b2bdb"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#a33ed3"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#039a57"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#c11392"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#65d369"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#907d69"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#52712a"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#460069"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#4fb0b1"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#953fa5"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#bc3a97"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#a12324"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#6a55e1"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#eac62a"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#57ccff"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b24c50"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#279b1c"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#55cdf6"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#e94d34"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#3330b2"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#d22d35"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#c48e40"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#bbe6b1"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b4ea63"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#3b7dbe"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f8ba49"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#4a1c1d"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bc8af4"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a8ab7a"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d2f774"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#029525"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#95927b"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#78619a"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e42521"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#93433c"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ca1a93"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#da7043"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7a3ef1"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#4d398f"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2f9b5f"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#20dc61"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#014599"
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#26eb61"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0dd4c2"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2a73d1"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#15f5a3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#bf7a55"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4931f7"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5f909d"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4956e5"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c2745c"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#19b313"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#691d19"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a5f4cf"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5539d7"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#68febd"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#436219"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1187d3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b75442"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#70ca97"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#205829"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#da4e20"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#9acfd6"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#a08ea8"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#f85bc7"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#b7a73d"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#621a3b"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#b79e66"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#ae15f3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#a19741"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#db1ee3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#dd4f82"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#9c68a0"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#47155e"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#49619d"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#fe06ef"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#c8b2e7"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#167a05"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#331f06"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#b47112"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#756fa5"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#7d01f3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#c78a6d"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#332515"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b6a3ed"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#3ac2f6"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f93077"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#44666b"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#dac6ca"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#6a8b28"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2032e3"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#51600a"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#712b30"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f5e860"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ffbf4d"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bd6b66"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#655eec"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a787cf"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#3cd331"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#4b831a"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fb341c"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#4e764c"
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#cb4bc8"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#caa2b0"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f9d2f8"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c1b162"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#37d44b"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2de9e7"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#605558"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#96cac6"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#25b5b1"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9a1ad0"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e28429"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#fae71b"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d776fd"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a5ad1a"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#76e3e0"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#935d11"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#6d713e"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#bd314e"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#ec0e47"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#800830"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e31961"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#fb94cc"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#9412b2"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#652879"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#5917a3"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#f66e2c"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#d0d03e"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#8317ba"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#c34152"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#847829"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#1ebb0b"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#aae98b"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#c76977"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#7d9ae1"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#69569e"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#6c73c7"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#fa1276"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#9ded29"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#d005d2"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#652774"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#3d69ca"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b34614"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#db23bd"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#471b9f"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#4f42f6"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bf0ba1"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#01920a"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#612edf"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c76555"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2d255b"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e3ed7f"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#6b232d"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#83c7c2"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e84a3d"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#20bb98"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2ec0cb"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2e368e"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#947d19"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#785023"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#09c5b7"
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ab46eb"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e9c22d"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#da4460"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#de013c"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4d174b"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#dfca94"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ae4256"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a6a0dc"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#55b814"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e97535"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ad1083"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4ae0de"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d2ce86"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5ba8b7"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#651c59"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#15a637"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e6c679"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#170ee0"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#b07c0a"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#a6bded"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#9701cc"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#6c5ecf"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#2be68a"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#a4d5a0"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#b3f6d3"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#1a113e"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#20f1ab"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#215ced"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#efc451"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#f70766"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#b7bf8c"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#e21e30"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#9dc4e6"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#6d6781"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#5b0620"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#6af05c"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#f098d0"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#424679"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#63cebf"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#1a62e9"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#70b30f"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#123c0c"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#eae3c0"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f6f805"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#9c05c2"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#94643f"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2bb78a"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d1fca6"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#da0b80"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#655ecc"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b8fa07"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#59ce8a"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#84689c"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#6a1334"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8eedad"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8d7842"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d29d36"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#13f831"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#af6654"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fa7a28"
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e85f74"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1a7fb1"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#59a4ba"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5b892f"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#39ee31"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#867961"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#126c9e"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a36bbe"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#23f43b"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c8c93b"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#747a45"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c8472c"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#81162c"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1286b3"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0bc021"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#97dd13"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#24a73a"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#b9048f"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#8a827c"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#16ab46"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#5d5a87"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#2dcc1f"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#b3adce"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#2442cb"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#7e846d"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#a66441"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#28255d"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#fa6fc0"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#65dbf6"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#eec7e4"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#352f18"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#d7937b"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#cec55e"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#01492f"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#8349da"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#3fd21d"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#8b35ab"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#ace9d6"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#94a4c3"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#647467"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#a81c86"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#100e9e"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#a015d6"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#502bbc"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f24623"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#437137"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#78ebe1"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#924df9"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#18f452"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7c3846"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2c45aa"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#db2cec"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bc948b"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b91c1a"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c08cbc"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#60a463"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#788e91"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ed3c75"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e633e1"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#17b1dd"
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#0f8e3c"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#112fcb"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d7182f"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#fb4921"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d9986a"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#eafc41"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#cfd119"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c0bcd4"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0b956a"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0ffea9"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#82bcaf"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0dc286"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#013b46"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#afd580"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b09fcf"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#067b9d"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#512a04"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#cfcee9"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#72df72"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#494bfc"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#08cfa0"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#506d0b"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#42730f"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#6499f3"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#0455f4"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#d17917"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#78c067"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#f9bc1e"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#29fc74"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#62d378"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#b29961"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#0286f8"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#29c8b4"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#9ef418"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#7fc848"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#2ecf0b"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#2ff6f0"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#066391"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#ea2d02"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#f456c5"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#921832"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#091f1e"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#309f93"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#591505"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#7d1a54"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2bd074"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7c989d"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#503001"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#53decf"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2b8d19"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c86539"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#06e4e0"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ef277a"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c19f5d"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e2c9ed"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2cd55f"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7a1f12"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#76ccb2"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#12adc4"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#576f59"
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f2987d"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#90097b"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#6338db"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5c263e"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#eeb175"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a1aebc"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d66693"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4d2b18"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b15268"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#38ffa8"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2aad57"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e6c326"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2fd165"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#00e02f"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e4aca2"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9ed139"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#56b60a"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#f22317"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#6230f9"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e8b049"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#29a895"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#85ceb3"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#c0bb2b"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#d5ad64"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#9ddecc"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#a9d411"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#5ff65b"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#37a27f"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#8ee1ef"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#50e8dc"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#c4bf39"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#95ac9b"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#24ab46"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#5594c4"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#98bbd5"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#5c9e7d"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#3ed6c7"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#5fb1d9"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#427d7e"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#46fee5"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#2ea036"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#9c62a4"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#6e4be2"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#00c4de"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#62c5ba"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#9ca27a"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b45fc5"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fcdc5d"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d88328"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#4d1f29"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#9deac5"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#12d62b"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fe79a4"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7d36d7"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8e3f6d"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f4e70d"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#975861"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2b7ebd"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#9f7147"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b10738"
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ec4bb0"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#87e5d2"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9385fc"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9805d5"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1d93bf"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#7c985c"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#427858"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ddb2f5"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8968fe"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9bedd7"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#bd184f"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#67c14f"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#6a997e"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b48637"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#39983b"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8f4923"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#4baae5"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#46dd8b"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#32c818"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#5e9801"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#1b60da"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#8ae631"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#52f8ff"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#c4f25a"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#41f882"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#8d6218"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#ae5192"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#f58d5f"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#5d8895"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#d8266b"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#8590a8"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#02ac37"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#02c4ba"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#ff165e"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#6cbe28"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#34466d"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#c2988c"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#226479"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#97b2d3"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#21d8cf"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#992705"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#54b9ac"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#a62d48"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#c3bc0f"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f64d2d"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bd8a34"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#0b3292"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b8ab54"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bfdbd3"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#420a13"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#1cc000"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#febdf6"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#70cdcc"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7714eb"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7f4325"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#595642"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f8b7c8"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#74060b"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#57f19d"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b07058"
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#09d504"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d38cc6"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8be097"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#de7099"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#64d637"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#774123"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8272dd"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#af43fd"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#31fb85"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#44452b"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#77ddda"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1ef945"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#86b784"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0e62ba"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#df40fc"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#52e026"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#64c10e"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#9c070a"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#61b794"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#92e219"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#524693"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#e3156d"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#021c7a"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#52de97"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#97e8f7"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#f54f90"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#f2f365"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#bee58e"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#76fe34"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#82498c"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4b1bf2"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#c86c23"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#40e957"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#aabe91"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#c3d292"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#e7e733"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#61fcc2"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#7bab04"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#c023fe"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#b9310e"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#d74b31"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#24cb98"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#523acf"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#b4e431"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#7863c6"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#6adee1"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2314d8"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f2d89b"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#26092c"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#906ace"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#01fe8c"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a6cf54"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#769413"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#3f51b2"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8777e0"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#42c2a6"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c1cc0d"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#90c89c"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#23ca88"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a3d744"
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7922a9"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#97dfe2"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9f0a0a"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#08b47d"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#072efb"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a705b6"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#49368e"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c8d152"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#095486"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#116abc"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#65243b"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#00ae3b"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c0bed0"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e659b3"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d57cb8"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#91f713"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#49da66"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#e2ebad"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#a1fd64"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#f00bd3"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#f09ca9"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4706ee"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#8b4ebd"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#e04ff7"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#9979d0"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#6b3058"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#8914b9"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#4a2699"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#6cd0c1"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#32c9f0"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#6b258e"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#569535"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#ba750b"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b277c5"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#2ae4d1"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#ef1971"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#47099d"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#a12357"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#ef92e3"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#37efc8"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#5cd4be"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#c056ba"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#17ea56"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#07b5d4"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#110b7f"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#882cd5"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fcc62b"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#470a64"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#465818"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7fe5c4"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d8c579"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ab6d6b"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#310137"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a59ef7"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b7bedc"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#58c73c"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#eab573"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e889c5"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#7ff36f"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a21e30"
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#590e56"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ac59a3"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2660c1"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8bcf60"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d7f91d"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c9b417"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e1d1a4"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b7298e"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#89f9fe"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2f8396"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#327462"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f0642d"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e1ec93"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2cb8c2"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8fbb8c"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9a23a4"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#685a36"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#38fa2f"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#c56a71"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#6f2478"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#072e1f"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#df7874"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#a5aaaa"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#046fe4"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#32089b"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#6ab0fc"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#d1c21e"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#e77d6e"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#67f0fa"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#829bcb"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#30e743"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#75a155"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#35760e"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#82871a"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#932446"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#db2bd5"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#b36410"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#85c56e"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#6f5e32"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#466c87"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#851152"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#aea045"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#0a0597"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#579c76"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#ade5a6"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fc2f0b"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f7e903"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#05f22b"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#101b70"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#881e44"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c0e2ae"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#4b7f08"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#02dbef"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d80e08"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#11b4fe"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#584994"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#73a9ab"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#af85fd"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#10598c"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b4c2ad"
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#940e23"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#bcfe36"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1a12b2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#fc4ba8"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#060859"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#643233"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#3d76e0"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f19671"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a01233"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8f1d01"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#adfb36"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#de6e56"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f7b231"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2a226b"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#f3ec8c"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d2f5ea"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#13a706"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#831bee"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#fe5908"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e18c2e"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#1465a9"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#7a5980"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#b88cd9"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#05faf6"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#0f485f"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#0c93f1"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#59654f"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#5a0063"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#3451d2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ad6356"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4969f8"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#983700"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#dc8fe2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#3203e9"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#921600"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#48859f"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#897b2d"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#f5d372"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#bc7a6c"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#b992c9"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#6a222b"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#f23596"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#2e12af"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#570ccc"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#8e2ad5"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c673bd"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d2f5fb"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#49e109"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c98b06"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#009634"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#86b32c"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d69505"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#bed81a"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#9e05b2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#530157"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#84a395"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ca33fb"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#9236c2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#470dd2"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2cca11"
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#37e9cc"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c7969f"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b51c8e"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#403380"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#782142"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#18079c"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c03e6f"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#28c37b"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2ea450"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0da51c"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ae6f2f"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#660cce"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#019a07"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#d5f73d"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#31d157"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#0c3a0a"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5385bf"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#d9ce58"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#dac841"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#d38ab2"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#5f3283"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4b2a70"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#d62b80"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#17b2d3"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#156918"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#d2c0fc"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#ca3bba"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#eb0de7"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#64126e"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#8c4c7e"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#b6e80e"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#c6a2c1"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#36218d"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#53ae91"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#f361f6"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#944c5e"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#46ed1d"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#8ddec9"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#c5fafc"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#545f30"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#cde1f0"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#26cee3"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#22e659"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#83a3cb"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#d97e15"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#12c322"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#0a4798"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b7d7d5"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c0a2ba"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#cb7203"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2b83e4"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#979c79"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#05d5b2"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b9717b"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#5f9568"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#25da95"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#818635"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#451d38"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#0528f7"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a42108"
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#40089a"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#26e92c"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#dfa51a"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#57ee6f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#7f2a2f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9bc54a"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#e9f7bb"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#a48fbe"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#efa813"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#c90156"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#583456"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#422b03"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#493615"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1bee68"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#61cf7b"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9597b6"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2d534e"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#03783c"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#cc507f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e3d8d9"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#c22454"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#937460"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#5513a1"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#2abb0d"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#71b284"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#a6f1eb"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#0bcb3e"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#ea542f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#576f90"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4d01a7"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#8e00a8"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#ebc9e2"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#9ea6d4"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#698455"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#b29028"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#76d55f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#5384d5"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#a96948"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#a69500"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#66ac42"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#63f71a"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#2e952e"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#92828d"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#660555"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#4003eb"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#5ebf00"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#214bc6"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ae772d"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#85cb4f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#dbd3f0"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a4c306"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#0c944e"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8f2074"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#17ddfc"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#cd1186"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#a1fa20"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#176dd8"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#3d256f"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#fec329"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#ccd09d"
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#2944fe"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#eaf3b0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#2bb5bf"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#736558"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#10f49e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#1b9adb"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#32603c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8089e6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9876ae"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#ed0ca9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#608838"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#9f7537"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b0aac9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#de9ece"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#5fbac3"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#8abe66"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 0
+      },
+      "type": "voxel",
+      "color": "#b4f721"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#e132f8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#134845"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#50d1fa"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#85f4ac"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#f2f8e1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#e9a303"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#be8971"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#cbb691"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#7583e5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#b54764"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#60b953"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#a7c8c8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#033bff"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#6120a1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#a968bc"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 1
+      },
+      "type": "voxel",
+      "color": "#78c919"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#e4634a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#53cb8d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#4041e4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#37a43a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#96f994"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#7e1322"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#d487e1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#94c136"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#b0126d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#c15d24"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#4d586d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#90e1a0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#bd7c35"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#b190f8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#eda774"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 2
+      },
+      "type": "voxel",
+      "color": "#2a3139"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#5bea01"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#200b0a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#c2532c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#dd4cb2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#fe227a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#737584"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4f6411"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#e5dac0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4d34d4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#383161"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#3b0c3d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4705b6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#115bc2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#2f2f3f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#6c5675"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 3
+      },
+      "type": "voxel",
+      "color": "#4efb86"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#bf4195"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#d97271"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#6cd6cd"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#a03b69"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#745cf4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#2056b5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#ad0f40"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#b5bfe9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#9e6ecf"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#9e3a38"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#34d85b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#c65441"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#cc2005"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#7ac414"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#b311ab"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 4
+      },
+      "type": "voxel",
+      "color": "#6c2478"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#47695b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#5badee"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#06d166"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#64369b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#85c1fd"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#edc5dc"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#ebeac6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#e6dcd5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#8e520e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#355efb"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#e96a64"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#146578"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#7a10c7"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#f64789"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#ccffb6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 5
+      },
+      "type": "voxel",
+      "color": "#a397b0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#491964"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#aec25a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#db9115"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#9f8628"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#e3cc99"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#a17d6f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#bedc78"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#50b752"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#4d7339"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#d26a23"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#7658c0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#1f3068"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#84f73a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#cd9a8f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#889333"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 6
+      },
+      "type": "voxel",
+      "color": "#e064a8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#5ca6f5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ac96f0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ecb9bd"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#02efd0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#3b69b7"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#2f7b3e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#698623"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#b2c665"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#7a286c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#4fd9a1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#ec5866"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#e16877"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#8bef97"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#56c8f2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#e47d71"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 7
+      },
+      "type": "voxel",
+      "color": "#49a600"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#7e85f0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#d7c664"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#86c5f5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#641f53"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#fa4682"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#9a22b9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#4704ba"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#f8de64"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#b0d604"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#cb554c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#b04691"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#e3757c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#48857a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#ed2260"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#204f2d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 8
+      },
+      "type": "voxel",
+      "color": "#928fbf"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#48aa4e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#a2010a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#5b8547"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#377b0a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#4403bf"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#36a433"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#89aee5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#1462f1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#031e0c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#9fc0a7"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#2832f6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#2db2a0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#5c3015"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#9d8299"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#752248"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 9
+      },
+      "type": "voxel",
+      "color": "#f4e6dc"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#b898ff"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#0a7b4e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#5095c8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#982484"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#7b766d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#8f557d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#86b96b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#781d9d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#0d253c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#d34b6d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#3d3059"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#302f5b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#6e84b0"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#66a1c7"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#dd6feb"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 10
+      },
+      "type": "voxel",
+      "color": "#a785cb"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#3558f3"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#da8832"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#df33ee"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#97bebe"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#7a06be"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#0f3342"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#3ca5a3"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#3dfe15"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#f30d4e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#1d55d9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#e473f4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#0d279a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#ecf4f7"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#4b9c0a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#5d0f82"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 11
+      },
+      "type": "voxel",
+      "color": "#8e2881"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#6427c4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#53577c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#90d256"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#4b9ac2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#b46d46"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#0344b4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#376229"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#7cbbb9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#95be0f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#00259e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#1e6f85"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#0199ad"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#cb0375"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#9e3186"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#782cc3"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 12
+      },
+      "type": "voxel",
+      "color": "#d3af14"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#3d9bea"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#42df81"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#143df5"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#bd75f4"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#3de5e9"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#b59aef"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#741724"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#74e148"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#3ab050"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#9c787e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#c6334e"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#2ec032"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#816759"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#4ee40f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#da393c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 13
+      },
+      "type": "voxel",
+      "color": "#6e947a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#492171"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#209baf"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#2c4419"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#f807c8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#72b2df"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#10c53f"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#b6ab8b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#711494"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#37681b"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#2b5a5c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#189208"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#9a5f08"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#b4f2ed"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#1ed9c2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#1ffc01"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 14
+      },
+      "type": "voxel",
+      "color": "#9cf33d"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#77def2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e6d94a"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#3b8e1c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 3,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8003e2"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 4,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#1b23d1"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 5,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e87253"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 6,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#8bc5a8"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 7,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#f0f74c"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 8,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#453440"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 9,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#920915"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 10,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#c77de6"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 11,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#e8f819"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 12,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#d3c620"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 13,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#1edd02"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 14,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#b3a4f3"
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15,
+        "z": 15
+      },
+      "type": "voxel",
+      "color": "#993a6a"
+    }
+  ]
+}
