@@ -287,11 +287,7 @@ class Api():
 
     def read_session(claims, token_user, id):
         """ Returns the session with the given id """
-        user = None
-        try:
-            user = token_user
-        except:
-            return malformed_request()      
+        user = token_user
 
         # Make sure the session exists
         try:
