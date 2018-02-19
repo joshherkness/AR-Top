@@ -4,7 +4,7 @@
       <div class="level-item">
         <div class="dropdown is-hoverable is-up">
           <div class="dropdown-trigger">
-            <button class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu4">
+            <button class="button is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
               <span>{{ name }}</span>
               <span class="icon is-small">
                 <i class="mdi mdi-chevron-down" />
@@ -37,21 +37,21 @@
         </div>
       </div>
       <div class="level-item" v-if="$route.name === 'editor'">
-        <a class="button is-link is-inverted" @click="showParty">Show party</a>
+        <a class="button is-dark" @click="showParty">Show party</a>
       </div>
     </div>
     <div class="level-right">
       <div class="level-item">
         <div class="tags has-addons">
-          <span class="tag is-medium">Invitation code</span>
-          <span class="tag is-medium is-link">{{ code }}</span>
+          <span class="tag is-medium is-white">Invitation code</span>
+          <span class="tag is-medium is-white has-text-link has-text-weight-semibold">{{ code }}</span>
         </div>
       </div>
       <div class="level-item">
         <div class="dropdown is-hoverable is-right is-up">
           <div class="dropdown-trigger">
             <p class="field">
-            <a class="button is-light">
+            <a class="button is-dark">
               <span class="icon">
                 <i class="mdi mdi-dots-vertical" />
               </span>
