@@ -241,7 +241,6 @@ GameObject:
   - component: {fileID: 269305708}
   - component: {fileID: 269305707}
   - component: {fileID: 269305706}
-  - component: {fileID: 269305710}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -324,22 +323,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &269305710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 269305705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ffd13f949689c4f9d3e74b057cd20a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 0}
-  roomcode: {fileID: 0}
-  submitButton: {fileID: 0}
-  errorLabel: {fileID: 0}
-  serverErrorLabel: {fileID: 0}
 --- !u!43 &596093281
 Mesh:
   m_ObjectHideFlags: 0
@@ -656,7 +639,7 @@ GameObject:
   - component: {fileID: 901785029}
   - component: {fileID: 901785030}
   m_Layer: 0
-  m_Name: World
+  m_Name: MapLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1298530040818706, guid: fb0499a3d5056b047bff12a27b2bc75f, type: 2}
   gridPrefab: {fileID: 1384763570359624, guid: 7f464ba2d628cc24a8bf7f48183c2470, type: 2}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 1044307107359926, guid: 8537a6fd1b7a17d49bda087794527e2d,
+    type: 2}
 --- !u!1 &1021966131
 GameObject:
   m_ObjectHideFlags: 0
