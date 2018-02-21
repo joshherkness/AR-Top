@@ -2,7 +2,8 @@
   <nav class="navbar has-shadow is-fixed-bottom level is-dark" style="padding: 0 1em; bottom: -1.5em;">
     <div class="level-left">
       <div class="level-item">
-        <div class="dropdown is-hoverable is-up">
+        <div class="dropdown is-hoverable is-up"
+          :class="{'is-active': isActive}">
           <div class="dropdown-trigger">
             <button class="button is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
               <span>{{ name }}</span>
@@ -12,16 +13,27 @@
             </button>
           </div>
           <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-            <div class="dropdown-content">
-              <nav class="panel">
+            <div class="dropdown-content is-paddingless"
+              style="overflow: hidden;">
+              <nav class="panel is-marginless">
                 <div class="panel-block">
                   <p class="control has-icons-left">
-                  <input class="input" type="text" placeholder="search" v-model="search">
+                  <input 
+                    class="input" 
+                    type="text" 
+                    placeholder="search"
+                    v-model="search" 
+                    @focus="isActive = true" 
+                    @blur="isActive = false">
                   <span class="icon is-small is-left">
                     <i class="mdi mdi-magnify" />
                   </span>
                   </p>
                 </div>
+              </nav>
+              <nav class="panel"
+                   style="overflow: auto;"
+                   :style="{'max-height': maxResultsHeight + 'px'}">
                 <router-link class="panel-block" v-for="map in searchList"
                   :key="map._id.$oid" 
                   @click.native="setOpen(map._id.$oid)"
@@ -31,6 +43,11 @@
                   </span>
                   {{ map.name }}
                 </router-link>
+
+                <!-- No results panel -->
+                <div v-if="searchList.length <=0" class="panel-block is-disabled">
+                  <i>No results</i>
+                </div>
               </nav>
             </div>
           </div>
@@ -76,12 +93,17 @@
 import { API } from '@/api/api'
 import store from '@/store/store'
 import { mapGetters } from 'vuex'
+
+const MAX_RESULTS_HEIGHT = 250
+
 export default {
   name: 'SessionManager',
   data: function () {
     return {
       search: '',
-      queuedID: null
+      queuedID: null,
+      isActive: false,
+      maxResultsHeight: MAX_RESULTS_HEIGHT
     }
   },
   computed: {
