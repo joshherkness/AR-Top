@@ -1,5 +1,6 @@
 <template>
-  <nav class="navbar" style="z-index: 1000">
+  <div>
+  <nav class="navbar has-shadow" style="z-index: 1000">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         AR-Top
@@ -53,6 +54,8 @@
       </div>
     </div>
   </nav>
+  <hr class="is-marginless"/>
+  </div>
 </template>
 
 <script>
