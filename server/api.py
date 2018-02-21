@@ -128,7 +128,7 @@ class Api():
             error = "token expired"
         # I am assuming that the user will need to login again and I don't need to check password here
         else:
-            map_list = GameMap.objects(owner=token_user.id)
+            map_list = GameMap.objects.exclude('models').filter(owner=token_user.id)
             if map_list == None:
                 error = "map error"
             else:
