@@ -166,4 +166,3 @@ if __name__ == '__main__':
         exit()
     app.register_blueprint(api)
     app.run()
-GameMap.drop_collection()
