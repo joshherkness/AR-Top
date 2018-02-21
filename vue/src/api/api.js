@@ -217,12 +217,13 @@ export class API {
   }
 
   // eslint-disable-next-line
-  static async updateSession(session) {
+  static async updateSession(id, { mapID }) {
     try {
-      let url = `${ENDPOINTS.session}`
+      let url = `${ENDPOINTS.session}/${id}`
+      let data = { mapID: mapID }
       let response = await axios.post(
         url,
-        session,
+        data,
         generateConfig({
           auth_token: store.state.user.token
         })
