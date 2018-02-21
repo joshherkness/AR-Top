@@ -1,53 +1,67 @@
 <template>
   <div>
     <!-- Canvas used to render the three.js map scene-->
-    <div ref='canvas' id='canvas'
-      :class="{'is-loading': loading}"></div>
-
-    <!-- Save button -->
-    <div class="field is-pulled-right" style="margin: 10px">
-      <div class="control">
-        <div class="button is-link"
-             :class="{'is-loading': saving}"
-             v-on:click="save">
-          <span>Save</span>
+    <div v-show="!loading" ref='canvas' id='canvas'/>
+   
+    <!-- Overlay -->
+    <div v-if="!loading"
+      class="level" style="position: absolute; padding: 30px; width: 100%;">
+      <div class="level-left">
+        <div class="level-item">
+          <span class="tag is-white title is-5">{{ name }}</span>
         </div>
-      </div>
-    </div>
-
-    <div class="field has-addons" style="position: absolute; bottom: 80px; right: 20px;"
-      v-if="!loading">
-      <div class="control">
-        <div class="dropdown is-hoverable is-up is-right">
-          <div class="dropdown-trigger">
-            <div class="button is-medium is-light"
-              aria-haspopup='true'
-              aria-controls='color-picker-dropdown-menu'
-              :class="{'is-active': isModeAdd()}"
-              :style="{'color': hexColor}"
-              v-on:click="setModeAdd">
-              <span class="icon is-medium">
-                <i class="mdi mdi-cube-outline"></i>
-              </span>
-              <div class="is-size-7">1</div>
-            </div>
-            <div class="dropdown-menu" role='menu'>
-              <sketch-picker v-model="color"></sketch-picker>
+        <div class="level-item">
+          <!-- Save button -->
+          <div class="control">
+            <div class="button is-link"
+                 :class="{'is-loading': saving}"
+                 v-on:click="save">
+              <span>Save</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="control">
-        <div class="button is-medium is-light"
-          :class="{'is-active': isModeDelete()}"
-          v-on:click="setModeDelete">
-          <span class="icon is-medium">
-            <i class="mdi mdi-eraser"></i>
-          </span>
-          <div class="is-size-7">2</div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="field has-addons">
+            <div class="control">
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <div class="button is-light"
+                    aria-haspopup='true'
+                    aria-controls='color-picker-dropdown-menu'
+                    :class="{'is-active': isModeAdd()}"
+                    :style="{'color': hexColor}"
+                    v-on:click="setModeAdd">
+                    <span class="icon is-medium">
+                      <i class="mdi mdi-cube-outline"></i>
+                    </span>
+                    <div class="is-size-7">1</div>
+                  </div>
+                  <div class="dropdown-menu" role='menu'>
+                    <sketch-picker v-model="color"></sketch-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control">
+              <div class="button is-light"
+                :class="{'is-active': isModeDelete()}"
+                v-on:click="setModeDelete">
+                <span class="icon is-medium">
+                  <i class="mdi mdi-eraser"></i>
+                </span>
+                <div class="is-size-7">2</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Loading spinner -->
+    <div v-if="loading" class="loading-spinner"/>
+
   </div>
 </template>
 
@@ -94,6 +108,13 @@ export default {
         position: new THREE.Vector3(), // Should this be an actual position
         color: this.hexColor
       })
+    },
+    name () {
+      if (!this.grid) {
+        return ''
+      }
+
+      return this.grid.name
     }
   },
   watch: {
@@ -344,20 +365,24 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
 
-  &.is-loading {
-        position: absolute;
-        pointer-events: none;
-        opacity: 0.5;
-        &:after {
-            @include loader;
-            position: absolute;
-            top: calc(50% - 1.0em);
-            left: calc(50% - 1.0em);
-            width: 2em;
-            height: 2em;
-            border-width: 0.25em;
-        }
-    }
+.loading-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+  &:after {
+    @include loader;
+    position: absolute;
+    top: calc(50% - 1.0em);
+    left: calc(50% - 1.0em);
+    width: 2em;
+    height: 2em;
+    border-width: 0.25em;
+  }
 }
 </style>
