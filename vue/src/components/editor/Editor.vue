@@ -120,11 +120,8 @@ export default {
    * This function is called when the router first navigates to this renderer.
    */
   beforeRouteEnter (to, from, next) {
-    API.getMap(to.params.id).then(map => {
-      next(vm => {
-        vm.grid = Grid.deserialize(map)
-        vm.grid.id = map._id.$oid
-      })
+    next(vm => {
+      vm.load(to.params.id)
     })
   },
 
@@ -133,11 +130,7 @@ export default {
    in the case where only a particular route parameter changes.
    */
   beforeRouteUpdate (to, from, next) {
-    API.getMap(to.params.id).then(map => {
-      this.grid = Grid.deserialize(map)
-      this.grid.id = map._id.$oid
-    })
-
+    this.load(to.params.id)
     next()
   },
   mounted () {
@@ -172,6 +165,17 @@ export default {
     window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
+    load (id) {
+      this.loading = true
+      API.getMap(id).then(map => {
+        this.loading = false
+        this.grid = Grid.deserialize(map)
+        this.grid.id = map._id.$oid
+      }).catch(err => {
+        this.loading = false
+        console.log(err)
+      })
+    },
     setup () {
       // Create a new grid director
       this.director.addEventListener('update', (event) => {
