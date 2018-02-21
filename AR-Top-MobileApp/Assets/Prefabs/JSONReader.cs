@@ -53,7 +53,7 @@ public class JSONReader : MonoBehaviour
 		string dataAsJson = "";
 
 		// Load example file
-		string filePath = Path.Combine(Application.streamingAssetsPath, "48x48.json");
+		string filePath = Path.Combine(Application.streamingAssetsPath,"TestData/voxel_cube_8x8.json");
 		if (File.Exists (filePath)) {
 			dataAsJson = File.ReadAllText(filePath); 
 		}
