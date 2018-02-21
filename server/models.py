@@ -129,17 +129,12 @@ class User(Document, UserMixin):
 # Session model
 #=====================================================
 class Session(Document):
-    """ Model for sessions.
-
-    Keyword arguments:
-    Model -- The base class for all in-house documents.
-
-    """
+    """ Model for sessions."""
     user = ReferenceField(User)#, required=True)
     map = ReferenceField(GameMap)#, required=True)
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
-
+        
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
