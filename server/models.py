@@ -124,15 +124,19 @@ class User(Document, UserMixin):
         user = User.objects.get(email=data['id'])
         return user
 
-
 #=====================================================
 # Session model
 #=====================================================
 class Session(Document):
-    """ Model for sessions."""
-    user = ReferenceField(User)#, required=True)
-    map = ReferenceField(GameMap)#, required=True)
-    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
+    """ Model for sessions.
+
+    Keyword arguments:
+    Model -- The base class for all in-house documents.
+
+    """
+    user = ObjectIdField()
+    map = ObjectIdField()
+    code = StringField(regex='^([a-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
         
     def save(self, *args, **kwargs):

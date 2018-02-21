@@ -128,7 +128,7 @@ class Api():
             error = "token expired"
         # I am assuming that the user will need to login again and I don't need to check password here
         else:
-            map_list = GameMap.objects(owner=token_user.id)
+            map_list = GameMap.objects.exclude('models').filter(owner=token_user.id)
             if map_list == None:
                 error = "map error"
             else:
@@ -254,13 +254,13 @@ class Api():
 
         Keyword arguments:
         claims -- The JWT claims that are being passed to this methods. Must include email.
+        token_user -- the user of the token sent in the JWT header, provided by @expiration_check
         """
         map_id, user = None, None
         try:
             map_id = request.form.get('map_id')
             user = token_user
         except:
-            print(''.join(tbe.format()))
             return malformed_request()
 
         # Make sure this user is actually the author of the map with map_id
@@ -277,7 +277,7 @@ class Api():
             return internal_error()
 
         try:
-            new_session = Session(user=user, map=remote_map)
+            new_session = Session(user=user.id, map=map_id)
             new_session.save()
         except Exception as e:
             current_app.logger.error("Failed to save session for user",
@@ -286,3 +286,45 @@ class Api():
 
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 
+
+    def update_session(claims, token_user, id):
+        """ Updates an existing session with a new map id
+
+        Keyword arguments:
+        claims -- The JWT claims that are being passed to this methods. Must include email.
+        token_user -- the user of the token sent in the JWT header, provided by @expiration_check
+        id -- the id of the session to be updated
+        map_id -- the map id to update the session with
+        """
+        map_id = None
+        try:
+            map_id = request.form.get('map_id')
+        except:
+            return malformed_request()
+
+        try:
+            session_entity = Session.objects(id=id).first()
+            session_entity.map = map_id
+            session_entity.save()
+        except (StopIteration, DoesNotExist) as e:
+            return jsonify(error="Session does not exist"), 404, json_tag
+        except  Exception as e:
+            current_app.logger.error(str(e))
+            return internal_error()
+
+        return jsonify(success="Successfully updated session with new map", session=session_entity)
+
+    def read_session(claims, token_user, id):
+        """ Returns the session with the given id """
+        user = token_user
+
+        # Make sure the session exists
+        try:
+            remote_copy = Session.objects(id=id).first()
+        except (StopIteration, DoesNotExist) as e:
+            return jsonify(error="Session does not exist"), 404, json_tag
+        except Exception as e:
+            current_app.logger.error(str(e))
+            return internal_error()
+
+        return jsonify(success="Successfully read session", session=remote_copy), 200, json_tag
