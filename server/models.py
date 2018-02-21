@@ -124,10 +124,11 @@ class User(Document, UserMixin):
         user = User.objects.get(email=data['id'])
         return user
 
-
 #=====================================================
 # Session model
 #=====================================================
+
+
 class Session(Document):
     """ Model for sessions.
 

@@ -116,12 +116,28 @@ def create_session(claims, token_user):
     return Api.create_session(claims, token_user)
 
 
+@api.route('/sessions/<id>', methods=['GET'])
+@protected
+@expiration_check
+def read_session(claims, token_user, id):
+    """ Returns the session with the given id """
+    return Api.read_session(claims, token_user, id)
+
+
 @api.route('/sessions/<session_id>', methods=['DELETE'])
 @protected
 @expiration_check
 def delete_session(claims, token_user, session_id):
     """ Delete a session with the given map_id and token user's id """
     return Api.delete_session(claims, token_user, session_id)
+
+
+@api.route('/sessions/<id>', methods=['PUT'])
+@protected
+@expiration_check
+def update_session(claims, token_user, id):
+    """ Updates an existing session with a new map id """
+    return Api.update_session(claims, token_user, id)
 
 
 #=====================================================
