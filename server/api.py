@@ -260,7 +260,6 @@ class Api():
             map_id = request.form.get('map_id')
             user = token_user
         except:
-            print(''.join(tbe.format()))
             return malformed_request()
 
         # Make sure this user is actually the author of the map with map_id
@@ -286,3 +285,17 @@ class Api():
 
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 
+    def read_session(claims, token_user, id):
+        """ Returns the session with the given id """
+        user = token_user
+
+        # Make sure the session exists
+        try:
+            remote_copy = Session.objects(id=id).first()
+        except (StopIteration, DoesNotExist) as e:
+            return jsonify(error="Session does not exist"), 404, json_tag
+        except Exception as e:
+            current_app.logger.error(str(e))
+            return internal_error()
+
+        return jsonify(success="Successfully read session", session=remote_copy), 200, json_tag
