@@ -13,6 +13,7 @@ from mongoengine.fields import *
 
 from constants import max_size, session_code_choices
 
+import somesockets
 
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
@@ -74,6 +75,13 @@ class GameMap(Document):
     def save(self, *args, **kwargs):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
+        all_open_sessions = Session.get(map=self.id)
+
+        # Unsure if it's possible to have multiple sessions
+        # with the same map, (going to guess this is a no)
+        # so loop may be unneeded code
+        for i in all_open_sessions:
+            somesockets.update(self.id, i.code)
 
 
 class User(Document, UserMixin):
@@ -140,7 +148,7 @@ class Session(Document):
     game_map_id = ObjectIdField()
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
-
+        
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
@@ -152,3 +160,5 @@ class Session(Document):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
         super().save(*args, **kwargs)
+
+        somesockets.update(self.map, self.code)
