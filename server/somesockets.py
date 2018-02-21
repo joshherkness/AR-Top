@@ -1,26 +1,11 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
 from secrets import SOCKETIO_SECRET_KEY
-from models import Session
+import models # import like this or you'll get circular dependencies
 from flask_mongoengine import MongoEngine
 from urllib.parse import urlparse, parse_qs
 
 
-#=====================================================
-# Data structures
-#=====================================================
-class PlayerList():
-    open_rooms = dict()
-    bijection = dict()
-
-    def add_user(self, sid, room):
-        if open_rooms.get(room) is None:
-            open_rooms[room] = [sid]
-            bijection[sid] = [room]
-        else:
-            open_rooms[room] += [sid]
-            bijection[sid] += [room]
-            
 #=====================================================
 # Global vars
 #=====================================================
@@ -32,67 +17,60 @@ db = MongoEngine(app)
 
 socketio = SocketIO(app)
 
-pl = PlayerList()
+
 #=====================================================
 # Error handling
 #=====================================================
 @socketio.on_error()
 def error_handler(e):
-    if e is ValueError or e is TypeError:
-        send('Malformed request')
+    if type(e) in [ValueError, TypeError]:
+        emit('error', 'Malformed request')
     else:
-        send('General error, try again')
+        print(e)
+        emit('error', 'General error, try again')
 
 
 @socketio.on_error_default
 def default_error_handler(e):
     app.logger.error("General error with request.sid=" + request.sid)
-    send('Internal server error, try again')
+    emit('error', 'Internal server error, try again')
+
+
 #=====================================================
 # Routes
 #=====================================================
 @socketio.on('connect')
 def connect():
-    room = request.query_string.decode().lower()
-    room = parse_qs(urlparse(room).query)['code']
-    room = Session.objects(code=room).first()
+    code = request.query_string.decode().lower()
+    code = parse_qs(urlparse(code).query)
+    if code.get('code') is None:
+        error_handler(ValueError('Invalid room code'))
+        return
     
-    if room is None:
-        error_handler(ValueError())
-    else:
-        join_room(room)
-        emit('Connect', dict(message="Another user connected"), room=room)
+    code = models.Session.objects(code=code['code']).first()
+    if code is None:
+        emit('roomNotFound', 'No session exists for this room code')
+        return
+    
+    join_room(code)
+    emit('connect', dict(message="Another user connected"), room=code)
 
 @socketio.on('disconnect')
 def disconnect():
     # This function technically doesn't even need to exist;
     # by default socketio handles room disconnection.
     # This is here purely in case we want to do anything additional.
-    emit('Disconnect', dict(message="User disconnected"), room=room)
+    pass
 
 @socketio.on('update')
-def handle_update(map, room):
+def update(map_id, room):
     """
     This isn't a socket event, this is triggered from within the flask application.
+    Nobody should be hitting this endpoint.
     """
-    try:
-        room = json['roomNumber']
-        map = json['map']
-    except:
-        send('Malformed request')
-        
+    map = models.GameMap.objects(id=map_id).first()
     emit('update', json=map, room=room)
 
-    
-@socketio.on('changeRoom')
-def switch_dungeon(json):
-    try:
-        room = json['roomNumber']
-    except:
-        send('Malformed request')
-        
-    emit('update', json=map, room=room)
-    
     
 if __name__ == "__main__":
     from argparse import ArgumentParser
