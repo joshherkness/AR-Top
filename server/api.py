@@ -296,7 +296,6 @@ class Api():
         Returns HTTP Response
         """
         try:
-            current_app.logger.debug(session_id)
             session = Session.objects(
                 id=session_id, user_id=token_user.id).first()
             session.delete()
