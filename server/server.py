@@ -108,6 +108,14 @@ def delete_map(claims, map_id):
     return Api.delete_map(claims, map_id)
 
 
+@api.route('/sessions', methods=['POST'])
+@protected
+@expiration_check
+def create_session(claims, token_user):
+    """ Creates a session with the given map_id and token user's id """
+    return Api.create_session(claims, token_user)
+
+
 @api.route('/sessions/<id>', methods=['GET'])
 @protected
 @expiration_check
@@ -116,15 +124,15 @@ def read_session(claims, token_user, id):
     return Api.read_session(claims, token_user, id)
 
 
-@api.route('/sessions/', methods=['POST'])
+@api.route('/sessions/<session_id>', methods=['DELETE'])
 @protected
 @expiration_check
-def create_session(claims, token_user):
-    """ Creates a session with the given map_id and token user's id """
-    return Api.create_session(claims, token_user)
+def delete_session(claims, token_user, session_id):
+    """ Delete a session with the given map_id and token user's id """
+    return Api.delete_session(claims, token_user, session_id)
 
 
-@api.route('/sessions/<id>', methods=['PUT'])
+@api.route('/sessions/<id>', methods=['POST'])
 @protected
 @expiration_check
 def update_session(claims, token_user, id):
