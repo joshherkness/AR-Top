@@ -75,7 +75,6 @@ class GameMap(Document):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
 
-
 class User(Document, UserMixin):
     """ Model for what fields a user can have in Mongo.
 

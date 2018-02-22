@@ -258,7 +258,7 @@ class Api():
         """
         map_id = None
         try:
-            map_id = request.json['mapID']
+            map_id = request.json['map_id']
         except:
             return malformed_request()
 

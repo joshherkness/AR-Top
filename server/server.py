@@ -132,7 +132,7 @@ def delete_session(claims, token_user, session_id):
     return Api.delete_session(claims, token_user, session_id)
 
 
-@api.route('/sessions/<id>', methods=['PUT'])
+@api.route('/sessions/<id>', methods=['POST'])
 @protected
 @expiration_check
 def update_session(claims, token_user, id):

@@ -128,8 +128,11 @@ export default {
       await API.deleteSession(store.state.session.session_id)
       store.dispatch('removeSession')
     },
-    showParty: function () {
-      // TODO: emit to party
+    showParty: async function () {
+      let updatedSession = await API.updateSession(store.state.session.session_id, {
+        map_id: this.queuedID
+      })
+      store.dispatch('updateSession', updatedSession)
     },
     setOpen: function (id) {
       this.queuedID = id
