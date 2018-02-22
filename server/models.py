@@ -160,4 +160,4 @@ class Session(Document):
             self.code = code_try
         super().save(*args, **kwargs)
 
-        somesockets.update(self.map, self.code)
+        somesockets.update(self.game_map_id, self.code)

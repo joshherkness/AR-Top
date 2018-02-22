@@ -1,13 +1,9 @@
 import unittest
-from flask import Flask
-from flask_socketio import SocketIO
-from somesockets import app, socketio
-from models import Session
+from models import *
 from helper import *
 from server import *
-from flask import current_app, jsonify, request
-from flask_mongoengine import MongoEngine
-from flask_security import MongoEngineUserDatastore, Security
+from flask_security import MongoEngineUserDatastore
+from somesockets import app, socketio
 
 
 test_email = "artop@gmail.com"
@@ -32,8 +28,7 @@ class TestSocketIO(unittest.TestCase):
         def helper(s, event_name, correct_response):
             client = socketio.test_client(app, query_string=s)
             responses = client.get_received()[0]
-            print(responses)
-            self.assertEqual(responses['args'][0], correct_response)
+            self.assertEqual(responses['name'], event_name)
             self.assertEqual(responses['args'][0], correct_response)
 
         # No query string -> Malformed request
