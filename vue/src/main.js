@@ -12,6 +12,14 @@ Vue.config.productionTip = false
 Vue.use(VModal)
 Vue.use(VeeValidate)
 
+Vue.filter('uppercase', function (value) {
+  if (!value) {
+    return ''
+  }
+  value = value.toString()
+  return value.toUpperCase()
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -256,10 +256,9 @@ class Api():
         claims -- The JWT claims that are being passed to this methods. Must include email.
         token_user -- the user of the token sent in the JWT header, provided by @expiration_check
         """
-        map_id, user = None, None
+        map_id = None
         try:
-            map_id = request.form.get('map_id')
-            user = token_user
+            map_id = request.json['map_id']
         except:
             return malformed_request()
 
@@ -267,7 +266,8 @@ class Api():
         # and that the map_id is of an existing map
         remote_map = None
         try:
-            remote_map = GameMap.objects(id=map_id, owner=user.id).first()
+            game_map = GameMap.objects(
+                id=map_id, owner=token_user.id).first()
         except (StopIteration, DoesNotExist) as e:
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
@@ -277,15 +277,32 @@ class Api():
             return internal_error()
 
         try:
-            new_session = Session(user=user.id, map=map_id)
+            new_session = Session(user_id=token_user.id,
+                                  game_map_id=game_map.id)
             new_session.save()
         except Exception as e:
             current_app.logger.error("Failed to save session for user",
-                                         str(user), "and map ", str(map_id), str(e))
+                                     str(user), "and map ", str(map_id), str(e))
             return internal_error()
-
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 
+    def delete_session(claims, token_user, session_id):
+        """Create session and save to database.
+
+        Keyword arguments:
+        claims -- The JWT claims that are being passed to this methods. Must include token.
+        token_user -- User object.
+
+        Returns HTTP Response
+        """
+        try:
+            session = Session.objects(
+                id=session_id, user_id=token_user.id).first()
+            session.delete()
+        except Exception as e:
+            current_app.logger.error(e)
+            return internal_error()
+        return jsonify(success="Successfully removed session"), 200, json_tag
 
     def update_session(claims, token_user, id):
         """ Updates an existing session with a new map id
@@ -298,17 +315,24 @@ class Api():
         """
         map_id = None
         try:
-            map_id = request.form.get('map_id')
+            map_id = request.json['map_id']
         except:
             return malformed_request()
 
+        # Make sure the map is owned by the token user
+        game_map = None
+        try:
+            game_map = GameMap.objects(id=map_id, owner=token_user.id).first()
+        except:
+            return jsonify(error="Game map does not exist"), 404, json_tag
+
         try:
             session_entity = Session.objects(id=id).first()
-            session_entity.map = map_id
+            session_entity.game_map_id = game_map.id
             session_entity.save()
         except (StopIteration, DoesNotExist) as e:
             return jsonify(error="Session does not exist"), 404, json_tag
-        except  Exception as e:
+        except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
 

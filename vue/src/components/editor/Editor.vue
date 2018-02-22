@@ -1,53 +1,67 @@
 <template>
   <div>
     <!-- Canvas used to render the three.js map scene-->
-    <div ref='canvas' id='canvas'
-      :class="{'is-loading': loading}"></div>
-
-    <!-- Save button -->
-    <div class="field is-pulled-right" style="margin: 10px">
-      <div class="control">
-        <div class="button is-link"
-             :class="{'is-loading': saving}"
-             v-on:click="save">
-          <span>Save</span>
+    <div v-show="!loading" ref='canvas' id='canvas'/>
+   
+    <!-- Overlay -->
+    <div v-if="!loading"
+      class="level" style="position: absolute; padding: 30px; width: 100%;">
+      <div class="level-left">
+        <div class="level-item">
+          <span class="tag is-white title is-5">{{ name }}</span>
         </div>
-      </div>
-    </div>
-
-    <div class="field has-addons" style="position: absolute; bottom: 10px; right: 10px;"
-      v-if="!loading">
-      <div class="control">
-        <div class="dropdown is-hoverable is-up is-right">
-          <div class="dropdown-trigger">
-            <div class="button is-medium is-light"
-              aria-haspopup='true'
-              aria-controls='color-picker-dropdown-menu'
-              :class="{'is-active': isModeAdd()}"
-              :style="{'color': hexColor}"
-              v-on:click="setModeAdd">
-              <span class="icon is-medium">
-                <i class="mdi mdi-cube-outline"></i>
-              </span>
-              <div class="is-size-7">1</div>
-            </div>
-            <div class="dropdown-menu" role='menu'>
-              <sketch-picker v-model="color"></sketch-picker>
+        <div class="level-item">
+          <!-- Save button -->
+          <div class="control">
+            <div class="button is-link"
+                 :class="{'is-loading': saving}"
+                 v-on:click="save">
+              <span>Save</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="control">
-        <div class="button is-medium is-light"
-          :class="{'is-active': isModeDelete()}"
-          v-on:click="setModeDelete">
-          <span class="icon is-medium">
-            <i class="mdi mdi-eraser"></i>
-          </span>
-          <div class="is-size-7">2</div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="field has-addons">
+            <div class="control">
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <div class="button is-light"
+                    aria-haspopup='true'
+                    aria-controls='color-picker-dropdown-menu'
+                    :class="{'is-active': isModeAdd()}"
+                    :style="{'color': hexColor}"
+                    v-on:click="setModeAdd">
+                    <span class="icon is-medium">
+                      <i class="mdi mdi-cube-outline"></i>
+                    </span>
+                    <div class="is-size-7">1</div>
+                  </div>
+                  <div class="dropdown-menu" role='menu'>
+                    <sketch-picker v-model="color"></sketch-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control">
+              <div class="button is-light"
+                :class="{'is-active': isModeDelete()}"
+                v-on:click="setModeDelete">
+                <span class="icon is-medium">
+                  <i class="mdi mdi-eraser"></i>
+                </span>
+                <div class="is-size-7">2</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Loading spinner -->
+    <div v-if="loading" class="loading-spinner"/>
+
   </div>
 </template>
 
@@ -75,7 +89,6 @@ export default {
       raycaster: null,
       mouse: null,
       grid: null,
-      selectionManager: null,
       color: defaultColor,
       mode: EditorMode.ADD,
       loading: false,
@@ -95,70 +108,122 @@ export default {
         position: new THREE.Vector3(), // Should this be an actual position
         color: this.hexColor
       })
+    },
+    name () {
+      if (!this.grid) {
+        return ''
+      }
+
+      return this.grid.name
     }
   },
   watch: {
+    grid (grid) {
+      // Create a new director
+      // TODO: Remove the need to create a new director
+      if (this.director) {
+        this.director.removeEventListener('update')
+      }
+      this.director = new GridDirector({ scale: 50 })
+
+      this.director.load(grid).then(() => {
+        this.setup()
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     mode (mode) {
       this.updateCursorPosition()
     }
   },
-  mounted () {
-    this.loading = true
 
-    // Create the director
-    this.director = new GridDirector({ scale: 50 })
-
-    API.getMap(this.$route.params.id).then((map) => {
-      map.id = map._id['$oid']
-      this.grid = Grid.deserialize(map)
-      this.director.load(this.grid).then(() => {
-        this.setup()
-        this.loading = false
-      })
-    }).catch((err) => {
-      console.log(err)
-      throw err
+  /**
+   * This function is called when the router first navigates to this renderer.
+   */
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.load(to.params.id)
     })
   },
+
+  /**
+   * This function is called when the particular route is updated, for example
+   in the case where only a particular route parameter changes.
+   */
+  beforeRouteUpdate (to, from, next) {
+    this.load(to.params.id)
+    next()
+  },
+  mounted () {
+    // Create the renderer
+    this.renderer = new THREE.WebGLRenderer()
+    this.renderer.setPixelRatio(window.devicePixelRatio)
+    this.renderer.setClearColor(0xffffff)
+
+    // Attach to the container
+    this.canvas = this.$refs.canvas
+    this.canvas.appendChild(this.renderer.domElement)
+
+    // Create the camera
+    const cameraFov = 45
+    this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
+
+    // Create the orbit controls
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+    this.controls.enablePan = false
+    this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+    this.camera.lookAt(new THREE.Vector3())
+    this.controls.addEventListener('change', this.render)
+
+    this.raycaster = new THREE.Raycaster()
+    this.mouse = new THREE.Vector2()
+
+    // Attach event listeners to the document
+    this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
+    document.addEventListener('keydown', this.onDocumentKeyDown, false)
+    document.addEventListener('keyup', this.onDocumentKeyUp, false)
+    window.addEventListener('resize', this.onWindowResize, false)
+  },
   methods: {
+    load (id) {
+      this.loading = true
+      API.getMap(id).then(map => {
+        this.loading = false
+        this.grid = Grid.deserialize(map)
+        this.grid.id = map._id.$oid
+      }).catch(err => {
+        this.loading = false
+        console.log(err)
+      })
+    },
     setup () {
-      // Create the renderer
-      this.renderer = new THREE.WebGLRenderer()
-      this.renderer.setPixelRatio(window.devicePixelRatio)
-      this.renderer.setClearColor(0xffffff)
-
-      // Create the camera
-      let cameraFov = 45
-      this.camera = new THREE.PerspectiveCamera(cameraFov, window.innerWidth / window.innerHeight, 1, 10000)
-      this.camera.lookAt(new THREE.Vector3())
-      this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(this.director.scene.actualWidth))
-
-      // Add orbit controls
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      this.controls.enablePan = false
-      this.controls.minDistance = 2 * this.director.scale || 50
-      this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
-      this.controls.addEventListener('change', this.render)
-
-      // Attach to the container
-      this.canvas = this.$refs.canvas
-      this.canvas.appendChild(this.renderer.domElement)
-
-      this.raycaster = new THREE.Raycaster()
-      this.mouse = new THREE.Vector2()
-
-      this.onWindowResize()
-
-      // Attach event listeners to the document
-      this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
-      this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
-      document.addEventListener('keydown', this.onDocumentKeyDown, false)
-      document.addEventListener('keyup', this.onDocumentKeyUp, false)
-      window.addEventListener('resize', this.onWindowResize, false)
-
+      // Create a new grid director
       this.director.addEventListener('update', (event) => {
         this.render()
       })
+
+      // Update camera properties
+      if (this.camera) {
+        // Here, we ensure that our entire scene will begin within the bounds of
+        // our camera
+        const scalar = Math.max(this.director.scene.actualWidth, this.director.scene.actualHeight)
+        this.camera.position.copy(new THREE.Vector3(1, 1, 1).multiplyScalar(scalar))
+
+        // Since the camera has not changed, we need to convey this change to
+        // the our controls, if there are any.
+        if (this.controls) {
+          this.controls.update()
+        }
+      }
+
+      // Update orbit control properties
+      if (this.controls) {
+        this.controls.minDistance = 2 * this.director.scale || 50
+      }
+
+      // We need to call this so that the canvas will resize to the window
+      this.onWindowResize()
     },
     render () {
       this.renderer.render(this.director.scene, this.camera)
@@ -300,20 +365,24 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
 
-  &.is-loading {
-        position: absolute;
-        pointer-events: none;
-        opacity: 0.5;
-        &:after {
-            @include loader;
-            position: absolute;
-            top: calc(50% - 1.0em);
-            left: calc(50% - 1.0em);
-            width: 2em;
-            height: 2em;
-            border-width: 0.25em;
-        }
-    }
+.loading-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+  &:after {
+    @include loader;
+    position: absolute;
+    top: calc(50% - 1.0em);
+    left: calc(50% - 1.0em);
+    width: 2em;
+    height: 2em;
+    border-width: 0.25em;
+  }
 }
 </style>
