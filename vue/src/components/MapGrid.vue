@@ -28,8 +28,6 @@ export default {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  max-height: 465px;
-  overflow: auto;
 }
 @media (max-width: 32em) {
   .map-cards {
