@@ -75,7 +75,7 @@ class GameMap(Document):
     def save(self, *args, **kwargs):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
-        all_open_sessions = Session.get(map=self.id)
+        all_open_sessions = Session.objects(game_map_id=self.id)
 
         # Unsure if it's possible to have multiple sessions
         # with the same map, (going to guess this is a no)

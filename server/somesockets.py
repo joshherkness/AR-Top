@@ -69,7 +69,7 @@ def update(map_id, room):
     Nobody should be hitting this endpoint.
     """
     map = models.GameMap.objects(id=map_id).first()
-    emit('update', json=map, room=room)
+    emit('update', json=dict(map=map), room=room)
 
     
 if __name__ == "__main__":
