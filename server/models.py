@@ -1,6 +1,6 @@
+import random
 import secrets
 import sys
-import random
 from datetime import datetime
 
 from bson import ObjectId
@@ -75,7 +75,6 @@ class GameMap(Document):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
 
-
 class User(Document, UserMixin):
     """ Model for what fields a user can have in Mongo.
 
@@ -127,6 +126,8 @@ class User(Document, UserMixin):
 #=====================================================
 # Session model
 #=====================================================
+
+
 class Session(Document):
     """ Model for sessions.
 
@@ -134,19 +135,19 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ObjectIdField()
-    map = ObjectIdField()
-    code = StringField(regex='^([a-z0-9]{5})$',  unique=True)
+    user_id = ObjectIdField()
+    game_map_id = ObjectIdField()
+    code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
-            for i in range(0,5):
+            for i in range(0, 5):
                 code_try += random.choice(session_code_choices)
             while len(Session.objects(code=code_try)) != 0:
                 code_try = ''
-                for i in range(0,5):
+                for i in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
         super().save(*args, **kwargs)

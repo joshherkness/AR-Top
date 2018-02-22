@@ -3,9 +3,11 @@
     <create-map-modal/>
     <delete-map-modal/>
     <edit-map-modal/>
+    <session-modal/>
 
     <!-- Only show the navbar for required routes-->
     <Navbar v-if="$route.meta.requiresNavbar"/>
+    <SessionManager v-if="$route.meta.requiresManager && session_id"/>
     <router-view/>
   </div>
 </template>
@@ -13,7 +15,10 @@
 <script>
 import CreateMapModal from '@/components/CreateMapModal'
 import DeleteMapModal from '@/components/DeleteMapModal'
+import SessionManager from '@/components/SessionManager'
 import EditMapModal from '@/components/EditMapModal'
+import SessionModal from '@/components/SessionModal'
+import { mapGetters } from 'vuex'
 import Navbar from '@/components/Navbar'
 
 export default {
@@ -22,7 +27,14 @@ export default {
     CreateMapModal,
     DeleteMapModal,
     EditMapModal,
+    SessionModal,
+    SessionManager,
     Navbar
+  },
+  computed: {
+    ...mapGetters([
+      'session_id'
+    ])
   }
 }
 </script>

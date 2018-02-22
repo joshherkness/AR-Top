@@ -11,6 +11,9 @@
 
 *.log
 
+# Tern
+.tern-port
+
 server/static
 server/templates
 
