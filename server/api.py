@@ -316,13 +316,20 @@ class Api():
         """
         map_id = None
         try:
-            map_id = request.form.get('map_id')
+            map_id = request.json['map_id']
         except:
             return malformed_request()
 
+        # Make sure the map is owned by the token user
+        game_map = None
+        try:
+            game_map = GameMap.objects(id=map_id, owner=token_user.id).first()
+        except:
+            return jsonify(error="Game map does not exist"), 404, json_tag
+
         try:
             session_entity = Session.objects(id=id).first()
-            session_entity.game_map_id = map_id
+            session_entity.game_map_id = game_map.id
             session_entity.save()
         except (StopIteration, DoesNotExist) as e:
             return jsonify(error="Session does not exist"), 404, json_tag
