@@ -75,11 +75,9 @@ class GameMap(Document):
     def save(self, *args, **kwargs):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
-        all_open_sessions = Session.objects(game_map_id=self.id)
 
-        # Unsure if it's possible to have multiple sessions
-        # with the same map, (going to guess this is a no)
-        # so loop may be unneeded code
+        # Retrieve all sessions that contain this map, and notify them.
+        all_open_sessions = Session.objects.filter(game_map_id=self.id)
         for i in all_open_sessions:
             somesockets.update(self.id, i.code)
 
@@ -147,7 +145,7 @@ class Session(Document):
     game_map_id = ObjectIdField()
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
-        
+
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''

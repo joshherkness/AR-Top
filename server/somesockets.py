@@ -46,12 +46,12 @@ def connect():
     if code.get('code') is None:
         error_handler(ValueError('Invalid room code'))
         return
-    
+
     code = models.Session.objects(code=code['code']).first()
     if code is None:
         emit('roomNotFound', 'No session exists for this room code')
         return
-    
+
     join_room(code)
     emit('connect', dict(message="Another user connected"), room=code)
 
@@ -71,7 +71,7 @@ def update(map_id, room):
     map = models.GameMap.objects(id=map_id).first()
     emit('update', json=dict(map=map), room=room)
 
-    
+
 if __name__ == "__main__":
     from argparse import ArgumentParser
 
@@ -83,5 +83,5 @@ if __name__ == "__main__":
     if args.port < 80:
         print("Port can't be negative or privileged!")
         exit()
-    
+
     socketio.run(app, host=args.host, port=args.port)
