@@ -61,6 +61,7 @@ def authenticate(claims):
     """ Log user in with credentials in claims. """
     return Api.authenticate(claims)
 
+
 @api.route('/authenticated', methods=['GET'])
 @protected
 @expiration_check
@@ -106,19 +107,37 @@ def delete_map(claims, map_id):
     """ Deletes a specified map by id. """
     return Api.delete_map(claims, map_id)
 
-@api.route('/sessions/', methods=['POST'])
-@protected
-@expiration_check
-def create_session(claims):
-    """ Creates a session with the given map_id and token user's id """
-    return Api.create_session(claims)
 
-@api.route('/sessions/', methods=['POST'])
+@api.route('/sessions', methods=['POST'])
 @protected
 @expiration_check
 def create_session(claims, token_user):
     """ Creates a session with the given map_id and token user's id """
-    return Api.create_session(claims,token_user)
+    return Api.create_session(claims, token_user)
+
+
+@api.route('/sessions/<id>', methods=['GET'])
+@protected
+@expiration_check
+def read_session(claims, token_user, id):
+    """ Returns the session with the given id """
+    return Api.read_session(claims, token_user, id)
+
+
+@api.route('/sessions/<session_id>', methods=['DELETE'])
+@protected
+@expiration_check
+def delete_session(claims, token_user, session_id):
+    """ Delete a session with the given map_id and token user's id """
+    return Api.delete_session(claims, token_user, session_id)
+
+
+@api.route('/sessions/<id>', methods=['POST'])
+@protected
+@expiration_check
+def update_session(claims, token_user, id):
+    """ Updates an existing session with a new map id """
+    return Api.update_session(claims, token_user, id)
 
 
 #=====================================================
@@ -147,5 +166,3 @@ if __name__ == '__main__':
         exit()
     app.register_blueprint(api)
     app.run()
-
-GameMap.drop_collection()
