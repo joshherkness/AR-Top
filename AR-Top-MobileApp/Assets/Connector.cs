@@ -17,10 +17,11 @@ public class Connector : MonoBehaviour {
 
 		DontDestroyOnLoad (socket.gameObject);
 
-		//socket.On("connect", connection);
+		socket.On("connect", connected);
 		socket.On ("update", UpdateJSON);
 		socket.On ("RoomNotFound", roomNotFound);
 		socket.On ("RoomFound", roomFound);
+		socket.On ("error", handleError);
 
 		StartCoroutine (BoopTime ());
 	}
@@ -43,7 +44,14 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void connection(JSONObject js){
-		socket.Emit ("FindRoom", js);
+		socket.url += "&room=" + js ["roomNumber"];
+		socket.Connect (); 
+	}
+
+	public void connected(SocketIOEvent e){
+		Debug.Log ("Connection received"); 
+		SceneManager.sceneLoaded += OnSceneLoaded;
+		SceneManager.LoadScene ("main", LoadSceneMode.Additive);
 	}
 
 	public void UpdateJSON(SocketIOEvent e){
@@ -58,5 +66,16 @@ public class Connector : MonoBehaviour {
 
 	public void roomFound (SocketIOEvent e){
 		SceneManager.LoadScene ("main");
+	}
+
+	public void handleError (SocketIOEvent e){
+		room.serverErrorReceived (e.data.ToString ());
+	}
+
+	public void OnSceneLoaded(Scene scene, LoadSceneMode mode){
+		MapController jsonReader = FindObjectOfType<MapController> ();
+		print (jsonReader);
+		SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
+		SceneManager.UnloadSceneAsync ("Login");
 	}
 }

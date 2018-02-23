@@ -288,6 +288,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
+      propertyPath: autoConnect
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
   m_IsPrefabParent: 0
@@ -582,7 +586,6 @@ GameObject:
   - component: {fileID: 1286540245}
   - component: {fileID: 1286540244}
   - component: {fileID: 1286540243}
-  - component: {fileID: 1286540242}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -590,13 +593,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1286540242
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1286540241}
-  m_Enabled: 1
 --- !u!124 &1286540243
 Behaviour:
   m_ObjectHideFlags: 0
