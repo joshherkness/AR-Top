@@ -21,6 +21,7 @@ public class Connector : MonoBehaviour {
 		socket.On ("update", UpdateJSON);
 		socket.On ("RoomNotFound", roomNotFound);
 		socket.On ("RoomFound", roomFound);
+		socket.On ("error", handleError);
 
 		StartCoroutine (BoopTime ());
 	}
@@ -67,8 +68,12 @@ public class Connector : MonoBehaviour {
 		SceneManager.LoadScene ("main");
 	}
 
+	public void handleError (SocketIOEvent e){
+		room.serverErrorReceived (e.data.ToString ());
+	}
+
 	public void OnSceneLoaded(Scene scene, LoadSceneMode mode){
-		JSONReader jsonReader = FindObjectOfType<JSONReader> ();
+		MapController jsonReader = FindObjectOfType<MapController> ();
 		print (jsonReader);
 		SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
 		SceneManager.UnloadSceneAsync ("Login");

@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using Vuforia;
 
-public class JSONReader : MonoBehaviour
+public class MapController : MonoBehaviour
 {
 
 	[SerializeField] GameObject tilePrefab;
@@ -54,7 +54,7 @@ public class JSONReader : MonoBehaviour
 		string dataAsJson = "";
 
 		// Load example file
-		string filePath = Path.Combine(Application.streamingAssetsPath, "16x16.json");
+		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_cube_16x16.json");
 		if (File.Exists (filePath)) {
 			dataAsJson = File.ReadAllText(filePath); 
 		}
@@ -64,9 +64,10 @@ public class JSONReader : MonoBehaviour
 
 	}
 
-	public void UpdateJSON (string JSONstring)
+	public void setMapJSON (string JSONstring)
 	{
-		Destroy (mapLayer);
+		Destroy (baseLayer);
+		Destroy (modelLayer);
 		buildLayers ();
 		Grid map = JsonUtility.FromJson<Grid> (JSONstring);
 		buildMap (map);

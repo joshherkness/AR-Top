@@ -48,4 +48,8 @@ public class RoomManager : MonoBehaviour {
 	public void roomNotFound(){
 		serverErrorLabel.text = "Error\nRoom not found with given code.";
 	}
+
+	public void serverErrorReceived(string message){
+		serverErrorLabel.text = message;
+	}
 }
