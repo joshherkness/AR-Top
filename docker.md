@@ -8,7 +8,7 @@
 
 ## Getting to know Docker
 
-* Read somoe of the basic concepts of docker [here](https://docs.docker.com/get-started/#docker-concepts)
+* Read some of the basic concepts of docker [here](https://docs.docker.com/get-started/#docker-concepts)
 
 ## Building the vue image
 
@@ -72,7 +72,7 @@ python              jessie              336d482502ab        6 days ago          
 
 ## Docker Compose
 
-* We currently have a multi-container Docker application. So to easily start all our services we will use [Docker Compose](https://docs.docker.com/compose/overview/)
+* We currently have a multi-container Docker application. So to easily start all of our services we will use [Docker Compose](https://docs.docker.com/compose/overview/)
 
 * To start Docker Compose run the following:
 
@@ -83,10 +83,24 @@ Go to [localhost](http://localhost) in your browser.
 
 ## Wrapping up
 
-* Should you ever make a change to one of the images. You will need to rebuild it for Docker Compose to recognize those changes.
+* Should you ever make a change to one of the images you will need to rebuild it for Docker Compose to recognize those changes.
 
 * To remove dangling and unused images use `docker system prune -a`
 
 * To see running containers use `docker ps`
 
-* If while closing Docker Compose doesn't stop the currently running containers use `docker-compose kill` to stop them.
+* If while closing Docker Compose and it doesn't stop the currently running containers use `docker-compose kill` to stop them.
+
+* If you want to enter into a running container you first need to have it's container id. So run `docker ps` to view all running containers and view their ids.
+
+    *  For the python containers:
+
+        * `docker exec -it CONTAINER_ID /bin/bash`
+
+    * For the mongo container:
+
+        * `docker exec -it CONTAINER_ID mongo`
+
+    * For the vue container:
+
+        * `docker exec -it CONTAINER_ID /bin/ash`
