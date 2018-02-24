@@ -1,11 +1,12 @@
 import secrets
+
 from flask import current_app
 
 DEBUG = True
 SECRET_KEY = secrets.SECRET_KEY
 
 MONGODB_DB = 'mydatabase'
-MONGODB_HOST = 'localhost'
+MONGODB_HOST = 'mongo'
 MONGODB_PORT = 27017
 
 # CORS Config

@@ -2,12 +2,12 @@ import secrets
 from json import loads
 
 from flask import Blueprint, Flask, jsonify, render_template, request, url_for
+from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 
 from api import *
 from constants import internal_error, json_tag, malformed_request
 from decorators import *
-from flask_cors import CORS
 from helper import *
 from models import *
 
@@ -165,4 +165,4 @@ if __name__ == '__main__':
             send_email(text=' '.join(args.email), recipients=args.recipients)
         exit()
     app.register_blueprint(api)
-    app.run()
+    app.run(host='0.0.0.0')
