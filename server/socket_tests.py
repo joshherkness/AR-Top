@@ -28,8 +28,8 @@ class TestSocketIO(unittest.TestCase):
         def helper(s, event_name, correct_response):
             client = socketio.test_client(app, query_string=s)
             responses = client.get_received()[0]
-            self.assertEqual(responses['name'], event_name)
             self.assertEqual(responses['args'][0], correct_response)
+            self.assertEqual(responses['name'], event_name)
 
         # No query string -> Malformed request
         helper('', 'error', 'Malformed request')
@@ -42,12 +42,13 @@ class TestSocketIO(unittest.TestCase):
         helper(url + 'code=DNE', 'roomNotFound', 'No session exists for this room code')
 
         # Session exists and valid query -> Connection event
+        valid_room = 'abcde'
         session = Session(user_id=self.user.id,
                           game_map_id=self.map.id,
-                          code='abcde')
+                          code=valid_room)
         session.save()
-
-        helper(url + 'code=abcde', 'connect', 'Another user connected')
+        
+        helper(url + 'code=' + valid_room, 'connect', dict(message='Another user connected'))
        
 if __name__ == "__main__":
     unittest.main()

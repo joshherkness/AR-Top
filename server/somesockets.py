@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room
 from secrets import SOCKETIO_SECRET_KEY
 import models # import like this or you'll get circular dependencies
 from flask_mongoengine import MongoEngine
@@ -24,16 +24,16 @@ socketio = SocketIO(app)
 @socketio.on_error()
 def error_handler(e):
     if type(e) in [ValueError, TypeError]:
-        emit('error', 'Malformed request')
+        socketio.emit('error', 'Malformed request')
     else:
         print(e)
-        emit('error', 'General error, try again')
+        socketio.emit('error', 'General error, try again')
 
 
 @socketio.on_error_default
 def default_error_handler(e):
     app.logger.error("General error with request.sid=" + request.sid)
-    emit('error', 'Internal server error, try again')
+    socketio.emit('error', 'Internal server error, try again')
 
 
 #=====================================================
@@ -47,13 +47,15 @@ def connect():
         error_handler(ValueError('Invalid room code'))
         return
 
-    code = models.Session.objects(code=code['code']).first()
+    code = models.Session.objects(code=code['code'][0]).first()
+
     if code is None:
-        emit('roomNotFound', 'No session exists for this room code')
+        socketio.emit('roomNotFound', 'No session exists for this room code')
         return
 
     join_room(code)
-    emit('connect', dict(message="Another user connected"), room=code)
+    socketio.emit('connect', dict(message="Another user connected"), room=code)
+
 
 @socketio.on('disconnect')
 def disconnect():
@@ -62,14 +64,14 @@ def disconnect():
     # This is here purely in case we want to do anything additional.
     pass
 
-@socketio.on('update')
+
 def update(map_id, room):
     """
     This isn't a socket event, this is triggered from within the flask application.
     Nobody should be hitting this endpoint.
     """
     map = models.GameMap.objects(id=map_id).first()
-    emit('update', json=dict(map=map), room=room)
+    socketio.emit('update', json=dict(map=map), room=room)
 
 
 if __name__ == "__main__":
