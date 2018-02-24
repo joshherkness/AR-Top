@@ -5,7 +5,7 @@ from server import *
 from flask_security import MongoEngineUserDatastore
 from somesockets import app, socketio
 
-
+url = 'http://127.0.0.1:80/?'
 test_email = "artop@gmail.com"
 test_password = "abc123"
 user_datastore = MongoEngineUserDatastore(db, User, Role)
@@ -24,12 +24,13 @@ class TestSocketIO(unittest.TestCase):
                            height=10, depth=10, color='#fff', private=False, models=[])
         self.map.save()
 
-    def test_connect(self):
+    def test_connection(self):
         def helper(s, event_name, correct_response):
             client = socketio.test_client(app, query_string=s)
             responses = client.get_received()[0]
             self.assertEqual(responses['args'][0], correct_response)
             self.assertEqual(responses['name'], event_name)
+            client.disconnect()
 
         # No query string -> Malformed request
         helper('', 'error', 'Malformed request')
@@ -37,7 +38,6 @@ class TestSocketIO(unittest.TestCase):
         # Query string that makes no sense -> Malformed request
         helper('sdgo', 'error', 'Malformed request')
 
-        url = 'http://127.0.0.1:80/?'
         # Valid query string but room doesn't exist -> roomNotFound
         helper(url + 'code=DNE', 'roomNotFound', 'No session exists for this room code')
 
@@ -49,6 +49,24 @@ class TestSocketIO(unittest.TestCase):
         session.save()
         
         helper(url + 'code=' + valid_room, 'connect', dict(message='Another user connected'))
-       
+
+    def test_map_update(self):
+        valid_room = 'abcde'
+        session = Session(user_id=self.user.id,
+                          game_map_id=self.map.id,
+                          code=valid_room)
+        session.save()
+
+        client = socketio.test_client(app, query_string=url+'code='+valid_room)
+
+        voxel = GameModel(type="voxel",position=Position(x=1,y=1,z=1),color='#fff')
+        self.map.models = [voxel]
+        self.map.save()
+
+        responses = client.get_received()
+        print(responses)
+        
+        
+        
 if __name__ == "__main__":
     unittest.main()
