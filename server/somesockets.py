@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit, join_room
 from secrets import SOCKETIO_SECRET_KEY
-import models # import like this or you'll get circular dependencies
-from flask_mongoengine import MongoEngine
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
+from flask import Flask, render_template, request
+from flask_mongoengine import MongoEngine
+from flask_socketio import SocketIO, emit, send
+
+import models  # import like this or you'll get circular dependencies
 
 #=====================================================
 # Global vars
@@ -57,6 +60,7 @@ def connect():
     socketio.emit('connect', dict(message="Another user connected"), room=code)
 
 
+
 @socketio.on('disconnect')
 def disconnect():
     # This function technically doesn't even need to exist;
@@ -78,8 +82,10 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
 
     parser = ArgumentParser(description="Socket server for ARTop")
-    parser.add_argument("host", type=str, nargs='?', help="The IP addr you want to listen for", default='127.0.0.1')
-    parser.add_argument("port", type=int, nargs='?', help="The port you want the server to run on", default=5000)
+    parser.add_argument("host", type=str, nargs='?',
+                        help="The IP addr you want to listen for", default='0.0.0.0')
+    parser.add_argument("port", type=int, nargs='?',
+                        help="The port you want the server to run on", default=5001)
     args = parser.parse_args()
 
     if args.port < 80:
