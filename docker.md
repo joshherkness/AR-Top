@@ -74,7 +74,7 @@ python              jessie              336d482502ab        6 days ago          
 
 * We currently have a multi-container Docker application. So to easily start all of our services we will use [Docker Compose](https://docs.docker.com/compose/overview/)
 
-* To start Docker Compose run the following:
+* To start Docker Compose run the following from the root of the project:
 
 ```
 docker-compose up
@@ -82,6 +82,8 @@ docker-compose up
 Go to [localhost](http://localhost) in your browser.
 
 ## Wrapping up
+
+* NOTE: For the mongo container to be accessible to our python containers we need to change  `MONGODB_HOST` inside [config.py](server/config.py) from `localhost` to `mongo` to match the containers Hostname. For the dev environment simply revert back to `localhost` and the `dev.sh` script will work as expected.
 
 * Should you ever make a change to one of the images you will need to rebuild it for Docker Compose to recognize those changes.
 
