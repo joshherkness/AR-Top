@@ -1,0 +1,24 @@
+version: '3'
+services:
+    flask:
+        hostname: flask
+        image: "oakland/flask"
+        ports:
+            - "5000:5000"
+        links:
+            - mongo:mongo
+    sockets:
+        hostname: sockets
+        image: "oakland/sockets"
+        ports:
+            - "5001:5001"
+        links:
+            - mongo:mongo
+    vue:
+        hostname: vue
+        image: "oakland/vue"
+        ports:
+            - "80:80"
+    mongo:
+        image: "mongo:latest"
+
