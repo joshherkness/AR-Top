@@ -199,10 +199,10 @@ export class API {
   }
 
   // eslint-disable-next-line
-  static async createSession({ map_id }) {
+  static async createSession(map_id) {
     try {
       let url = `${ENDPOINTS.session}`
-      let data = { map_id }
+      let data = { map_id: map_id }
       let response = await axios.post(
         url,
         data,
@@ -210,24 +210,25 @@ export class API {
           auth_token: store.state.user.token
         })
       )
-      return response.data
+      return response.data.session
     } catch (err) {
       throw err
     }
   }
 
   // eslint-disable-next-line
-  static async updateSession(session) {
+  static async updateSession(id, { map_id }) {
     try {
-      let url = `${ENDPOINTS.session}`
+      let url = `${ENDPOINTS.session}/${id}`
+      let data = { map_id: map_id }
       let response = await axios.post(
         url,
-        session,
+        data,
         generateConfig({
           auth_token: store.state.user.token
         })
       )
-      return response.data
+      return response.data.session
     } catch (err) {
       throw err
     }

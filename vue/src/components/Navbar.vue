@@ -1,4 +1,5 @@
 <template>
+  <div>
   <nav class="navbar has-shadow" style="z-index: 1000">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
@@ -23,7 +24,9 @@
     </div>
     <div class="navbar-menu" :class="{ 'is-active': collapseActive }">
       <div class="navbar-end">
-        <session-manager/>
+        <a class="navbar-item" v-if="token && !session_id" @click="$modal.show('session-modal')">
+          Open Session
+        </a>
         <div class="navbar-item has-dropdown is-hoverable" v-if="token">
           <a class="navbar-link is-hidden-touch">
             {{ email }}
@@ -51,12 +54,13 @@
       </div>
     </div>
   </nav>
+  <hr class="is-marginless"/>
+  </div>
 </template>
 
 <script>
 import store from '@/store/store'
 import { mapGetters, mapActions } from 'vuex'
-import SessionManager from '@/components/SessionManager'
 export default {
   name: 'Navbar',
   data: function () {
@@ -67,12 +71,13 @@ export default {
   computed: {
     ...mapGetters([
       'email',
-      'token'
+      'token',
+      'session_id'
     ])
   },
   methods: {
     ...mapActions([
-      'removeSession'
+      'setSession'
     ]),
     toggleCollapse: function () {
       this.collapseActive = !this.collapseActive
@@ -81,9 +86,6 @@ export default {
       store.dispatch('signOutUser')
       store.dispatch('removeAllMaps')
     }
-  },
-  components: {
-    SessionManager
   }
 }
 </script>

@@ -25,7 +25,6 @@
 
 <script>
 import MapRow from '@/components/MapRow'
-
 export default {
   name: 'MapList',
   props: ['maps'],
@@ -34,4 +33,3 @@ export default {
   }
 }
 </script>
-

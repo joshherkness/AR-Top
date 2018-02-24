@@ -1,6 +1,6 @@
+import random
 import secrets
 import sys
-import random
 from datetime import datetime
 
 from bson import ObjectId
@@ -13,6 +13,7 @@ from mongoengine.fields import *
 
 from constants import max_size, session_code_choices
 
+import somesockets
 
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
@@ -75,6 +76,10 @@ class GameMap(Document):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
 
+        # Retrieve all sessions that contain this map, and notify them.
+        all_open_sessions = Session.objects.filter(game_map_id=self.id)
+        for i in all_open_sessions:
+            somesockets.update(self.id, i.code)
 
 class User(Document, UserMixin):
     """ Model for what fields a user can have in Mongo.
@@ -124,10 +129,11 @@ class User(Document, UserMixin):
         user = User.objects.get(email=data['id'])
         return user
 
-
 #=====================================================
 # Session model
 #=====================================================
+
+
 class Session(Document):
     """ Model for sessions.
 
@@ -135,19 +141,21 @@ class Session(Document):
     Model -- The base class for all in-house documents.
 
     """
-    user = ReferenceField(User)#, required=True)
-    map = ReferenceField(GameMap)#, required=True)
+    user_id = ObjectIdField()
+    game_map_id = ObjectIdField()
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
     created_at = DateTimeField(default=datetime.now())
 
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
-            for i in range(0,5):
+            for i in range(0, 5):
                 code_try += random.choice(session_code_choices)
             while len(Session.objects(code=code_try)) != 0:
                 code_try = ''
-                for i in range(0,5):
+                for i in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
         super().save(*args, **kwargs)
+
+        somesockets.update(self.game_map_id, self.code)
