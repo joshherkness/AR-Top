@@ -9,6 +9,7 @@ public class Connector : MonoBehaviour {
 	SocketIOComponent socket;
 	RoomManager room;
 	string socketurlbase;
+	private bool mainSceneLoaded = false;
 
 	// Use this for initialization
 	void Start () {
@@ -49,13 +50,16 @@ public class Connector : MonoBehaviour {
 		socket.url = socketurlbase;
 		socket.url += "&room=" + js ["roomNumber"];
 		print (socket.url); 
-		socket.Connect (); 
+		socket.Connect ();
 	}
 
 	public void connected(SocketIOEvent e){
-		Debug.Log ("Connection received"); 
-		SceneManager.sceneLoaded += OnSceneLoaded;
-		SceneManager.LoadScene ("main", LoadSceneMode.Additive);
+		Debug.Log ("Connection received");
+		if (!mainSceneLoaded) {
+			SceneManager.sceneLoaded += OnSceneLoaded;
+			SceneManager.LoadScene ("main", LoadSceneMode.Additive);
+			mainSceneLoaded = true;
+		}
 	}
 
 	public void UpdateJSON(SocketIOEvent e){
