@@ -352,3 +352,16 @@ class Api():
             return internal_error()
 
         return jsonify(success="Successfully read session", session=remote_copy), 200, json_tag
+
+    def read_session_user_id(claims, token_user):
+        """ Read a session with given user_id """
+        try:
+            session_entity = Session.objects(user_id=token_user.id).first()
+        except (StopIteration, DoesNotExist) as e:
+            return jsonify(error="Session does not exist"), 404, json_tag
+        except Exception as e:
+            current_app.logger.error(str(e))
+            return internal_error()
+
+        return jsonify(success="Successfully read session", session=session_entity), 200, json_tag
+
