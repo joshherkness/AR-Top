@@ -380,7 +380,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 255543131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a917f0af64a6423093132dab321c15f, type: 3}
+  m_Script: {fileID: 11500000, guid: b9282b0d344bec64a8afb2b2675c7362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &255543136
@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 269305708}
   - component: {fileID: 269305707}
   - component: {fileID: 269305706}
+  - component: {fileID: 269305710}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1534,11 +1535,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 901785028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f35dd26865887374c99d844a9e82c778, type: 3}
+  m_Script: {fileID: 11500000, guid: 6587703064dc6cb468188aaa8503958f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1298530040818706, guid: fb0499a3d5056b047bff12a27b2bc75f, type: 2}
-  gridPrefab: {fileID: 1384763570359624, guid: 7f464ba2d628cc24a8bf7f48183c2470, type: 2}
+  gridPrefab: {fileID: 1298530040818706, guid: aef40dcac5fabd848a06885b5b27fa8a, type: 2}
+  playerPrefab: {fileID: 1044307107359926, guid: 8537a6fd1b7a17d49bda087794527e2d,
+    type: 2}
 --- !u!1 &911862976
 GameObject:
   m_ObjectHideFlags: 0

@@ -91,32 +91,32 @@ namespace SocketIO
 
 		public void Awake()
 		{
-			encoder = new Encoder();
-			decoder = new Decoder();
-			parser = new Parser();
-			handlers = new Dictionary<string, List<Action<SocketIOEvent>>>();
-			ackList = new List<Ack>();
-			sid = null;
-			packetId = 0;
+				encoder = new Encoder ();
+				decoder = new Decoder ();
+				parser = new Parser ();
+				handlers = new Dictionary<string, List<Action<SocketIOEvent>>> ();
+				ackList = new List<Ack> ();
+				sid = null;
+				packetId = 0;
 
-			ws = new WebSocket(url);
-			ws.OnOpen += OnOpen;
-			ws.OnMessage += OnMessage;
-			ws.OnError += OnError;
-			ws.OnClose += OnClose;
-			wsConnected = false;
+				ws = new WebSocket (url);
+				ws.OnOpen += OnOpen;
+				ws.OnMessage += OnMessage;
+				ws.OnError += OnError;
+				ws.OnClose += OnClose;
+				wsConnected = false;
 
-			eventQueueLock = new object();
-			eventQueue = new Queue<SocketIOEvent>();
+				eventQueueLock = new object ();
+				eventQueue = new Queue<SocketIOEvent> ();
 
-			ackQueueLock = new object();
-			ackQueue = new Queue<Packet>();
+				ackQueueLock = new object ();
+				ackQueue = new Queue<Packet> ();
 
-			connected = false;
+				connected = false;
 
-			#if SOCKET_IO_DEBUG
+				#if SOCKET_IO_DEBUG
 			if(debugMethod == null) { debugMethod = Debug.Log; };
-			#endif
+				#endif
 		}
 
 		public void Start()
@@ -170,6 +170,7 @@ namespace SocketIO
 		
 		public void Connect()
 		{
+			NewWebsocket ();
 			connected = true;
 
 			socketThread = new Thread(RunSocketThread);
@@ -177,6 +178,20 @@ namespace SocketIO
 
 			pingThread = new Thread(RunPingThread);
 			pingThread.Start(ws);
+		}
+
+		public void NewWebsocket(){
+			ws.OnOpen -= OnOpen;
+			ws.OnMessage -= OnMessage;
+			ws.OnError -= OnError;
+			ws.OnClose -= OnClose;
+
+			ws = new WebSocket (url);
+			ws.OnOpen += OnOpen;
+			ws.OnMessage += OnMessage;
+			ws.OnError += OnError;
+			ws.OnClose += OnClose;
+			wsConnected = false;
 		}
 
 		public void Close()

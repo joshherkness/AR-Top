@@ -12,7 +12,7 @@ public class HandleGridOutline : MonoBehaviour {
 		sprite = GetComponent <SpriteRenderer> ();
 	}
 
-	void OnOutlineChanged (string outline){
+	public void OnOutlineChanged (string outline){
 		string name = this.transform.name;
 		if (outline == "None")
 			sprite.enabled = false;

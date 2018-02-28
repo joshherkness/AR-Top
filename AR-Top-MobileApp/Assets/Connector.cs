@@ -8,12 +8,14 @@ public class Connector : MonoBehaviour {
 
 	SocketIOComponent socket;
 	RoomManager room;
+	string socketurlbase;
 
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
 		socket = GameObject.Find ("SocketIO").GetComponent <SocketIOComponent> ();
 		room = FindObjectOfType<RoomManager> ();
+		socketurlbase = socket.url;
 
 		DontDestroyOnLoad (socket.gameObject);
 
@@ -23,7 +25,7 @@ public class Connector : MonoBehaviour {
 		socket.On ("RoomFound", roomFound);
 		socket.On ("error", handleError);
 
-		StartCoroutine (BoopTime ());
+		//StartCoroutine (BoopTime ());
 	}
 
 	// Update is called once per frame
@@ -44,7 +46,9 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void connection(JSONObject js){
+		socket.url = socketurlbase;
 		socket.url += "&room=" + js ["roomNumber"];
+		print (socket.url); 
 		socket.Connect (); 
 	}
 
