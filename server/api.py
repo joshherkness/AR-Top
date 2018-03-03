@@ -9,6 +9,7 @@ from helper import Helper
 from constants import json_tag, malformed_request, internal_error
 
 from models import GameMap, User, Role, Session
+from mongoengine import DoesNotExist
 
 
 class Api():
@@ -106,7 +107,7 @@ class Api():
 
         try:
             game_map = GameMap.objects(id=id, owner=user.id).first()
-        except (StopIteration, DoesNotExist) as e:
+        except (StopIteration, DoesNotExist):
             current_app.logger.error(e)
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
@@ -251,7 +252,7 @@ class Api():
         try:
             remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
             remote_copy.delete()
-        except (StopIteration, DoesNotExist) as e:
+        except (StopIteration, DoesNotExist):
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
             return jsonify(error="Map does not exist"), 404, json_tag
