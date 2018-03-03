@@ -6,7 +6,9 @@ from json import dumps, loads
 
 import bcrypt
 from server import *
-
+from flask import Blueprint
+api = Blueprint("api", "api", url_prefix="/api")
+app.register_blueprint(api)
 
 class TestUserEndpoints(unittest.TestCase):
     #=====================================================
@@ -16,9 +18,13 @@ class TestUserEndpoints(unittest.TestCase):
         self.db_fd, app.config['DATABASE'] = tempfile.mkstemp()
         app.testing = True
         self.app = app.test_client()
+        self.valid_email = "validEmail@gmail.com"
+        self.valid_password = "validPassword123"
+        self.encrypted_password = bcrypt.hashpw(self.valid_password.encode(), bcrypt.gensalt())
+        self.user_datastore = MongoEngineUserDatastore(db, User, Role)
   
     def tearDown(self):
-        Map.objects.all().delete()
+        GameMap.objects.all().delete()
         User.objects.all().delete()
         Session.objects.all().delete()
         os.close(self.db_fd)
@@ -31,10 +37,20 @@ class TestUserEndpoints(unittest.TestCase):
         headers = {
                 'Authorization': 'Bearer ' + jwt.encode(dict(data=data), base64.b64decode(secrets.JWT_KEY), algorithm='HS512').decode()
         }
-
         response = self.app.open(page, method=method, data=data, follow_redirects=True, headers=headers)
-        json = loads(response.data.decode('utf-8'))
+        app.logger.debug(response.data)
+        json = loads(response.data.dcode('utf-8'))
         return json, response.status_code
+
+    def create_map(self, user_id):
+        m = GameMap(owner=user_id, color="#FFF")
+        m.save()
+        return m
+
+    def create_session(self, user_id, game_map_id):
+        s = Session(user_id=user_id, game_map_id=game_map_id)
+        s.save()
+        return s
 
     #=====================================================
     # Tests
@@ -66,14 +82,14 @@ class TestUserEndpoints(unittest.TestCase):
 
         User.objects.all().delete()
         data = dict(email="test@gmail.com", password="testpassword")
-        test_user = user_datastore.create_user(email=data['email'], password=data['password'])
+        test_user = self.user_datastore.create_user(email=data['email'], password=data['password'])
         tester(data, "Email already in use, please use another one")
-        user_datastore.delete_user(test_user)
+        self.user_datastore.delete_user(test_user)
     
         data = dict(email="new1Emai2lNo24bo5dyShouldHave@gmail.com", password="validPassword123")
         tester(data, "Account has been created! Check your email to validate your account.", correct_code=200, key="success")
         test_user = User.objects.get(email=data['email'])
-        user_datastore.delete_user(test_user)
+        self.user_datastore.delete_user(test_user)
 
     def test_authenticate(self):
         valid_email = "validEmail@gmail.com"
@@ -195,7 +211,7 @@ class TestUserEndpoints(unittest.TestCase):
         valid_email = "validEmail@gmail.com"
         valid_password = "validPassword123"
         encrypted_password = bcrypt.hashpw(valid_password.encode(), bcrypt.gensalt())
-        test_user = user_datastore.create_user(email=valid_email, password=encrypted_password)
+        test_user = self.user_datastore.create_user(email=valid_email, password=encrypted_password)
         test_user_id = test_user.id
         auth_token = self.request('/api/auth', dict(email=valid_email, password=valid_password))[0]
         auth_token = dict(auth_token=auth_token['auth_token'])
@@ -209,6 +225,19 @@ class TestUserEndpoints(unittest.TestCase):
 
     def test_update_map(self):
         pass
+
+    def test_read_session_user_id(self):
+        test_user = self.user_datastore.create_user(email=self.valid_email, password=self.encrypted_password)
+        test_map = self.create_map(user_id=test_user.id)
+        test_session = self.create_session(user_id=test_user.id, game_map_id=test_map.id)
+
+        auth_token = self.request('/auth', dict(email=self.valid_email, password=self.valid_password, method='POST'))[0]
+        auth_token = dict(auth_token=auth_token['auth_token'])
+
+        # try to read session
+        data = {}
+        response, code = self.request('/session', data, method='GET')
+        assert code == 200
 
         
 if __name__ == "__main__":

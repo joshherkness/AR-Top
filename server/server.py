@@ -123,7 +123,7 @@ def read_session(claims, token_user, id):
     """ Returns the session with the given id """
     return Api.read_session(claims, token_user, id)
 
-@api.route('/session/<user_id>', methods=['GET'])
+@api.route('/session', methods=['GET'])
 @protected
 @expiration_check
 def read_session_user_id(claims, token_user):
