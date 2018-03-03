@@ -1,3 +1,5 @@
+from flask import Flask, render_template, request
+from flask_socketio import SocketIO, send, emit, join_room
 from secrets import SOCKETIO_SECRET_KEY
 from urllib.parse import parse_qs, urlparse
 
@@ -55,7 +57,7 @@ def connect():
         return
 
     join_room(code)
-    socketio.emit('connect', dict(message="Another user connected"), room=code)
+    socketio.emit('newUser', dict(message="Another user connected"), room=code)
 
 
 
