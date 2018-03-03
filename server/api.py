@@ -5,7 +5,10 @@ from flask import current_app, jsonify, request
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
 
-from helper import *
+from helper import Helper
+from constants import json_tag, malformed_request, internal_error
+
+from models import GameMap, User, Role, Session
 
 
 class Api():
@@ -56,6 +59,7 @@ class Api():
         # send_email(recipients=email, subject="ay whaddup", text="Hello from AR-top")
         return jsonify(success="Account has been created! Check your email to validate your account.", auth_token=token.decode('utf-8')), 200, json_tag
 
+    @staticmethod
     def authenticate(claims):
         """Verify a login attempt.
 
@@ -64,7 +68,7 @@ class Api():
 
         Returns a HTTP response.
         """
-        email, password, error = None, None, None
+        email, password = None, None
         try:
             # Use a dict access here, not ".get". The access is better with the try block.
             if claims is not None:
@@ -83,6 +87,7 @@ class Api():
         else:
             return jsonify(email=email, auth_token=validator[2]), 200, json_tag
 
+    @staticmethod
     def read_map(claims, id):
         """Gather all maps associated with a user.
 
@@ -92,7 +97,7 @@ class Api():
 
         Returns a HTTP response.
         """
-        email, user, game_map = None, None, None
+        email, game_map = None, None
         try:
             email = claims["email"]
             user = User.objects(email=email).first()
@@ -100,7 +105,7 @@ class Api():
             return malformed_request()
 
         try:
-            game_map = GameMap.objects(id=id).first()
+            game_map = GameMap.objects(id=id, owner=user.id).first()
         except (StopIteration, DoesNotExist) as e:
             current_app.logger.error(e)
             # Malicious user may be trying to overwrite someone's map
@@ -112,6 +117,7 @@ class Api():
 
         return jsonify(game_map), 200, json_tag
 
+    @staticmethod
     def read_list_of_maps(claims, user_id):
         """Gather all maps associated with a user.
 
@@ -128,13 +134,15 @@ class Api():
             error = "token expired"
         # I am assuming that the user will need to login again and I don't need to check password here
         else:
-            map_list = GameMap.objects.exclude('models').filter(owner=token_user.id)
+            map_list = GameMap.objects.exclude(
+                'models').filter(owner=token_user.id)
             if map_list == None:
                 error = "map error"
             else:
                 return jsonify(map_list), 200, json_tag
         return jsonify(error=error), 422, json_tag
 
+    @staticmethod
     def create_map(claims):
         """Create a map for the user.
 
@@ -177,6 +185,7 @@ class Api():
 
         return jsonify(success="Successfully created map", map=new_game_map), 200, json_tag
 
+    @staticmethod
     def update_map(claims, map_id):
         """Update a maps name or base color.
 
@@ -218,6 +227,7 @@ class Api():
         remote_copy.save()
         return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
+    @staticmethod
     def delete_map(claims, map_id):
         """Delete map from database.
 
@@ -249,6 +259,7 @@ class Api():
             return internal_error()
         return jsonify(success=map_id), 200, json_tag
 
+    @staticmethod
     def create_session(claims, token_user):
         """Create session and save to database.
 
@@ -264,7 +275,6 @@ class Api():
 
         # Make sure this user is actually the author of the map with map_id
         # and that the map_id is of an existing map
-        remote_map = None
         try:
             game_map = GameMap.objects(
                 id=map_id, owner=token_user.id).first()
@@ -282,10 +292,11 @@ class Api():
             new_session.save()
         except Exception as e:
             current_app.logger.error("Failed to save session for user",
-                                     str(user), "and map ", str(map_id), str(e))
+                                     str(token_user), "and map ", str(map_id), str(e))
             return internal_error()
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 
+    @staticmethod
     def delete_session(claims, token_user, session_id):
         """Create session and save to database.
 
@@ -304,6 +315,7 @@ class Api():
             return internal_error()
         return jsonify(success="Successfully removed session"), 200, json_tag
 
+    @staticmethod
     def update_session(claims, token_user, id):
         """ Updates an existing session with a new map id
 
@@ -338,9 +350,9 @@ class Api():
 
         return jsonify(success="Successfully updated session with new map", session=session_entity)
 
+    @staticmethod
     def read_session(claims, token_user, id):
         """ Returns the session with the given id """
-        user = token_user
 
         # Make sure the session exists
         try:

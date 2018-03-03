@@ -1,9 +1,11 @@
 import traceback
 from functools import wraps
 
-from flask import current_app, request
+from flask import current_app, request, jsonify
 
-from helper import *
+from helper import Helper
+from models import User
+from constants import json_tag, malformed_request
 
 
 def expiration_check(f):
@@ -42,7 +44,7 @@ def protected(f):
         try:
             claims = Helper.verify_jwt(request)
             return f(claims, *args, **kwargs)
-        except Exception as e:
+        except Exception:
             if not current_app.testing:
                 current_app.logger.error(traceback.format_exc())
             return malformed_request()
