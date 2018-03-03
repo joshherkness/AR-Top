@@ -9,12 +9,13 @@ from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
                             UserMixin, login_required)
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
-from mongoengine import *
-from mongoengine.fields import *
-
-from constants import max_size, session_code_choices
+from mongoengine import (BooleanField, DateTimeField, Document, DoesNotExist,
+                         EmailField, EmbeddedDocument, EmbeddedDocumentField,
+                         EmbeddedDocumentListField, IntField, ListField,
+                         ObjectIdField, ReferenceField, StringField)
 
 import somesockets
+from constants import max_size, session_code_choices
 
 
 class Role(Document, RoleMixin):
