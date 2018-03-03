@@ -149,11 +149,11 @@ class Session(Document):
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
-            for i in range(0, 5):
+            for _ in range(0, 5):
                 code_try += random.choice(session_code_choices)
             while len(Session.objects(code=code_try)) != 0:
                 code_try = ''
-                for i in range(0, 5):
+                for _ in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
         super().save(*args, **kwargs)
