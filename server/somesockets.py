@@ -18,4 +18,4 @@ def connect():
 
 
 if __name__ == '__main__':
-    socket.run(app, host='127.0.0.1', debug=True, port=5001)
+    socket.run(app, host='0.0.0.0', debug=True, port=5001)
