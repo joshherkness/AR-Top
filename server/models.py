@@ -1,6 +1,7 @@
 import random
 import secrets
 import sys
+from json import dumps, loads
 from datetime import datetime
 
 from bson import ObjectId
@@ -13,7 +14,8 @@ from mongoengine.fields import *
 
 from constants import max_size, session_code_choices
 
-import somesockets
+from flask_socketio import SocketIO
+
 
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
@@ -75,6 +77,7 @@ class GameMap(Document):
     def save(self, *args, **kwargs):
         self.updated = datetime.now()
         super(GameMap, self).save(*args, **kwargs)
+
 
 class User(Document, UserMixin):
     """ Model for what fields a user can have in Mongo.
@@ -151,4 +154,14 @@ class Session(Document):
                 for i in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
+
+        game_map = GameMap.objects(id=self.game_map_id).first()
+        game_map = game_map.to_json()
+        game_map = loads(game_map)
+        name = game_map["name"]
+        color = game_map["color"]
+        models = game_map["models"]
+        socketio = SocketIO(message_queue='redis://')
+        socketio.emit(
+            'update', {'name': name, 'color': color, 'models': models})
         super().save(*args, **kwargs)
