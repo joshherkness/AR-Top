@@ -174,8 +174,6 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response[0], 200)
         self.assertEqual(response[1]['success'], "Successfully created map")
 
-    def test_read_maps(self):
-
 
 if __name__ == '__main__':
     unittest.main()
