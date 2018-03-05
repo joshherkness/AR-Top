@@ -128,7 +128,8 @@ class Api():
             error = "token expired"
         # I am assuming that the user will need to login again and I don't need to check password here
         else:
-            map_list = GameMap.objects.exclude('models').filter(owner=token_user.id)
+            map_list = GameMap.objects.exclude(
+                'models').filter(owner=token_user.id)
             if map_list == None:
                 error = "map error"
             else:
@@ -282,7 +283,7 @@ class Api():
             new_session.save()
         except Exception as e:
             current_app.logger.error("Failed to save session for user",
-                                     str(user), "and map ", str(map_id), str(e))
+                                     str(token_user), "and map ", str(map_id), str(e))
             return internal_error()
         return jsonify(success="Successfully created session", session=new_session), 200, json_tag
 

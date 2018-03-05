@@ -5,6 +5,7 @@ from json import dumps, loads
 from datetime import datetime
 
 from bson import ObjectId
+from flask import current_app
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
                             UserMixin, login_required)
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -161,7 +162,11 @@ class Session(Document):
         name = game_map["name"]
         color = game_map["color"]
         models = game_map["models"]
-        socketio = SocketIO(message_queue='redis://')
+        if current_app.config['REDIS_HOST'] is None:
+            socketio = SocketIO(message_queue='redis://')
+        else:
+            socketio = SocketIO(message_queue='redis://' +
+                                current_app.config['REDIS_HOST'])
         socketio.emit(
             'update', {'name': name, 'color': color, 'models': models})
         super().save(*args, **kwargs)

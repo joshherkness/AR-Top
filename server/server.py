@@ -11,11 +11,23 @@ from decorators import *
 from helper import *
 from models import *
 
+from argparse import ArgumentParser
+
+parser = ArgumentParser(description="Runs flask server")
+parser.add_argument("--deploy", action='store_true')
+args = parser.parse_args()
+
+
 # Create app
 app = Flask(__name__)
 
 # Load configuration from config file.
 app.config.from_object('config')
+
+if args.deploy:
+    app.config['REDIS_HOST'] = 'redis'
+    app.config['MONGODB_HOST'] = 'mongo'
+
 
 # Set CORS
 CORS(app, resources={r"/api/*": {"origins": "*"}},
@@ -144,10 +156,6 @@ def update_session(claims, token_user, id):
 # Main
 #=====================================================
 if __name__ == '__main__':
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser(description="Runs flask server")
-
     # TODO: logic not implemented for this because we should wait
     parser.add_argument("mode", nargs='?', choices=[
                         'd', 'p'], help="Selects whether or not you want to run development or production")
@@ -157,18 +165,6 @@ if __name__ == '__main__':
                         type=str, help="Who you want to send to")
     parser.add_argument("-u", "--user", nargs=2, type=str,
                         help="Insert a new user: takes username, password")
-    parser.add_argument("--deploy", action='store_true')
-    args = parser.parse_args()
-
-    MONGODB_HOST = 'mongo' if args.deploy else MONGODB_DB_HOST
-    
-    if args.email is not None:
-        if args.recipients is None:
-            print("You need to include recipients to email if you want to send an email.")
-        else:
-            send_email(text=' '.join(args.email), recipients=args.recipients)
-        exit()
-
 
     app.register_blueprint(api)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)
