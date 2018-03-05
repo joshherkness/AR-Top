@@ -5,11 +5,9 @@ from flask import Blueprint, Flask, jsonify, render_template, request, url_for
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 
-from api import *
+from api import Api
 from constants import internal_error, json_tag, malformed_request
-from decorators import *
-from helper import *
-from models import *
+from decorators import expiration_check, protected
 
 # Create app
 app = Flask(__name__)

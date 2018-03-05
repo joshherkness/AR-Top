@@ -2,15 +2,17 @@ import base64
 
 import bcrypt
 import jwt
+import secrets
 from flask import current_app
 from flask_mail import Mail, Message
 
-from constants import *
-from models import *
+from constants import email_pattern, max_email_length, max_password_length
+from models import User
 
 
 class Helper():
 
+    @staticmethod
     def validate_register(email, password):
         """Validate user registration.
 
@@ -47,6 +49,7 @@ class Helper():
             current_app.logger.error(e)
         return invalid, message
 
+    @staticmethod
     def validate_auth(email, password):
         """Validate an authentication attempt.
 
@@ -71,6 +74,7 @@ class Helper():
             current_app.logger.error(e)
         return invalid, message, auth_token
 
+    @staticmethod
     def verify_jwt(request):
         """Verify that a JWT is valid.
 
@@ -86,10 +90,12 @@ class Helper():
                 secrets.JWT_KEY.encode()), algorithm=['HS512'])['data']
         return claims
 
+    @staticmethod
     def hashpw(password):
         """ Hash and salt the incoming string. """
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
+    @staticmethod
     def send_email(text, recipients, subject="AR-top"):
         """Send email to user.
 
