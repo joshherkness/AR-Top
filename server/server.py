@@ -157,12 +157,18 @@ if __name__ == '__main__':
                         type=str, help="Who you want to send to")
     parser.add_argument("-u", "--user", nargs=2, type=str,
                         help="Insert a new user: takes username, password")
+    parser.add_argument("--deploy", action='store_true')
     args = parser.parse_args()
+
+    MONGODB_HOST = 'mongo' if args.deploy else MONGODB_DB_HOST
+    
     if args.email is not None:
         if args.recipients is None:
             print("You need to include recipients to email if you want to send an email.")
         else:
             send_email(text=' '.join(args.email), recipients=args.recipients)
         exit()
+
+
     app.register_blueprint(api)
     app.run(host='0.0.0.0')
