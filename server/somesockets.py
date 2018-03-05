@@ -1,95 +1,30 @@
-from flask import Flask, render_template, request
-from flask_socketio import SocketIO, send, emit, join_room
-from secrets import SOCKETIO_SECRET_KEY
-from urllib.parse import parse_qs, urlparse
+from threading import Lock
 
-from flask import Flask, render_template, request
-from flask_mongoengine import MongoEngine
-from flask_socketio import SocketIO, emit, send
+import sys
+import eventlet
+from flask import Flask, jsonify
+from flask_socketio import SocketIO, emit
+from argparse import ArgumentParser
+parser = ArgumentParser(description="Socket server")
+parser.add_argument("--deploy", action='store_true')
+args = parser.parse_args()
 
-import models  # import like this or you'll get circular dependencies
+eventlet.monkey_patch()
 
-#=====================================================
-# Global vars
-#=====================================================
 app = Flask(__name__)
-app.config['SECRET_KEY'] = SOCKETIO_SECRET_KEY
-app.config.from_object('config')
 
-db = MongoEngine(app)
-
-socketio = SocketIO(app)
-
-
-#=====================================================
-# Error handling
-#=====================================================
-@socketio.on_error()
-def error_handler(e):
-    if type(e) in [ValueError, TypeError]:
-        socketio.emit('error', 'Malformed request')
-    else:
-        print(e)
-        socketio.emit('error', 'General error, try again')
+if args.deploy:
+    socket = SocketIO(app, logger=True, engineio_logger=True,
+                      message_queue="redis://redis")
+else:
+    socket = SocketIO(app, logger=True, engineio_logger=True,
+                      message_queue="redis://")
 
 
-@socketio.on_error_default
-def default_error_handler(e):
-    app.logger.error("General error with request.sid=" + request.sid)
-    socketio.emit('error', 'Internal server error, try again')
-
-
-#=====================================================
-# Routes
-#=====================================================
-@socketio.on('connect')
+@socket.on('connect')
 def connect():
-    code = request.query_string.decode().lower()
-    code = parse_qs(urlparse(code).query)
-    if code.get('code') is None:
-        error_handler(ValueError('Invalid room code'))
-        return
-
-    code = models.Session.objects(code=code['code'][0]).first()
-
-    if code is None:
-        socketio.emit('roomNotFound', 'No session exists for this room code')
-        return
-
-    join_room(code)
-    socketio.emit('newUser', dict(message="Another user connected"), room=code)
-
-
-
-@socketio.on('disconnect')
-def disconnect():
-    # This function technically doesn't even need to exist;
-    # by default socketio handles room disconnection.
-    # This is here purely in case we want to do anything additional.
-    pass
-
-
-def update(map_id, room):
-    """
-    This isn't a socket event, this is triggered from within the flask application.
-    Nobody should be hitting this endpoint.
-    """
-    map = models.GameMap.objects(id=map_id).first()
-    socketio.emit('update', json=dict(map=map), room=room)
+    emit('my_response', {'data': 'Connected', 'count': 0})
 
 
 if __name__ == "__main__":
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser(description="Socket server for ARTop")
-    parser.add_argument("host", type=str, nargs='?',
-                        help="The IP addr you want to listen for", default='0.0.0.0')
-    parser.add_argument("port", type=int, nargs='?',
-                        help="The port you want the server to run on", default=5001)
-    args = parser.parse_args()
-
-    if args.port < 80:
-        print("Port can't be negative or privileged!")
-        exit()
-
-    socketio.run(app, host=args.host, port=args.port)
+    socket.run(app, debug=True, host='0.0.0.0', port=5001)
