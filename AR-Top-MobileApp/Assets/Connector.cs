@@ -52,16 +52,15 @@ public class Connector : MonoBehaviour {
 		//socket.url = socketurlbase;
 		//socket.url += "&room=" + js ["roomNumber"];
 		//print (socket.url); 
-		socket.Connect ();
+		socket.Emit ("joinRoom", js["roomNumber"]);
 	}
 
 	public void connected(SocketIOEvent e){
-		Debug.Log ("Connection received");
-		if (!mainSceneLoaded) {
-			SceneManager.sceneLoaded += OnSceneLoaded;
-			SceneManager.LoadScene ("main", LoadSceneMode.Additive);
-			mainSceneLoaded = true;
-		}
+		Debug.Log ("connected to Socket server");
+		if (e != null)
+			Debug.LogWarning ("Message from Socket server: " + e);
+		else
+			Debug.Log ("No issues from Socket Server");
 	}
 
 	public void UpdateJSON(SocketIOEvent e){
@@ -75,7 +74,12 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void roomFound (SocketIOEvent e){
-		SceneManager.LoadScene ("main");
+		Debug.Log ("Connection received");
+		if (!mainSceneLoaded) {
+			SceneManager.sceneLoaded += OnSceneLoaded;
+			SceneManager.LoadScene ("main", LoadSceneMode.Additive);
+			mainSceneLoaded = true;
+		}
 	}
 
 	public void handleError (SocketIOEvent e){
