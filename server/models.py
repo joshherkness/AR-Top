@@ -1,8 +1,8 @@
 import random
 import secrets
 import sys
+from json import dumps, loads
 from datetime import datetime as dt
-
 from bson import ObjectId
 from flask import current_app
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
@@ -16,7 +16,7 @@ from mongoengine import (BooleanField, DateTimeField, Document, DoesNotExist,
 
 import somesockets
 from constants import max_size, session_code_choices
-
+from flask_socketio import SocketIO
 
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
@@ -156,4 +156,18 @@ class Session(Document):
                 for _ in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
+
+        game_map = GameMap.objects(id=self.game_map_id).first()
+        game_map = game_map.to_json()
+        game_map = loads(game_map)
+        name = game_map["name"]
+        color = game_map["color"]
+        models = game_map["models"]
+        if current_app.config['REDIS_HOST'] is None:
+            socketio = SocketIO(message_queue='redis://')
+        else:
+            socketio = SocketIO(message_queue='redis://' +
+                                current_app.config['REDIS_HOST'])
+        socketio.emit(
+            'update', {'name': name, 'color': color, 'models': models})
         super().save(*args, **kwargs)
