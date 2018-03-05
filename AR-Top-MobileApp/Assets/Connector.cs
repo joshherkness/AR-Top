@@ -49,7 +49,7 @@ public class Connector : MonoBehaviour {
 	public void connection(JSONObject js){
 		socket.url = socketurlbase;
 		socket.url += "&room=" + js ["roomNumber"];
-		print (socket.url);
+		print (socket.url); 
 		socket.Connect ();
 	}
 

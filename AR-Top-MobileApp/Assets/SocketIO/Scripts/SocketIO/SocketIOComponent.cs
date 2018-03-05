@@ -170,7 +170,7 @@ namespace SocketIO
 		
 		public void Connect()
 		{
-			//NewWebsocket ();
+			NewWebsocket ();
 			connected = true;
 
 			socketThread = new Thread(RunSocketThread);
