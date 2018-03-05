@@ -16,6 +16,8 @@ public class Connector : MonoBehaviour {
 		DontDestroyOnLoad (this.gameObject);
 		socket = GameObject.Find ("SocketIO").GetComponent <SocketIOComponent> ();
 		room = FindObjectOfType<RoomManager> ();
+		if (room != null)
+			print (room);
 		socketurlbase = socket.url;
 
 		DontDestroyOnLoad (socket.gameObject);
@@ -47,9 +49,9 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void connection(JSONObject js){
-		socket.url = socketurlbase;
-		socket.url += "&room=" + js ["roomNumber"];
-		print (socket.url); 
+		//socket.url = socketurlbase;
+		//socket.url += "&room=" + js ["roomNumber"];
+		//print (socket.url); 
 		socket.Connect ();
 	}
 
@@ -63,7 +65,7 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void UpdateJSON(SocketIOEvent e){
-		Debug.Log ("Update Called"); 
+		Debug.Log ("Update Called");
 		Debug.Log(string.Format ("[name: {0}, data: {1}]", e.name, e.data));
 	}
 
@@ -77,7 +79,8 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void handleError (SocketIOEvent e){
-		room.serverErrorReceived (e.data.ToString ());
+		if (room != null)
+			room.serverErrorReceived (e.data.ToString ());
 	}
 
 	public void OnSceneLoaded(Scene scene, LoadSceneMode mode){

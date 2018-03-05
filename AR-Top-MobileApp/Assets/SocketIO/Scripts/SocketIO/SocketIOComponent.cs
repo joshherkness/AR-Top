@@ -27,7 +27,7 @@
 
 #endregion
 
-//#define SOCKET_IO_DEBUG			// Uncomment this for debug
+#define SOCKET_IO_DEBUG			// Uncomment this for debug
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -170,7 +170,7 @@ namespace SocketIO
 		
 		public void Connect()
 		{
-			NewWebsocket ();
+			//NewWebsocket ();
 			connected = true;
 
 			socketThread = new Thread(RunSocketThread);
@@ -180,7 +180,7 @@ namespace SocketIO
 			pingThread.Start(ws);
 		}
 
-		public void NewWebsocket(){
+		/*public void NewWebsocket(){
 			ws.OnOpen -= OnOpen;
 			ws.OnMessage -= OnMessage;
 			ws.OnError -= OnError;
@@ -192,7 +192,7 @@ namespace SocketIO
 			ws.OnError += OnError;
 			ws.OnClose += OnClose;
 			wsConnected = false;
-		}
+		}*/
 
 		public void Close()
 		{
