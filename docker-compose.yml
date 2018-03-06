@@ -23,11 +23,10 @@ services:
             - "80:80"
     mongo:
         image: "mongo:latest"
-<<<<<<< HEAD
         ports:
             - "27017:27017"
-=======
     redis:
         image: "redis:alpine"
->>>>>>> refs/remotes/origin/development
+        ports:
+            - "6379:6379"
 
