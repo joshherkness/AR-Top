@@ -160,7 +160,11 @@ class Api():
             email = claims["email"]
             user = User.objects(email=email).first()
             map = request.json['map']
-            map = loads(map)
+
+            # The test send map as a string.
+            if type(map) is not dict:
+                map = loads(map)
+
         except Exception as e:
             if not current_app.testing:
                 current_app.logger.error(str(e))
@@ -383,4 +387,3 @@ class Api():
             return jsonify(error="Session does not exist"), 404, json_tag
 
         return jsonify(success="Successfully read session", session=session_entity), 200, json_tag
-

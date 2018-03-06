@@ -14,9 +14,9 @@ from mongoengine import (BooleanField, DateTimeField, Document, DoesNotExist,
                          EmbeddedDocumentListField, IntField, ListField,
                          ObjectIdField, ReferenceField, StringField)
 
-import somesockets
 from constants import max_size, session_code_choices
 from flask_socketio import SocketIO
+
 
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
