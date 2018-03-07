@@ -24,28 +24,15 @@ public class Connector : MonoBehaviour {
 
 		socket.On("connect", connected);
 		socket.On ("update", UpdateJSON);
-		socket.On ("RoomNotFound", roomNotFound);
-		socket.On ("RoomFound", roomFound);
+		socket.On ("roomNotFound", roomNotFound);
+		socket.On ("roomFound", roomFound);
 		socket.On ("error", handleError);
 
-		//StartCoroutine (BoopTime ());
 	}
 
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	private IEnumerator BoopTime(){
-		yield return new WaitForSeconds (1);
-
-		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["email"] = "some@email.com";
-		data["pass"] = "1234";
-		data ["first"] = "Ronald";
-		data ["last"] = "Pimsley";
-		socket.Emit ("update", new JSONObject (data));
-		//socket.Emit ("RoomNotFound", new JSONObject (data));
 	}
 
 	public void connection(JSONObject js){

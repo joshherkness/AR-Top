@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RoomManager : MonoBehaviour {
 
 	public RectTransform panel; //The panel that contains the input field for the room code
 	public InputField roomcode; //The input field for the room code
 	public Button submitButton; //The button to submit the room code to the socket
-	public Text errorLabel; //The label to print out user error
-	public Text serverErrorLabel; //The label to display a server error e.g. "Room code doesn't exist!"
+	public TextMeshProUGUI errorLabel; //The label to print out user error
+	public TextMeshProUGUI serverErrorLabel; //The label to display a server error e.g. "Room code doesn't exist!"
 
 	private Connector con;
 
@@ -20,11 +21,17 @@ public class RoomManager : MonoBehaviour {
 	void Start () {
 		con = FindObjectOfType<Connector> ();
 		roomcode.contentType = InputField.ContentType.Alphanumeric;
+		roomcode.characterLimit = 5;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (roomcode.text.Length == ROOMCODELENGTH) {
+			submitButton.interactable = true;
+		} else {
+			submitButton.interactable = false;
+		}
+
 	}
 
 	public void SubmitRoomCode(){
