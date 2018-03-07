@@ -33,7 +33,7 @@ def join_room(json):
             join_room(room)
             emit('joinRoom', {'data': 'Successfully connected to room ' + room})
         else:
-            emit('roomNotFound', {'data':'Room does ' + room + ' not exist.'})
+            emit('roomNotFound', {'data':'Room ' + room + ' does not exist.'})
     except KeyError:
         emit('error', {'data':'Malformed request'})
     except:
