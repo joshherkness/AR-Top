@@ -5,6 +5,8 @@ import eventlet
 from flask import Flask, jsonify
 from flask_socketio import SocketIO, emit, join_room
 from argparse import ArgumentParser
+from models import Session
+
 parser = ArgumentParser(description="Socket server")
 parser.add_argument("--deploy", action='store_true')
 args = parser.parse_args()
