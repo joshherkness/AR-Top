@@ -7,6 +7,7 @@ services:
             - "5000:5000"
         links:
             - mongo:mongo
+            - redis:redis
     sockets:
         hostname: sockets
         image: "oakland/sockets"
@@ -14,6 +15,7 @@ services:
             - "5001:5001"
         links:
             - mongo:mongo
+            - redis:redis
     vue:
         hostname: vue
         image: "oakland/vue"
@@ -21,4 +23,6 @@ services:
             - "80:80"
     mongo:
         image: "mongo:latest"
+    redis:
+        image: "redis:alpine"
 

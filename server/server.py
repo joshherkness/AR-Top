@@ -5,17 +5,27 @@ from flask import Blueprint, Flask, jsonify, render_template, request, url_for
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 
-from api import *
+from api import Api
 from constants import internal_error, json_tag, malformed_request
-from decorators import *
-from helper import *
-from models import *
+from decorators import expiration_check, protected
+
+from argparse import ArgumentParser
+
+parser = ArgumentParser(description="Runs flask server")
+parser.add_argument("--deploy", action='store_true')
+args = parser.parse_args()
+
 
 # Create app
 app = Flask(__name__)
 
 # Load configuration from config file.
 app.config.from_object('config')
+
+if args.deploy:
+    app.config['REDIS_HOST'] = 'redis'
+    app.config['MONGODB_HOST'] = 'mongo'
+
 
 # Set CORS
 CORS(app, resources={r"/api/*": {"origins": "*"}},
@@ -123,6 +133,12 @@ def read_session(claims, token_user, id):
     """ Returns the session with the given id """
     return Api.read_session(claims, token_user, id)
 
+@api.route('/session', methods=['GET'])
+@protected
+@expiration_check
+def read_session_user_id(claims, token_user):
+    """ Read a session with id of the token_user """
+    return Api.read_session_user_id(claims, token_user)
 
 @api.route('/sessions/<session_id>', methods=['DELETE'])
 @protected
@@ -144,10 +160,6 @@ def update_session(claims, token_user, id):
 # Main
 #=====================================================
 if __name__ == '__main__':
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser(description="Runs flask server")
-
     # TODO: logic not implemented for this because we should wait
     parser.add_argument("mode", nargs='?', choices=[
                         'd', 'p'], help="Selects whether or not you want to run development or production")
@@ -157,12 +169,6 @@ if __name__ == '__main__':
                         type=str, help="Who you want to send to")
     parser.add_argument("-u", "--user", nargs=2, type=str,
                         help="Insert a new user: takes username, password")
-    args = parser.parse_args()
-    if args.email is not None:
-        if args.recipients is None:
-            print("You need to include recipients to email if you want to send an email.")
-        else:
-            send_email(text=' '.join(args.email), recipients=args.recipients)
-        exit()
+
     app.register_blueprint(api)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)

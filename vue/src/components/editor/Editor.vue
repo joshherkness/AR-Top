@@ -59,6 +59,29 @@
       </div>
     </div>
 
+    <!-- Help menu -->
+    <div class="field help-field">
+      <div class="control">
+        <div class="dropdown is-hoverable is-right is-up"
+             :class="{'is-active': showHelp}">
+          <div class="dropdown-trigger">
+            <div class="button is-light"
+              aria-haspopup='true'
+              aria-controls='help-dropdown'
+              v-on:click="showHelp = false"
+              v-on:mouseover="showHelp = false">
+              <span class="icon is-medium">
+                <i class="mdi mdi-help"></i>
+              </span>
+            </div>
+            <div class="dropdown-menu" role='menu'>
+              <help></help>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Loading spinner -->
     <div v-if="loading" class="loading-spinner"/>
 
@@ -74,6 +97,7 @@ import { ModelFactory } from './ModelFactory'
 import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import { EditorMode } from './EditorMode'
+import Help from './Help'
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 let defaultColor = { hex: '#4A90E2' }
@@ -92,10 +116,12 @@ export default {
       color: defaultColor,
       mode: EditorMode.ADD,
       loading: false,
-      saving: false
+      saving: false,
+      showHelp: true
     }
   },
   components: {
+    'help': Help,
     'sketch-picker': Sketch
   },
   computed: {
@@ -384,5 +410,11 @@ export default {
     height: 2em;
     border-width: 0.25em;
   }
+}
+
+.help-field {
+  position: absolute;
+  right: 30px;
+  bottom: 82px;
 }
 </style>
