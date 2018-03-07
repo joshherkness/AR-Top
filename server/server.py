@@ -16,13 +16,6 @@ parser.add_argument("--deploy", action='store_true')
 args = parser.parse_args()
 
 
-from argparse import ArgumentParser
-
-parser = ArgumentParser(description="Runs flask server")
-parser.add_argument("--deploy", action='store_true')
-args = parser.parse_args()
-
-
 # Create app
 app = Flask(__name__)
 
