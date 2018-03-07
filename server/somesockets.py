@@ -29,7 +29,7 @@ def connect():
 def join_room(json):
     try:
         room = json['room']
-        if Session.objects(code=room) is not None:
+        if Session.objects(code=room).first() is not None:
             join_room(room)
             emit('joinRoom', {'data': 'Successfully connected to room ' + room})
         else:
