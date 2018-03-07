@@ -2,19 +2,19 @@ import random
 import secrets
 import sys
 from json import dumps, loads
-from datetime import datetime
-
+from datetime import datetime as dt
 from bson import ObjectId
 from flask import current_app
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
                             UserMixin, login_required)
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
-from mongoengine import *
-from mongoengine.fields import *
+from mongoengine import (BooleanField, DateTimeField, Document, DoesNotExist,
+                         EmailField, EmbeddedDocument, EmbeddedDocumentField,
+                         EmbeddedDocumentListField, IntField, ListField,
+                         ObjectIdField, ReferenceField, StringField)
 
 from constants import max_size, session_code_choices
-
 from flask_socketio import SocketIO
 
 
@@ -72,11 +72,11 @@ class GameMap(Document):
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
     private = BooleanField(default=False)
     models = EmbeddedDocumentListField(GameModel)
-    updated = DateTimeField(default=datetime.now())
-    inserted = DateTimeField(default=datetime.now())
+    updated = DateTimeField(default=dt.now())
+    inserted = DateTimeField(default=dt.now())
 
     def save(self, *args, **kwargs):
-        self.updated = datetime.now()
+        self.updated = dt.now()
         super(GameMap, self).save(*args, **kwargs)
 
 
@@ -88,19 +88,19 @@ class User(Document, UserMixin):
     UserMixin -- Mixin for User model definitions.
 
     """
-    updated = DateTimeField(default=datetime.now())
-    inserted = DateTimeField(default=datetime.now())
+    updated = DateTimeField(default=dt.now())
+    inserted = DateTimeField(default=dt.now())
     email = EmailField(max_length=255, unique=True)
     password = StringField(max_length=255)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField()
     roles = ListField(ReferenceField(Role), default=[])
     verified = BooleanField(default=False)
-    updated = DateTimeField(default=datetime.now())
-    inserted = DateTimeField(default=datetime.now())
+    updated = DateTimeField(default=dt.now())
+    inserted = DateTimeField(default=dt.now())
 
     def save(self, *args, **kwargs):
-        self.updated = datetime.now()
+        self.updated = dt.now()
         super(User, self).save(*args, **kwargs)
 
     def verify_password(self, password):
@@ -123,7 +123,8 @@ class User(Document, UserMixin):
         except BadSignature:
             return None  # invalid token
         except Exception as e:
-            print("ERROR IN User.verify_auth_token function")
+            if not current_app.testing:
+                current_app.logger.error(e)
             return None
         user = User.objects.get(email=data['id'])
         return user
@@ -143,16 +144,16 @@ class Session(Document):
     user_id = ObjectIdField()
     game_map_id = ObjectIdField()
     code = StringField(regex='^([A-Za-z0-9]{5})$',  unique=True)
-    created_at = DateTimeField(default=datetime.now())
+    created_at = DateTimeField(default=dt.now())
 
     def save(self, *args, **kwargs):
         if self.code == None:
             code_try = ''
-            for i in range(0, 5):
+            for _ in range(0, 5):
                 code_try += random.choice(session_code_choices)
             while len(Session.objects(code=code_try)) != 0:
                 code_try = ''
-                for i in range(0, 5):
+                for _ in range(0, 5):
                     code_try += random.choice(session_code_choices)
             self.code = code_try
 
@@ -162,7 +163,7 @@ class Session(Document):
         name = game_map["name"]
         color = game_map["color"]
         models = game_map["models"]
-        if current_app.config['REDIS_HOST'] is None:
+        if current_app.config['REDIS_HOST'] is None or current_app.config['REDIS_HOST'] == "":
             socketio = SocketIO(message_queue='redis://')
         else:
             socketio = SocketIO(message_queue='redis://' +

@@ -29,8 +29,11 @@ def connect():
 def join_room(json):
     try:
         room = json['room']
-        join_room(room)
-        emit('joinRoom', {'data': 'Successfully connected to room ' + room})
+        if Session.objects(code=room) is not None:
+            join_room(room)
+            emit('joinRoom', {'data': 'Successfully connected to room ' + room})
+        else:
+            emit('roomNotFound', {'data':'Room does ' + room + ' not exist.'})
     except KeyError:
         emit('error', {'data':'Malformed request'})
     except:
