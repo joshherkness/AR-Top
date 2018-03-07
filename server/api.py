@@ -160,7 +160,11 @@ class Api():
             email = claims["email"]
             user = User.objects(email=email).first()
             map = request.json['map']
-            map = loads(map)
+
+            # The test send map as a string.
+            if type(map) is not dict:
+                map = loads(map)
+
         except Exception as e:
             if not current_app.testing:
                 current_app.logger.error(str(e))
@@ -191,7 +195,7 @@ class Api():
 
     @staticmethod
     def update_map(claims, map_id):
-        """Update a maps name or base color.
+        """Update a map.
 
         Keyword arguments:
         claims -- The JWT claims that are being passed to this methods. Must include email.
@@ -222,9 +226,19 @@ class Api():
             return internal_error()
 
         try:
-            remote_copy.update(**map)
+            remote_copy.name = map['name']
+            remote_copy.color = map['color']
+            remote_copy.width = map['width']
+            remote_copy.height = map['height']
+            remote_copy.depth = map['depth']
+            remote_copy.private = map['private']
+            remote_copy.models = map['models']
             remote_copy.updated = datetime.now()
+        except AttributeError as e:
+            # happens when remote copy is None
+            return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
+            traceback.print_exc()
             current_app.logger.error(str(e))
             return internal_error()
 
@@ -383,4 +397,3 @@ class Api():
             return jsonify(error="Session does not exist"), 404, json_tag
 
         return jsonify(success="Successfully read session", session=session_entity), 200, json_tag
-
