@@ -18,6 +18,7 @@ import somesockets
 from constants import max_size, session_code_choices
 from flask_socketio import SocketIO
 
+
 class Role(Document, RoleMixin):
     """ Model for what roles a user can have.
 
@@ -163,7 +164,7 @@ class Session(Document):
         name = game_map["name"]
         color = game_map["color"]
         models = game_map["models"]
-        if current_app.config['REDIS_HOST'] is None:
+        if current_app.config['REDIS_HOST'] is None or current_app.config['REDIS_HOST'] == "":
             socketio = SocketIO(message_queue='redis://')
         else:
             socketio = SocketIO(message_queue='redis://' +
