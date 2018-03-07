@@ -5,11 +5,16 @@ from flask import Blueprint, Flask, jsonify, render_template, request, url_for
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 
-from api import *
+from api import Api
 from constants import internal_error, json_tag, malformed_request
-from decorators import *
-from helper import *
-from models import *
+from decorators import expiration_check, protected
+
+from argparse import ArgumentParser
+
+parser = ArgumentParser(description="Runs flask server")
+parser.add_argument("--deploy", action='store_true')
+args = parser.parse_args()
+
 
 from argparse import ArgumentParser
 
@@ -134,6 +139,14 @@ def create_session(claims, token_user):
 def read_session(claims, token_user, id):
     """ Returns the session with the given id """
     return Api.read_session(claims, token_user, id)
+
+
+@api.route('/session', methods=['GET'])
+@protected
+@expiration_check
+def read_session_user_id(claims, token_user):
+    """ Read a session with id of the token_user """
+    return Api.read_session_user_id(claims, token_user)
 
 
 @api.route('/sessions/<session_id>', methods=['DELETE'])
