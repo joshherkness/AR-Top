@@ -238,7 +238,6 @@ class Api():
             # happens when remote copy is None
             return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
-            traceback.print_exc()
             current_app.logger.error(str(e))
             return internal_error()
 

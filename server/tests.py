@@ -127,6 +127,40 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response[0], 422)
         self.assertEqual(response[1]['error'], "Incorrect email or password")
 
+    def test_authenticated(self):
+        def helper(auth_data, payload=None):
+            response = self.request('/api/authenticated', auth_data, 'GET', payload)
+            json = loads(response.data.decode('utf-8'))
+            return response.status_code, json
+        
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # valid token
+        response = helper(valid_token)
+        self.assertEqual(response[0], 200)
+        self.assertEqual(response[1]['user']['_id']['$oid'], str(valid_user.id)) 
+
+        # missing token
+        response = helper('')
+        self.assertEqual(response[0], 401)
+        self.assertEqual(response[1], {'error': 'token expired.'})
+
+        # token invalid
+        response = helper('garbage_token')
+        self.assertEqual(response[0], 401)
+        self.assertEqual(response[1], {'error': 'token expired.'})
+
     def test_create_map(self):
         def helper(auth_data, payload=None):
             response = self.request('/api/map', auth_data, 'POST', payload)
