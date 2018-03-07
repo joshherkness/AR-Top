@@ -195,7 +195,7 @@ class Api():
 
     @staticmethod
     def update_map(claims, map_id):
-        """Update a maps name or base color.
+        """Update a map.
 
         Keyword arguments:
         claims -- The JWT claims that are being passed to this methods. Must include email.
@@ -228,7 +228,15 @@ class Api():
         try:
             remote_copy.name = map['name']
             remote_copy.color = map['color']
+            remote_copy.width = map['width']
+            remote_copy.height = map['height']
+            remote_copy.depth = map['depth']
+            remote_copy.private = map['private']
+            remote_copy.models = map['models']
             remote_copy.updated = datetime.now()
+        except AttributeError as e:
+            # happens when remote copy is None
+            return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
