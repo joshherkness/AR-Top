@@ -6,11 +6,8 @@
         :style="{'background-color': color}">
       </div>
     </td>
-    <td class="is-narrow">{{ name }}</td>
-    <td class="is-narrow">
-      <span class="tag is-light">{{ width }} x {{depth}}</span>
-    </td>
-    <td class="is-narrow">
+    <td class="">{{ name }}</td>
+    <td class="">
       {{ updated.$date | date }}
     </td>
 

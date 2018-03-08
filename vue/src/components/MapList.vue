@@ -6,7 +6,6 @@
         <th></th>
 
         <th>Name</th>
-        <th>Size</th>
         <th>Last modified</th>
 
         <!-- Blank columns used for right aligned controls -->
