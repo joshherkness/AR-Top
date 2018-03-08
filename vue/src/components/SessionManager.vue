@@ -38,8 +38,11 @@
                   :key="map._id.$oid" 
                   @click.native="setOpen(map._id.$oid)"
                   :to="{ name: 'editor', params: { id: map._id.$oid }}">
-                  <span class="panel-icon" v-if="map._id.$oid === game_map_id">
-                    <i class="mdi mdi-check"/>
+                  <span class="panel-icon" 
+                    :class="{'has-text-success': map._id.$oid === game_map_id}">
+                    <i class="mdi"
+                      :class="{'mdi-circle': map._id.$oid === game_map_id, 
+                               'mdi-circle-outline': map._id.$oid !== game_map_id}"/>
                   </span>
                   {{ map.name }}
                 </router-link>
