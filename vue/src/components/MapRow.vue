@@ -54,21 +54,21 @@ export default {
   methods: {
     onOpen: function () {
       this.$router.push({
-        name: 'editor', 
+        name: 'editor',
         params: {
           id: this.oid
         }})
     },
     onEdit: function () {
       this.$modal.show('edit-map-modal', {
-        id: this.oid, 
-        name: this.name, 
+        id: this.oid,
+        name: this.name,
         color: this.color
       })
     },
     onDelete: function () {
       this.$modal.show('delete-map-modal', {
-        id: this.oid, 
+        id: this.oid,
         name: this.name
       })
     }

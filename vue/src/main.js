@@ -28,9 +28,9 @@ moment().calendar(null, {
   lastDay: '[Yesterday]',
   lastWeek: '[Last] dddd',
   sameElse: 'MM/DD/YYYY h:mm a'
-});
+})
 
-Vue.filter('date', function(value) {
+Vue.filter('date', function (value) {
   if (value) {
     return moment(value).calendar()
   }
