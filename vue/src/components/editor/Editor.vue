@@ -112,12 +112,14 @@ export default {
       renderer: null,
       raycaster: null,
       mouse: null,
+      mouseStart: null,
       grid: null,
       color: defaultColor,
       mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      showHelp: true
+      showHelp: true,
+      disableTool: false
     }
   },
   components: {
@@ -198,6 +200,7 @@ export default {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enablePan = false
     this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+    this.controls.zoomSpeed = 1.5
     this.camera.lookAt(new THREE.Vector3())
     this.controls.addEventListener('change', this.render)
 
@@ -206,6 +209,7 @@ export default {
 
     // Attach event listeners to the document
     this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.addEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
     document.addEventListener('keyup', this.onDocumentKeyUp, false)
@@ -257,6 +261,11 @@ export default {
     updateCursorPosition () {
       let data = this.director.getFirstIntersectData(this.raycaster)
 
+      if (this.disableTool) {
+        this.director.clearSelection()
+        return
+      }
+
       if (!data || !data.object) {
         this.director.clearSelection()
         return
@@ -288,11 +297,27 @@ export default {
       this.mouse.set((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
       this.raycaster.setFromCamera(this.mouse, this.camera)
 
+      if (this.mouseStart &&
+          (Math.abs(this.mouse.x - this.mouseStart.x) > 0.01 ||
+          Math.abs(this.mouse.y - this.mouseStart.y) > 0.01)) {
+        this.disableTool = true
+      }
+
       // Update the cursor position for the selection manager
       this.updateCursorPosition()
     },
+    onDocumentMouseDown (event) {
+      this.mouseStart = new THREE.Vector2((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
+    },
     onDocumentMouseUp (event) {
       let data = this.director.getFirstIntersectData(this.raycaster)
+
+      this.mouseStart = null
+      if (this.disableTool) {
+        this.disableTool = false
+        this.updateCursorPosition()
+        return
+      }
 
       if (!data || !data.object) {
         return
@@ -374,6 +399,7 @@ export default {
 
     // Remove event listeners
     this.canvas.removeEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.removeEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.removeEventListener('mouseup', this.onDocumentMouseUp, false)
     document.removeEventListener('keydown', this.onDocumentKeyDown, false)
     document.removeEventListener('keyup', this.onDocumentKeyUp, false)
