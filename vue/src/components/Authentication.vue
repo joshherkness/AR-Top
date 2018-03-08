@@ -140,6 +140,7 @@ export default {
           if (session) {
             this.setSession(session)
           }
+        // eslint-disable-next-line
         }).catch((err) => {
           // In case the user does not own any sessions, we don't want
           // to throw an error here.
