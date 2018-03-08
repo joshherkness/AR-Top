@@ -63,13 +63,12 @@
     <div class="field help-field">
       <div class="control">
         <div class="dropdown is-hoverable is-right is-up"
-             :class="{'is-active': showHelp}">
+             :class="{'is-active': !hasSeenEditorHelp}">
           <div class="dropdown-trigger">
             <div class="button is-light"
               aria-haspopup='true'
               aria-controls='help-dropdown'
-              v-on:click="showHelp = false"
-              v-on:mouseover="showHelp = false">
+              v-on:mouseover="setHasSeenEditorHelp">
               <span class="icon is-medium">
                 <i class="mdi mdi-help"></i>
               </span>
@@ -90,6 +89,7 @@
 
 <script>
 import { API } from '@/api/api'
+import { mapGetters, mapActions } from 'vuex'
 
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
@@ -127,6 +127,9 @@ export default {
     'sketch-picker': Sketch
   },
   computed: {
+    ...mapGetters([
+      'hasSeenEditorHelp'
+    ]),
     hexColor () {
       return this.color.hex
     },
@@ -216,6 +219,9 @@ export default {
     window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
+    ...mapActions([
+      'setHasSeenEditorHelp'
+    ]),
     load (id) {
       this.loading = true
       API.getMap(id).then(map => {
