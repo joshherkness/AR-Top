@@ -5,7 +5,7 @@
         <div class="dropdown is-hoverable is-up"
           :class="{'is-active': isActive}">
           <div class="dropdown-trigger">
-            <button class="button is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+            <button class="button is-darker" aria-haspopup="true" aria-controls="dropdown-menu4">
               <span>{{ name }}</span>
               <span class="icon is-small">
                 <i class="mdi mdi-chevron-down" />
@@ -59,9 +59,10 @@
     </div>
     <div class="level-right">
       <div class="level-item">
-        <div class="tags has-addons">
-          <span class="tag is-medium is-white">Invitation code</span>
-          <span class="tag is-medium is-white has-text-link
+        <div class="tags has-addons ">
+          <span class="tag is-medium is-darker"
+            style="margin-right: 3px;">Invitation code</span>
+          <span class="tag is-medium is-darker
             has-text-weight-semibold">{{ code | uppercase }}</span>
         </div>
       </div>
@@ -140,3 +141,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.is-darker {
+  border: none;
+  color: white;
+  background-color: #242424;
+}
+
+button.is-darker:hover {
+  background-color: #1a1a1a;
+}
+</style>
