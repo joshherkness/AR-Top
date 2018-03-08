@@ -357,7 +357,7 @@ export default {
       }
     },
     onDocumentKeyUp (event) {
-      console.log(this.director.grid.serialize())
+      // Any key up events should be placed here
     },
     isModeAdd () {
       return this.mode === EditorMode.ADD
