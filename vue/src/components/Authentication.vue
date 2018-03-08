@@ -111,7 +111,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'updateUser'
+      'updateUser',
+      'setSession'
     ]),
     signin: async function () {
       try {
@@ -133,6 +134,16 @@ export default {
 
         // Update the local user
         this.updateUser(user)
+
+        // Update the local session, if any exist for the current user
+        API.getCurrentSession().then((session) => {
+          if (session) {
+            this.setSession(session)
+          }
+        }).catch((err) => {
+          // In case the user does not own any sessions, we don't want
+          // to throw an error here.
+        })
 
         // Navigate to home route
         router.push('/library')
