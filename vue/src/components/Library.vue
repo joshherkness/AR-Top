@@ -121,13 +121,9 @@ export default {
       }
     } catch (err) {
       let msg = err.response.data.error
-      if (msg === 'token expired') {
-        this.$store.dispatch('signOutUser')
-      } else if (msg === 'map error') {
-        this.error = true
-      } else {
+      this.error = true
+      if (msg !== 'map error') {
         this.message = msg
-        this.error = true
       }
     }
 
