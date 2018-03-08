@@ -10,6 +10,9 @@
     <td class="is-narrow">
       <span class="tag is-light">{{ width }} x {{depth}}</span>
     </td>
+    <td class="is-narrow">
+      {{ updated.$date | date }}
+    </td>
 
     <!-- Blank cell used for padding -->
     <td></td>
@@ -50,7 +53,7 @@
 <script>
 export default {
   name: 'MapRow',
-  props: ['name', 'oid', 'color', 'width', 'depth'],
+  props: ['name', 'oid', 'color', 'width', 'depth', 'updated'],
   methods: {
     onOpen: function () {
       this.$router.push({

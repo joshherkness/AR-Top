@@ -7,6 +7,7 @@
 
         <th>Name</th>
         <th>Size</th>
+        <th>Last modified</th>
 
         <!-- Blank columns used for right aligned controls -->
         <th></th>
@@ -20,7 +21,8 @@
       v-bind:oid="map._id.$oid"
       v-bind:color="map.color"
       v-bind:depth="map.depth"
-      v-bind:width="map.width"/>
+      v-bind:width="map.width"
+      v-bind:updated="map.updated"/>
     </tbody>
   </table>
 </template>
