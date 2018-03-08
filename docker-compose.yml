@@ -20,7 +20,7 @@ services:
         hostname: vue
         image: "oakland/vue"
         ports:
-            - "80:80"
+            - "8080:8080"
     mongo:
         image: "mongo:latest"
         ports:
@@ -29,3 +29,11 @@ services:
         image: "redis:alpine"
         ports:
             - "6379:6379"
+    web:
+        image: "nginx:stable-alpine"
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - "80:80"
+        links:
+            - vue
