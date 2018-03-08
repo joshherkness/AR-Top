@@ -1,6 +1,6 @@
 <template>
-  <div class="section">
-    <div class="container">
+  <div class="section library-section">
+    <div class="library-header">
       <div class="level">
         <div class="level-left">
           <div class="level-item">
@@ -60,12 +60,16 @@
         </div>
       </div>
       <hr>
+    </div>
+
+    <!-- No results indicator -->
+    <span v-if="filteredMaps.length === 0"
+      class="title is-6">No results</span>
       
-      <!-- Library content here -->
-      <div v-if="!loading">
-        <map-grid v-show="layout === 'grid'" v-bind:maps="filteredMaps"/>
-        <map-list v-show="layout === 'list'" v-bind:maps="filteredMaps"/>
-      </div>
+    <!-- Library content here -->
+    <div v-if="!loading && filteredMaps.length !== 0" class="library-content">
+      <map-grid v-show="layout === 'grid'" v-bind:maps="filteredMaps"/>
+      <map-list v-show="layout === 'list'" v-bind:maps="filteredMaps"/>
     </div>
   </div>
 </template>
@@ -134,4 +138,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
+
+.library-section {
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+  padding-bottom: 0;
+}
+
+.library-header {
+  flex: 0 1 auto;
+}
+
+.library-content {
+  flex: 1;
+  overflow: scroll;
+}
 </style>

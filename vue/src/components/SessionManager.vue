@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar has-shadow is-fixed-bottom level is-dark" style="padding: 0 1em; bottom: -1.5em;">
+  <nav class="navbar level is-dark" style="padding: 0 1em;">
     <div class="level-left">
       <div class="level-item">
         <div class="dropdown is-hoverable is-up"
