@@ -118,7 +118,6 @@ export default {
       mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      showHelp: true,
       disableTool: false
     }
   },
