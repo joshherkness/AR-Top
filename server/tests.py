@@ -210,7 +210,7 @@ class TestApp(unittest.TestCase):
 
     def test_read_session_user_id(self):
         def helper(auth_data, payload=None):
-            response = self.request('/api/session', auth_data, 'GET', payload)
+            response = self.request('/api/sessions', auth_data, 'GET', payload)
             json = loads(response.data.decode('utf-8'))
             return response, json
         
