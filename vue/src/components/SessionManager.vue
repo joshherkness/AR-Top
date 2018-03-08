@@ -115,7 +115,11 @@ export default {
     ]),
     name: function () {
       const mapID = store.state.session.game_map_id
-      return store.state.map.maps.filter(map => map._id.$oid === mapID)[0].name
+      let map = store.state.map.maps.filter(map => map._id.$oid === mapID)[0]
+      if (!map) {
+        return ''
+      }
+      return map.name
     },
     searchList: function () {
       return store.state.map.maps.filter(map => {
