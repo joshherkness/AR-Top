@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="editor">
     <!-- Canvas used to render the three.js map scene-->
     <div v-show="!loading" ref='canvas' id='canvas'/>
    
-    <!-- Overlay -->
+    <!-- Top toolbar -->
     <div v-if="!loading"
-      class="level" style="position: absolute; padding: 30px; width: 100%;">
+      class="level"
+      style="z-index: 10;">
       <div class="level-left">
         <div class="level-item">
           <span class="tag is-white title is-5">{{ name }}</span>
@@ -59,22 +60,31 @@
       </div>
     </div>
 
-    <!-- Help menu -->
-    <div class="field help-field">
-      <div class="control">
-        <div class="dropdown is-hoverable is-right is-up"
-             :class="{'is-active': !hasSeenEditorHelp}">
-          <div class="dropdown-trigger">
-            <div class="button is-light"
-              aria-haspopup='true'
-              aria-controls='help-dropdown'
-              v-on:mouseover="setHasSeenEditorHelp">
-              <span class="icon is-medium">
-                <i class="mdi mdi-help"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu" role='menu'>
-              <help></help>
+    <!-- Flex child used to seperate top and bottom toolbar -->
+    <div style="flex: 1;"></div>
+
+    <!-- Bottom toolbar -->
+    <div class="level"
+      style="z-index: 10;">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="control">
+            <div class="dropdown is-hoverable is-right is-up"
+                :class="{'is-active': !hasSeenEditorHelp}">
+              <div class="dropdown-trigger">
+                <div class="button is-light"
+                  aria-haspopup='true'
+                  aria-controls='help-dropdown'
+                  v-on:mouseover="setHasSeenEditorHelp">
+                  <span class="icon is-medium">
+                    <i class="mdi mdi-help"></i>
+                  </span>
+                </div>
+                <div class="dropdown-menu" role='menu'>
+                  <help></help>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -443,9 +453,10 @@ export default {
   }
 }
 
-.help-field {
-  position: absolute;
-  right: 30px;
-  bottom: 82px;
+.editor {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  padding: 30px;
 }
 </style>
