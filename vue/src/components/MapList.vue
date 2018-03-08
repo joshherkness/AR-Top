@@ -1,10 +1,12 @@
 <template>
-  <table class="table is-fullwidth">
+  <table class="table is-fullwidth is-hoverable is-striped">
     <thead>
       <tr>
+        <!-- Blankc column for color -->
+        <th></th>
+
         <th>Name</th>
         <th>Size</th>
-        <th>Color</th>
 
         <!-- Blank columns used for right aligned controls -->
         <th></th>
