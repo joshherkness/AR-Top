@@ -12,6 +12,18 @@
           </div>
         </div>
         <div class="level-right">
+          <div class="level-item">
+            <p class="control has-icons-left">
+              <input 
+                class="input" 
+                type="text" 
+                placeholder="search"
+                v-model="filter">
+              <span class="icon is-small is-left">
+                <i class="mdi mdi-magnify" />
+              </span>
+            </p>
+          </div>
           <!-- Grid layout control -->
           <div class="level-item">
             <div class="field has-addons">
@@ -51,8 +63,8 @@
       
       <!-- Library content here -->
       <div v-if="!loading">
-        <map-grid v-show="layout === 'grid'" v-bind:maps="maps"/>
-        <map-list v-show="layout === 'list'" v-bind:maps="maps"/>
+        <map-grid v-show="layout === 'grid'" v-bind:maps="filteredMaps"/>
+        <map-list v-show="layout === 'list'" v-bind:maps="filteredMaps"/>
       </div>
     </div>
   </div>
@@ -71,7 +83,8 @@ export default {
     return {
       loading: false,
       error: false,
-      message: 'You currently have no maps.'
+      message: 'You currently have no maps.',
+      filter: ''
     }
   },
   components: {
@@ -82,7 +95,12 @@ export default {
     ...mapGetters([
       'maps',
       'layout'
-    ])
+    ]),
+    filteredMaps: function () {
+      return this.maps.filter(map => {
+        return map.name.toLowerCase().includes(this.filter.toLowerCase())
+      })
+    }
   },
   methods: {
     ...mapActions([
