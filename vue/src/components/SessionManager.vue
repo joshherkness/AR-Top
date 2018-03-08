@@ -64,7 +64,7 @@
       <div class="level-item">
         <div class="tags has-addons ">
           <span class="tag is-medium is-darker"
-            style="margin-right: 3px;">Invitation code</span>
+            style="margin-right: 2px;">Invitation code</span>
           <span class="tag is-medium is-darker
             has-text-weight-semibold">{{ code | uppercase }}</span>
         </div>
