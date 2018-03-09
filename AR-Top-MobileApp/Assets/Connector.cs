@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 using UnityEngine.SceneManagement;
+using Vuforia;
 
 public class Connector : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class Connector : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
+		VuforiaBehaviour.Instance.enabled = false;
 		socket = GameObject.Find ("SocketIO").GetComponent <SocketIOComponent> ();
 		room = FindObjectOfType<RoomManager> ();
 		if (room != null)
@@ -39,7 +41,7 @@ public class Connector : MonoBehaviour {
 		//socket.url = socketurlbase;
 		//socket.url += "&room=" + js ["roomNumber"];
 		//print (socket.url); 
-		socket.Emit ("joinRoom", js["roomNumber"]);
+		socket.Emit ("joinRoom", js);
 	}
 
 	public void connected(SocketIOEvent e){
@@ -70,14 +72,27 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void handleError (SocketIOEvent e){
-		if (room != null)
-			room.serverErrorReceived (e.data.ToString ());
+		Debug.LogError ("error event received from socket server" + e.data.ToString ());
+		if (room != null) {
+			print (room); 
+			room.serverErrorReceived (e);
+		}
 	}
 
 	public void OnSceneLoaded(Scene scene, LoadSceneMode mode){
 		MapController jsonReader = FindObjectOfType<MapController> ();
 		print (jsonReader);
-		SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
-		SceneManager.UnloadSceneAsync ("Login");
+		if (scene.name == "main") {
+			VuforiaBehaviour.Instance.enabled = true;
+			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
+			SceneManager.UnloadSceneAsync ("Login");
+		} else {
+			VuforiaBehaviour.Instance.enabled = false;
+			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Login"));
+			SceneManager.UnloadSceneAsync ("main");
+			mainSceneLoaded = false;
+			Destroy (this);
+		}
+
 	}
 }

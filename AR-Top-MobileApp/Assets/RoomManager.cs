@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SocketIO;
 
 public class RoomManager : MonoBehaviour {
 
@@ -40,11 +41,11 @@ public class RoomManager : MonoBehaviour {
 		if (roomcode.text.Length == ROOMCODELENGTH) {
 			code = roomcode.text;
 			Dictionary<string, string> r = new Dictionary<string, string> ();
-			r ["roomNumber"] = code;
+			r ["room"] = code;
 			con.connection (new JSONObject (r));
 			//panel.gameObject.SetActive (false);
 		} else {
-			errorLabel.text = "Room code must be " + ROOMCODELENGTH + " characters long.";
+			errorLabel.text = "Invitation code must be " + ROOMCODELENGTH + " characters long.";
 		}
 	}
 
@@ -53,10 +54,16 @@ public class RoomManager : MonoBehaviour {
 	}
 
 	public void roomNotFound(){
-		serverErrorLabel.text = "Error\nRoom not found with given code.";
+		serverErrorLabel.text = "Session not found with given code.";
 	}
 
-	public void serverErrorReceived(string message){
-		serverErrorLabel.text = message;
+	public void serverErrorReceived(SocketIOEvent message){
+		if (message.data.ToString () == "{\"data\":\"Malformed request\"}") {
+			serverErrorLabel.text = "Malformed request";
+		} else if (message.data.ToString () == "{\"data\":\"Internal server error\"}") {
+			serverErrorLabel.text = "Internal server error";
+		} else {
+			serverErrorLabel.text = "Room not found";
+		}
 	}
 }
