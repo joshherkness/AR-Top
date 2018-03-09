@@ -20,7 +20,7 @@ const actions = {
   // eslint-disable-next-line
   signOutUser({ commit }) {
     commit(types.UNSET_USER)
-    router.push('/')
+    router.push('/login')
   }
 }
 

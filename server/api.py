@@ -195,7 +195,7 @@ class Api():
 
     @staticmethod
     def update_map(claims, map_id):
-        """Update a maps name or base color.
+        """Update a map.
 
         Keyword arguments:
         claims -- The JWT claims that are being passed to this methods. Must include email.
@@ -228,7 +228,15 @@ class Api():
         try:
             remote_copy.name = map['name']
             remote_copy.color = map['color']
+            remote_copy.width = map['width']
+            remote_copy.height = map['height']
+            remote_copy.depth = map['depth']
+            remote_copy.private = map['private']
+            remote_copy.models = map['models']
             remote_copy.updated = datetime.now()
+        except AttributeError as e:
+            # happens when remote copy is None
+            return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
@@ -237,7 +245,7 @@ class Api():
         return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
     @staticmethod
-    def delete_map(claims, map_id):
+    def delete_map(claims, token_user, map_id):
         """Delete map from database.
 
         Keyword arguments:
@@ -246,19 +254,10 @@ class Api():
 
         Returns a HTTP response.
         """
-        email = None
         try:
-            email = claims["email"]
-        except:
-            return malformed_request()
-
-        try:
-            user = User.objects(email=email).first()
-        except:
-            return internal_error()
-
-        try:
-            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
+            remote_copy = GameMap.objects(id=map_id, owner=token_user.id).first()
+            if remote_copy is None:
+                return jsonify(error="Map does not exist"), 404, json_tag
             remote_copy.delete()
         except (StopIteration, DoesNotExist):
             # Malicious user may be trying to overwrite someone's map

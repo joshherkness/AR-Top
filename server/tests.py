@@ -208,9 +208,149 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response[0], 200)
         self.assertEqual(response[1]['success'], "Successfully created map")
 
+    def test_update_map(self):
+        def helper(auth_data, map_id, payload=None):
+            response = self.request('/api/map/' + map_id, auth_data, 'POST', payload)
+            json = loads(response.data.decode('utf-8'))
+            return response.status_code, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color="#fff", private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', data)
+        json = loads(response.data.decode('utf-8'))
+        test_map_id = json['map']['_id']['$oid']
+        test_map = GameMap.objects(id=test_map_id).first()
+
+        # Success
+        #map = request.json['map']
+        data = dict(map=dumps({}))
+        data['map'] = json['map']
+        response = helper(valid_token, test_map_id, data)
+        self.assertEqual(response[0], 200)
+        self.assertEqual(response[1]['map']['name'], json['map']['name'])
+        self.assertEqual(response[1]['map']['color'], json['map']['color'])
+        self.assertEqual(response[1]['map']['width'], json['map']['width'])
+        self.assertEqual(response[1]['map']['height'], json['map']['height'])
+        self.assertEqual(response[1]['map']['depth'], json['map']['depth'])
+        self.assertEqual(response[1]['map']['private'], json['map']['private'])
+        self.assertEqual(response[1]['map']['models'], json['map']['models'])
+        self.assertEqual(response[1]['map']['_id'], json['map']['_id'])
+
+        # user making the request does not own the map with map_id
+        response = helper(valid_token2, test_map_id, data)
+        self.assertEqual(response[0], 404)
+        self.assertEqual(response[1], {'error': 'Map does not exist'})
+
+        # map with map_id does not exist
+        garbage_map_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_map_id, data)
+        self.assertEqual(response[0], 404)
+        self.assertEqual(response[1], {'error': 'Map does not exist'})
+
+        # The new map json sent in the body is improperly formatted.
+        # (if the color value doesn't change, we know it was invalid
+        #   invalid json doesn't throw an error, the field that is invalid 
+        #   isn't changed in the database)
+        invalid_color = 'not a color string'
+        data['color'] = invalid_color
+        response = helper(valid_token, test_map_id, data)
+        self.assertEqual(response[0], 200)
+        self.assertNotEqual(response[1]['map']['color'], invalid_color)
+
+    def test_delete_map(self):
+        def helper(auth_data, map_id, payload=None):
+            response = self.request('/api/map/' + map_id, auth_data, 'DELETE', payload)
+            json = loads(response.data.decode('utf-8'))
+            return response.status_code, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color="#fff", private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', data)
+        json = loads(response.data.decode('utf-8'))
+        test_map_id = json['map']['_id']['$oid']
+        test_map = GameMap.objects(id=test_map_id).first()
+
+        # returns ({error="Map does not exist"}, 404, json_tag) 
+        # user making the request does not own the map with map_id
+        response = helper(valid_token2, test_map_id)
+        self.assertEqual(response[0], 404)
+        self.assertEqual(response[1], {'error': 'Map does not exist'})
+
+        #returns ({error="Map does not exist"}, 404, json_tag)
+        # if a map with map_id does not exist
+        garbage_map_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_map_id)
+        self.assertEqual(response[0], 404)
+        self.assertEqual(response[1], {'error': 'Map does not exist'})
+
+        # Success
+        response = helper(valid_token, test_map_id)
+        self.assertEqual(response[0], 200)
+        self.assertEqual(response[1], {'success': test_map_id})
+        self.assertIsNone(GameMap.objects(id=test_map_id).first())
+
+
     def test_read_session_user_id(self):
         def helper(auth_data, payload=None):
-            response = self.request('/api/session', auth_data, 'GET', payload)
+            response = self.request('/api/sessions', auth_data, 'GET', payload)
             json = loads(response.data.decode('utf-8'))
             return response, json
         

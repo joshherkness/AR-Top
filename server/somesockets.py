@@ -3,7 +3,7 @@ from threading import Lock
 import sys
 import eventlet
 from flask import Flask, jsonify
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Socket server")
 parser.add_argument("--deploy", action='store_true')
@@ -25,6 +25,19 @@ else:
 def connect():
     emit('my_response', {'data': 'Connected', 'count': 0})
 
+@socket.on('joinRoom')
+def join_room(json):
+    try:
+        room = json['room']
+        if Session.objects(code=room) is not None:
+            join_room(room)
+            emit('joinRoom', {'data': 'Successfully connected to room ' + room})
+        else:
+            emit('roomNotFound', {'data':'Room does ' + room + ' not exist.'})
+    except KeyError:
+        emit('error', {'data':'Malformed request'})
+    except:
+        emit('error', {'data':'Internal server error'})
 
 if __name__ == "__main__":
     socket.run(app, debug=True, host='0.0.0.0', port=5001)

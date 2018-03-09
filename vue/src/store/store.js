@@ -16,24 +16,37 @@ export default new Vuex.Store({
     session
   },
   state: {
-    layout: 'grid'
+    layout: 'grid',
+    hasSeenEditorHelp: false
   },
   actions: {
     // eslint-disable-next-line
     setLayout({ commit }, layout) {
       commit(types.SET_LAYOUT, layout)
+    },
+    // eslint-disable-next-line
+    setHasSeenEditorHelp({ commit }) {
+      commit(types.SET_HAS_SEEN_EDITOR_HELP)
     }
   },
   mutations: {
     // eslint-disable-next-line
     [types.SET_LAYOUT](state, layout) {
       state.layout = layout
+    },
+    // eslint-disable-next-line
+    [types.SET_HAS_SEEN_EDITOR_HELP](state) {
+      state.hasSeenEditorHelp = true
     }
   },
   getters: {
     // eslint-disable-next-line
     layout(state) {
       return state.layout
+    },
+    // eslint-disable-next-line
+    hasSeenEditorHelp(state) {
+      return state.hasSeenEditorHelp
     }
   },
   plugins: [

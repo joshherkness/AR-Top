@@ -6,7 +6,8 @@
       v-bind:oid="map._id.$oid"
       v-bind:color="map.color"
       v-bind:depth="map.depth"
-      v-bind:width="map.width"/>
+      v-bind:width="map.width"
+      v-bind:updated="map.updated"/>
   </div>
 </template>
 

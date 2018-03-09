@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow: scroll;">
     <section class="hero is-large is-link">
       <div class="hero-body">
         <div class="container">

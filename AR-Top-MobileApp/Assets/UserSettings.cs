@@ -21,6 +21,7 @@ public class UserSettings : MonoBehaviour {
 		dropdowns = GetComponentsInChildren <TMP_Dropdown> ();
 		settingsPanel.gameObject.SetActive (false);
 		settingsIcon.sprite = settingsGear;
+		onOutlineChanged += outlineChange;
 
 		if (PlayerPrefs.HasKey ("UserAA"))
 			QualitySettings.antiAliasing = PlayerPrefs.GetInt ("UserAA");
@@ -83,5 +84,9 @@ public class UserSettings : MonoBehaviour {
 			settingsPanel.gameObject.SetActive (true);
 			settingsIcon.sprite = closeX;
 		}
+	}
+
+	public void outlineChange (string str){
+	
 	}
 }
