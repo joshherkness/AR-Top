@@ -183,6 +183,25 @@ export class API {
   }
 
   // eslint-disable-next-line
+  static async getCurrentSession() {
+    if (!store.state.user.token || store.state.user.token === '') {
+      return null
+    }
+
+    try {
+      let response = await axios.get(
+        ENDPOINTS.session,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data.session
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
   static async deleteSession(id) {
     try {
       let url = `${ENDPOINTS.session}/${id}`
