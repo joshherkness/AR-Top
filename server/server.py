@@ -135,7 +135,7 @@ def read_session(claims, token_user, id):
     return Api.read_session(claims, token_user, id)
 
 
-@api.route('/session', methods=['GET'])
+@api.route('/sessions', methods=['GET'])
 @protected
 @expiration_check
 def read_session_user_id(claims, token_user):
