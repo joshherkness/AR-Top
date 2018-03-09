@@ -245,7 +245,7 @@ class Api():
         return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
     @staticmethod
-    def delete_map(claims, map_id):
+    def delete_map(claims, token_user, map_id):
         """Delete map from database.
 
         Keyword arguments:
@@ -254,19 +254,10 @@ class Api():
 
         Returns a HTTP response.
         """
-        email = None
         try:
-            email = claims["email"]
-        except:
-            return malformed_request()
-
-        try:
-            user = User.objects(email=email).first()
-        except:
-            return internal_error()
-
-        try:
-            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
+            remote_copy = GameMap.objects(id=map_id, owner=token_user.id).first()
+            if remote_copy is None:
+                return jsonify(error="Map does not exist"), 404, json_tag
             remote_copy.delete()
         except (StopIteration, DoesNotExist):
             # Malicious user may be trying to overwrite someone's map

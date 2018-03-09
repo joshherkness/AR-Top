@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="editor">
     <!-- Canvas used to render the three.js map scene-->
     <div v-show="!loading" ref='canvas' id='canvas'/>
    
-    <!-- Overlay -->
+    <!-- Top toolbar -->
     <div v-if="!loading"
-      class="level" style="position: absolute; padding: 30px; width: 100%;">
+      class="level"
+      style="z-index: 10;">
       <div class="level-left">
         <div class="level-item">
           <span class="tag is-white title is-5">{{ name }}</span>
@@ -59,23 +60,31 @@
       </div>
     </div>
 
-    <!-- Help menu -->
-    <div class="field help-field">
-      <div class="control">
-        <div class="dropdown is-hoverable is-right is-up"
-             :class="{'is-active': showHelp}">
-          <div class="dropdown-trigger">
-            <div class="button is-light"
-              aria-haspopup='true'
-              aria-controls='help-dropdown'
-              v-on:click="showHelp = false"
-              v-on:mouseover="showHelp = false">
-              <span class="icon is-medium">
-                <i class="mdi mdi-help"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu" role='menu'>
-              <help></help>
+    <!-- Flex child used to seperate top and bottom toolbar -->
+    <div style="flex: 1;"></div>
+
+    <!-- Bottom toolbar -->
+    <div class="level"
+      style="z-index: 10;">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="control">
+            <div class="dropdown is-hoverable is-right is-up"
+                :class="{'is-active': !hasSeenEditorHelp}">
+              <div class="dropdown-trigger">
+                <div class="button is-light"
+                  aria-haspopup='true'
+                  aria-controls='help-dropdown'
+                  v-on:mouseover="setHasSeenEditorHelp">
+                  <span class="icon is-medium">
+                    <i class="mdi mdi-help"></i>
+                  </span>
+                </div>
+                <div class="dropdown-menu" role='menu'>
+                  <help></help>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -90,6 +99,7 @@
 
 <script>
 import { API } from '@/api/api'
+import { mapGetters, mapActions } from 'vuex'
 
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
@@ -112,12 +122,13 @@ export default {
       renderer: null,
       raycaster: null,
       mouse: null,
+      mouseStart: null,
       grid: null,
       color: defaultColor,
       mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      showHelp: true
+      disableTool: false
     }
   },
   components: {
@@ -125,6 +136,9 @@ export default {
     'sketch-picker': Sketch
   },
   computed: {
+    ...mapGetters([
+      'hasSeenEditorHelp'
+    ]),
     hexColor () {
       return this.color.hex
     },
@@ -198,6 +212,7 @@ export default {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enablePan = false
     this.controls.maxPolarAngle = (Math.PI / 2) + 0.1
+    this.controls.zoomSpeed = 1.5
     this.camera.lookAt(new THREE.Vector3())
     this.controls.addEventListener('change', this.render)
 
@@ -206,12 +221,16 @@ export default {
 
     // Attach event listeners to the document
     this.canvas.addEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.addEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
     document.addEventListener('keyup', this.onDocumentKeyUp, false)
     window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
+    ...mapActions([
+      'setHasSeenEditorHelp'
+    ]),
     load (id) {
       this.loading = true
       API.getMap(id).then(map => {
@@ -257,6 +276,11 @@ export default {
     updateCursorPosition () {
       let data = this.director.getFirstIntersectData(this.raycaster)
 
+      if (this.disableTool) {
+        this.director.clearSelection()
+        return
+      }
+
       if (!data || !data.object) {
         this.director.clearSelection()
         return
@@ -288,11 +312,27 @@ export default {
       this.mouse.set((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
       this.raycaster.setFromCamera(this.mouse, this.camera)
 
+      if (this.mouseStart &&
+          (Math.abs(this.mouse.x - this.mouseStart.x) > 0.01 ||
+          Math.abs(this.mouse.y - this.mouseStart.y) > 0.01)) {
+        this.disableTool = true
+      }
+
       // Update the cursor position for the selection manager
       this.updateCursorPosition()
     },
+    onDocumentMouseDown (event) {
+      this.mouseStart = new THREE.Vector2((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
+    },
     onDocumentMouseUp (event) {
       let data = this.director.getFirstIntersectData(this.raycaster)
+
+      this.mouseStart = null
+      if (this.disableTool) {
+        this.disableTool = false
+        this.updateCursorPosition()
+        return
+      }
 
       if (!data || !data.object) {
         return
@@ -327,7 +367,7 @@ export default {
       }
     },
     onDocumentKeyUp (event) {
-      console.log(this.director.grid.serialize())
+      // Any key up events should be placed here
     },
     isModeAdd () {
       return this.mode === EditorMode.ADD
@@ -374,6 +414,7 @@ export default {
 
     // Remove event listeners
     this.canvas.removeEventListener('mousemove', this.onDocumentMouseMove, false)
+    this.canvas.removeEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.removeEventListener('mouseup', this.onDocumentMouseUp, false)
     document.removeEventListener('keydown', this.onDocumentKeyDown, false)
     document.removeEventListener('keyup', this.onDocumentKeyUp, false)
@@ -412,9 +453,10 @@ export default {
   }
 }
 
-.help-field {
-  position: absolute;
-  right: 30px;
-  bottom: 82px;
+.editor {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  padding: 30px;
 }
 </style>

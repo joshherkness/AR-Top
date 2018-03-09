@@ -7,8 +7,14 @@
 
     <!-- Only show the navbar for required routes-->
     <Navbar v-if="$route.meta.requiresNavbar"/>
+
+    <!-- Main app content -->
+    <div style="flex: 1; overflow: hidden;">
+      <router-view style="height: 100%;"/>
+    </div>
+
+    <!-- Only show the session manager for routes that require it -->
     <SessionManager v-if="$route.meta.requiresManager && session_id"/>
-    <router-view/>
   </div>
 </template>
 
@@ -49,6 +55,8 @@ $mdi-font-path: '~mdi/fonts/';
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
 }
 </style>

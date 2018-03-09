@@ -1,10 +1,12 @@
 <template>
-  <table class="table is-fullwidth">
+  <table class="table is-fullwidth is-hoverable is-striped">
     <thead>
       <tr>
+        <!-- Blankc column for color -->
+        <th></th>
+
         <th>Name</th>
-        <th>Size</th>
-        <th>Color</th>
+        <th>Last modified</th>
 
         <!-- Blank columns used for right aligned controls -->
         <th></th>
@@ -18,7 +20,8 @@
       v-bind:oid="map._id.$oid"
       v-bind:color="map.color"
       v-bind:depth="map.depth"
-      v-bind:width="map.width"/>
+      v-bind:width="map.width"
+      v-bind:updated="map.updated"/>
     </tbody>
   </table>
 </template>

@@ -140,7 +140,7 @@ export class API {
       let response = await axios.delete(
         url,
         generateConfig({
-          email: store.state.user.email
+          auth_token: store.state.user.token
         })
       )
       return response.data.success
