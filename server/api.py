@@ -91,7 +91,7 @@ class Api():
             return jsonify(email=email, auth_token=validator[2]), 200, json_tag
 
     @staticmethod
-    def read_map(claims, id):
+    def read_map(claims, token_user, id):
         """Gather all maps associated with a user.
 
         Keyword arguments:
@@ -103,12 +103,11 @@ class Api():
         email, game_map = None, None
         try:
             email = claims["email"]
-            user = User.objects(email=email).first()
         except Exception as e:
             return malformed_request()
 
         try:
-            game_map = GameMap.objects(id=id, owner=user.id).first()
+            game_map = GameMap.objects(id=id, owner=token_user.id).first()
         except (StopIteration, DoesNotExist):
             current_app.logger.error(e)
             # Malicious user may be trying to overwrite someone's map
@@ -121,7 +120,7 @@ class Api():
         return jsonify(game_map), 200, json_tag
 
     @staticmethod
-    def read_list_of_maps(claims, user_id):
+    def read_list_of_maps(claims, token_user, user_id):
         """Gather all maps associated with a user.
 
         Keyword arguments:
@@ -130,8 +129,6 @@ class Api():
 
         Returns a HTTP response.
         """
-        token = claims['auth_token']
-        token_user = User.verify_auth_token(token)
         map_list = None
         if token_user is None:
             error = "token expired"
@@ -146,7 +143,7 @@ class Api():
         return jsonify(error=error), 422, json_tag
 
     @staticmethod
-    def create_map(claims):
+    def create_map(claims, token_user):
         """Create a map for the user.
 
         Keyword arguments:
@@ -154,11 +151,9 @@ class Api():
 
         Returns a HTTP response.
         """
-        email, map, user = None, None, None
+        map = None
         try:
             # Use a dict access here, not ".get". The access is better with the try block.
-            email = claims["email"]
-            user = User.objects(email=email).first()
             map = request.json['map']
 
             # The test send map as a string.
@@ -183,18 +178,18 @@ class Api():
             return malformed_request()
 
         try:
-            new_game_map = GameMap(owner=user.id, name=name, width=width, height=height,
+            new_game_map = GameMap(owner=token_user.id, name=name, width=width, height=height,
                                    depth=depth, color=color, private=private, models=models)
             new_game_map.save()
         except Exception as e:
             current_app.logger.error("Failed to save map for user",
-                                     str(user), "\n", str(e))
+                                     str(token_user), "\n", str(e))
             return internal_error()
 
         return jsonify(success="Successfully created map", map=new_game_map), 200, json_tag
 
     @staticmethod
-    def update_map(claims, map_id):
+    def update_map(claims, token_user, map_id):
         """Update a map.
 
         Keyword arguments:
