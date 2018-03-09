@@ -3,9 +3,9 @@ from argparse import ArgumentParser
 from threading import Lock
 
 import eventlet
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from flask_mongoengine import MongoEngine
-from flask_socketio import SocketIO, emit, join_room, send, rooms
+from flask_socketio import SocketIO, emit, join_room
 
 from models import Session
 
@@ -34,17 +34,17 @@ else:
 
 @socket.on('connect')
 def connect():
-    send("{} has connected".format(request.sid))
+    emit('my_response', {'data': 'Connected', 'count': 0})
 
 
 @socket.on('joinRoom')
-def join(json):
+def join_room(json):
     try:
         room = json['room']
         if Session.objects(code=room.lower()).first() is not None:
             join_room(room.lower())
-            # sends a message event
-            send("{} has joined {}".format(request.sid, room), room=room)
+            emit('joinRoom', {
+                 'data': 'Successfully connected to room ' + room.lower()})
         else:
             emit('roomNotFound', {'data': 'Room ' + room + ' does not exist.'})
     except KeyError:
