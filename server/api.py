@@ -286,6 +286,8 @@ class Api():
         try:
             game_map = GameMap.objects(
                 id=map_id, owner=token_user.id).first()
+            if game_map is None:
+                return jsonify(error="Map does not exist"), 404, json_tag
         except (StopIteration, DoesNotExist) as e:
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
