@@ -7,7 +7,8 @@ from flask import Flask, jsonify, request
 from flask_mongoengine import MongoEngine
 from flask_socketio import SocketIO, emit, join_room, send, rooms
 
-from models import Session
+from models import Session, GameMap
+from json import loads
 
 parser = ArgumentParser(description="Socket server")
 parser.add_argument("--deploy", action='store_true')
@@ -34,17 +35,30 @@ else:
 
 @socket.on('connect')
 def connect():
-    send("{} has connected".format(request.sid))
+    emit('connected', {})
 
 
 @socket.on('joinRoom')
 def join(json):
     try:
         room = json['room']
-        if Session.objects(code=room.lower()).first() is not None:
+        session = Session.objects(code=room.lower()).first()
+        if session is not None:
             join_room(room.lower())
             # sends a message event
-            send("{} has joined {}".format(request.sid, room), room=room)
+            # send("{} has joined {}".format(request.sid, room), room=room)
+            game_map = GameMap.objects(id=session.game_map_id).first()
+            game_map = game_map.to_json()
+            game_map = loads(game_map)
+            name = game_map["name"]
+            color = game_map["color"]
+            models = game_map["models"]
+            width = game_map["width"]
+            height = game_map["height"]
+            color = game_map["color"]
+
+            emit('roomFound', {'name': name, 'color': color,
+                               'models': models, 'width': width, 'height': height})
         else:
             emit('roomNotFound', {'data': 'Room ' + room + ' does not exist.'})
     except KeyError:

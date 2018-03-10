@@ -11,6 +11,7 @@ from helper import Helper
 from constants import json_tag, malformed_request, internal_error
 
 from models import GameMap, User, Role, Session
+from flask_socketio import SocketIO
 from mongoengine import DoesNotExist
 
 
@@ -226,23 +227,30 @@ class Api():
             return internal_error()
 
         try:
-            remote_copy.name = map['name']
-            remote_copy.color = map['color']
-            remote_copy.width = map['width']
-            remote_copy.height = map['height']
-            remote_copy.depth = map['depth']
-            remote_copy.private = map['private']
-            remote_copy.models = map['models']
-            remote_copy.updated = datetime.now()
+            remote_copy.update(**map)
+            game_map = GameMap.objects(id=map_id).first()
+            game_map = game_map.to_json()
+            game_map = loads(game_map)
+            name = game_map["name"]
+            color = game_map["color"]
+            models = game_map["models"]
+            depth = game_map["depth"]
+            height = game_map["height"]
+            width = game_map["width"]
+            if current_app.config['REDIS_HOST'] is None or current_app.config['REDIS_HOST'] == "":
+                socketio = SocketIO(message_queue='redis://')
+            else:
+                socketio = SocketIO(message_queue='redis://' +
+                                    current_app.config['REDIS_HOST'])
+            socketio.emit(
+                'update', {'name': name, 'color': color, 'models': models, 'height': height, 'width': width, 'depth': depth})
+            return jsonify(success="Map updated successfully", map=GameMap.objects(id=map_id).first()), 200, json_tag
         except AttributeError as e:
             # happens when remote copy is None
             return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(str(e))
             return internal_error()
-
-        remote_copy.save()
-        return jsonify(success="Map updated successfully", map=remote_copy), 200, json_tag
 
     @staticmethod
     def delete_map(claims, map_id):
