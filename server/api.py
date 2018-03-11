@@ -101,11 +101,7 @@ class Api():
 
         Returns a HTTP response.
         """
-        email, game_map = None, None
-        try:
-            email = claims["email"]
-        except Exception as e:
-            return malformed_request()
+        game_map = None
 
         try:
             game_map = GameMap.objects(id=id, owner=token_user.id).first()
@@ -201,9 +197,7 @@ class Api():
         """
         try:
             # Use a dict access here, not ".get". The access is better with the try block.
-            email = claims["email"]
             map = request.json['map']
-            user = User.objects(email=email).first()
         except Exception as e:
             current_app.logger.error(str(e))
             return malformed_request()
@@ -212,7 +206,7 @@ class Api():
         # and that the ID also is an existing map
         remote_copy = None
         try:
-            remote_copy = GameMap.objects(id=map_id, owner=user.id).first()
+            remote_copy = GameMap.objects(id=map_id, owner=token_user.id).first()
         except (StopIteration, DoesNotExist) as e:
             # Malicious user may be trying to overwrite someone's map
             # or there actually is something wrong; treat these situations the same
