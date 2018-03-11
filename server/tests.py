@@ -492,6 +492,69 @@ class TestApp(unittest.TestCase):
         test_session = Session.objects(id=test_session_id).first()
         self.assertIsNotNone(test_session)
 
+    def test_read_session(self):
+        def helper(auth_data, session_id):
+            response = self.request('/api/sessions/' + session_id, auth_data, 'GET')
+            json = loads(response.data.decode('utf-8'))
+            return response, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        map_id = json['map']['_id']['$oid']
+
+        # Create session
+        response = self.request('/api/sessions', valid_token, 'POST', dict(map_id=map_id))
+        json = loads(response.data.decode('utf-8'))
+        test_session_id = json['session']['_id']['$oid']
+
+        # Session does not exist
+        garbage_session_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1]['error'], "Session does not exist")
+
+        # User does not own session
+        response = helper(valid_token2, test_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1]['error'], "Session does not exist")
+
+        # Success
+        response = helper(valid_token, test_session_id)
+        self.assertEqual(response[0].status_code, 200)
+        self.assertEqual(response[1]['success'], "Successfully read session")
+        self.assertEqual(response[1]['session']['_id']['$oid'], test_session_id)
+
 
 if __name__ == '__main__':
     unittest.main()
