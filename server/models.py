@@ -163,11 +163,14 @@ class Session(Document):
         name = game_map["name"]
         color = game_map["color"]
         models = game_map["models"]
+        depth = game_map["depth"]
+        height = game_map["height"]
+        width = game_map["width"]
         if current_app.config['REDIS_HOST'] is None or current_app.config['REDIS_HOST'] == "":
             socketio = SocketIO(message_queue='redis://')
         else:
             socketio = SocketIO(message_queue='redis://' +
                                 current_app.config['REDIS_HOST'])
         socketio.emit(
-            'update', {'name': name, 'color': color, 'models': models})
+            'update', {'name': name, 'color': color, 'models': models, 'depth': depth, 'width': width, 'height': height})
         super().save(*args, **kwargs)

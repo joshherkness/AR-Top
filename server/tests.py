@@ -129,10 +129,11 @@ class TestApp(unittest.TestCase):
 
     def test_authenticated(self):
         def helper(auth_data, payload=None):
-            response = self.request('/api/authenticated', auth_data, 'GET', payload)
+            response = self.request(
+                '/api/authenticated', auth_data, 'GET', payload)
             json = loads(response.data.decode('utf-8'))
             return response.status_code, json
-        
+
         # Create user
         valid_email = "validEmail@gmail.com"
         valid_password = "validPassword123"
@@ -149,7 +150,8 @@ class TestApp(unittest.TestCase):
         # valid token
         response = helper(valid_token)
         self.assertEqual(response[0], 200)
-        self.assertEqual(response[1]['user']['_id']['$oid'], str(valid_user.id)) 
+        self.assertEqual(response[1]['user']['_id']
+                         ['$oid'], str(valid_user.id))
 
         # missing token
         response = helper('')
@@ -178,7 +180,7 @@ class TestApp(unittest.TestCase):
         # Get token
         response = self.request('/api/auth', dict(email=valid_email,
                                                   password=valid_password), 'POST')
-        valid_token = loads(response.data.decode('utf-8'))['auth_token']
+        valid_token = loads(response.data.decode('utf-8'))
 
         response = helper(valid_token)
         self.assertEqual(response[0], 422)
@@ -188,8 +190,8 @@ class TestApp(unittest.TestCase):
 
         response = helper('garbage_token', data['map'])
 
-        self.assertEqual(response[0], 422)
-        self.assertEqual(response[1]['error'], "Malformed request")
+        self.assertEqual(response[0], 401)
+        self.assertEqual(response[1]['error'], "token expired.")
 
         map_dict = dict(name="test_map", width=4, height=5,
                         depth=6, private=True, models=[])
@@ -203,14 +205,15 @@ class TestApp(unittest.TestCase):
         # With color key
         map_dict['color'] = "#fff"
         data['map'] = dumps(map_dict)
-        response = helper(dict(email=valid_user.email), data)
+        response = helper(valid_token, data)
 
         self.assertEqual(response[0], 200)
         self.assertEqual(response[1]['success'], "Successfully created map")
 
     def test_update_map(self):
         def helper(auth_data, map_id, payload=None):
-            response = self.request('/api/map/' + map_id, auth_data, 'POST', payload)
+            response = self.request(
+                '/api/map/' + map_id, auth_data, 'POST', payload)
             json = loads(response.data.decode('utf-8'))
             return response.status_code, json
 
@@ -253,7 +256,11 @@ class TestApp(unittest.TestCase):
         # Success
         #map = request.json['map']
         data = dict(map=dumps({}))
-        data['map'] = json['map']
+        test_map = loads(test_map.to_json())
+        mapz = {'id': test_map_id, 'name': test_map['name'], 'color': test_map['color'],
+                'width': test_map['width'], 'height': test_map['height'], 'depth': test_map['depth']}
+
+        data['map'] = mapz
         response = helper(valid_token, test_map_id, data)
         self.assertEqual(response[0], 200)
         self.assertEqual(response[1]['map']['name'], json['map']['name'])
@@ -278,7 +285,7 @@ class TestApp(unittest.TestCase):
 
         # The new map json sent in the body is improperly formatted.
         # (if the color value doesn't change, we know it was invalid
-        #   invalid json doesn't throw an error, the field that is invalid 
+        #   invalid json doesn't throw an error, the field that is invalid
         #   isn't changed in the database)
         invalid_color = 'not a color string'
         data['color'] = invalid_color
@@ -288,7 +295,8 @@ class TestApp(unittest.TestCase):
 
     def test_delete_map(self):
         def helper(auth_data, map_id, payload=None):
-            response = self.request('/api/map/' + map_id, auth_data, 'DELETE', payload)
+            response = self.request(
+                '/api/map/' + map_id, auth_data, 'DELETE', payload)
             json = loads(response.data.decode('utf-8'))
             return response.status_code, json
 
@@ -328,13 +336,13 @@ class TestApp(unittest.TestCase):
         test_map_id = json['map']['_id']['$oid']
         test_map = GameMap.objects(id=test_map_id).first()
 
-        # returns ({error="Map does not exist"}, 404, json_tag) 
+        # returns ({error="Map does not exist"}, 404, json_tag)
         # user making the request does not own the map with map_id
         response = helper(valid_token2, test_map_id)
         self.assertEqual(response[0], 404)
         self.assertEqual(response[1], {'error': 'Map does not exist'})
 
-        #returns ({error="Map does not exist"}, 404, json_tag)
+        # returns ({error="Map does not exist"}, 404, json_tag)
         # if a map with map_id does not exist
         garbage_map_id = "507f191e810c19729de860ea"
         response = helper(valid_token, garbage_map_id)
@@ -347,13 +355,12 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response[1], {'success': test_map_id})
         self.assertIsNone(GameMap.objects(id=test_map_id).first())
 
-
     def test_read_session_user_id(self):
         def helper(auth_data, payload=None):
             response = self.request('/api/sessions', auth_data, 'GET', payload)
             json = loads(response.data.decode('utf-8'))
             return response, json
-        
+
         # Create user
         valid_email = "validEmail@gmail.com"
         valid_password = "validPassword123"
@@ -375,14 +382,16 @@ class TestApp(unittest.TestCase):
                         depth=6, color='#FFF', private=True, models=[])
         data = dict(map=dumps({}))
         data['map'] = dumps(map_dict)
-        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        response = self.request('/api/map', valid_token,
+                                'POST', payload=(data))
         json = loads(response.data.decode('utf-8'))
         map_id = json['map']['_id']['$oid']
 
         # Create session
         data = dict(map_id=dumps({}))
         data['map_id'] = map_id
-        response = self.request('/api/sessions', valid_token, 'POST', payload=(data))
+        response = self.request(
+            '/api/sessions', valid_token, 'POST', payload=(data))
         json = loads(response.data.decode('utf-8'))
         session_json = json['session']
         session_id = json['session']['_id']['$oid']
@@ -397,10 +406,11 @@ class TestApp(unittest.TestCase):
 
     def test_create_session(self):
         def helper(auth_data, payload=None):
-            response = self.request('/api/sessions', auth_data, 'POST', payload)
+            response = self.request(
+                '/api/sessions', auth_data, 'POST', payload)
             json = loads(response.data.decode('utf-8'))
             return response, json
-        
+
         # Create user
         valid_email = "validEmail@gmail.com"
         valid_password = "validPassword123"
@@ -427,22 +437,23 @@ class TestApp(unittest.TestCase):
                                                   password=valid_password2), 'POST')
         valid_token2 = loads(response.data.decode('utf-8'))
 
-
         # Create map
         map_dict = dict(name="test_map", width=4, height=5,
                         depth=6, color='#FFF', private=True, models=[])
         data = dict(map=dumps({}))
         data['map'] = dumps(map_dict)
-        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        response = self.request('/api/map', valid_token,
+                                'POST', payload=(data))
         json = loads(response.data.decode('utf-8'))
         map_id = json['map']['_id']['$oid']
 
         # Create map with missing name, color, models
         map_missing_fields_dict = dict(width=4, height=5,
-                        depth=6, private=True)
+                                       depth=6, private=True)
         data = dict(map=dumps({}))
         data['map'] = dumps(map_dict)
-        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        response = self.request('/api/map', valid_token,
+                                'POST', payload=(data))
         json = loads(response.data.decode('utf-8'))
         map_missing_fields_id = json['map']['_id']['$oid']
 
@@ -470,15 +481,79 @@ class TestApp(unittest.TestCase):
         # Success
         response = helper(valid_token, dict(map_id=map_id))
         self.assertEqual(response[0].status_code, 200)
-        self.assertEqual(response[1]['success'], "Successfully created session")
+        self.assertEqual(response[1]['success'],
+                         "Successfully created session")
         test_session_json = response[1]['session']
         self.assertEqual(test_session_json['game_map_id']['$oid'], map_id)
-        self.assertEqual(test_session_json['user_id']['$oid'], str(valid_user.id))
+        self.assertEqual(
+            test_session_json['user_id']['$oid'], str(valid_user.id))
         self.assertIsNotNone(test_session_json['code'])
         test_session_id = test_session_json['_id']['$oid']
         test_session = Session.objects(id=test_session_id).first()
         self.assertIsNotNone(test_session)
 
+    def test_read_session(self):
+        def helper(auth_data, session_id):
+            response = self.request('/api/sessions/' + session_id, auth_data, 'GET')
+            json = loads(response.data.decode('utf-8'))
+            return response, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        map_id = json['map']['_id']['$oid']
+
+        # Create session
+        response = self.request('/api/sessions', valid_token, 'POST', dict(map_id=map_id))
+        json = loads(response.data.decode('utf-8'))
+        test_session_id = json['session']['_id']['$oid']
+
+        # Session does not exist
+        garbage_session_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1]['error'], "Session does not exist")
+
+        # User does not own session
+        response = helper(valid_token2, test_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1]['error'], "Session does not exist")
+
+        # Success
+        response = helper(valid_token, test_session_id)
+        self.assertEqual(response[0].status_code, 200)
+        self.assertEqual(response[1]['success'], "Successfully read session")
+        self.assertEqual(response[1]['session']['_id']['$oid'], test_session_id)
 
 
 if __name__ == '__main__':
