@@ -132,10 +132,12 @@ export class GridDirector extends THREE.EventDispatcher {
 
     this.selectedPosition = unitPosition.clone()
 
+    let group = null
+    let object = null
     let occupyingModel = this.grid.at(unitPosition)
     if (occupyingModel) {
       // Add the model to the model selection group
-      let object = this.objectMap.get(occupyingModel)
+      object = this.objectMap.get(occupyingModel)
       if (!object) {
         throw new Error('An object should exist.')
       }
@@ -145,19 +147,21 @@ export class GridDirector extends THREE.EventDispatcher {
 
       this.scene.remove(object)
 
-      let group = this.scene.getObjectByName('model-selection')
-      group.add(object)
+      group = this.scene.getObjectByName('model-selection')
     } else {
       // Create a selection using the provided model
       if (!model) {
         throw new Error('Property model must be defined')
       }
 
-      let object = model.createObject(this.scale)
+      object = model.createObject(this.scale)
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
       object.material.transparent = true
       object.material.opacity = 0.5
-      let group = this.scene.getObjectByName('selection')
+      group = this.scene.getObjectByName('selection')
+    }
+
+    if (group && object) {
       group.add(object)
     }
 

@@ -140,7 +140,7 @@ export class API {
       let response = await axios.delete(
         url,
         generateConfig({
-          email: store.state.user.email
+          auth_token: store.state.user.token
         })
       )
       return response.data.success
@@ -177,6 +177,25 @@ export class API {
         })
       )
       return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async getCurrentSession() {
+    if (!store.state.user.token || store.state.user.token === '') {
+      return null
+    }
+
+    try {
+      let response = await axios.get(
+        ENDPOINTS.session,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data.session
     } catch (err) {
       throw err
     }

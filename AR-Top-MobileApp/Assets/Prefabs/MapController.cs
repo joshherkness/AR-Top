@@ -5,11 +5,12 @@ using UnityEngine;
 using System;
 using Vuforia;
 
-public class JSONReader : MonoBehaviour
+public class MapController : MonoBehaviour
 {
 
 	[SerializeField] GameObject tilePrefab;
 	[SerializeField] GameObject gridPrefab;
+	[SerializeField] GameObject playerPrefab;
 
 	private GameObject mapLayer;
 	private GameObject baseLayer;
@@ -53,7 +54,7 @@ public class JSONReader : MonoBehaviour
 		string dataAsJson = "";
 
 		// Load example file
-		string filePath = Path.Combine(Application.streamingAssetsPath,"TestData/voxel_cube_8x8.json");
+		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_shell_8x8.json");
 		if (File.Exists (filePath)) {
 			dataAsJson = File.ReadAllText(filePath); 
 		}
@@ -63,9 +64,10 @@ public class JSONReader : MonoBehaviour
 
 	}
 
-	public void UpdateJSON (string JSONstring)
+	public void setMapJSON (string JSONstring)
 	{
-		Destroy (mapLayer);
+		Destroy (baseLayer);
+		Destroy (modelLayer);
 		buildLayers ();
 		Grid map = JsonUtility.FromJson<Grid> (JSONstring);
 		buildMap (map);
@@ -122,16 +124,20 @@ public class JSONReader : MonoBehaviour
 	//Builds a piece based on its type. Places the piece and gives it its color.
 	void buildPiece (GridModel obj)
 	{
-
+		Vector3 tileVector = obj.position;
+		GameObject tilePiece;
 		//Checks the type of the piece. Will be converted to a switch statement to check for all types.
 		switch (obj.type) 
 		{
-
 		case "voxel": 
-			Vector3 tileVector = obj.position;
-			GameObject tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
+			tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
-			colorize (tilePiece, obj.color); 
+			colorize (tilePiece, obj.color);
+			break;
+		case "player": 
+			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			colorize (tilePiece, obj.color);
 			break;
 		}
 	}

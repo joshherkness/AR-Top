@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar has-shadow is-fixed-bottom level is-dark" style="padding: 0 1em; bottom: -1.5em;">
+  <nav class="navbar level is-dark" style="padding: 0 1em;">
     <div class="level-left">
       <div class="level-item">
         <div class="dropdown is-hoverable is-up"
           :class="{'is-active': isActive}">
           <div class="dropdown-trigger">
-            <button class="button is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+            <button class="button is-darker" aria-haspopup="true" aria-controls="dropdown-menu4">
               <span>{{ name }}</span>
               <span class="icon is-small">
                 <i class="mdi mdi-chevron-down" />
@@ -38,8 +38,11 @@
                   :key="map._id.$oid" 
                   @click.native="setOpen(map._id.$oid)"
                   :to="{ name: 'editor', params: { id: map._id.$oid }}">
-                  <span class="panel-icon" v-if="map._id.$oid === game_map_id">
-                    <i class="mdi mdi-check"/>
+                  <span class="panel-icon" 
+                    :class="{'has-text-success': map._id.$oid === game_map_id}">
+                    <i class="mdi"
+                      :class="{'mdi-circle': map._id.$oid === game_map_id, 
+                               'mdi-circle-outline': map._id.$oid !== game_map_id}"/>
                   </span>
                   {{ map.name }}
                 </router-link>
@@ -59,9 +62,10 @@
     </div>
     <div class="level-right">
       <div class="level-item">
-        <div class="tags has-addons">
-          <span class="tag is-medium is-white">Invitation code</span>
-          <span class="tag is-medium is-white has-text-link
+        <div class="tags has-addons ">
+          <span class="tag is-medium is-darker"
+            style="margin-right: 2px;">Invitation code</span>
+          <span class="tag is-medium is-darker
             has-text-weight-semibold">{{ code | uppercase }}</span>
         </div>
       </div>
@@ -115,7 +119,11 @@ export default {
     ]),
     name: function () {
       const mapID = store.state.session.game_map_id
-      return store.state.map.maps.filter(map => map._id.$oid === mapID)[0].name
+      let map = store.state.map.maps.filter(map => map._id.$oid === mapID)[0]
+      if (!map) {
+        return ''
+      }
+      return map.name
     },
     searchList: function () {
       return store.state.map.maps.filter(map => {
@@ -140,3 +148,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.is-darker {
+  border: none;
+  color: white;
+  background-color: #242424;
+}
+
+button.is-darker:hover {
+  background-color: #1a1a1a;
+}
+</style>

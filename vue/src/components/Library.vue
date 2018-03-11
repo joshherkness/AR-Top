@@ -1,6 +1,6 @@
 <template>
-  <div class="section">
-    <div class="container">
+  <div class="section library-section">
+    <div class="library-header">
       <div class="level">
         <div class="level-left">
           <div class="level-item">
@@ -12,6 +12,18 @@
           </div>
         </div>
         <div class="level-right">
+          <div class="level-item">
+            <p class="control has-icons-left">
+              <input 
+                class="input" 
+                type="text" 
+                placeholder="search"
+                v-model="filter">
+              <span class="icon is-small is-left">
+                <i class="mdi mdi-magnify" />
+              </span>
+            </p>
+          </div>
           <!-- Grid layout control -->
           <div class="level-item">
             <div class="field has-addons">
@@ -48,12 +60,16 @@
         </div>
       </div>
       <hr>
+    </div>
+
+    <!-- No results indicator -->
+    <span v-if="filteredMaps.length === 0"
+      class="title is-6">No results</span>
       
-      <!-- Library content here -->
-      <div v-if="!loading">
-        <map-grid v-show="layout === 'grid'" v-bind:maps="maps"/>
-        <map-list v-show="layout === 'list'" v-bind:maps="maps"/>
-      </div>
+    <!-- Library content here -->
+    <div v-if="!loading && filteredMaps.length !== 0" class="library-content">
+      <map-grid v-show="layout === 'grid'" v-bind:maps="filteredMaps"/>
+      <map-list v-show="layout === 'list'" v-bind:maps="filteredMaps"/>
     </div>
   </div>
 </template>
@@ -71,7 +87,8 @@ export default {
     return {
       loading: false,
       error: false,
-      message: 'You currently have no maps.'
+      message: 'You currently have no maps.',
+      filter: ''
     }
   },
   components: {
@@ -82,7 +99,12 @@ export default {
     ...mapGetters([
       'maps',
       'layout'
-    ])
+    ]),
+    filteredMaps: function () {
+      return this.maps.filter(map => {
+        return map.name.toLowerCase().includes(this.filter.toLowerCase())
+      })
+    }
   },
   methods: {
     ...mapActions([
@@ -103,13 +125,9 @@ export default {
       }
     } catch (err) {
       let msg = err.response.data.error
-      if (msg === 'token expired') {
-        this.$store.dispatch('signOutUser')
-      } else if (msg === 'map error') {
-        this.error = true
-      } else {
+      this.error = true
+      if (msg !== 'map error') {
         this.message = msg
-        this.error = true
       }
     }
 
@@ -120,4 +138,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/bulma.sass';
+
+.library-section {
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+  padding-bottom: 0;
+}
+
+.library-header {
+  flex: 0 1 auto;
+}
+
+.library-content {
+  flex: 1;
+  overflow: scroll;
+}
 </style>
