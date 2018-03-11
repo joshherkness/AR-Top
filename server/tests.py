@@ -178,7 +178,7 @@ class TestApp(unittest.TestCase):
         # Get token
         response = self.request('/api/auth', dict(email=valid_email,
                                                   password=valid_password), 'POST')
-        valid_token = loads(response.data.decode('utf-8'))['auth_token']
+        valid_token = loads(response.data.decode('utf-8'))
 
         response = helper(valid_token)
         self.assertEqual(response[0], 422)
@@ -188,8 +188,8 @@ class TestApp(unittest.TestCase):
 
         response = helper('garbage_token', data['map'])
 
-        self.assertEqual(response[0], 422)
-        self.assertEqual(response[1]['error'], "Malformed request")
+        self.assertEqual(response[0], 401)
+        self.assertEqual(response[1]['error'], "token expired.")
 
         map_dict = dict(name="test_map", width=4, height=5,
                         depth=6, private=True, models=[])
@@ -203,7 +203,7 @@ class TestApp(unittest.TestCase):
         # With color key
         map_dict['color'] = "#fff"
         data['map'] = dumps(map_dict)
-        response = helper(dict(email=valid_user.email), data)
+        response = helper(valid_token, data)
 
         self.assertEqual(response[0], 200)
         self.assertEqual(response[1]['success'], "Successfully created map")
