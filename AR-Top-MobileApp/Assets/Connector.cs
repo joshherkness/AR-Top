@@ -15,6 +15,7 @@ public class Connector : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
+		DontDestroyOnLoad (GameObject.FindGameObjectWithTag ("MainCamera"));
 		VuforiaBehaviour.Instance.enabled = false;
 		socket = GameObject.Find ("SocketIO").GetComponent <SocketIOComponent> ();
 		room = FindObjectOfType<RoomManager> ();
@@ -83,14 +84,15 @@ public class Connector : MonoBehaviour {
 		MapController jsonReader = FindObjectOfType<MapController> ();
 		print (jsonReader);
 		if (scene.name == "main") {
-			VuforiaBehaviour.Instance.enabled = true;
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
 			SceneManager.UnloadSceneAsync ("Login");
+			VuforiaBehaviour.Instance.enabled = true;
 		} else {
 			VuforiaBehaviour.Instance.enabled = false;
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Login"));
 			SceneManager.UnloadSceneAsync ("main");
 			mainSceneLoaded = false;
+			Destroy (GameObject.FindGameObjectWithTag ("MainCamera"));
 			Destroy (this);
 		}
 
