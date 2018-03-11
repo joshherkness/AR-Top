@@ -19,6 +19,8 @@ public class MapController : MonoBehaviour
 
 	private GUIBehavior guiBehavior;
 
+	private MapGameObject mapGameObject;
+
 	/**
 	 * Structure used to represent a single model within the map.
 	 */
@@ -48,9 +50,7 @@ public class MapController : MonoBehaviour
 	void Start () 
 	{
 
-		// Set anti-aliasing
-		// TODO: Move this setting outside this script.
-		QualitySettings.antiAliasing = 2;
+		mapGameObject = FindObjectOfType<MapGameObject> ();
 
 		buildLayers ();
 
@@ -65,15 +65,26 @@ public class MapController : MonoBehaviour
 			dataAsJson = dataAsJson.Replace ("\n", "");
 		}
 		guiBehavior = FindObjectOfType<GUIBehavior> ();
+
+		if (mapGameObject != null) {
+			dataAsJson = mapGameObject.getMap ();
+		}
+
 		Grid grid = JsonUtility.FromJson<Grid> (dataAsJson);
+
 		buildMap (grid);
 
 	}
 
 	public void setMapJSON (string JSONstring)
 	{
-		Destroy (baseLayer);
-		Destroy (modelLayer);
+		print ("Rebuilding Map");
+		Destroy (baseLayer.gameObject);
+		Destroy (modelLayer.gameObject);
+		Destroy (mapLayer.gameObject);
+		mapLayer = null;
+		baseLayer = null;
+		modelLayer = null;
 		buildLayers ();
 		Grid map = JsonUtility.FromJson<Grid> (JSONstring);
 		buildMap (map);
@@ -81,27 +92,27 @@ public class MapController : MonoBehaviour
 
 	void buildLayers ()
 	{
-		mapLayer = GameObject.Find ("MapLayer");
-		if (mapLayer == null) {
+		//mapLayer = GameObject.Find ("MapLayer");
+		//if (mapLayer == null) {
 			mapLayer = new GameObject ("MapLayer");
 			mapLayer.AddComponent <LeanRotate> ();
 			mapLayer.AddComponent <LeanScale> ();
 			mapLayer.AddComponent <LeanTranslate> ();
-		}
+		//}
 
-		baseLayer = GameObject.Find ("GridLayer");
-		if (baseLayer == null)
-		{
+		//baseLayer = GameObject.Find ("GridLayer");
+		//if (baseLayer == null)
+		//{
 			baseLayer = new GameObject ("GridLayer");
 			baseLayer.transform.SetParent (mapLayer.transform);
-		}
+		//}
 
-		modelLayer = GameObject.Find ("TileLayer");
-		if (modelLayer == null)
-		{
+		//modelLayer = GameObject.Find ("TileLayer");
+		//if (modelLayer == null)
+		//{
 			modelLayer = new GameObject ("TileLayert");
 			modelLayer.transform.SetParent (mapLayer.transform);
-		}
+		//}
 	}
 
 	void buildMap (Grid obj)

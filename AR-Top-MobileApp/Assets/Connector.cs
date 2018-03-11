@@ -11,11 +11,14 @@ public class Connector : MonoBehaviour {
 	RoomManager room;
 	string socketurlbase;
 	private bool mainSceneLoaded = false;
+	private MapGameObject mapGameObject;
 
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
 		DontDestroyOnLoad (GameObject.FindGameObjectWithTag ("MainCamera"));
+		mapGameObject = FindObjectOfType<MapGameObject> ();
+
 		VuforiaBehaviour.Instance.enabled = false;
 		socket = GameObject.Find ("SocketIO").GetComponent <SocketIOComponent> ();
 		room = FindObjectOfType<RoomManager> ();
@@ -55,7 +58,9 @@ public class Connector : MonoBehaviour {
 
 	public void UpdateJSON(SocketIOEvent e){
 		Debug.Log ("Update Called");
-		Debug.Log(string.Format ("[name: {0}, data: {1}]", e.name, e.data));
+		string models = e.data.ToString ();
+		print (models);
+		mapGameObject.setMap (models);
 	}
 
 	public void roomNotFound(SocketIOEvent e){
@@ -65,6 +70,9 @@ public class Connector : MonoBehaviour {
 
 	public void roomFound (SocketIOEvent e){
 		Debug.Log ("Connection received");
+		string models = e.data.ToString ();
+		print (models); 
+		mapGameObject.setMap (models);
 		if (!mainSceneLoaded) {
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.LoadScene ("main", LoadSceneMode.Additive);
@@ -81,8 +89,7 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void OnSceneLoaded(Scene scene, LoadSceneMode mode){
-		MapController jsonReader = FindObjectOfType<MapController> ();
-		print (jsonReader);
+		mapGameObject.findMapController ();
 		if (scene.name == "main") {
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("main"));
 			SceneManager.UnloadSceneAsync ("Login");
