@@ -239,6 +239,7 @@ class Api():
             return jsonify(error="Map does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(str(e))
+            traceback.print_exc()
             return internal_error()
 
     @staticmethod
@@ -363,7 +364,9 @@ class Api():
 
         # Make sure the session exists
         try:
-            remote_copy = Session.objects(id=id).first()
+            remote_copy = Session.objects(id=id, user_id=token_user.id).first()
+            if remote_copy is None:
+                return jsonify(error="Session does not exist"), 404, json_tag
         except (StopIteration, DoesNotExist) as e:
             return jsonify(error="Session does not exist"), 404, json_tag
         except Exception as e:
