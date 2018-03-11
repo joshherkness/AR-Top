@@ -13,6 +13,8 @@ public class UserSettings : MonoBehaviour {
 	public Image settingsIcon;
 	private TMP_Dropdown[] dropdowns;
 
+	public Button[] buttons;
+
 	public delegate void OnOutlineChanged(string outline);
 	public event OnOutlineChanged onOutlineChanged;
 
@@ -80,9 +82,17 @@ public class UserSettings : MonoBehaviour {
 		if (settingsPanel.gameObject.activeInHierarchy) {
 			settingsPanel.gameObject.SetActive (false);
 			settingsIcon.sprite = settingsGear;
+
+			foreach (Button button in buttons) {
+				button.gameObject.SetActive (true);
+			}
 		} else {
 			settingsPanel.gameObject.SetActive (true);
 			settingsIcon.sprite = closeX;
+
+			foreach (Button button in buttons) {
+				button.gameObject.SetActive (false);
+			}
 		}
 	}
 

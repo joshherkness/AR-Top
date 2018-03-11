@@ -93,6 +93,7 @@ public class Connector : MonoBehaviour {
 			SceneManager.UnloadSceneAsync ("main");
 			mainSceneLoaded = false;
 			Destroy (GameObject.FindGameObjectWithTag ("MainCamera"));
+			Destroy (GameObject.FindObjectOfType<RoomManager> ());
 			Destroy (this);
 		}
 
