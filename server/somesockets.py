@@ -56,9 +56,10 @@ def join(json):
             width = game_map["width"]
             height = game_map["height"]
             color = game_map["color"]
+            depth = game_map["depth"]
 
             emit('roomFound', {'name': name, 'color': color,
-                               'models': models, 'width': width, 'height': height})
+                               'models': models, 'width': width, 'height': height, 'depth': depth})
         else:
             emit('roomNotFound', {'data': 'Room ' + room + ' does not exist.'})
     except KeyError:
