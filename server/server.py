@@ -85,30 +85,34 @@ def authenticated(claims, token_user):
 
 @api.route('/map/<id>', methods=['GET'])
 @protected
-def read_map(claims, id):
+@expiration_check
+def read_map(claims, token_user, id):
     """ Return a single map by id. """
-    return Api.read_map(claims, id)
+    return Api.read_map(claims, token_user, id)
 
 
 @api.route("/maps/<string:user_id>", methods=['GET'])
 @protected
-def read_list_of_maps(claims, user_id):
+@expiration_check
+def read_list_of_maps(claims, token_user, user_id):
     """ Get all maps for a user. """
-    return Api.read_list_of_maps(claims, user_id)
+    return Api.read_list_of_maps(claims, token_user, user_id)
 
 
 @api.route("/map", methods=["POST"])
 @protected
-def create_map(claims):
+@expiration_check
+def create_map(claims, token_user):
     """ Creates a map. """
-    return Api.create_map(claims)
+    return Api.create_map(claims, token_user)
 
 
 @api.route('/map/<map_id>', methods=['POST'])
 @protected
-def update_map(claims, map_id):
+@expiration_check
+def update_map(claims, token_user, map_id):
     """ Updates a maps name or color by id. """
-    return Api.update_map(claims, map_id)
+    return Api.update_map(claims, token_user, map_id)
 
 
 @api.route('/map/<map_id>', methods=['DELETE'])

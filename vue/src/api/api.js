@@ -119,17 +119,45 @@ export class API {
   // eslint-disable-next-line
   static async getMap(id) {
     try {
+      let authToken = store.state.user.token
       let url = `${ENDPOINTS.map}/${id}`
       let response = await axios.get(
         url,
         generateConfig({
-          email: store.state.user.email
+          auth_token: authToken
         })
       )
       return response.data
     } catch (err) {
       // eslint-disable-next-line
       let authToken
+    }
+  }
+
+  // eslint-disable-next-line
+  static async createMap(mapData) {
+    try {
+      let authToken = store.state.user.token
+      let url = `${ENDPOINTS.map}`
+      let data = {
+        map: mapData
+      }
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          auth_token: authToken
+        })
+      )
+
+      let map = response.data.map
+
+      // Add the map to the store
+      store.dispatch('addMap', map)
+
+      return map
+    } catch (err) {
+      throw err
     }
   }
 
@@ -152,12 +180,13 @@ export class API {
   // eslint-disable-next-line
   static async updateMap(id, data) {
     try {
+      let authToken = store.state.user.token
       let url = `${ENDPOINTS.map}/${id}`
       let response = await axios.post(
         url,
         data,
         generateConfig({
-          email: store.state.user.email
+          auth_token: authToken
         })
       )
       return response.data.map
