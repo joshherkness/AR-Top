@@ -16,7 +16,7 @@ public class Connector : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
-		DontDestroyOnLoad (GameObject.FindGameObjectWithTag ("MainCamera"));
+		//DontDestroyOnLoad (GameObject.FindGameObjectWithTag ("MainCamera"));
 		mapGameObject = FindObjectOfType<MapGameObject> ();
 
 		VuforiaBehaviour.Instance.enabled = false;
@@ -33,7 +33,7 @@ public class Connector : MonoBehaviour {
 		socket.On ("roomNotFound", roomNotFound);
 		socket.On ("roomFound", roomFound);
 		socket.On ("error", handleError);
-
+		//socket.On ("disconnect", ); 
 	}
 
 	// Update is called once per frame
@@ -74,9 +74,15 @@ public class Connector : MonoBehaviour {
 		print (models); 
 		mapGameObject.setMap (models);
 		if (!mainSceneLoaded) {
+			
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.LoadScene ("main", LoadSceneMode.Additive);
 			mainSceneLoaded = true;
+			Debug.Log ("Connection received");
+			models = e.data.ToString ();
+			print (models); 
+			mapGameObject.setMap (models);
+
 		}
 	}
 
@@ -84,6 +90,15 @@ public class Connector : MonoBehaviour {
 		Debug.LogError ("error event received from socket server" + e.data.ToString ());
 		if (room != null) {
 			print (room); 
+			room.serverErrorReceived (e);
+		}
+	}
+
+	public void handleDisconnect (SocketIOEvent e){
+		Debug.Log ("Disconnected");
+		if (mainSceneLoaded) {
+			SceneManager.LoadScene ("Login", LoadSceneMode.Additive);
+			mainSceneLoaded = false;
 			room.serverErrorReceived (e);
 		}
 	}
@@ -98,10 +113,9 @@ public class Connector : MonoBehaviour {
 			VuforiaBehaviour.Instance.enabled = false;
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Login"));
 			SceneManager.UnloadSceneAsync ("main");
-			mainSceneLoaded = false;
-			Destroy (GameObject.FindGameObjectWithTag ("MainCamera"));
-			Destroy (GameObject.FindObjectOfType<RoomManager> ());
-			Destroy (this);
+			//mainSceneLoaded = false;
+			//Destroy (GameObject.FindObjectOfType<RoomManager> ());
+			Destroy (this.gameObject);
 		}
 
 	}

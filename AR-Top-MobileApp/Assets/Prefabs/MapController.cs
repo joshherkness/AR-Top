@@ -92,27 +92,18 @@ public class MapController : MonoBehaviour
 
 	void buildLayers ()
 	{
-		//mapLayer = GameObject.Find ("MapLayer");
-		//if (mapLayer == null) {
-			mapLayer = new GameObject ("MapLayer");
-			mapLayer.AddComponent <LeanRotate> ();
-			mapLayer.AddComponent <LeanScale> ();
-			mapLayer.AddComponent <LeanTranslate> ();
-		//}
+	
+		mapLayer = new GameObject ("MapLayer");
+		mapLayer.AddComponent <LeanRotate> ();
+		mapLayer.AddComponent <LeanScale> ();
+		mapLayer.AddComponent <LeanTranslate> ();
 
-		//baseLayer = GameObject.Find ("GridLayer");
-		//if (baseLayer == null)
-		//{
-			baseLayer = new GameObject ("GridLayer");
-			baseLayer.transform.SetParent (mapLayer.transform);
-		//}
+		baseLayer = new GameObject ("GridLayer");
+		baseLayer.transform.SetParent (mapLayer.transform);
 
-		//modelLayer = GameObject.Find ("TileLayer");
-		//if (modelLayer == null)
-		//{
-			modelLayer = new GameObject ("TileLayert");
-			modelLayer.transform.SetParent (mapLayer.transform);
-		//}
+		modelLayer = new GameObject ("TileLayert");
+		modelLayer.transform.SetParent (mapLayer.transform);
+
 	}
 
 	void buildMap (Grid obj)
@@ -135,10 +126,14 @@ public class MapController : MonoBehaviour
 		foreach (GridModel model in obj.models)
 			buildPiece (model);
 
-		Vector3 position = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2))*.1f, mapLayer.transform.position.y*.1f, (mapLayer.transform.position.z - (obj.depth / 2))*.1f);
-		mapLayer.transform.Translate (position);
+		Vector3 mapPosition = new Vector3 (0f, 0f, 0f);
+		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2))*.1f, mapLayer.transform.position.y*.1f, (mapLayer.transform.position.z - (obj.depth / 2))*.1f);
+		mapLayer.transform.Translate (mapPosition);
 		mapLayer.transform.localScale = this.gameObject.transform.localScale;
 		mapLayer.transform.SetParent (this.gameObject.transform);
+
+		baseLayer.transform.Translate (childposition);
+		modelLayer.transform.Translate (childposition);
 
 		guiBehavior.setStartingPositions (mapLayer.transform);
 	}

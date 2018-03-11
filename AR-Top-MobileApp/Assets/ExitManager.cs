@@ -26,9 +26,10 @@ public class ExitManager : MonoBehaviour {
 	public void exit (){
 		VuforiaBehaviour.Instance.enabled = false;
 		Destroy (GameObject.FindGameObjectWithTag ("MainCamera"));
+		SceneManager.LoadScene ("Login", LoadSceneMode.Additive);
+		/*
 		Destroy (GameObject.FindObjectOfType<RoomManager> ());
-		Destroy (connector);
-		SceneManager.LoadScene ("Login");
+		Destroy (connector.gameObject);*/
 	}
 
 	public void openExitPanel (){
