@@ -349,14 +349,19 @@ class Api():
         game_map = None
         try:
             game_map = GameMap.objects(id=map_id, owner=token_user.id).first()
+            if game_map is None:
+                return jsonify(error="Game map does not exist"), 404, json_tag
         except:
             return jsonify(error="Game map does not exist"), 404, json_tag
 
         try:
-            session_entity = Session.objects(id=id).first()
+            session_entity = Session.objects(id=id, user_id=token_user.id).first()
+            assert session_entity is not None
             session_entity.game_map_id = game_map.id
             session_entity.save()
         except (StopIteration, DoesNotExist) as e:
+            return jsonify(error="Session does not exist"), 404, json_tag
+        except AssertionError as e:
             return jsonify(error="Session does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(str(e))
