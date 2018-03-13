@@ -317,7 +317,13 @@ class Api():
         try:
             session = Session.objects(
                 id=session_id, user_id=token_user.id).first()
+            if session is None:
+                return jsonify(error="Session does not exist"), 404, json_tag
             session.delete()
+        except (StopIteration, DoesNotExist) as e:
+            # Malicious user may be trying to overwrite someone's map
+            # or there actually is something wrong; treat these situations the same
+            return jsonify(error="Session does not exist"), 404, json_tag
         except Exception as e:
             current_app.logger.error(e)
             return internal_error()
