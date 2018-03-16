@@ -17,6 +17,8 @@ export class GridDirector extends THREE.EventDispatcher {
     this.scene = null
     this.scale = scale
     this.objectMap = new Map()
+
+    this.selectedPosition = null
   }
 
   /**
@@ -122,13 +124,21 @@ export class GridDirector extends THREE.EventDispatcher {
   setSelection (unitPosition, { model } = {}) {
     if (!this.scene) return
 
-    // First, we want to clear any current selection
-    this.clearSelection()
+    if (this.selectedPosition && this.selectedPosition.equals(unitPosition)) {
+      return
+    }
 
+    // First, we want to clear any current selection
+    this.clearSelection(true)
+
+    this.selectedPosition = unitPosition.clone()
+
+    let group = null
+    let object = null
     let occupyingModel = this.grid.at(unitPosition)
     if (occupyingModel) {
       // Add the model to the model selection group
-      let object = this.objectMap.get(occupyingModel)
+      object = this.objectMap.get(occupyingModel)
       if (!object) {
         throw new Error('An object should exist.')
       }
@@ -141,26 +151,29 @@ export class GridDirector extends THREE.EventDispatcher {
 
       this.scene.remove(object)
 
-      let group = this.scene.getObjectByName('model-selection')
-      group.add(object)
+      group = this.scene.getObjectByName('model-selection')
     } else {
       // Create a selection using the provided model
       if (!model) {
         throw new Error('Property model must be defined')
       }
 
-      let object = model.createObject(this.scale)
+      object = model.createObject(this.scale)
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
+
       object.traverse((node) => {
         if (node.material) {
           node.material.opacity = 0.5
         }
       })
       let group = this.scene.getObjectByName('selection')
-      group.add(object)
-    }
 
-    this._onUpdate()
+      if (group && object) {
+        group.add(object)
+      }
+
+      this._onUpdate()
+    }
   }
 
   initSelection () {
@@ -180,10 +193,16 @@ export class GridDirector extends THREE.EventDispatcher {
     this.scene.add(modelGroup)
   }
 
-  clearSelection () {
+  clearSelection (supressUpdate = false) {
     if (!this.scene) {
       return
     }
+
+    if (!this.selectedPosition) {
+      return
+    }
+
+    this.selectedPosition = null
 
     // Clean up any current selections
     let group = this.scene.getObjectByName('selection')
@@ -207,7 +226,9 @@ export class GridDirector extends THREE.EventDispatcher {
     // Hard reset the selection, now that we cleaned up
     this.initSelection()
 
-    this._onUpdate()
+    if (!supressUpdate) {
+      this._onUpdate()
+    }
   }
 
   convertActualToUnitPosition (actualPosition) {

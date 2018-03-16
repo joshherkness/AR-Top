@@ -102,8 +102,7 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import axios from 'axios'
-import { generateConfig } from '@/api/api'
+import { API } from '@/api/api'
 import { mapActions } from 'vuex'
 import router from '@/router/index'
 
@@ -193,30 +192,23 @@ export default {
 
         this.loading = true
 
-        let data = {
-          map: {
-            name: this.form.name,
-            width: this.form.size || DEFAULT_SIZE,
-            height: DEFAULT_HEIGHT,
-            depth: this.form.size || DEFAULT_SIZE,
-            color: this.form.color || DEFAULT_COLOR,
-            private: this.form.private,
-            models: []
-          }
+        let mapData = {
+          name: this.form.name,
+          width: this.form.size || DEFAULT_SIZE,
+          height: DEFAULT_HEIGHT,
+          depth: this.form.size || DEFAULT_SIZE,
+          color: this.form.color || DEFAULT_COLOR,
+          private: this.form.private,
+          models: []
         }
 
-        let url = 'http://localhost:5000/api/map'
-        let response = await axios.post(url, data, generateConfig({
-          email: this.$store.state.user.email
-        }))
+        let map = await API.createMap(mapData)
 
         // Close this modal
         this.close(true)
 
         // Route the user to their newly created map
-        let map = response.data.map
-        this.addMap(map)
-        router.push({name: 'Editor', params: {id: map._id.$oid}})
+        router.push({name: 'editor', params: {id: map._id.$oid}})
 
         // Navigate to the editor here
       } catch (err) {

@@ -42,7 +42,9 @@ const ENDPOINTS = {
   authenticate: `${API_ROOT}/auth`,
   register: `${API_ROOT}/register`,
   map: `${API_ROOT}/map`,
-  maps: `${API_ROOT}/maps`
+  maps: `${API_ROOT}/maps`,
+  session: `${API_ROOT}/sessions`,
+  authenticated: `${API_ROOT}/authenticated`
 }
 
 export class API {
@@ -82,6 +84,22 @@ export class API {
   }
 
   // eslint-disable-next-line
+  static async getCurrentUser() {
+    try {
+      let authToken = store.state.user.token
+      let response = await axios.get(
+        ENDPOINTS.authenticated,
+        generateConfig({
+          auth_token: authToken
+        })
+      )
+      return response.data.user
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
   static async getMaps() {
     try {
       let authToken = store.state.user.token
@@ -101,11 +119,12 @@ export class API {
   // eslint-disable-next-line
   static async getMap(id) {
     try {
+      let authToken = store.state.user.token
       let url = `${ENDPOINTS.map}/${id}`
       let response = await axios.get(
         url,
         generateConfig({
-          email: store.state.user.email
+          auth_token: authToken
         })
       )
       return response.data
@@ -116,13 +135,40 @@ export class API {
   }
 
   // eslint-disable-next-line
+  static async createMap(mapData) {
+    try {
+      let authToken = store.state.user.token
+      let url = `${ENDPOINTS.map}`
+      let data = {
+        map: mapData
+      }
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          auth_token: authToken
+        })
+      )
+
+      let map = response.data.map
+
+      // Add the map to the store
+      store.dispatch('addMap', map)
+
+      return map
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
   static async deleteMap(id) {
     try {
       let url = `${ENDPOINTS.map}/${id}`
       let response = await axios.delete(
         url,
         generateConfig({
-          email: store.state.user.email
+          auth_token: store.state.user.token
         })
       )
       return response.data.success
@@ -134,15 +180,103 @@ export class API {
   // eslint-disable-next-line
   static async updateMap(id, data) {
     try {
+      let authToken = store.state.user.token
       let url = `${ENDPOINTS.map}/${id}`
       let response = await axios.post(
         url,
         data,
         generateConfig({
-          email: store.state.user.email
+          auth_token: authToken
         })
       )
       return response.data.map
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async getSession(id) {
+    try {
+      let url = `${ENDPOINTS.session}/${id}`
+      let response = await axios.get(
+        url,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async getCurrentSession() {
+    if (!store.state.user.token || store.state.user.token === '') {
+      return null
+    }
+
+    try {
+      let response = await axios.get(
+        ENDPOINTS.session,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data.session
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async deleteSession(id) {
+    try {
+      let url = `${ENDPOINTS.session}/${id}`
+      let response = await axios.delete(
+        url,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async createSession(map_id) {
+    try {
+      let url = `${ENDPOINTS.session}`
+      let data = { map_id: map_id }
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data.session
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line
+  static async updateSession(id, { map_id }) {
+    try {
+      let url = `${ENDPOINTS.session}/${id}`
+      let data = { map_id: map_id }
+      let response = await axios.post(
+        url,
+        data,
+        generateConfig({
+          auth_token: store.state.user.token
+        })
+      )
+      return response.data.session
     } catch (err) {
       throw err
     }

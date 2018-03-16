@@ -1,0 +1,7 @@
+FROM python:jessie
+
+COPY . /app
+WORKDIR /app
+RUN pip --no-cache-dir install -r requirements.txt
+
+CMD [ "python", "somesockets.py", "--deploy" ]
