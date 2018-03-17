@@ -2,13 +2,14 @@ import 'three'
 import 'three/examples/js/loaders/OBJLoader'
 import 'three/examples/js/loaders/MTLLoader'
 import { GridHelpers } from './GridHelpers'
-import { TileFloorObject } from './PreloadModels'
+import { ObjectList } from './PreloadModels'
 
 const DEFAULT_WIREFRAME_LINE_WIDTH = 1
 
 export const GridModelType = Object.freeze({
   VOXEL: 'voxel',
-  TILE_FLOOR: 'tile_floor'
+  TILE_FLOOR: 'tile_floor',
+  CHARACTER: 'character_type'
 })
 
 export class GridModel {
@@ -94,32 +95,75 @@ export class VoxelGridModel extends GridModel {
     return super.equals(model) && this.color === model.color
   }
 }
-import tile_floor_object from '@/assets/models/tile_floor.obj'
-import tile_floor_material from '@/assets/models/tile_floor.mtl'
 
-export class TileFloorGridModel extends GridModel {
-  constructor (position) {
+export class TileGridModel extends GridModel {
+  constructor (position, type) {
     super(position)
 
-    this.type = GridModelType.TILE_FLOOR
+    if (type === undefined) {
+      throw new TypeError('Type must be defined')
+    }
+
+    this.type = type
   }
 
   createObject (scale = 1) {
-    let mesh = TileFloorObject.clone()
+    let mesh = ObjectList[this.type].clone()
     mesh.traverse((node) => {
       if (node.material) {
         node.material = node.material.clone()
+        node.material.transparent = true
+
+        if (node.userData && !node.userData.isBoundingBox) {
+          node.material.opacity = 1.0
+        }
       }
     })
     mesh.scale.set(scale/16, scale/16, scale/16)
     mesh.position.y = -scale/2
-    mesh.children[0].material.transparent = true
-    mesh.children[0].material.opacity = 1.0
 
     let object = new THREE.Group()
     object.add(mesh)
 
     return object
+  }
+}
+
+export class EntityGridModel extends GridModel {
+  constructor (position, color, type) {
+    super(position)
+
+    if (color === undefined) {
+      throw new TypeError('Color must be defined')
+    }
+
+    if (type === undefined) {
+      throw new TypeError('Type must be defined')
+    }
+
+    this.type = type
+    this.color = color
+  }
+
+  createObject (scale = 1) {
+    let mesh = ObjectList[this.type].clone()
+    mesh.traverse((node) => {
+      if (node.material) {
+        node.material = node.material.clone()
+        node.material.transparent = true
+
+        if (node.userData && !node.userData.isBoundingBox) {
+          node.material.opacity = 1.0
+        }
+      }
+    })
+    mesh.scale.set(scale/16, scale/16, scale/16)
+    mesh.position.y = -scale/2
+
+    let group = new THREE.Group()
+    group.add(mesh)
+
+    return group
   }
 }
 

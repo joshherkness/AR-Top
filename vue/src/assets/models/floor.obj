@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g tile_floor
+g floor
 
 # material
-mtllib tile_floor.mtl
+mtllib floor.mtl
 usemtl palette
 
 # normals

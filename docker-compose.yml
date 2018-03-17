@@ -20,7 +20,7 @@ services:
         hostname: vue
         image: "oakland/vue"
         ports:
-            - "8080:8080"
+            - "8081:8081"
     mongo:
         image: "mongo:latest"
         ports:

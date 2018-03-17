@@ -144,7 +144,8 @@ export class GridDirector extends THREE.EventDispatcher {
       }
 
       object.traverse((node) => {
-        if (node.material) {
+        var skip = node.userData.isBoundingBox
+        if (!skip && node.material) {
           node.material.opacity = 0.5
         }
       })
@@ -162,18 +163,20 @@ export class GridDirector extends THREE.EventDispatcher {
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
 
       object.traverse((node) => {
-        if (node.material) {
+        var skip = node.userData.isBoundingBox
+        if (!skip && node.material) {
           node.material.opacity = 0.5
         }
       })
-      let group = this.scene.getObjectByName('selection')
 
-      if (group && object) {
-        group.add(object)
-      }
-
-      this._onUpdate()
+      group = this.scene.getObjectByName('selection')
     }
+
+    if (group && object) {
+      group.add(object)
+    }
+
+    this._onUpdate()
   }
 
   initSelection () {
@@ -214,7 +217,8 @@ export class GridDirector extends THREE.EventDispatcher {
     if (modelGroup) {
       modelGroup.children.forEach((child) => {
         child.traverse((node) => {
-          if (node.material) {
+          let skip = node.userData.isBoundingBox
+          if (!skip && node.material) {
             node.material.opacity = 1.0
           }
         })

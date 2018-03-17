@@ -45,6 +45,27 @@
                 </div>
               </div>
             </div>
+            <!-- Player -->
+            <div class="control">
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <div class="button is-light"
+                    aria-haspopup='true'
+                    aria-controls='color-picker-dropdown-menu'
+                    :class="{'is-active': isModePlayer()}"
+                    :style="{'color': hexColor}"
+                    v-on:click="setModePlayer">
+                    <span class="icon is-medium">
+                      <i class="mdi mdi-account-plus"></i>
+                    </span>
+                    <div class="is-size-7">2</div>
+                  </div>
+                  <div class="dropdown-menu" role='menu'>
+                    <sketch-picker v-model="color"></sketch-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="control">
               <div class="button is-light"
                 :class="{'is-active': isModeDelete()}"
@@ -52,7 +73,7 @@
                 <span class="icon is-medium">
                   <i class="mdi mdi-eraser"></i>
                 </span>
-                <div class="is-size-7">2</div>
+                <div class="is-size-7">3</div>
               </div>
             </div>
           </div>
@@ -380,11 +401,17 @@ export default {
     isModeDelete () {
       return this.mode === EditorMode.DELETE
     },
+    isModePlayer () {
+      return this.mode === EditorMode.PLAYER
+    },
     setModeAdd () {
       this.mode = EditorMode.ADD
     },
     setModeDelete () {
       this.mode = EditorMode.DELETE
+    },
+    setModePlayer () {
+      this.mode = Editor.Mode.PLAYER
     },
     save () {
       if (!this.grid) {
