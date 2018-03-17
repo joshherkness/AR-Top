@@ -2,7 +2,7 @@ import 'three'
 import 'three/examples/js/loaders/OBJLoader'
 import 'three/examples/js/loaders/MTLLoader'
 import { GridHelpers } from './GridHelpers'
-import { ObjectList } from './PreloadModels'
+import { ObjectList } from './PreloadedObjects'
 
 const DEFAULT_WIREFRAME_LINE_WIDTH = 1
 
@@ -155,6 +155,11 @@ export class EntityGridModel extends GridModel {
         if (node.userData && !node.userData.isBoundingBox) {
           node.material.opacity = 1.0
         }
+      }
+
+      // Change the color of the ring
+      if (node.name === 'entity_base.ring') {
+        node.material.color = new THREE.Color(this.color)
       }
     })
     mesh.scale.set(scale/16, scale/16, scale/16)

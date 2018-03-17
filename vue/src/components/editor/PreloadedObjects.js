@@ -2,12 +2,30 @@ import * as THREE from 'three'
 import 'three/examples/js/loaders/OBJLoader'
 import 'three/examples/js/loaders/MTLLoader'
 
-let models = [
-  'floor'
+let MODEL_DATA = [
+  {
+    type: 'floor',
+    display: 'Floor'
+  }
 ]
 
-let entities = [
-  'human'
+let ENTITY_DATA = [
+  {
+    type: 'fighter',
+    display: 'Fighter'
+  }, 
+  {
+    type: 'ranger',
+    display: 'Ranger'
+  }, 
+  {
+    type: 'knight',
+    display: 'Knight'
+  }, 
+  {
+    type: 'goblin',
+    display: 'Goblin'
+  }
 ]
 
 function loadObject (name) {
@@ -87,15 +105,25 @@ function loadEntity (name) {
 }
 
 let ObjectList = {}
-models.forEach((name) => {
-  ObjectList[name] = loadModel(name)
-})
-entities.forEach((name) => {
-  ObjectList[name] = loadEntity(name)
+
+// Preload all models
+MODEL_DATA.forEach((data) => {
+  if (!data.type) throw TypeError("MODEL_DATA element must have a type attribute")
+
+  // Load the model
+  ObjectList[data.type] = loadModel(data.type)
 })
 
-console.log(ObjectList)
+// Preload all entities
+ENTITY_DATA.forEach((data) => {
+  if (!data.type) throw TypeError("ENTITY_DATA element must have a type attribute")
+
+  // Load the entity
+  ObjectList[data.type] = loadEntity(data.type)
+})
 
 export {
-  ObjectList as ObjectList
+  ObjectList as ObjectList,
+  MODEL_DATA,
+  ENTITY_DATA
 }

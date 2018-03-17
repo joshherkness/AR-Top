@@ -45,23 +45,23 @@
                 </div>
               </div>
             </div>
-            <!-- Player -->
+            <!-- Entity tool -->
             <div class="control">
               <div class="dropdown is-hoverable is-right">
                 <div class="dropdown-trigger">
                   <div class="button is-light"
                     aria-haspopup='true'
                     aria-controls='color-picker-dropdown-menu'
-                    :class="{'is-active': isModePlayer()}"
-                    :style="{'color': hexColor}"
-                    v-on:click="setModePlayer">
+                    :class="{'is-active': isModeEntity()}"
+                    :style="{'color': entityData.color.hex}"
+                    v-on:click="setModeEntity">
                     <span class="icon is-medium">
                       <i class="mdi mdi-account-plus"></i>
                     </span>
                     <div class="is-size-7">2</div>
                   </div>
                   <div class="dropdown-menu" role='menu'>
-                    <sketch-picker v-model="color"></sketch-picker>
+                    <entity-selector v-bind:entityData="entityData"></entity-selector>
                   </div>
                 </div>
               </div>
@@ -129,6 +129,8 @@ import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import { EditorMode } from './EditorMode'
 import Help from './Help'
+import EntitySelector from './EntitySelector'
+import { EntityGridModel } from './GridModels';
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 let defaultColor = { hex: '#4A90E2' }
@@ -149,11 +151,18 @@ export default {
       mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      disableTool: false
+      disableTool: false,
+      entityData: {
+        type: 'fighter',
+        color: {
+          hex: '#ffffff'
+        }
+      }
     }
   },
   components: {
     'help': Help,
+    'entity-selector': EntitySelector,
     'sketch-picker': Sketch
   },
   computed: {
@@ -164,11 +173,19 @@ export default {
       return this.color.hex
     },
     model () {
-      return ModelFactory.createModel({
-        type: 'voxel',
-        position: new THREE.Vector3(), // Should this be an actual position
-        color: this.hexColor
-      })
+      if (this.mode === EditorMode.ADD) {
+        return ModelFactory.createModel({
+          type: 'voxel',
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.hexColor
+        })
+      } else if (this.mode === EditorMode.ENTITY) {
+        return ModelFactory.createModel({
+          type: this.entityData.type,
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.entityData.color.hex
+        })
+      }
     },
     name () {
       if (!this.grid) {
@@ -320,7 +337,7 @@ export default {
           return
         }
         actualPosition.setFromMatrixPosition(data.object.matrixWorld)
-      } else if (this.mode === EditorMode.ADD) {
+      } else {
         actualPosition = data.point.add(data.face.normal)
       }
 
@@ -371,17 +388,27 @@ export default {
         let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
         let model = this.grid.at(unitPosition)
         this.director.remove(model)
-      } else if (this.mode === EditorMode.ADD) {
+      } else {
         // Add
         if (!data.face) return
         interactPosition.copy(data.point.add(data.face.normal))
         let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
-        let model = ModelFactory.createModel({
-          type: 'voxel',
-          color: this.hexColor,
-          position: unitPosition
-        })
-        this.director.add(model)
+
+        if (this.mode === EditorMode.ADD) {
+          let model = ModelFactory.createModel({
+            type: 'voxel',
+            color: this.hexColor,
+            position: unitPosition
+          })
+          this.director.add(model)
+        } else if (this.mode === EditorMode.ENTITY) {
+          let model = ModelFactory.createModel({
+            type: this.entityData.type,
+            color: this.entityData.color.hex,
+            position: unitPosition
+          })
+          this.director.add(model)
+        }
       }
     },
     onDocumentKeyDown (event) {
@@ -401,8 +428,8 @@ export default {
     isModeDelete () {
       return this.mode === EditorMode.DELETE
     },
-    isModePlayer () {
-      return this.mode === EditorMode.PLAYER
+    isModeEntity () {
+      return this.mode === EditorMode.ENTITY
     },
     setModeAdd () {
       this.mode = EditorMode.ADD
@@ -410,8 +437,8 @@ export default {
     setModeDelete () {
       this.mode = EditorMode.DELETE
     },
-    setModePlayer () {
-      this.mode = Editor.Mode.PLAYER
+    setModeEntity () {
+      this.mode = EditorMode.ENTITY
     },
     save () {
       if (!this.grid) {

@@ -1,4 +1,5 @@
 import { GridModelType, VoxelGridModel , TileGridModel, EntityGridModel} from './GridModels'
+import { ENTITY_DATA } from './PreloadedObjects'
 
 /**
  * Factory used to create instances of map models based on
@@ -25,9 +26,9 @@ export class ModelFactory {
 
     // Create the type based instance of our model
     if (data.type === GridModelType.VOXEL && data.color) {
-      //return new CharacterGridModel(data.position, 0xffffff)
-      return new TileGridModel(data.position, 'floor')
-      //return new VoxelGridModel(data.position, data.color)
+      return new VoxelGridModel(data.position, data.color)
+    } else if (ENTITY_DATA.map(data => data.type).includes(data.type)) {
+      return new EntityGridModel(data.position, data.color, data.type)
     }
 
     return null
