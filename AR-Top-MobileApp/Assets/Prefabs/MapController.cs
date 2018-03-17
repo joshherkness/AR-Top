@@ -20,6 +20,7 @@ public class MapController : MonoBehaviour
 	private GUIBehavior guiBehavior;
 
 	private MapGameObject mapGameObject;
+	private UserSettings userSettings;
 
 	/**
 	 * Structure used to represent a single model within the map.

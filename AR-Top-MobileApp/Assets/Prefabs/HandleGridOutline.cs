@@ -24,4 +24,12 @@ public class HandleGridOutline : MonoBehaviour {
 				sprite.enabled = true;
 		}
 	}
+
+	void OnDestroy(){
+		userSettings.onOutlineChanged -= OnOutlineChanged;
+	}
+
+	public void changeOutlines (){
+		OnOutlineChanged (PlayerPrefs.GetString ("UserGrid"));
+	}
 }
