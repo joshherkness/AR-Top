@@ -13,6 +13,8 @@ public class Connector : MonoBehaviour {
 	private bool mainSceneLoaded = false;
 	private MapGameObject mapGameObject;
 
+	JSONObject roomCode;
+
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
@@ -33,7 +35,7 @@ public class Connector : MonoBehaviour {
 		socket.On ("roomNotFound", roomNotFound);
 		socket.On ("roomFound", roomFound);
 		socket.On ("error", handleError);
-		//socket.On ("disconnect", ); 
+		socket.On ("disconnect", handleDisconnect);
 	}
 
 	// Update is called once per frame
@@ -42,9 +44,7 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void connection(JSONObject js){
-		//socket.url = socketurlbase;
-		//socket.url += "&room=" + js ["roomNumber"];
-		//print (socket.url); 
+		roomCode = js;
 		socket.Emit ("joinRoom", js);
 	}
 
@@ -98,6 +98,7 @@ public class Connector : MonoBehaviour {
 		Debug.Log ("Disconnected");
 		if (mainSceneLoaded) {
 			SceneManager.LoadScene ("Login", LoadSceneMode.Additive);
+			LeaveRoomSession ();
 			mainSceneLoaded = false;
 			room.serverErrorReceived (e);
 		}
@@ -118,5 +119,11 @@ public class Connector : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+	}
+
+	public void LeaveRoomSession(){
+		if (roomCode["room"] != null) {
+			socket.Emit ("leaveRoom", roomCode);
+		}
 	}
 }
