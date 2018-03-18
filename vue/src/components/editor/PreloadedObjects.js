@@ -28,6 +28,11 @@ let ENTITY_DATA = [
   }
 ]
 
+// Load the base object and note some other useful base related constants
+var BASE_OBJECT = loadObject('base')
+var BASE_RING_OBJECT_NAME = 'base.ring'
+var BASE_CENTER_OBJECT_NAME = 'base.center'
+
 function loadObject (name) {
   let objData = require(`@/assets/models/${name}.obj`)
   let mtlData = require(`@/assets/models/${name}.mtl`)
@@ -81,23 +86,9 @@ function loadEntity (name) {
   })
 
   // Create the base
-  let entity_base = new THREE.Group()
-  entity_base.name = "entity_base"
-
-  var cylinder_geometry = new THREE.CylinderGeometry( 7.5, 8, 1, 32 );
-  var cylinder_material = new THREE.MeshBasicMaterial( {color: 0x50E3C2} );
-  var cylinder = new THREE.Mesh( cylinder_geometry, cylinder_material );
-  cylinder.name = "entity_base.ring"
-  cylinder.position.y = 0.5
-
-  var cylinder_geometry_b = new THREE.CylinderGeometry( 7, 7, 1, 32 );
-  var cylinder_material_b = new THREE.MeshBasicMaterial( {color: 0x222222} );
-  var cylinder_b = new THREE.Mesh( cylinder_geometry_b, cylinder_material_b );
-  cylinder_b.name = "entity_base.center"
-  cylinder_b.position.y = 0.55
-
-  entity_base.add(cylinder)
-  entity_base.add(cylinder_b)
+  var entity_base = BASE_OBJECT.clone()
+  entity_base.name = "base"
+  entity_base.scale.set(16, 16, 16)
 
   group.add(entity_base)
 
@@ -125,5 +116,7 @@ ENTITY_DATA.forEach((data) => {
 export {
   ObjectList as ObjectList,
   MODEL_DATA,
-  ENTITY_DATA
+  ENTITY_DATA,
+  BASE_RING_OBJECT_NAME,
+  BASE_CENTER_OBJECT_NAME
 }
