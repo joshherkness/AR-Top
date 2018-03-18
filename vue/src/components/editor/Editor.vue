@@ -415,7 +415,9 @@ export default {
       switch (event.keyCode) {
         case 49: this.mode = EditorMode.ADD
           break
-        case 50: this.mode = EditorMode.DELETE
+        case 50: this.mode = EditorMode.ADD
+          break
+        case 51: this.mode = EditorMode.DELETE
           break
       }
     },
