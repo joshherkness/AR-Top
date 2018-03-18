@@ -555,6 +555,190 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response[1]['success'], "Successfully read session")
         self.assertEqual(response[1]['session']['_id']['$oid'], test_session_id)
 
+    def test_delete_session(self):
+        def helper(auth_data, session_id):
+            response = self.request('/api/sessions/' + session_id, auth_data, 'DELETE')
+            json = loads(response.data.decode('utf-8'))
+            return response, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        map_id = json['map']['_id']['$oid']
+
+        # Create session
+        response = self.request('/api/sessions', valid_token, 'POST', dict(map_id=map_id))
+        json = loads(response.data.decode('utf-8'))
+        test_session_id = json['session']['_id']['$oid']
+
+        # User making request does not own the session
+        response = helper(valid_token2, test_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Session does not exist'})
+
+        # Session with session_id does not exist
+        garbage_session_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_session_id)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Session does not exist'})
+
+        # Success
+        response = helper(valid_token, test_session_id)
+        self.assertEqual(response[0].status_code, 200)
+        self.assertEqual(response[1], {'success': 'Successfully removed session'})
+        self.assertIsNone(Session.objects(id=test_session_id).first())
+
+    def test_update_session(self):
+        def helper(auth_data, session_id, payload=None):
+            response = self.request('/api/sessions/' + session_id, auth_data, 'POST', payload)
+            json = loads(response.data.decode('utf-8'))
+            return response, json
+
+        # Create user
+        valid_email = "validEmail@gmail.com"
+        valid_password = "validPassword123"
+        encrypted_password = bcrypt.hashpw(
+            valid_password.encode(), bcrypt.gensalt())
+        User(email=valid_email, password=encrypted_password).save()
+        valid_user = User.objects(email=valid_email).first()
+
+        # Get token
+        response = self.request('/api/auth', dict(email=valid_email,
+                                                  password=valid_password), 'POST')
+        valid_token = loads(response.data.decode('utf-8'))
+
+        # Create second user
+        valid_email2 = "secondEmail@gmail.com"
+        valid_password2 = "secondPassword123"
+        encrypted_password2 = bcrypt.hashpw(
+            valid_password2.encode(), bcrypt.gensalt())
+        User(email=valid_email2, password=encrypted_password2).save()
+        valid_user2 = User.objects(email=valid_email2).first()
+
+        # Get second token
+        response = self.request('/api/auth', dict(email=valid_email2,
+                                                  password=valid_password2), 'POST')
+        valid_token2 = loads(response.data.decode('utf-8'))
+
+        # Create map
+        map_dict = dict(name="test_map", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        map_id = json['map']['_id']['$oid']
+
+        # Create new map to update session with
+        new_map_dict = dict(name="test_map2", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        new_map_id = json['map']['_id']['$oid']
+
+        # Create new map to update session with
+        new_map_dict = dict(name="test_map2", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        new_map_id = json['map']['_id']['$oid']
+
+        # Create new map to update session with that the valid_user2 owns
+        new_map_dict = dict(name="test_map3", width=4, height=5,
+                        depth=6, color='#FFF', private=True, models=[])
+        data = dict(map=dumps({}))
+        data['map'] = dumps(map_dict)
+        response = self.request('/api/map', valid_token2, 'POST', payload=(data))
+        json = loads(response.data.decode('utf-8'))
+        new_map_id2 = json['map']['_id']['$oid']
+
+        # Create session
+        response = self.request('/api/sessions', valid_token, 'POST', dict(map_id=map_id))
+        json = loads(response.data.decode('utf-8'))
+        test_session_id = json['session']['_id']['$oid']
+
+        # User making request does not own the map that the session is being updated with
+        data = dict(map_id=dumps({}))
+        data['map_id'] = str(new_map_id)
+        response = helper(valid_token2, test_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Game map does not exist'})
+
+        # Map to update session with does not exist
+        garbage_map_id = "507f191e810c19729de860ea"
+        data['map_id'] = garbage_map_id
+        response = helper(valid_token, test_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Game map does not exist'}) 
+
+        # User making request does not own the session, but owns the map
+        data['map_id'] =  str(new_map_id2)
+        response = helper(valid_token2, test_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Session does not exist'}) 
+
+        # Session does not exist
+        data['map_id'] =  str(new_map_id)
+        garbage_session_id = "507f191e810c19729de860ea"
+        response = helper(valid_token, garbage_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 404)
+        self.assertEqual(response[1], {'error': 'Session does not exist'}) 
+
+        # Malformed data sent in body
+        data = dict(malformed_map_id=dumps({}))
+        data['malformed_map_id'] = str(new_map_id)
+        response = helper(valid_token, test_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 422)
+        self.assertEqual(response[1], {'error': 'Malformed request'})
+
+        # Success (need to check that updated map matches id)
+        data = dict(map_id=dumps({}))
+        data['map_id'] = str(new_map_id)
+        response = helper(valid_token, test_session_id, payload=data)
+        self.assertEqual(response[0].status_code, 200)
+        self.assertEqual(response[1]['success'], "Successfully updated session with new map")
+        updated_session = response[1]['session']
+        self.assertEqual(updated_session['_id']['$oid'], test_session_id)
+        updated_map_id = updated_session['game_map_id']['$oid']
+        self.assertEqual(updated_map_id, str(new_map_id))
+        # Check that the session in the database was actually updated
+        test_session = Session.objects(id=test_session_id).first()
+        self.assertEqual(str(test_session.game_map_id), updated_map_id)
+
 
 if __name__ == '__main__':
     unittest.main()
