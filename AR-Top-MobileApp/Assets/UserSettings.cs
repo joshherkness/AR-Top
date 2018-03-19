@@ -39,6 +39,12 @@ public class UserSettings : MonoBehaviour {
 			onOutlineChanged ("Full");
 		}
 	}
+
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)){
+			closeSettingsPanel ();
+		}
+	}
 	
 	public void setAntiAliasing (){
 		int index = 2;
@@ -98,5 +104,9 @@ public class UserSettings : MonoBehaviour {
 
 	public void outlineChange (string str){
 	
+	}
+
+	public void closeSettingsPanel(){
+		settingsPanel.gameObject.SetActive (false);
 	}
 }

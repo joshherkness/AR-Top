@@ -20,13 +20,16 @@ public class ExitManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			openExitPanel ();
+		}
 	}
 
 	public void exit (){
 		VuforiaBehaviour.Instance.enabled = false;
 		Destroy (GameObject.FindGameObjectWithTag ("MainCamera"));
 		SceneManager.LoadScene ("Login", LoadSceneMode.Additive);
+		connector.LeaveRoomSession ();
 		/*
 		Destroy (GameObject.FindObjectOfType<RoomManager> ());
 		Destroy (connector.gameObject);*/

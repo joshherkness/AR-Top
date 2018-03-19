@@ -180,3 +180,9 @@ class Session(Document):
         socketio.emit(
             'update', {'name': name, 'color': color, 'models': models, 'depth': depth, 'width': width, 'height': height})
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        socketio = SocketIO(message_queue='redis://' + current_app.config['REDIS_HOST'])
+        socketio.emit('close_room', self.code)
+        
+        super().save(*args, **kwargs)
