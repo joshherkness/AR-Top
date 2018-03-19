@@ -99,4 +99,8 @@ public class UserSettings : MonoBehaviour {
 	public void outlineChange (string str){
 	
 	}
+
+	void OnDestroy(){
+		//onOutlineChanged = null;
+	}
 }
