@@ -107,7 +107,8 @@ public class MapController : MonoBehaviour
 
 	}
 
-	void buildMap (Grid obj)
+//	void buildMap (Grid obj)
+	IEnumerator buildMap(Grid obj) 
 	{
 		int row = (int) obj.width;
 		int col = (int) obj.depth;
@@ -125,7 +126,10 @@ public class MapController : MonoBehaviour
 		}
 
 		foreach (GridModel model in obj.models)
-			buildPiece (model);
+		{
+			buildPiece(model);
+			yield return null;
+		}
 
 		Vector3 mapPosition = new Vector3 (0f, 0f, 0f);
 		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2))*.1f, mapLayer.transform.position.y*.1f, (mapLayer.transform.position.z - (obj.depth / 2))*.1f);
