@@ -13,15 +13,15 @@ let ENTITY_DATA = [
   {
     type: 'fighter',
     display: 'Fighter'
-  }, 
+  },
   {
     type: 'ranger',
     display: 'Ranger'
-  }, 
+  },
   {
     type: 'knight',
     display: 'Knight'
-  }, 
+  },
   {
     type: 'goblin',
     display: 'Goblin'
@@ -51,7 +51,7 @@ function loadObject (name) {
 function loadModel (name) {
   // Load the object
   let object = loadObject(name)
-  object.name = "main"
+  object.name = 'main'
 
   // Create bounding box
   // Todo: Find some way to make this not hard coded
@@ -60,16 +60,16 @@ function loadModel (name) {
     transparent: true,
     opacity: 0
   })
-  let bounding_box = new THREE.Mesh(geometry, material)
-  bounding_box.name = "bounding_box"
-  bounding_box.position.y = 8
-  bounding_box.userData = {
+  let boundingBox = new THREE.Mesh(geometry, material)
+  boundingBox.name = 'bounding_box'
+  boundingBox.position.y = 8
+  boundingBox.userData = {
     isBoundingBox: true
   }
 
   let group = new THREE.Group()
   group.add(object)
-  group.add(bounding_box)
+  group.add(boundingBox)
 
   return group
 }
@@ -86,11 +86,11 @@ function loadEntity (name) {
   })
 
   // Create the base
-  var entity_base = BASE_OBJECT.clone()
-  entity_base.name = "base"
-  entity_base.scale.set(16, 16, 16)
+  var entityBase = BASE_OBJECT.clone()
+  entityBase.name = 'base'
+  entityBase.scale.set(16, 16, 16)
 
-  group.add(entity_base)
+  group.add(entityBase)
 
   return group
 }
@@ -99,7 +99,7 @@ let ObjectList = {}
 
 // Preload all models
 MODEL_DATA.forEach((data) => {
-  if (!data.type) throw TypeError("MODEL_DATA element must have a type attribute")
+  if (!data.type) throw TypeError('MODEL_DATA element must have a type attribute')
 
   // Load the model
   ObjectList[data.type] = loadModel(data.type)
@@ -107,14 +107,14 @@ MODEL_DATA.forEach((data) => {
 
 // Preload all entities
 ENTITY_DATA.forEach((data) => {
-  if (!data.type) throw TypeError("ENTITY_DATA element must have a type attribute")
+  if (!data.type) throw TypeError('ENTITY_DATA element must have a type attribute')
 
   // Load the entity
   ObjectList[data.type] = loadEntity(data.type)
 })
 
 export {
-  ObjectList as ObjectList,
+  ObjectList,
   MODEL_DATA,
   ENTITY_DATA,
   BASE_RING_OBJECT_NAME,

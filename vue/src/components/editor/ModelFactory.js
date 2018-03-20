@@ -1,4 +1,4 @@
-import { GridModelType, VoxelGridModel , TileGridModel, EntityGridModel} from './GridModels'
+import { GridModelType, VoxelGridModel, EntityGridModel } from './GridModels'
 import { ENTITY_DATA } from './PreloadedObjects'
 
 /**

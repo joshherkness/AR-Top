@@ -45,11 +45,11 @@ import { Sketch } from 'vue-color'
 import { ENTITY_DATA } from '@/components/editor/PreloadedObjects'
 
 export default {
-  name: "entity-selector",
+  name: 'entity-selector',
   components: {
     'sketch-picker': Sketch
   },
-  props: ["entityData", "entityList"],
+  props: ['entityData', 'entityList'],
   data: function () {
     return {
       filter: ''

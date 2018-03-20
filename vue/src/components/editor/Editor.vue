@@ -130,7 +130,6 @@ import * as THREE from 'three'
 import { EditorMode } from './EditorMode'
 import Help from './Help'
 import EntitySelector from './EntitySelector'
-import { EntityGridModel } from './GridModels';
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 let defaultColor = { hex: '#4A90E2' }

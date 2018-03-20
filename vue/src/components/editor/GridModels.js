@@ -1,4 +1,4 @@
-import 'three'
+import * as THREE from 'three'
 import 'three/examples/js/loaders/OBJLoader'
 import 'three/examples/js/loaders/MTLLoader'
 import { GridHelpers } from './GridHelpers'
@@ -119,8 +119,8 @@ export class TileGridModel extends GridModel {
         }
       }
     })
-    mesh.scale.set(scale/16, scale/16, scale/16)
-    mesh.position.y = -scale/2
+    mesh.scale.set(scale / 16, scale / 16, scale / 16)
+    mesh.position.y = -scale / 2
 
     let object = new THREE.Group()
     object.add(mesh)
@@ -162,8 +162,8 @@ export class EntityGridModel extends GridModel {
         node.material.color = new THREE.Color(this.color)
       }
     })
-    mesh.scale.set(scale/16, scale/16, scale/16)
-    mesh.position.y = -scale/2
+    mesh.scale.set(scale / 16, scale / 16, scale / 16)
+    mesh.position.y = -scale / 2
 
     let group = new THREE.Group()
     group.add(mesh)
