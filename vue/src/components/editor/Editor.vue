@@ -1,120 +1,91 @@
 <template>
-  <div class="editor">
+  <div class="editor columns is-gapless">
     <!-- Canvas used to render the three.js map scene-->
     <div v-show="!loading" ref='canvas' id='canvas'/>
-   
-    <!-- Top toolbar -->
-    <div v-if="!loading"
-      class="level"
-      style="z-index: 10;">
-      <div class="level-left">
-        <div class="level-item">
-          <span class="tag is-white title is-5">{{ name }}</span>
-        </div>
-        <div class="level-item">
-          <!-- Save button -->
-          <div class="control">
-            <div class="button is-link"
-                 :class="{'is-loading': saving}"
-                 v-on:click="save">
-              <span>Save</span>
+
+    <div class="column">
+      <div class="overlay">
+        <!-- Top toolbar -->
+        <div v-if="!loading"
+          class="level"
+          style="z-index: 10;">
+          <div class="level-left">
+            <div class="level-item">
+              <span class="tag is-white title is-5">{{ name }}</span>
+            </div>
+            <div class="level-item">
+              <!-- Save button -->
+              <div class="control">
+                <div class="button is-link"
+                    :class="{'is-loading': saving}"
+                    v-on:click="save">
+                  <span>Save</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Flex child used to seperate top and bottom toolbar -->
+        <div style="flex: 1;"></div>
+
+        <!-- Bottom toolbar -->
+        <div class="level"
+          style="z-index: 10;">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <div class="control">
+                <div class="dropdown is-hoverable is-right is-up"
+                    :class="{'is-active': !hasSeenEditorHelp}">
+                  <div class="dropdown-trigger">
+                    <div class="button is-light"
+                      aria-haspopup='true'
+                      aria-controls='help-dropdown'
+                      v-on:mouseover="setHasSeenEditorHelp">
+                      <span class="icon is-medium">
+                        <i class="mdi mdi-help"></i>
+                      </span>
+                    </div>
+                    <div class="dropdown-menu" role='menu'>
+                      <help></help>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading spinner -->
+        <div v-if="loading" class="loading-spinner"/>
       </div>
-      <div class="level-right">
-        <div class="level-item">
-          <div class="field has-addons">
-            <div class="control">
-              <div class="dropdown is-hoverable is-right">
-                <div class="dropdown-trigger">
-                  <div class="button is-light"
-                    aria-haspopup='true'
-                    aria-controls='color-picker-dropdown-menu'
-                    :class="{'is-active': isModeAdd()}"
-                    :style="{'color': hexColor}"
-                    v-on:click="setModeAdd">
-                    <span class="icon is-medium">
-                      <i class="mdi mdi-cube-outline"></i>
-                    </span>
-                    <div class="is-size-7">1</div>
-                  </div>
-                  <div class="dropdown-menu" role='menu'>
-                    <sketch-picker v-model="color"></sketch-picker>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Entity tool -->
-            <div class="control">
-              <div class="dropdown is-hoverable is-right">
-                <div class="dropdown-trigger">
-                  <div class="button is-light"
-                    aria-haspopup='true'
-                    aria-controls='color-picker-dropdown-menu'
-                    :class="{'is-active': isModeEntity()}"
-                    :style="{'color': entityData.color.hex}"
-                    v-on:click="setModeEntity">
-                    <span class="icon is-medium">
-                      <i class="mdi mdi-account-plus"></i>
-                    </span>
-                    <div class="is-size-7">2</div>
-                  </div>
-                  <div class="dropdown-menu" role='menu'>
-                    <entity-selector v-bind:entityData="entityData"></entity-selector>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="control">
-              <div class="button is-light"
-                :class="{'is-active': isModeDelete()}"
-                v-on:click="setModeDelete">
-                <span class="icon is-medium">
-                  <i class="mdi mdi-eraser"></i>
+    </div>
+
+    <div class="column is-narrow"
+      style="z-index: 10;">
+      <div class="tools">
+        <div class="tabs" v-if="toolManager">
+          <ul>
+            <li v-for="tool in toolManager.tools"
+              :key="tool.type"
+              :class="{'is-active': toolManager.tool.type === tool.type}">
+              <a @click="toolManager.selectTool(tool.type)">
+                <span class="icon">
+                  <i class="mdi"
+                    :class="tool.icon"></i>
                 </span>
-                <div class="is-size-7">3</div>
-              </div>
-            </div>
-          </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div v-if="toolManager && toolManager.tool.type === 'place'">
+          <entity-selector v-bind:entityData="toolManager.tool.options"></entity-selector>
         </div>
       </div>
     </div>
 
-    <!-- Flex child used to seperate top and bottom toolbar -->
-    <div style="flex: 1;"></div>
-
-    <!-- Bottom toolbar -->
-    <div class="level"
-      style="z-index: 10;">
-      <div class="level-left"></div>
-      <div class="level-right">
-        <div class="level-item">
-          <div class="control">
-            <div class="dropdown is-hoverable is-right is-up"
-                :class="{'is-active': !hasSeenEditorHelp}">
-              <div class="dropdown-trigger">
-                <div class="button is-light"
-                  aria-haspopup='true'
-                  aria-controls='help-dropdown'
-                  v-on:mouseover="setHasSeenEditorHelp">
-                  <span class="icon is-medium">
-                    <i class="mdi mdi-help"></i>
-                  </span>
-                </div>
-                <div class="dropdown-menu" role='menu'>
-                  <help></help>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Loading spinner -->
-    <div v-if="loading" class="loading-spinner"/>
-
+    <!-- here -->
   </div>
 </template>
 
@@ -122,17 +93,14 @@
 import { API } from '@/api/api'
 import { mapGetters, mapActions } from 'vuex'
 
+import { ToolManager } from '@/components/editor/ToolManager'
 import { GridDirector } from './GridDirector'
 import { Grid } from './Grid'
-import { ModelFactory } from './ModelFactory'
 import { Sketch } from 'vue-color'
 import * as THREE from 'three'
-import { EditorMode } from './EditorMode'
 import Help from './Help'
 import EntitySelector from './EntitySelector'
 var OrbitControls = require('three-orbit-controls')(THREE)
-
-let defaultColor = { hex: '#4A90E2' }
 
 export default {
   name: 'Editor',
@@ -144,19 +112,10 @@ export default {
       renderer: null,
       raycaster: null,
       mouse: null,
-      mouseStart: null,
       grid: null,
-      color: defaultColor,
-      mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      disableTool: false,
-      entityData: {
-        type: 'fighter',
-        color: {
-          hex: '#ffffff'
-        }
-      }
+      toolManager: null
     }
   },
   components: {
@@ -168,30 +127,19 @@ export default {
     ...mapGetters([
       'hasSeenEditorHelp'
     ]),
-    hexColor () {
-      return this.color.hex
-    },
-    model () {
-      if (this.mode === EditorMode.ADD) {
-        return ModelFactory.createModel({
-          type: 'voxel',
-          position: new THREE.Vector3(), // Should this be an actual position
-          color: this.hexColor
-        })
-      } else if (this.mode === EditorMode.ENTITY) {
-        return ModelFactory.createModel({
-          type: this.entityData.type,
-          position: new THREE.Vector3(), // Should this be an actual position
-          color: this.entityData.color.hex
-        })
-      }
-    },
     name () {
       if (!this.grid) {
         return ''
       }
 
       return this.grid.name
+    },
+    toolType () {
+      if (!this.toolManager || !this.toolManager.tool) {
+        return ''
+      }
+
+      return this.toolManager.tool.type
     }
   },
   watch: {
@@ -208,9 +156,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    },
-    mode (mode) {
-      this.updateCursorPosition()
     }
   },
 
@@ -266,7 +211,6 @@ export default {
     this.canvas.addEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.addEventListener('mouseup', this.onDocumentMouseUp, false)
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
-    document.addEventListener('keyup', this.onDocumentKeyUp, false)
     window.addEventListener('resize', this.onWindowResize, false)
   },
   methods: {
@@ -309,39 +253,13 @@ export default {
         this.controls.minDistance = 2 * this.director.scale || 50
       }
 
+      this.toolManager = ToolManager.getInstance()
+
       // We need to call this so that the canvas will resize to the window
       this.onWindowResize()
     },
     render () {
       this.renderer.render(this.director.scene, this.camera)
-    },
-    updateCursorPosition () {
-      let data = this.director.getFirstIntersectData(this.raycaster)
-
-      if (this.disableTool) {
-        this.director.clearSelection()
-        return
-      }
-
-      if (!data || !data.object) {
-        this.director.clearSelection()
-        return
-      }
-
-      // update cursor position
-      let actualPosition = new THREE.Vector3()
-      if (this.mode === EditorMode.DELETE) {
-        if (data.object.name === 'grid-plane') {
-          this.director.clearSelection()
-          return
-        }
-        actualPosition.setFromMatrixPosition(data.object.matrixWorld)
-      } else {
-        actualPosition = data.point.add(data.face.normal)
-      }
-
-      let unitPosition = this.director.convertActualToUnitPosition(actualPosition)
-      this.director.setSelection(unitPosition, { model: this.model })
     },
     onWindowResize () {
       this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight
@@ -351,95 +269,28 @@ export default {
     },
     onDocumentMouseMove (event) {
       // Update mouse and raycaster
-      this.mouse.set((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
-      this.raycaster.setFromCamera(this.mouse, this.camera)
-
-      if (this.mouseStart &&
-          (Math.abs(this.mouse.x - this.mouseStart.x) > 0.01 ||
-          Math.abs(this.mouse.y - this.mouseStart.y) > 0.01)) {
-        this.disableTool = true
+      let mouse = {
+        x: (event.offsetX / window.innerWidth) * 2 - 1,
+        y: -(event.offsetY / window.innerHeight) * 2 + 1
       }
+      this.raycaster.setFromCamera(mouse, this.camera)
+
+      let toolManager = ToolManager.getInstance()
 
       // Update the cursor position for the selection manager
-      this.updateCursorPosition()
+      toolManager.onMouseMove(event, this.director, this.raycaster)
     },
     onDocumentMouseDown (event) {
-      this.mouseStart = new THREE.Vector2((event.offsetX / window.innerWidth) * 2 - 1, -(event.offsetY / window.innerHeight) * 2 + 1)
+      let toolManager = ToolManager.getInstance()
+      toolManager.onMouseDown(event, this.director, this.raycaster)
     },
     onDocumentMouseUp (event) {
-      let data = this.director.getFirstIntersectData(this.raycaster)
-
-      this.mouseStart = null
-      if (this.disableTool) {
-        this.disableTool = false
-        this.updateCursorPosition()
-        return
-      }
-
-      if (!data || !data.object) {
-        return
-      }
-
-      let interactPosition = new THREE.Vector3()
-      if (this.mode === EditorMode.DELETE) {
-        // Delete
-        interactPosition.setFromMatrixPosition(data.object.matrixWorld)
-        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
-        let model = this.grid.at(unitPosition)
-        this.director.remove(model)
-      } else {
-        // Add
-        if (!data.face) return
-        interactPosition.copy(data.point.add(data.face.normal))
-        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
-
-        if (this.mode === EditorMode.ADD) {
-          let model = ModelFactory.createModel({
-            type: 'voxel',
-            color: this.hexColor,
-            position: unitPosition
-          })
-          this.director.add(model)
-        } else if (this.mode === EditorMode.ENTITY) {
-          let model = ModelFactory.createModel({
-            type: this.entityData.type,
-            color: this.entityData.color.hex,
-            position: unitPosition
-          })
-          this.director.add(model)
-        }
-      }
+      let toolManager = ToolManager.getInstance()
+      toolManager.onMouseUp(event, this.director, this.raycaster)
     },
     onDocumentKeyDown (event) {
-      switch (event.keyCode) {
-        case 49: this.mode = EditorMode.ADD
-          break
-        case 50: this.mode = EditorMode.ADD
-          break
-        case 51: this.mode = EditorMode.DELETE
-          break
-      }
-    },
-    onDocumentKeyUp (event) {
-      // Any key up events should be placed here
-    },
-    isModeAdd () {
-      return this.mode === EditorMode.ADD
-    },
-    isModeDelete () {
-      return this.mode === EditorMode.DELETE
-    },
-    isModeEntity () {
-      return this.mode === EditorMode.ENTITY
-    },
-    setModeAdd () {
-      this.mode = EditorMode.ADD
-    },
-    setModeDelete () {
-      this.mode = EditorMode.DELETE
-    },
-    setModeEntity () {
-      this.mode = EditorMode.ENTITY
+      let toolManager = ToolManager.getInstance()
+      toolManager.onKeyPress(event)
     },
     save () {
       if (!this.grid) {
@@ -477,7 +328,6 @@ export default {
     this.canvas.removeEventListener('mousedown', this.onDocumentMouseDown, false)
     this.canvas.removeEventListener('mouseup', this.onDocumentMouseUp, false)
     document.removeEventListener('keydown', this.onDocumentKeyDown, false)
-    document.removeEventListener('keyup', this.onDocumentKeyUp, false)
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 }
@@ -513,10 +363,22 @@ export default {
   }
 }
 
-.editor {
+.overlay {
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-flow: column;
   padding: 30px;
+}
+
+.tools {
+  border-left: 1px solid $border;
+  width: 300px;
+  background: white;
+  height: 100%;
+
+  .tabs {
+    margin: 0;
+  }
 }
 </style>
