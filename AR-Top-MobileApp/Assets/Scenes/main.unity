@@ -2165,6 +2165,14 @@ MonoBehaviour:
   gridPrefab: {fileID: 1298530040818706, guid: aef40dcac5fabd848a06885b5b27fa8a, type: 2}
   playerPrefab: {fileID: 1044307107359926, guid: 8537a6fd1b7a17d49bda087794527e2d,
     type: 2}
+  fighterPrefab: {fileID: 1665976502518680, guid: a1eadd5754e39834bbbc9c5afeecbb0d,
+    type: 2}
+  rangerPrefab: {fileID: 1876517748819388, guid: f88fd149948c0924696607a9237abb67,
+    type: 2}
+  knightPrefab: {fileID: 1386183982413954, guid: 3c0d541ad6e630048be1a1b8bf286fbd,
+    type: 2}
+  goblinPrefab: {fileID: 1727820684993778, guid: 4f6e44b43469545478f8ed139dc83b3e,
+    type: 2}
 --- !u!1 &911862976
 GameObject:
   m_ObjectHideFlags: 0

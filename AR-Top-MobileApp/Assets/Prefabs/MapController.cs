@@ -12,6 +12,10 @@ public class MapController : MonoBehaviour
 	[SerializeField] GameObject tilePrefab;
 	[SerializeField] GameObject gridPrefab;
 	[SerializeField] GameObject playerPrefab;
+	[SerializeField] GameObject fighterPrefab;
+	[SerializeField] GameObject rangerPrefab;
+	[SerializeField] GameObject knightPrefab;
+	[SerializeField] GameObject goblinPrefab;
 
 	private GameObject mapLayer;
 	private GameObject baseLayer;
@@ -144,23 +148,63 @@ public class MapController : MonoBehaviour
 	{
 		Vector3 tileVector = obj.position;
 		GameObject tilePiece;
-		//Checks the type of the piece. Will be converted to a switch statement to check for all types.
+		Transform basePiece;
+		//Checks the type of the piece and instantiates the appropriate prefab.
 		switch (obj.type) 
 		{
-		case "voxel": 
+		case "voxel":
 			tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
 			break;
-		case "player": 
+		case "player":
 			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
+			break;
+		case "fighter":
+			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "knight":
+			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "ranger":
+			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "goblin":
+			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
 			break;
 		}
 	}
 
 	static void colorize (GameObject obj, String stringColor)
+	{
+		MeshRenderer[] meshes = obj.GetComponentsInChildren<MeshRenderer> ();
+
+		foreach (MeshRenderer mesh in meshes)
+		{
+			Color color;
+			if (ColorUtility.TryParseHtmlString (stringColor, out color)) 
+			{
+				Renderer renderer = mesh.GetComponent<Renderer> ();
+				renderer.material.color = color;
+			}
+		}
+	}
+
+	static void colorize (Transform obj, String stringColor)
 	{
 		MeshRenderer[] meshes = obj.GetComponentsInChildren<MeshRenderer> ();
 
