@@ -50,7 +50,13 @@ class GameModel(EmbeddedDocument):
     EmbeddedDocument -- Representation of a One-To-Many Relationship.
 
     """
-    type = StringField(required=True, choices=['voxel'])
+    type = StringField(required=True, choices=[
+        'voxel',
+        'fighter',
+        'ranger',
+        'knight',
+        'goblin'
+    ])
     position = EmbeddedDocumentField(Position)
     color = StringField(
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
@@ -173,4 +179,10 @@ class Session(Document):
                                 current_app.config['REDIS_HOST'])
         socketio.emit(
             'update', {'name': name, 'color': color, 'models': models, 'depth': depth, 'width': width, 'height': height})
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        socketio = SocketIO(message_queue='redis://' + current_app.config['REDIS_HOST'])
+        socketio.emit('close_room', self.code)
+        
         super().save(*args, **kwargs)
