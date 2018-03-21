@@ -97,14 +97,19 @@ export class VoxelGridModel extends GridModel {
 }
 
 export class TileGridModel extends GridModel {
-  constructor (position, type) {
+  constructor (position, color, type) {
     super(position)
+
+    if (color === undefined) {
+      throw new TypeError('Color must be defined')
+    }
 
     if (type === undefined) {
       throw new TypeError('Type must be defined')
     }
 
     this.type = type
+    this.color = color
   }
 
   createObject (scale = 1) {
@@ -113,6 +118,7 @@ export class TileGridModel extends GridModel {
       if (node.material) {
         node.material = node.material.clone()
         node.material.transparent = true
+        node.material.color = new THREE.Color(this.color)
 
         if (node.userData && !node.userData.isBoundingBox) {
           node.material.opacity = 1.0
