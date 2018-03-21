@@ -50,7 +50,13 @@ class GameModel(EmbeddedDocument):
     EmbeddedDocument -- Representation of a One-To-Many Relationship.
 
     """
-    type = StringField(required=True, choices=['voxel'])
+    type = StringField(required=True, choices=[
+        'voxel',
+        'fighter',
+        'ranger',
+        'knight',
+        'goblin'
+    ])
     position = EmbeddedDocumentField(Position)
     color = StringField(
         required=True, regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')

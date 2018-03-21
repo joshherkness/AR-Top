@@ -1,10 +1,15 @@
 import * as THREE from 'three'
+import 'three/examples/js/loaders/OBJLoader'
+import 'three/examples/js/loaders/MTLLoader'
 import { GridHelpers } from './GridHelpers'
+import { ObjectList, BASE_RING_OBJECT_NAME } from './PreloadedObjects'
 
 const DEFAULT_WIREFRAME_LINE_WIDTH = 1
 
 export const GridModelType = Object.freeze({
-  VOXEL: 'voxel'
+  VOXEL: 'voxel',
+  TILE_FLOOR: 'tile_floor',
+  CHARACTER: 'character_type'
 })
 
 export class GridModel {
@@ -88,6 +93,82 @@ export class VoxelGridModel extends GridModel {
 
   equals (model) {
     return super.equals(model) && this.color === model.color
+  }
+}
+
+export class TileGridModel extends GridModel {
+  constructor (position, type) {
+    super(position)
+
+    if (type === undefined) {
+      throw new TypeError('Type must be defined')
+    }
+
+    this.type = type
+  }
+
+  createObject (scale = 1) {
+    let mesh = ObjectList[this.type].clone()
+    mesh.traverse((node) => {
+      if (node.material) {
+        node.material = node.material.clone()
+        node.material.transparent = true
+
+        if (node.userData && !node.userData.isBoundingBox) {
+          node.material.opacity = 1.0
+        }
+      }
+    })
+    mesh.scale.set(scale / 16, scale / 16, scale / 16)
+    mesh.position.y = -scale / 2
+
+    let object = new THREE.Group()
+    object.add(mesh)
+
+    return object
+  }
+}
+
+export class EntityGridModel extends GridModel {
+  constructor (position, color, type) {
+    super(position)
+
+    if (color === undefined) {
+      throw new TypeError('Color must be defined')
+    }
+
+    if (type === undefined) {
+      throw new TypeError('Type must be defined')
+    }
+
+    this.type = type
+    this.color = color
+  }
+
+  createObject (scale = 1) {
+    let mesh = ObjectList[this.type].clone()
+    mesh.traverse((node) => {
+      if (node.material) {
+        node.material = node.material.clone()
+        node.material.transparent = true
+
+        if (node.userData && !node.userData.isBoundingBox) {
+          node.material.opacity = 1.0
+        }
+      }
+
+      // Change the color of the ring
+      if (node.name === BASE_RING_OBJECT_NAME) {
+        node.material.color = new THREE.Color(this.color)
+      }
+    })
+    mesh.scale.set(scale / 16, scale / 16, scale / 16)
+    mesh.position.y = -scale / 2
+
+    let group = new THREE.Group()
+    group.add(mesh)
+
+    return group
   }
 }
 
