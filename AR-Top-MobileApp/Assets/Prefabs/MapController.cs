@@ -22,6 +22,8 @@ public class MapController : MonoBehaviour
 	private MapGameObject mapGameObject;
 	private UserSettings userSettings;
 
+	private Vector3 offset;
+
 	/**
 	 * Structure used to represent a single model within the map.
 	 */
@@ -97,7 +99,7 @@ public class MapController : MonoBehaviour
 		mapLayer = new GameObject ("MapLayer");
 		mapLayer.AddComponent <LeanRotate> ();
 		mapLayer.AddComponent <LeanScale> ();
-		mapLayer.AddComponent <LeanTranslate> ();
+		//mapLayer.AddComponent <LeanTranslate> ();
 
 		baseLayer = new GameObject ("GridLayer");
 		baseLayer.transform.SetParent (mapLayer.transform);
@@ -136,6 +138,8 @@ public class MapController : MonoBehaviour
 		baseLayer.transform.Translate (childposition);
 		modelLayer.transform.Translate (childposition);
 
+		offset = childposition;
+
 		guiBehavior.setStartingPositions (mapLayer.transform);
 	}
 
@@ -173,5 +177,9 @@ public class MapController : MonoBehaviour
 				renderer.material.color = color;
 			}
 		}
+	}
+
+	public Vector3 getOffset (){
+		return offset;
 	}
 }

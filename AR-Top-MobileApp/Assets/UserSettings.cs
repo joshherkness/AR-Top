@@ -15,6 +15,9 @@ public class UserSettings : MonoBehaviour {
 
 	public Button[] buttons;
 
+	public GameObject voxelFinder;
+	public TextMeshProUGUI coordinatesDisplayText;
+
 	public delegate void OnOutlineChanged(string outline);
 	public event OnOutlineChanged onOutlineChanged;
 
@@ -108,5 +111,17 @@ public class UserSettings : MonoBehaviour {
 
 	public void closeSettingsPanel(){
 		settingsPanel.gameObject.SetActive (false);
+	}
+
+	public void toggleCoordinates(){
+		if (voxelFinder.activeInHierarchy) {
+			voxelFinder.gameObject.SetActive (false);
+			coordinatesDisplayText.enabled = false;
+			buttons [2].image.color = new Color (1, 1, 1);
+		} else {
+			voxelFinder.gameObject.SetActive (true);
+			coordinatesDisplayText.enabled = true;
+			buttons [2].image.color = new Color (0, 0, 0);
+		}
 	}
 }
