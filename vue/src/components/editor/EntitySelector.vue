@@ -60,7 +60,7 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import { ENTITY_DATA } from '@/components/editor/PreloadedObjects'
+import { ENTITY_DATA, MODEL_DATA } from '@/components/editor/PreloadedObjects'
 
 export default {
   name: 'entity-selector',
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     filteredList: function () {
-      return ENTITY_DATA.filter((data) => {
+      return ENTITY_DATA.concat(MODEL_DATA).filter((data) => {
         return data.display.toLowerCase().includes(this.filter.toLowerCase())
       })
     }
