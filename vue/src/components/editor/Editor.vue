@@ -45,6 +45,27 @@
                 </div>
               </div>
             </div>
+            <!-- Entity tool -->
+            <div class="control">
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <div class="button is-light"
+                    aria-haspopup='true'
+                    aria-controls='color-picker-dropdown-menu'
+                    :class="{'is-active': isModeEntity()}"
+                    :style="{'color': entityData.color.hex}"
+                    v-on:click="setModeEntity">
+                    <span class="icon is-medium">
+                      <i class="mdi mdi-account-plus"></i>
+                    </span>
+                    <div class="is-size-7">2</div>
+                  </div>
+                  <div class="dropdown-menu" role='menu'>
+                    <entity-selector v-bind:entityData="entityData"></entity-selector>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="control">
               <div class="button is-light"
                 :class="{'is-active': isModeDelete()}"
@@ -52,7 +73,7 @@
                 <span class="icon is-medium">
                   <i class="mdi mdi-eraser"></i>
                 </span>
-                <div class="is-size-7">2</div>
+                <div class="is-size-7">3</div>
               </div>
             </div>
           </div>
@@ -108,6 +129,7 @@ import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import { EditorMode } from './EditorMode'
 import Help from './Help'
+import EntitySelector from './EntitySelector'
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 let defaultColor = { hex: '#4A90E2' }
@@ -128,11 +150,18 @@ export default {
       mode: EditorMode.ADD,
       loading: false,
       saving: false,
-      disableTool: false
+      disableTool: false,
+      entityData: {
+        type: 'fighter',
+        color: {
+          hex: '#ffffff'
+        }
+      }
     }
   },
   components: {
     'help': Help,
+    'entity-selector': EntitySelector,
     'sketch-picker': Sketch
   },
   computed: {
@@ -143,11 +172,19 @@ export default {
       return this.color.hex
     },
     model () {
-      return ModelFactory.createModel({
-        type: 'voxel',
-        position: new THREE.Vector3(), // Should this be an actual position
-        color: this.hexColor
-      })
+      if (this.mode === EditorMode.ADD) {
+        return ModelFactory.createModel({
+          type: 'voxel',
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.hexColor
+        })
+      } else if (this.mode === EditorMode.ENTITY) {
+        return ModelFactory.createModel({
+          type: this.entityData.type,
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.entityData.color.hex
+        })
+      }
     },
     name () {
       if (!this.grid) {
@@ -195,6 +232,11 @@ export default {
     next()
   },
   mounted () {
+    this.loading = true
+
+    // Create the director
+    this.director = new GridDirector({ scale: 16 })
+
     // Create the renderer
     this.renderer = new THREE.WebGLRenderer()
     this.renderer.setPixelRatio(window.devicePixelRatio)
@@ -293,8 +335,8 @@ export default {
           this.director.clearSelection()
           return
         }
-        actualPosition.copy(data.object.position)
-      } else if (this.mode === EditorMode.ADD) {
+        actualPosition.setFromMatrixPosition(data.object.matrixWorld)
+      } else {
         actualPosition = data.point.add(data.face.normal)
       }
 
@@ -341,28 +383,40 @@ export default {
       let interactPosition = new THREE.Vector3()
       if (this.mode === EditorMode.DELETE) {
         // Delete
-        interactPosition.copy(data.object.position)
+        interactPosition.setFromMatrixPosition(data.object.matrixWorld)
         let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
         let model = this.grid.at(unitPosition)
         this.director.remove(model)
-      } else if (this.mode === EditorMode.ADD) {
+      } else {
         // Add
         if (!data.face) return
         interactPosition.copy(data.point.add(data.face.normal))
         let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
-        let model = ModelFactory.createModel({
-          type: 'voxel',
-          color: this.hexColor,
-          position: unitPosition
-        })
-        this.director.add(model)
+
+        if (this.mode === EditorMode.ADD) {
+          let model = ModelFactory.createModel({
+            type: 'voxel',
+            color: this.hexColor,
+            position: unitPosition
+          })
+          this.director.add(model)
+        } else if (this.mode === EditorMode.ENTITY) {
+          let model = ModelFactory.createModel({
+            type: this.entityData.type,
+            color: this.entityData.color.hex,
+            position: unitPosition
+          })
+          this.director.add(model)
+        }
       }
     },
     onDocumentKeyDown (event) {
       switch (event.keyCode) {
         case 49: this.mode = EditorMode.ADD
           break
-        case 50: this.mode = EditorMode.DELETE
+        case 50: this.mode = EditorMode.ADD
+          break
+        case 51: this.mode = EditorMode.DELETE
           break
       }
     },
@@ -375,11 +429,17 @@ export default {
     isModeDelete () {
       return this.mode === EditorMode.DELETE
     },
+    isModeEntity () {
+      return this.mode === EditorMode.ENTITY
+    },
     setModeAdd () {
       this.mode = EditorMode.ADD
     },
     setModeDelete () {
       this.mode = EditorMode.DELETE
+    },
+    setModeEntity () {
+      this.mode = EditorMode.ENTITY
     },
     save () {
       if (!this.grid) {

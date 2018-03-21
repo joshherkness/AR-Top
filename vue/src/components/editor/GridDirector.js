@@ -142,8 +142,12 @@ export class GridDirector extends THREE.EventDispatcher {
         throw new Error('An object should exist.')
       }
 
-      object.material.transparent = true
-      object.material.opacity = 0.5
+      object.traverse((node) => {
+        var skip = node.userData.isBoundingBox
+        if (!skip && node.material) {
+          node.material.opacity = 0.5
+        }
+      })
 
       this.scene.remove(object)
 
@@ -156,8 +160,14 @@ export class GridDirector extends THREE.EventDispatcher {
 
       object = model.createObject(this.scale)
       object.position.copy(this.convertUnitToActualPosition(unitPosition))
-      object.material.transparent = true
-      object.material.opacity = 0.5
+
+      object.traverse((node) => {
+        var skip = node.userData.isBoundingBox
+        if (!skip && node.material) {
+          node.material.opacity = 0.5
+        }
+      })
+
       group = this.scene.getObjectByName('selection')
     }
 
@@ -205,10 +215,12 @@ export class GridDirector extends THREE.EventDispatcher {
     let modelGroup = this.scene.getObjectByName('model-selection')
     if (modelGroup) {
       modelGroup.children.forEach((child) => {
-        if (child.material) {
-          child.material.transparent = true
-          child.material.opacity = 1.0
-        }
+        child.traverse((node) => {
+          let skip = node.userData.isBoundingBox
+          if (!skip && node.material) {
+            node.material.opacity = 1.0
+          }
+        })
         this.scene.add(child)
         modelGroup.remove(child)
       })
