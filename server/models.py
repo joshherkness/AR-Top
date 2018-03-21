@@ -52,10 +52,12 @@ class GameModel(EmbeddedDocument):
     """
     type = StringField(required=True, choices=[
         'voxel',
+        'floor',
+        'wall',
         'fighter',
         'ranger',
         'knight',
-        'goblin'
+        'goblin',
     ])
     position = EmbeddedDocumentField(Position)
     color = StringField(
