@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 324e212728dd44d4aafb857970c43b12
+guid: f32ae2f0d3d4d62448ec60938566d93f
 timeCreated: 1521848815
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: floor
+    100000: voxel
     100002: //RootNode
-    400000: floor
+    400000: voxel
     400002: //RootNode
     2100000: palette
-    2300000: floor
-    3300000: floor
-    4300000: floor
+    2300000: voxel
+    3300000: voxel
+    4300000: voxel
   externalObjects: {}
   materials:
     importMaterials: 1
