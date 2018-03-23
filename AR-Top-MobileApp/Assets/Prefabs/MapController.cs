@@ -12,6 +12,7 @@ public class MapController : MonoBehaviour
 	[SerializeField] GameObject tilePrefab;
 	[SerializeField] GameObject gridPrefab;
 	[SerializeField] GameObject playerPrefab;
+	//private ObjectPoolerScript objectPooler;
 
 	private GameObject mapLayer;
 	private GameObject baseLayer;
@@ -23,6 +24,10 @@ public class MapController : MonoBehaviour
 	private UserSettings userSettings;
 
 	private Vector3 offset;
+
+	private bool readyToUpdate = true;
+	private string oldDataAsJSON = null;
+	private bool invokeNewMap = false;
 
 	/**
 	 * Structure used to represent a single model within the map.
@@ -54,18 +59,19 @@ public class MapController : MonoBehaviour
 	{
 
 		mapGameObject = FindObjectOfType<MapGameObject> ();
+		//objectPooler = FindObjectOfType<ObjectPoolerScript> ();
 
 		buildLayers ();
 
 		string dataAsJson = "";
 
 		// Load example file
-		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_shell_x8.json");
+		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_shell_4x4.json");
 		if (File.Exists (filePath)) {
 			dataAsJson = File.ReadAllText (filePath); 
 		} else {
-			dataAsJson = "{\n  \"width\": 4,\n  \"height\": 48,\n  \"depth\": 4,\n  \"color\": \"#FFFFFF\",\n  \"id\": \"5a8a417e2a74a062699e6075\",\n  \"name\": \"Tiny Shell\",\n  \"models\": [\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fe78cc\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0600b8\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ad7f3e\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fc8e04\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1ba754\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#831575\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#833088\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ca3b2a\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#843bef\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#5b925c\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#4beaf9\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1b2d66\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#8545a6\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#eb8538\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#e55982\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ae67e3\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f1a95c\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2d488b\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#adc187\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f59760\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f37f61\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#4b5478\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2aeadf\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#919626\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#91b487\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#5a357a\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ac83f0\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#aa4158\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0c60c9\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#838c61\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#483b1b\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1b16b3\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#947685\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#83da28\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0fd922\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#a615d3\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#bf0cdf\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#495b90\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f28975\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#e820ab\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fcb82e\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9d33a6\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1d91f4\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#93949e\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#64de74\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f72433\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2e8176\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9eba4c\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#887441\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#b3bd90\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9ca6f1\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#129246\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#90ab01\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#c72993\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#386140\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#6e6f65\"\n    }\n  ]\n}\n";
-			dataAsJson = dataAsJson.Replace ("\n", "");
+			//dataAsJson = "{\n  \"width\": 4,\n  \"height\": 48,\n  \"depth\": 4,\n  \"color\": \"#FFFFFF\",\n  \"id\": \"5a8a417e2a74a062699e6075\",\n  \"name\": \"Tiny Shell\",\n  \"models\": [\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fe78cc\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0600b8\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ad7f3e\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fc8e04\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1ba754\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#831575\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#833088\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ca3b2a\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#843bef\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#5b925c\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#4beaf9\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1b2d66\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#8545a6\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#eb8538\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#e55982\"\n    },\n    {\n      \"position\": {\n        \"x\": 0,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ae67e3\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f1a95c\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2d488b\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#adc187\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f59760\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f37f61\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#4b5478\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2aeadf\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#919626\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#91b487\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#5a357a\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#ac83f0\"\n    },\n    {\n      \"position\": {\n        \"x\": 1,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#aa4158\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0c60c9\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#838c61\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#483b1b\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1b16b3\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#947685\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#83da28\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#0fd922\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#a615d3\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#bf0cdf\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#495b90\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f28975\"\n    },\n    {\n      \"position\": {\n        \"x\": 2,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#e820ab\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#fcb82e\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9d33a6\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#1d91f4\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 0\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#93949e\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#64de74\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#f72433\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#2e8176\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 1\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9eba4c\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#887441\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#b3bd90\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#9ca6f1\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 2\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#129246\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 0,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#90ab01\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 1,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#c72993\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 2,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#386140\"\n    },\n    {\n      \"position\": {\n        \"x\": 3,\n        \"y\": 3,\n        \"z\": 3\n      },\n      \"type\": \"voxel\",\n      \"color\": \"#6e6f65\"\n    }\n  ]\n}\n";
+			//dataAsJson = dataAsJson.Replace ("\n", "");
 		}
 		guiBehavior = FindObjectOfType<GUIBehavior> ();
 
@@ -73,24 +79,77 @@ public class MapController : MonoBehaviour
 			dataAsJson = mapGameObject.getMap ();
 		}
 
+		print (dataAsJson); 
+
 		Grid grid = JsonUtility.FromJson<Grid> (dataAsJson);
 
-		StartCoroutine (buildMap (grid));
+		//StartCoroutine (buildMap (grid));
+		oldDataAsJSON = dataAsJson;
+		buildMap (grid);
 
 	}
 
+	void Update (){
+		if (invokeNewMap) {
+			setMapJSON (oldDataAsJSON);
+		}
+	}
+
+	/*public void testAnUpdate (){
+		string dataAsJson;
+		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_shell_16x16.json");
+		//if (File.Exists (filePath)) {
+			dataAsJson = File.ReadAllText (filePath); 
+		//}
+		setMapJSON (dataAsJson);
+	}
+
+	public void testAnotherUpdate (){
+		string dataAsJson;
+		string filePath = Path.Combine(Application.streamingAssetsPath, "TestData/voxel_shell_8x8.json");
+		//if (File.Exists (filePath)) {
+		dataAsJson = File.ReadAllText (filePath); 
+		//}
+		setMapJSON (dataAsJson);
+	}*/
+
 	public void setMapJSON (string JSONstring)
 	{
-		print ("Rebuilding Map");
-		Destroy (baseLayer.gameObject);
-		Destroy (modelLayer.gameObject);
-		Destroy (mapLayer.gameObject);
-		mapLayer = null;
-		baseLayer = null;
-		modelLayer = null;
-		buildLayers ();
-		Grid map = JsonUtility.FromJson<Grid> (JSONstring);
-		StartCoroutine (buildMap (map));
+		if (readyToUpdate) {
+			readyToUpdate = false;
+			invokeNewMap = false;
+			print ("Rebuilding Map");
+			Transform[] objs = GetComponentsInChildren <Transform> ();
+			foreach (Transform obj in objs) {
+				if (obj.name == "World") {
+					print ("Hello World!"); 
+				} else {
+					if (obj.name == "Tile Cube(Clone)") {
+						obj.transform.position = new Vector3 (-100, -100, -100);
+						obj.transform.parent = null;
+						obj.localScale = new Vector3 (1, 1, 1);
+						obj.localEulerAngles = new Vector3 (0, 0, 0);
+						obj.gameObject.SetActive (false);
+					}
+				}
+			}
+			Destroy (baseLayer.gameObject);
+			Destroy (modelLayer.gameObject);
+			Destroy (mapLayer.gameObject);
+			mapLayer = null;
+			baseLayer = null;
+			modelLayer = null;
+			buildLayers ();
+			Grid map = JsonUtility.FromJson<Grid> (JSONstring);
+			//StartCoroutine (buildMap (map));
+			buildMap (map);
+			oldDataAsJSON = JSONstring;
+		} else {
+			if (!JSONstring.Equals (oldDataAsJSON)) {
+				oldDataAsJSON = JSONstring;
+				invokeNewMap = true;
+			}
+		}
 	}
 
 	void buildLayers ()
@@ -111,7 +170,7 @@ public class MapController : MonoBehaviour
 	}
 
 //	void buildMap (Grid obj)
-	IEnumerator buildMap(Grid obj) 
+	void buildMap(Grid obj) 
 	{
 		int row = (int) obj.width;
 		int col = (int) obj.depth;
@@ -123,46 +182,65 @@ public class MapController : MonoBehaviour
 			{
 				// Create the grid base
 				Vector3 tilesVector = new Vector3 (i, -1f, j);
-				GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
-				tile.transform.SetParent (modelLayer.transform);
-				colorize (tile, obj.color);
-				/*rendererComponents = tile.GetComponentsInChildren<Renderer> (true);
+				//GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
+				GameObject tile = ObjectPoolerScript.current.getPooledObject ();
+				if (tile == null) {
+					Debug.LogWarning ("Ran out of voxels?");
+					break;
+				} else {
+					tile.transform.position = tilesVector;
+					tile.gameObject.SetActive (true);
+					tile.transform.SetParent (modelLayer.transform);
+					colorize (tile, obj.color);
+					/*rendererComponents = tile.GetComponentsInChildren<Renderer> (true);
 				foreach (Renderer renderer in rendererComponents)
 					renderer.enabled = false;*/
+				}
 			}
 		}
 
 		//Get a count of all of the models
 		int n = obj.models.Length;
+		int m = 0;
 
 		foreach (GridModel model in obj.models)
 		{
-			buildPiece(model);
-			n--;
-			yield return null;
+			if (m < ObjectPoolerScript.current.getMaxAmount ()) {
+				buildPiece (model);
+				n--;
+				m++;
+			} else {
+				showMap (obj, n, m);
+				break;
+			}
 		}
 
+		showMap (obj, n, m);
+
+
+
+
+	}
+
+	void showMap (Grid obj, int n, int m)
+	{
 		Vector3 mapPosition = new Vector3 (0f, 0f, 0f);
-		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2))*.1f, mapLayer.transform.position.y*.1f, (mapLayer.transform.position.z - (obj.depth / 2))*.1f);
+		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2)) * .1f, mapLayer.transform.position.y * .1f, (mapLayer.transform.position.z - (obj.depth / 2)) * .1f);
 		mapLayer.transform.Translate (mapPosition);
 		mapLayer.transform.localScale = this.gameObject.transform.localScale;
 		mapLayer.transform.SetParent (this.gameObject.transform);
-
 		baseLayer.transform.Translate (childposition);
 		modelLayer.transform.Translate (childposition);
-
 		offset = childposition;
-
 		guiBehavior.setStartingPositions (mapLayer.transform);
-
 		//We don't want the map pieces to load until everything is done
-		if (n <= 0) {
+		if (n <= 0 || m >= ObjectPoolerScript.current.getMaxAmount ()) {
 			/*rendererComponents = mapLayer.GetComponentsInChildren <Renderer> ();
 			foreach (Renderer renderer in rendererComponents) {
 				renderer.enabled = true;
-			}*/
-			mapLayer.SetActive (true);
+			}*/mapLayer.SetActive (true);
 		}
+		readyToUpdate = true;
 	}
 
 	//Builds a piece based on its type. Places the piece and gives it its color.
@@ -175,12 +253,20 @@ public class MapController : MonoBehaviour
 		switch (obj.type) 
 		{
 		case "voxel": 
-			tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
-			tilePiece.transform.SetParent (modelLayer.transform);
-			colorize (tilePiece, obj.color);
-			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
+			//tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
+			tilePiece = ObjectPoolerScript.current.getPooledObject ();
+			if (tilePiece == null) {
+				Debug.LogWarning ("Ran out of voxels?");
+				break;
+			} else {
+				tilePiece.transform.position = tileVector;
+				tilePiece.gameObject.SetActive (true);
+				tilePiece.transform.SetParent (modelLayer.transform);
+				colorize (tilePiece, obj.color);
+				/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
 			foreach (Renderer renderer in rendererComponents)
 				renderer.enabled = false;*/
+			}
 			break;
 		case "player": 
 			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
