@@ -2486,6 +2486,7 @@ MonoBehaviour:
   m_Script: {fileID: 1453722849, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -2850,6 +2851,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1298530040818706, guid: fb0499a3d5056b047bff12a27b2bc75f, type: 2}
   gridPrefab: {fileID: 1298530040818706, guid: aef40dcac5fabd848a06885b5b27fa8a, type: 2}
+=======
+  tilePrefab: {fileID: 1298530040818706, guid: fb0499a3d5056b047bff12a27b2bc75f, type: 2}
+  gridPrefab: {fileID: 1298530040818706, guid: aef40dcac5fabd848a06885b5b27fa8a, type: 2}
+  wallPrefab: {fileID: 1952159941598020, guid: 7486b44cef003904092468f36bcacfc9, type: 2}
+  floorPrefab: {fileID: 1989649942970982, guid: 64550599dfbeea441aa893019bb41429,
+    type: 2}
+>>>>>>> origin/Import-entity-models-to-Unity
   playerPrefab: {fileID: 1044307107359926, guid: 8537a6fd1b7a17d49bda087794527e2d,
     type: 2}
   fighterPrefab: {fileID: 1665976502518680, guid: a1eadd5754e39834bbbc9c5afeecbb0d,
