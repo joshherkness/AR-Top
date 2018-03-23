@@ -35,9 +35,14 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
+  plugins: [
+    new (require('webpack')).ProvidePlugin({
+      'THREE': 'three'
+    })
+  ],
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),
@@ -73,6 +78,22 @@ module.exports = {
         options: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(obj)(\?.*)?$/,
+        loader: 'raw-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('models/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(mtl)(\?.*)?$/,
+        loader: 'mtl-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('models/[name].[hash:7].[ext]')
         }
       }
     ]

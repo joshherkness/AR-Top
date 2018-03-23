@@ -4,5 +4,6 @@
  */
 export const EditorMode = Object.freeze({
   ADD: Symbol('add'),
-  DELETE: Symbol('delete')
+  DELETE: Symbol('delete'),
+  Entity: Symbol('entity')
 })

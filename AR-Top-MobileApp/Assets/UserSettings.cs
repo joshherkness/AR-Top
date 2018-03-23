@@ -15,6 +15,11 @@ public class UserSettings : MonoBehaviour {
 
 	public Button[] buttons;
 
+	public GameObject voxelFinder;
+	public TextMeshProUGUI coordinatesDisplayText;
+	public Button coordinateOnButton;
+	public Button coordinateOffButton;
+
 	public delegate void OnOutlineChanged(string outline);
 	public event OnOutlineChanged onOutlineChanged;
 
@@ -37,6 +42,12 @@ public class UserSettings : MonoBehaviour {
 		} else {
 			PlayerPrefs.SetString ("UserGrid", "Full");
 			onOutlineChanged ("Full");
+		}
+	}
+
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)){
+			closeSettingsPanel ();
 		}
 	}
 	
@@ -100,7 +111,26 @@ public class UserSettings : MonoBehaviour {
 	
 	}
 
+
 	void OnDestroy(){
 		//onOutlineChanged = null;
+}
+
+	public void closeSettingsPanel(){
+		settingsPanel.gameObject.SetActive (false);
+	}
+
+	public void toggleCoordinates(){
+		if (voxelFinder.activeInHierarchy) {
+			voxelFinder.gameObject.SetActive (false);
+			coordinatesDisplayText.enabled = false;
+			coordinateOnButton.interactable = false;
+			coordinateOffButton.interactable = true;
+		} else {
+			voxelFinder.gameObject.SetActive (true);
+			coordinatesDisplayText.enabled = true;
+			coordinateOnButton.interactable = true;
+			coordinateOffButton.interactable = false;
+		}
 	}
 }
