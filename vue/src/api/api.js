@@ -37,7 +37,14 @@ export const generateConfig = data => {
   }
 }
 
-const API_ROOT = 'http://localhost:5000/api'
+let API_ROOT = ''
+
+if (process.env.NODE_ENV === 'production') {
+  API_ROOT = 'http://167.99.48.22:5000/api'
+} else {
+  API_ROOT = 'http://localhost:5000/api'
+}
+
 const ENDPOINTS = {
   authenticate: `${API_ROOT}/auth`,
   register: `${API_ROOT}/register`,
