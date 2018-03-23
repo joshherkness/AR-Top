@@ -75,7 +75,7 @@ public class MapController : MonoBehaviour
 
 		Grid grid = JsonUtility.FromJson<Grid> (dataAsJson);
 
-		buildMap (grid);
+		StartCoroutine (buildMap (grid));
 
 	}
 
@@ -90,7 +90,7 @@ public class MapController : MonoBehaviour
 		modelLayer = null;
 		buildLayers ();
 		Grid map = JsonUtility.FromJson<Grid> (JSONstring);
-		buildMap (map);
+		StartCoroutine (buildMap (map));
 	}
 
 	void buildLayers ()
@@ -106,13 +106,16 @@ public class MapController : MonoBehaviour
 
 		modelLayer = new GameObject ("TileLayert");
 		modelLayer.transform.SetParent (mapLayer.transform);
+		mapLayer.SetActive (false);
 
 	}
 
-	void buildMap (Grid obj)
+//	void buildMap (Grid obj)
+	IEnumerator buildMap(Grid obj) 
 	{
 		int row = (int) obj.width;
 		int col = (int) obj.depth;
+		//Renderer[] rendererComponents;
 
 		for (int i = 0; i < row; i++)
 		{
@@ -123,11 +126,21 @@ public class MapController : MonoBehaviour
 				GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
 				tile.transform.SetParent (modelLayer.transform);
 				colorize (tile, obj.color);
+				/*rendererComponents = tile.GetComponentsInChildren<Renderer> (true);
+				foreach (Renderer renderer in rendererComponents)
+					renderer.enabled = false;*/
 			}
 		}
 
+		//Get a count of all of the models
+		int n = obj.models.Length;
+
 		foreach (GridModel model in obj.models)
-			buildPiece (model);
+		{
+			buildPiece(model);
+			n--;
+			yield return null;
+		}
 
 		Vector3 mapPosition = new Vector3 (0f, 0f, 0f);
 		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2))*.1f, mapLayer.transform.position.y*.1f, (mapLayer.transform.position.z - (obj.depth / 2))*.1f);
@@ -141,6 +154,15 @@ public class MapController : MonoBehaviour
 		offset = childposition;
 
 		guiBehavior.setStartingPositions (mapLayer.transform);
+
+		//We don't want the map pieces to load until everything is done
+		if (n <= 0) {
+			/*rendererComponents = mapLayer.GetComponentsInChildren <Renderer> ();
+			foreach (Renderer renderer in rendererComponents) {
+				renderer.enabled = true;
+			}*/
+			mapLayer.SetActive (true);
+		}
 	}
 
 	//Builds a piece based on its type. Places the piece and gives it its color.
@@ -148,6 +170,7 @@ public class MapController : MonoBehaviour
 	{
 		Vector3 tileVector = obj.position;
 		GameObject tilePiece;
+		Renderer[] rendererComponents;
 		//Checks the type of the piece. Will be converted to a switch statement to check for all types.
 		switch (obj.type) 
 		{
@@ -155,11 +178,17 @@ public class MapController : MonoBehaviour
 			tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
+			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
+			foreach (Renderer renderer in rendererComponents)
+				renderer.enabled = false;*/
 			break;
 		case "player": 
 			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
+			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
+			foreach (Renderer renderer in rendererComponents)
+				renderer.enabled = false;*/
 			break;
 		}
 	}

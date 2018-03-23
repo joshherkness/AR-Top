@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HandleGridOutline : MonoBehaviour {
 	private UserSettings userSettings;
@@ -26,7 +27,9 @@ public class HandleGridOutline : MonoBehaviour {
 	}
 
 	void OnDestroy(){
-		userSettings.onOutlineChanged -= OnOutlineChanged;
+		if (userSettings != null){
+			userSettings.onOutlineChanged -= OnOutlineChanged;
+		}
 	}
 
 	public void changeOutlines (){

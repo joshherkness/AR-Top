@@ -111,6 +111,11 @@ public class UserSettings : MonoBehaviour {
 	
 	}
 
+
+	void OnDestroy(){
+		//onOutlineChanged = null;
+}
+
 	public void closeSettingsPanel(){
 		settingsPanel.gameObject.SetActive (false);
 	}
