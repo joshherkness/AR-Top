@@ -4,6 +4,14 @@ import 'three/examples/js/loaders/MTLLoader'
 
 let MODEL_DATA = [
   {
+    type: 'voxel',
+    display: 'Voxel'
+  },
+  {
+    type: 'wall',
+    display: 'Wall'
+  },
+  {
     type: 'floor',
     display: 'Floor'
   }
