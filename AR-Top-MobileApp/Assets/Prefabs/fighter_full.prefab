@@ -144,8 +144,8 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
-  - {fileID: 2100002, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
+  - {fileID: 2100000, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
+  - {fileID: 2100002, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,7 +179,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 34acbb68e66ead24eb3c62b54c70ad88, type: 3}
+  - {fileID: 2100000, guid: e44435de280430740817c3a3a448e524, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -205,11 +205,11 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1431318430934442}
-  m_Mesh: {fileID: 4300000, guid: 34acbb68e66ead24eb3c62b54c70ad88, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e44435de280430740817c3a3a448e524, type: 3}
 --- !u!33 &33825250394396868
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1873316567039926}
-  m_Mesh: {fileID: 4300000, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
