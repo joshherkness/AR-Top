@@ -205,11 +205,12 @@ public class MapController : MonoBehaviour
 
 	void showMap (Grid obj, int n, int m)
 	{
-		Vector3 mapPosition = new Vector3 (0f, 0f, 0f);
+		Vector3 mapPosition = new Vector3 (0f, 0f, -0.1f);
 		Vector3 childposition = new Vector3 ((mapLayer.transform.position.x - (obj.width / 2)) * .1f, mapLayer.transform.position.y * .1f, (mapLayer.transform.position.z - (obj.depth / 2)) * .1f);
 		mapLayer.transform.Translate (mapPosition);
 		mapLayer.transform.localScale = this.gameObject.transform.localScale;
 		mapLayer.transform.SetParent (this.gameObject.transform);
+		mapLayer.transform.localScale = new Vector3 (1f, 1f, -1f);
 		baseLayer.transform.Translate (childposition);
 		modelLayer.transform.Translate (childposition);
 		offset = childposition;
