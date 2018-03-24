@@ -6,8 +6,8 @@ public class ObjectPoolerScript : MonoBehaviour {
 
 	public static ObjectPoolerScript current;
 	[SerializeField] GameObject pooledObject;
-	[SerializeField] int pooledAmount = 1600;
-	[SerializeField] int maxAmount = 1600;
+	[SerializeField] int pooledAmount = 600;
+	[SerializeField] int maxAmount = 200000;
 
 	[SerializeField] List<GameObject> pooledObjects;
 

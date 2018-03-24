@@ -2684,8 +2684,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooledObject: {fileID: 1633924148968284, guid: d9f50320addafa14998a3d0bbbc17113,
     type: 2}
-  pooledAmount: 1600
-  maxAmount: 1600
+  pooledAmount: 800
+  maxAmount: 200000
   pooledObjects: []
 --- !u!4 &742875126
 Transform:
