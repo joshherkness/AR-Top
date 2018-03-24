@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4606665453852752}
   - component: {fileID: 33364842786128012}
   - component: {fileID: 23811499721584390}
+  - component: {fileID: 65784764492108992}
   m_Layer: 0
   m_Name: goblin
   m_TagString: Untagged
@@ -213,3 +214,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076220698251378}
   m_Mesh: {fileID: 4300000, guid: 88752ec6e17bc854aac59bc17bce4c66, type: 3}
+--- !u!65 &65784764492108992
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076220698251378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12, y: 12, z: 7}
+  m_Center: {x: 0, y: 6, z: 0.5}

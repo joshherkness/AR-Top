@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4845279959880048}
   - component: {fileID: 33212396148049954}
   - component: {fileID: 23850005323958574}
+  - component: {fileID: 65825309987040600}
   m_Layer: 0
   m_Name: voxel
   m_TagString: Untagged
@@ -111,3 +112,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1761080493988080}
   m_Mesh: {fileID: 4300000, guid: 213487154b16cf14aa67a57ecb613faa, type: 3}
+--- !u!65 &65825309987040600
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1761080493988080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16, y: 16, z: 16}
+  m_Center: {x: 0, y: 8, z: 0}
