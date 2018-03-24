@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4606665453852752}
   - component: {fileID: 33364842786128012}
   - component: {fileID: 23811499721584390}
+  - component: {fileID: 65784764492108992}
   m_Layer: 0
   m_Name: goblin
   m_TagString: Untagged
@@ -144,8 +145,8 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
-  - {fileID: 2100002, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
+  - {fileID: 2100000, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
+  - {fileID: 2100002, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,7 +180,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 137446011ae341e46a9e03ad1830efcf, type: 3}
+  - {fileID: 2100000, guid: 88752ec6e17bc854aac59bc17bce4c66, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -205,11 +206,23 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823902059993720}
-  m_Mesh: {fileID: 4300000, guid: 58a107f3b7db5c9499415f2cf2006e14, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e00e4260561b6d0458c5fe4d6457c751, type: 3}
 --- !u!33 &33364842786128012
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076220698251378}
-  m_Mesh: {fileID: 4300000, guid: 137446011ae341e46a9e03ad1830efcf, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 88752ec6e17bc854aac59bc17bce4c66, type: 3}
+--- !u!65 &65784764492108992
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076220698251378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12, y: 12, z: 7}
+  m_Center: {x: 0, y: 6, z: 0.5}
