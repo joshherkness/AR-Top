@@ -122,7 +122,9 @@ public class Connector : MonoBehaviour {
 	}
 
 	public void LeaveRoomSession(){
+		print ("Room Code: " + roomCode["room"]);
 		if (roomCode["room"] != null) {
+			print ("sending " + roomCode + " to socket server."); 
 			socket.Emit ("leaveRoom", roomCode);
 		}
 	}
