@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import * as THREE from 'three'
+=======
+import 'three'
+>>>>>>> origin/Import-entity-models-to-Unity
 import 'three/examples/js/loaders/OBJLoader'
 import 'three/examples/js/loaders/MTLLoader'
 import { GridHelpers } from './GridHelpers'
@@ -97,14 +101,28 @@ export class VoxelGridModel extends GridModel {
 }
 
 export class TileGridModel extends GridModel {
+<<<<<<< HEAD
+  constructor (position, color, type) {
+    super(position)
+
+    if (color === undefined) {
+      throw new TypeError('Color must be defined')
+    }
+
+=======
   constructor (position, type) {
     super(position)
 
+>>>>>>> origin/Import-entity-models-to-Unity
     if (type === undefined) {
       throw new TypeError('Type must be defined')
     }
 
     this.type = type
+<<<<<<< HEAD
+    this.color = color
+=======
+>>>>>>> origin/Import-entity-models-to-Unity
   }
 
   createObject (scale = 1) {
@@ -113,14 +131,23 @@ export class TileGridModel extends GridModel {
       if (node.material) {
         node.material = node.material.clone()
         node.material.transparent = true
+<<<<<<< HEAD
+        node.material.color = new THREE.Color(this.color)
+=======
+>>>>>>> origin/Import-entity-models-to-Unity
 
         if (node.userData && !node.userData.isBoundingBox) {
           node.material.opacity = 1.0
         }
       }
     })
+<<<<<<< HEAD
     mesh.scale.set(scale / 16, scale / 16, scale / 16)
     mesh.position.y = -scale / 2
+=======
+    mesh.scale.set(scale/16, scale/16, scale/16)
+    mesh.position.y = -scale/2
+>>>>>>> origin/Import-entity-models-to-Unity
 
     let object = new THREE.Group()
     object.add(mesh)
@@ -162,8 +189,13 @@ export class EntityGridModel extends GridModel {
         node.material.color = new THREE.Color(this.color)
       }
     })
+<<<<<<< HEAD
     mesh.scale.set(scale / 16, scale / 16, scale / 16)
     mesh.position.y = -scale / 2
+=======
+    mesh.scale.set(scale/16, scale/16, scale/16)
+    mesh.position.y = -scale/2
+>>>>>>> origin/Import-entity-models-to-Unity
 
     let group = new THREE.Group()
     group.add(mesh)

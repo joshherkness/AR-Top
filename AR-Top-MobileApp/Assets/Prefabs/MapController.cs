@@ -11,8 +11,15 @@ public class MapController : MonoBehaviour
 
 	[SerializeField] GameObject tilePrefab;
 	[SerializeField] GameObject gridPrefab;
+	[SerializeField] GameObject wallPrefab;
+	[SerializeField] GameObject floorPrefab;
 	[SerializeField] GameObject playerPrefab;
 	//private ObjectPoolerScript objectPooler;
+	[SerializeField] GameObject fighterPrefab;
+	[SerializeField] GameObject rangerPrefab;
+	[SerializeField] GameObject knightPrefab;
+	[SerializeField] GameObject goblinPrefab;
+
 
 	private GameObject mapLayer;
 	private GameObject baseLayer;
@@ -250,6 +257,8 @@ public class MapController : MonoBehaviour
 		GameObject tilePiece;
 		Renderer[] rendererComponents;
 		//Checks the type of the piece. Will be converted to a switch statement to check for all types.
+		Transform basePiece;
+		//Checks the type of the piece and instantiates the appropriate prefab.
 		switch (obj.type) 
 		{
 		case "voxel": 
@@ -268,13 +277,50 @@ public class MapController : MonoBehaviour
 				renderer.enabled = false;*/
 			}
 			break;
-		case "player": 
-			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
+		case "wall":
+			tilePiece = Instantiate (wallPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
 			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
 			foreach (Renderer renderer in rendererComponents)
 				renderer.enabled = false;*/
+			break;
+		case "floor":
+			tilePiece = Instantiate (floorPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (modelLayer.transform);
+			colorize (tilePiece, obj.color);
+			break;
+		case "player":
+			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (baseLayer.transform);
+			colorize (tilePiece, obj.color);
+			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
+			foreach (Renderer renderer in rendererComponents)
+				renderer.enabled = false;*/
+			break;
+		case "fighter":
+			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (baseLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "knight":
+			tilePiece = Instantiate (knightPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (baseLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "ranger":
+			tilePiece = Instantiate (rangerPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (baseLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
+			break;
+		case "goblin":
+			tilePiece = Instantiate (goblinPrefab, tileVector, Quaternion.identity);
+			tilePiece.transform.SetParent (baseLayer.transform);
+			basePiece = tilePiece.transform.GetChild (1);
+			colorize (basePiece, obj.color);
 			break;
 		}
 	}
@@ -296,5 +342,21 @@ public class MapController : MonoBehaviour
 
 	public Vector3 getOffset (){
 		return offset;
+	}
+	static void colorize (Transform obj, String stringColor)
+	{
+		MeshRenderer[] meshes = obj.GetComponentsInChildren<MeshRenderer> ();
+		print ("Mesh Length: " + meshes.Length); 
+
+		foreach (MeshRenderer mesh in meshes)
+		{
+			print ("Mesh: " + mesh);
+			Color color;
+			if (ColorUtility.TryParseHtmlString (stringColor, out color)) 
+			{
+				Renderer renderer = mesh.GetComponent<Renderer> ();
+				renderer.material.color = color;
+			}
+		}
 	}
 }
