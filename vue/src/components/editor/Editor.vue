@@ -54,6 +54,40 @@
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
+=======
+            <!-- Entity tool -->
+            <div class="control">
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <div class="button is-light"
+                    aria-haspopup='true'
+                    aria-controls='color-picker-dropdown-menu'
+                    :class="{'is-active': isModeEntity()}"
+                    :style="{'color': entityData.color.hex}"
+                    v-on:click="setModeEntity">
+                    <span class="icon is-medium">
+                      <i class="mdi mdi-account-plus"></i>
+                    </span>
+                    <div class="is-size-7">2</div>
+                  </div>
+                  <div class="dropdown-menu" role='menu'>
+                    <entity-selector v-bind:entityData="entityData"></entity-selector>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control">
+              <div class="button is-light"
+                :class="{'is-active': isModeDelete()}"
+                v-on:click="setModeDelete">
+                <span class="icon is-medium">
+                  <i class="mdi mdi-eraser"></i>
+                </span>
+                <div class="is-size-7">3</div>
+              </div>
+            </div>
+>>>>>>> origin/Import-entity-models-to-Unity
           </div>
         </div>
 
@@ -100,6 +134,10 @@ import { Sketch } from 'vue-color'
 import * as THREE from 'three'
 import Help from './Help'
 import EntitySelector from './EntitySelector'
+<<<<<<< HEAD
+=======
+import { EntityGridModel } from './GridModels';
+>>>>>>> origin/Import-entity-models-to-Unity
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 export default {
@@ -115,7 +153,17 @@ export default {
       grid: null,
       loading: false,
       saving: false,
+<<<<<<< HEAD
       toolManager: null
+=======
+      disableTool: false,
+      entityData: {
+        type: 'fighter',
+        color: {
+          hex: '#ffffff'
+        }
+      }
+>>>>>>> origin/Import-entity-models-to-Unity
     }
   },
   components: {
@@ -127,6 +175,27 @@ export default {
     ...mapGetters([
       'hasSeenEditorHelp'
     ]),
+<<<<<<< HEAD
+=======
+    hexColor () {
+      return this.color.hex
+    },
+    model () {
+      if (this.mode === EditorMode.ADD) {
+        return ModelFactory.createModel({
+          type: 'voxel',
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.hexColor
+        })
+      } else if (this.mode === EditorMode.ENTITY) {
+        return ModelFactory.createModel({
+          type: this.entityData.type,
+          position: new THREE.Vector3(), // Should this be an actual position
+          color: this.entityData.color.hex
+        })
+      }
+    },
+>>>>>>> origin/Import-entity-models-to-Unity
     name () {
       if (!this.grid) {
         return ''
@@ -261,6 +330,37 @@ export default {
     render () {
       this.renderer.render(this.director.scene, this.camera)
     },
+<<<<<<< HEAD
+=======
+    updateCursorPosition () {
+      let data = this.director.getFirstIntersectData(this.raycaster)
+
+      if (this.disableTool) {
+        this.director.clearSelection()
+        return
+      }
+
+      if (!data || !data.object) {
+        this.director.clearSelection()
+        return
+      }
+
+      // update cursor position
+      let actualPosition = new THREE.Vector3()
+      if (this.mode === EditorMode.DELETE) {
+        if (data.object.name === 'grid-plane') {
+          this.director.clearSelection()
+          return
+        }
+        actualPosition.setFromMatrixPosition(data.object.matrixWorld)
+      } else {
+        actualPosition = data.point.add(data.face.normal)
+      }
+
+      let unitPosition = this.director.convertActualToUnitPosition(actualPosition)
+      this.director.setSelection(unitPosition, { model: this.model })
+    },
+>>>>>>> origin/Import-entity-models-to-Unity
     onWindowResize () {
       this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight
       this.camera.updateProjectionMatrix()
@@ -285,12 +385,88 @@ export default {
       toolManager.onMouseDown(event, this.director, this.raycaster)
     },
     onDocumentMouseUp (event) {
+<<<<<<< HEAD
       let toolManager = ToolManager.getInstance()
       toolManager.onMouseUp(event, this.director, this.raycaster)
     },
     onDocumentKeyDown (event) {
       let toolManager = ToolManager.getInstance()
       toolManager.onKeyPress(event)
+=======
+      let data = this.director.getFirstIntersectData(this.raycaster)
+
+      this.mouseStart = null
+      if (this.disableTool) {
+        this.disableTool = false
+        this.updateCursorPosition()
+        return
+      }
+
+      if (!data || !data.object) {
+        return
+      }
+
+      let interactPosition = new THREE.Vector3()
+      if (this.mode === EditorMode.DELETE) {
+        // Delete
+        interactPosition.setFromMatrixPosition(data.object.matrixWorld)
+        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
+        let model = this.grid.at(unitPosition)
+        this.director.remove(model)
+      } else {
+        // Add
+        if (!data.face) return
+        interactPosition.copy(data.point.add(data.face.normal))
+        let unitPosition = this.director.convertActualToUnitPosition(interactPosition)
+
+        if (this.mode === EditorMode.ADD) {
+          let model = ModelFactory.createModel({
+            type: 'voxel',
+            color: this.hexColor,
+            position: unitPosition
+          })
+          this.director.add(model)
+        } else if (this.mode === EditorMode.ENTITY) {
+          let model = ModelFactory.createModel({
+            type: this.entityData.type,
+            color: this.entityData.color.hex,
+            position: unitPosition
+          })
+          this.director.add(model)
+        }
+      }
+    },
+    onDocumentKeyDown (event) {
+      switch (event.keyCode) {
+        case 49: this.mode = EditorMode.ADD
+          break
+        case 50: this.mode = EditorMode.ADD
+          break
+        case 51: this.mode = EditorMode.DELETE
+          break
+      }
+    },
+    onDocumentKeyUp (event) {
+      // Any key up events should be placed here
+    },
+    isModeAdd () {
+      return this.mode === EditorMode.ADD
+    },
+    isModeDelete () {
+      return this.mode === EditorMode.DELETE
+    },
+    isModeEntity () {
+      return this.mode === EditorMode.ENTITY
+    },
+    setModeAdd () {
+      this.mode = EditorMode.ADD
+    },
+    setModeDelete () {
+      this.mode = EditorMode.DELETE
+>>>>>>> origin/Import-entity-models-to-Unity
+    },
+    setModeEntity () {
+      this.mode = EditorMode.ENTITY
     },
     save () {
       if (!this.grid) {
