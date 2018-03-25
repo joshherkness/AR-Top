@@ -52,19 +52,12 @@ class GameModel(EmbeddedDocument):
     """
     type = StringField(required=True, choices=[
         'voxel',
-<<<<<<< HEAD
         'floor',
         'wall',
         'fighter',
         'ranger',
         'knight',
         'goblin',
-=======
-        'fighter',
-        'ranger',
-        'knight',
-        'goblin'
->>>>>>> origin/Import-entity-models-to-Unity
     ])
     position = EmbeddedDocumentField(Position)
     color = StringField(

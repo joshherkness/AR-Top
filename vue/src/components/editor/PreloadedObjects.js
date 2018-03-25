@@ -4,7 +4,6 @@ import 'three/examples/js/loaders/MTLLoader'
 
 let MODEL_DATA = [
   {
-<<<<<<< HEAD
     type: 'voxel',
     display: 'Voxel'
   },
@@ -13,8 +12,6 @@ let MODEL_DATA = [
     display: 'Wall'
   },
   {
-=======
->>>>>>> origin/Import-entity-models-to-Unity
     type: 'floor',
     display: 'Floor'
   }
@@ -24,7 +21,6 @@ let ENTITY_DATA = [
   {
     type: 'fighter',
     display: 'Fighter'
-<<<<<<< HEAD
   },
   {
     type: 'ranger',
@@ -34,17 +30,6 @@ let ENTITY_DATA = [
     type: 'knight',
     display: 'Knight'
   },
-=======
-  }, 
-  {
-    type: 'ranger',
-    display: 'Ranger'
-  }, 
-  {
-    type: 'knight',
-    display: 'Knight'
-  }, 
->>>>>>> origin/Import-entity-models-to-Unity
   {
     type: 'goblin',
     display: 'Goblin'
@@ -74,11 +59,7 @@ function loadObject (name) {
 function loadModel (name) {
   // Load the object
   let object = loadObject(name)
-<<<<<<< HEAD
   object.name = 'main'
-=======
-  object.name = "main"
->>>>>>> origin/Import-entity-models-to-Unity
 
   // Create bounding box
   // Todo: Find some way to make this not hard coded
@@ -87,27 +68,16 @@ function loadModel (name) {
     transparent: true,
     opacity: 0
   })
-<<<<<<< HEAD
   let boundingBox = new THREE.Mesh(geometry, material)
   boundingBox.name = 'bounding_box'
   boundingBox.position.y = 8
   boundingBox.userData = {
-=======
-  let bounding_box = new THREE.Mesh(geometry, material)
-  bounding_box.name = "bounding_box"
-  bounding_box.position.y = 8
-  bounding_box.userData = {
->>>>>>> origin/Import-entity-models-to-Unity
     isBoundingBox: true
   }
 
   let group = new THREE.Group()
   group.add(object)
-<<<<<<< HEAD
   group.add(boundingBox)
-=======
-  group.add(bounding_box)
->>>>>>> origin/Import-entity-models-to-Unity
 
   return group
 }
@@ -124,19 +94,11 @@ function loadEntity (name) {
   })
 
   // Create the base
-<<<<<<< HEAD
   var entityBase = BASE_OBJECT.clone()
   entityBase.name = 'base'
   entityBase.scale.set(16, 16, 16)
 
   group.add(entityBase)
-=======
-  var entity_base = BASE_OBJECT.clone()
-  entity_base.name = "base"
-  entity_base.scale.set(16, 16, 16)
-
-  group.add(entity_base)
->>>>>>> origin/Import-entity-models-to-Unity
 
   return group
 }
@@ -145,11 +107,7 @@ let ObjectList = {}
 
 // Preload all models
 MODEL_DATA.forEach((data) => {
-<<<<<<< HEAD
   if (!data.type) throw TypeError('MODEL_DATA element must have a type attribute')
-=======
-  if (!data.type) throw TypeError("MODEL_DATA element must have a type attribute")
->>>>>>> origin/Import-entity-models-to-Unity
 
   // Load the model
   ObjectList[data.type] = loadModel(data.type)
@@ -157,28 +115,16 @@ MODEL_DATA.forEach((data) => {
 
 // Preload all entities
 ENTITY_DATA.forEach((data) => {
-<<<<<<< HEAD
   if (!data.type) throw TypeError('ENTITY_DATA element must have a type attribute')
-=======
-  if (!data.type) throw TypeError("ENTITY_DATA element must have a type attribute")
->>>>>>> origin/Import-entity-models-to-Unity
 
   // Load the entity
   ObjectList[data.type] = loadEntity(data.type)
 })
 
 export {
-<<<<<<< HEAD
   ObjectList,
-=======
-  ObjectList as ObjectList,
->>>>>>> origin/Import-entity-models-to-Unity
   MODEL_DATA,
   ENTITY_DATA,
   BASE_RING_OBJECT_NAME,
   BASE_CENTER_OBJECT_NAME
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/Import-entity-models-to-Unity

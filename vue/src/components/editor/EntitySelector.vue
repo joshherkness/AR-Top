@@ -1,16 +1,9 @@
 <template>
-<<<<<<< HEAD
   <div style="display: flex; flex-flow: column; margin: 10px;">
     <label class="label">Type</label>
     <div style="flex: 1; display: flex; flex-flow: column;">
       <!-- Search bar -->
       <nav class="panel is-marginless">
-=======
-  <div class="box" style="display: flex; flex-flow: row; padding: 0; height: 306px;">
-    <div style="flex: 1; display: flex; flex-flow: column; ">
-      <!-- Search bar -->
-      <nav class="panel is-marginless" style="width: 200px;">
->>>>>>> origin/Import-entity-models-to-Unity
         <div class="panel-block">
           <p class="control has-icons-left">
           <input 
@@ -26,11 +19,7 @@
       </nav>
       <!-- List -->
       <nav class="panel"
-<<<<<<< HEAD
         style="flex: 1; overflow: scroll;">
-=======
-        style="flex: 1; overflow: scroll; height: 100%">
->>>>>>> origin/Import-entity-models-to-Unity
         <a class="panel-block" v-for="data in filteredList"
           :key="data.type" 
           @click="setType(data.type)">
@@ -46,7 +35,6 @@
         </div>
       </nav>
     </div>
-<<<<<<< HEAD
     <hr>
     <div style="flex: 0 1 auto;">
       <!-- Color -->
@@ -66,17 +54,12 @@
           </div>
         </div>
       </div>
-=======
-    <div style="flex: 0 1 auto;">
-      <sketch-picker v-model="entityData.color"></sketch-picker>
->>>>>>> origin/Import-entity-models-to-Unity
     </div>
   </div>
 </template>
 
 <script>
 import { Sketch } from 'vue-color'
-<<<<<<< HEAD
 import { ENTITY_DATA, MODEL_DATA } from '@/components/editor/PreloadedObjects'
 
 export default {
@@ -85,16 +68,6 @@ export default {
     'sketch-picker': Sketch
   },
   props: ['entityData', 'entityList'],
-=======
-import { ENTITY_DATA } from '@/components/editor/PreloadedObjects'
-
-export default {
-  name: "entity-selector",
-  components: {
-    'sketch-picker': Sketch
-  },
-  props: ["entityData", "entityList"],
->>>>>>> origin/Import-entity-models-to-Unity
   data: function () {
     return {
       filter: ''
@@ -102,11 +75,7 @@ export default {
   },
   computed: {
     filteredList: function () {
-<<<<<<< HEAD
       return ENTITY_DATA.concat(MODEL_DATA).filter((data) => {
-=======
-      return ENTITY_DATA.filter((data) => {
->>>>>>> origin/Import-entity-models-to-Unity
         return data.display.toLowerCase().includes(this.filter.toLowerCase())
       })
     }
@@ -120,10 +89,7 @@ export default {
 </script>
 
 <style lang="scss">
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/Import-entity-models-to-Unity
 .box {
   overflow: hidden;
 }

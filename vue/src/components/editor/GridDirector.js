@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { GridScene } from './GridScene'
-import { setTimeout } from 'timers';
 
 /**
  * Acts as a mediator between a grid and a scene, keeping the two in sync.
