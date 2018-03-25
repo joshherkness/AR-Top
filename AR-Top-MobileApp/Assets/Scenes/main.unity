@@ -2848,9 +2848,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6587703064dc6cb468188aaa8503958f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 1298530040818706, guid: fb0499a3d5056b047bff12a27b2bc75f, type: 2}
+  tilePrefab: {fileID: 1633924148968284, guid: d9f50320addafa14998a3d0bbbc17113, type: 2}
   gridPrefab: {fileID: 1298530040818706, guid: aef40dcac5fabd848a06885b5b27fa8a, type: 2}
+  wallPrefab: {fileID: 1649307305594216, guid: 7486b44cef003904092468f36bcacfc9, type: 2}
+  floorPrefab: {fileID: 1299737698277386, guid: 64550599dfbeea441aa893019bb41429,
+    type: 2}
   playerPrefab: {fileID: 1044307107359926, guid: 8537a6fd1b7a17d49bda087794527e2d,
+    type: 2}
+  fighterPrefab: {fileID: 1665976502518680, guid: a1eadd5754e39834bbbc9c5afeecbb0d,
+    type: 2}
+  rangerPrefab: {fileID: 1876517748819388, guid: f88fd149948c0924696607a9237abb67,
+    type: 2}
+  knightPrefab: {fileID: 1386183982413954, guid: 3c0d541ad6e630048be1a1b8bf286fbd,
+    type: 2}
+  goblinPrefab: {fileID: 1727820684993778, guid: 4f6e44b43469545478f8ed139dc83b3e,
     type: 2}
 --- !u!1 &911862976
 GameObject:
