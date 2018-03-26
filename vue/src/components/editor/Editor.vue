@@ -82,6 +82,20 @@
         <div v-if="toolManager && toolManager.tool.type === 'place'">
           <entity-selector v-bind:entityData="toolManager.tool.options"></entity-selector>
         </div>
+        <div v-if="toolManager && toolManager.tool.type === 'delete'">
+          <div class="content" style="margin: 10px;">
+            <p>
+              Click on a model to remove it from the map.
+            </p>
+          </div>
+        </div>
+        <div v-if="toolManager && toolManager.tool.type === 'move'">
+          <div class="content" style="margin: 10px;">
+            <p>
+              Click and drag on a model to move it to a new location.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -254,6 +268,7 @@ export default {
       }
 
       this.toolManager = ToolManager.getInstance()
+      this.toolManager.controls = this.controls
 
       // We need to call this so that the canvas will resize to the window
       this.onWindowResize()
