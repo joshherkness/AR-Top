@@ -139,7 +139,7 @@ public class MapController : MonoBehaviour
 	{
 	
 		mapLayer = new GameObject ("MapLayer");
-		mapLayer.AddComponent <LeanRotate> ();
+		mapLayer.AddComponent <LeanRotate1> ();
 		mapLayer.AddComponent <LeanScale> ();
 		//mapLayer.AddComponent <LeanTranslate> ();
 
