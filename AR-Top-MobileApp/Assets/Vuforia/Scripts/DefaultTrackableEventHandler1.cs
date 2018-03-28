@@ -74,9 +74,6 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-		HandleGridOutline[] gridOutlines  = GetComponentsInChildren <HandleGridOutline> ();
-
-		//drawLines.enabled = true;
 		
 		// Enable rendering:
         foreach (var component in rendererComponents)
@@ -90,9 +87,6 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         foreach (var component in canvasComponents)
             component.enabled = true;
 
-		foreach (HandleGridOutline component in gridOutlines)
-			component.OnOutlineChanged (PlayerPrefs.GetString ("UserGrid"));
-
     }
 
 
@@ -101,9 +95,6 @@ public class DefaultTrackableEventHandler1 : MonoBehaviour, ITrackableEventHandl
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-		//var drawLines  = FindObjectOfType<DrawLines> ();
-
-		//drawLines.enabled = false;
 
         // Disable rendering:
         foreach (var component in rendererComponents)

@@ -20,15 +20,11 @@ public class UserSettings : MonoBehaviour {
 	public Button coordinateOnButton;
 	public Button coordinateOffButton;
 
-	public delegate void OnOutlineChanged(string outline);
-	public event OnOutlineChanged onOutlineChanged;
-
 	// Use this for initialization
 	void Start () {
 		dropdowns = GetComponentsInChildren <TMP_Dropdown> ();
 		settingsPanel.gameObject.SetActive (false);
 		settingsIcon.sprite = settingsGear;
-		onOutlineChanged += outlineChange;
 
 		if (PlayerPrefs.HasKey ("UserAA"))
 			QualitySettings.antiAliasing = PlayerPrefs.GetInt ("UserAA");
@@ -37,12 +33,6 @@ public class UserSettings : MonoBehaviour {
 			PlayerPrefs.SetInt ("UserAA", 2);
 		}
 
-		if (PlayerPrefs.HasKey ("UserGrid")) {
-			onOutlineChanged(PlayerPrefs.GetString ("UserGrid"));
-		} else {
-			PlayerPrefs.SetString ("UserGrid", "Full");
-			onOutlineChanged ("Full");
-		}
 	}
 
 	void Update(){
@@ -73,22 +63,6 @@ public class UserSettings : MonoBehaviour {
 		print (index); 
 	}
 
-	public void setGridOutlineCounts (){
-		TMP_Dropdown dropdown = dropdowns [1];
-		switch (dropdown.value) {
-		case 0:
-			PlayerPrefs.SetString ("UserGrid", "None");
-			break;
-		case 1:
-			PlayerPrefs.SetString ("UserGrid", "Top");
-			break;
-		case 2:
-			PlayerPrefs.SetString ("UserGrid", "Full");
-			break;
-		}
-		onOutlineChanged(PlayerPrefs.GetString ("UserGrid"));
-	}
-
 	public void setSettingsPanel (){
 		if (settingsPanel.gameObject.activeInHierarchy) {
 			settingsPanel.gameObject.SetActive (false);
@@ -107,15 +81,6 @@ public class UserSettings : MonoBehaviour {
 		}
 	}
 
-	public void outlineChange (string str){
-	
-	}
-
-
-	void OnDestroy(){
-		//onOutlineChanged = null;
-}
-
 	public void closeSettingsPanel(){
 		settingsPanel.gameObject.SetActive (false);
 	}
@@ -124,13 +89,13 @@ public class UserSettings : MonoBehaviour {
 		if (voxelFinder.activeInHierarchy) {
 			voxelFinder.gameObject.SetActive (false);
 			coordinatesDisplayText.enabled = false;
-			coordinateOnButton.interactable = false;
-			coordinateOffButton.interactable = true;
+			coordinateOnButton.interactable = true;
+			coordinateOffButton.interactable = false;
 		} else {
 			voxelFinder.gameObject.SetActive (true);
 			coordinatesDisplayText.enabled = true;
-			coordinateOnButton.interactable = true;
-			coordinateOffButton.interactable = false;
+			coordinateOnButton.interactable = false;
+			coordinateOffButton.interactable = true;
 		}
 	}
 }
