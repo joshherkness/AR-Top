@@ -10,10 +10,8 @@ public class MapController : MonoBehaviour
 {
 
 	[SerializeField] GameObject tilePrefab;
-	[SerializeField] GameObject gridPrefab;
 	[SerializeField] GameObject wallPrefab;
 	[SerializeField] GameObject floorPrefab;
-	[SerializeField] GameObject playerPrefab;
 	[SerializeField] GameObject fighterPrefab;
 	[SerializeField] GameObject rangerPrefab;
 	[SerializeField] GameObject knightPrefab;
@@ -261,14 +259,6 @@ public class MapController : MonoBehaviour
 			tilePiece = Instantiate (floorPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
-			break;
-		case "player":
-			tilePiece = Instantiate (playerPrefab, tileVector, Quaternion.identity);
-			tilePiece.transform.SetParent (baseLayer.transform);
-			colorize (tilePiece, obj.color);
-			/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
-			foreach (Renderer renderer in rendererComponents)
-				renderer.enabled = false;*/
 			break;
 		case "fighter":
 			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);

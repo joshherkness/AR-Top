@@ -33,6 +33,30 @@ public class UserSettings : MonoBehaviour {
 			PlayerPrefs.SetInt ("UserAA", 2);
 		}
 
+		setDropdownValue ();
+	}
+
+	void setDropdownValue (){
+		int index = 2;
+		if (PlayerPrefs.HasKey ("UserAA")) {
+			index = PlayerPrefs.GetInt ("UserAA");
+		}
+		TMP_Dropdown dropdown = dropdowns [0];
+		switch (index) {
+		case 0:
+			dropdown.value = 0;
+			break;
+		case 2:
+			dropdown.value = 1;
+			break;
+		case 4:
+			dropdown.value = 2;
+			break;
+		case 8:
+			dropdown.value = 3;
+			break;
+		}
+
 	}
 
 	void Update(){
