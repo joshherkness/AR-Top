@@ -1,4 +1,5 @@
 import secrets
+from argparse import ArgumentParser
 from json import loads
 
 from flask import Blueprint, Flask, jsonify, render_template, request, url_for
@@ -8,8 +9,6 @@ from flask_mongoengine import MongoEngine
 from api import Api
 from constants import internal_error, json_tag, malformed_request
 from decorators import expiration_check, protected
-
-from argparse import ArgumentParser
 
 parser = ArgumentParser(description="Runs flask server")
 parser.add_argument("--deploy", action='store_true')
@@ -178,4 +177,5 @@ if __name__ == '__main__':
                         help="Insert a new user: takes username, password")
 
     app.register_blueprint(api)
-    app.run(host='0.0.0.0', port=5000)
+    app.run(ssl_context=('/app/cert.pem', '/app/privkey.pem'),
+            host='0.0.0.0', port=8443)
