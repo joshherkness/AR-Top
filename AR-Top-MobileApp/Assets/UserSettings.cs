@@ -36,27 +36,18 @@ public class UserSettings : MonoBehaviour {
 		setDropdownValue ();
 	}
 
+	/**
+	 * Sets the dropdown index value
+	 * by taking the Anti-Aliasing stored in PlayerPrefs
+	 * and shifting the bit 1 place to the right.
+	 */
 	void setDropdownValue (){
 		int index = 2;
 		if (PlayerPrefs.HasKey ("UserAA")) {
 			index = PlayerPrefs.GetInt ("UserAA");
 		}
 		TMP_Dropdown dropdown = dropdowns [0];
-		switch (index) {
-		case 0:
-			dropdown.value = 0;
-			break;
-		case 2:
-			dropdown.value = 1;
-			break;
-		case 4:
-			dropdown.value = 2;
-			break;
-		case 8:
-			dropdown.value = 3;
-			break;
-		}
-
+		dropdown.value = index >> 1;
 	}
 
 	void Update(){
@@ -64,29 +55,35 @@ public class UserSettings : MonoBehaviour {
 			closeSettingsPanel ();
 		}
 	}
-	
+
+	/**
+	 * Sets Unity's Anti-Aliasing Setting
+	 * The index of the dropdown is used to power 2
+	 * e.g. User selects 4. Dropdown index is 2. 2^2=4
+	 *		Anti-Aliasing is set to 4x
+	 *
+	 * Powering was chosen over bitshifting because
+	 * 3 << 1 = 6, which does not reach 8x Anti-Aliasing
+	 * but 2^0 = 1, which will reach 0 Anti-Aliasing
+	 * Since Anti-Aliasing defaults to the first setting
+	 * equal to or lower than the given index.
+	 */
 	public void setAntiAliasing (){
 		int index = 2;
 		TMP_Dropdown dropdown = dropdowns [0];
-		switch (dropdown.value) {
-		case 0:
-			index = 0;
-			break;
-		case 1:
-			index = 2;
-			break;
-		case 2:
-			index = 4;
-			break;
-		case 3:
-			index = 8;
-			break;
-		}
+
+		index = (int) Math.Pow(2.0, (double)dropdown.value);
+
 		QualitySettings.antiAliasing = index;
 		PlayerPrefs.SetInt ("UserAA", index);
-		print (index); 
+		print (index);
 	}
 
+	/**
+	 * Sets the settings panel to active or inactive
+	 * Also sets appropriate buttons on or off
+	 * and changes the "Gear" icon to an "X" icon
+	 */
 	public void setSettingsPanel (){
 		if (settingsPanel.gameObject.activeInHierarchy) {
 			settingsPanel.gameObject.SetActive (false);
@@ -109,6 +106,9 @@ public class UserSettings : MonoBehaviour {
 		settingsPanel.gameObject.SetActive (false);
 	}
 
+	/**
+	 * Toggles the Coordinate Display text on and off
+	 */
 	public void toggleCoordinates(){
 		if (voxelFinder.activeInHierarchy) {
 			voxelFinder.gameObject.SetActive (false);
