@@ -1,15 +1,15 @@
 import sys
 from argparse import ArgumentParser
+from json import loads
 from threading import Lock
 
 import eventlet
 from flask import Flask, jsonify, request
 from flask_mongoengine import MongoEngine
-from flask_socketio import SocketIO, emit, join_room, \
-    close_room, leave_room, send, rooms
+from flask_socketio import (SocketIO, close_room, emit, join_room, leave_room,
+                            rooms, send)
 
-from models import Session, GameMap
-from json import loads
+from models import GameMap, Session
 
 parser = ArgumentParser(description="Socket server")
 parser.add_argument("--deploy", action='store_true')
@@ -69,9 +69,11 @@ def join(json):
         app.logger.error(str(e))
         emit('error', {'data': 'Internal server error'})
 
+
 @socket.on('close_room')
 def disconnect(room):
     close_room(room)
+
 
 @socket.on('leaveRoom')
 def leave_room(json):
@@ -85,4 +87,4 @@ def leave_room(json):
         emit('error', {'data': 'Internal server error'})
 
 if __name__ == "__main__":
-    socket.run(app, debug=True, host='0.0.0.0', port=5001)
+    socket.run(app, debug=True, host='0.0.0.0', port=80)
