@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="artoplogotarget" size="1.000000 0.714286" />
     <ImageTarget name="Lots-O-Dice2" size="1.000000 1.000000" />
     <ImageTarget name="Lots-O-Dice1" size="1.000000 0.596083" />
     <ImageTarget name="D20" size="1.000000 1.000000" />
