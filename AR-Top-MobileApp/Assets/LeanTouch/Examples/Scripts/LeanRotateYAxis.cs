@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Lean.Touch
 {
 	// This script allows you to transform the current GameObject
-	public class LeanRotate1 : MonoBehaviour
+	public class LeanRotateYAxis : MonoBehaviour
 	{
 		[Tooltip("Ignore fingers with StartedOverGui?")]
 		public bool IgnoreGuiFingers;
