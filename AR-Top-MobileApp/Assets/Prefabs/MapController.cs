@@ -171,6 +171,9 @@ public class MapController : MonoBehaviour
 					tile.gameObject.SetActive (true);
 					tile.transform.SetParent (modelLayer.transform);
 					colorize (tile, obj.color);
+					RaycastText rayCastText = tile.GetComponent <RaycastText> ();
+					string raycastInfo = "(" + i.ToString () + ", " + j.ToString () + ", 0)";
+					rayCastText.appendRaycastInfoText (raycastInfo);
 				}
 			}
 		}
@@ -220,6 +223,8 @@ public class MapController : MonoBehaviour
 		GameObject tilePiece;
 		Renderer[] rendererComponents;
 		Transform basePiece;
+		RaycastText rayCastText;
+		string rayCastInfo;
 
 		//Checks the type of the piece and instantiates the appropriate prefab.
 		switch (obj.type) 
@@ -234,41 +239,69 @@ public class MapController : MonoBehaviour
 				tilePiece.gameObject.SetActive (true);
 				tilePiece.transform.SetParent (modelLayer.transform);
 				colorize (tilePiece, obj.color);
+				rayCastText = tilePiece.GetComponent <RaycastText> ();
+				rayCastText.clearRaycastInfoText ();
+				rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+				rayCastText.appendRaycastInfoText (rayCastInfo);
 			}
 			break;
 		case "wall":
 			tilePiece = Instantiate (wallPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		case "floor":
 			tilePiece = Instantiate (floorPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		case "fighter":
 			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		case "knight":
 			tilePiece = Instantiate (knightPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		case "ranger":
 			tilePiece = Instantiate (rangerPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		case "goblin":
 			tilePiece = Instantiate (goblinPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
+			rayCastText = tilePiece.GetComponent <RaycastText> ();
+			rayCastText.clearRaycastInfoText ();
+			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+			rayCastText.appendRaycastInfoText (rayCastInfo);
 			break;
 		}
 	}
