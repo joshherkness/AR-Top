@@ -84,7 +84,6 @@ public class MapController : MonoBehaviour
 
 		Grid grid = JsonUtility.FromJson<Grid> (dataAsJson);
 
-		//StartCoroutine (buildMap (grid));
 		oldDataAsJSON = dataAsJson;
 		buildMap (grid);
 
@@ -124,7 +123,6 @@ public class MapController : MonoBehaviour
 			modelLayer = null;
 			buildLayers ();
 			Grid map = JsonUtility.FromJson<Grid> (JSONstring);
-			//StartCoroutine (buildMap (map));
 			buildMap (map);
 			oldDataAsJSON = JSONstring;
 		} else {
@@ -152,8 +150,7 @@ public class MapController : MonoBehaviour
 
 	}
 
-//	void buildMap (Grid obj)
-	void buildMap(Grid obj) 
+	void buildMap(Grid obj)
 	{
 		int row = (int) obj.width;
 		int col = (int) obj.depth;
@@ -165,7 +162,6 @@ public class MapController : MonoBehaviour
 			{
 				// Create the grid base
 				Vector3 tilesVector = new Vector3 (i, -1f, j);
-				//GameObject tile = Instantiate (tilePrefab, tilesVector, Quaternion.identity);
 				GameObject tile = ObjectPoolerScript.current.getPooledObject ();
 				if (tile == null) {
 					Debug.LogWarning ("Ran out of voxels?");
@@ -175,9 +171,6 @@ public class MapController : MonoBehaviour
 					tile.gameObject.SetActive (true);
 					tile.transform.SetParent (modelLayer.transform);
 					colorize (tile, obj.color);
-					/*rendererComponents = tile.GetComponentsInChildren<Renderer> (true);
-				foreach (Renderer renderer in rendererComponents)
-					renderer.enabled = false;*/
 				}
 			}
 		}
@@ -193,11 +186,10 @@ public class MapController : MonoBehaviour
 				n--;
 				m++;
 			} else {
-				showMap (obj, n, m);
+				//showMap (obj, n, m);
 				break;
 			}
 		}
-
 		showMap (obj, n, m);
 	}
 
@@ -213,12 +205,10 @@ public class MapController : MonoBehaviour
 		modelLayer.transform.Translate (childposition);
 		offset = childposition;
 		guiBehavior.setStartingPositions (mapLayer.transform);
+
 		//We don't want the map pieces to load until everything is done
 		if (n <= 0 || m >= ObjectPoolerScript.current.getMaxAmount ()) {
-			/*rendererComponents = mapLayer.GetComponentsInChildren <Renderer> ();
-			foreach (Renderer renderer in rendererComponents) {
-				renderer.enabled = true;
-			}*/mapLayer.SetActive (true);
+			mapLayer.SetActive (true);
 		}
 		readyToUpdate = true;
 	}
@@ -229,13 +219,12 @@ public class MapController : MonoBehaviour
 		Vector3 tileVector = obj.position;
 		GameObject tilePiece;
 		Renderer[] rendererComponents;
-		//Checks the type of the piece. Will be converted to a switch statement to check for all types.
 		Transform basePiece;
+
 		//Checks the type of the piece and instantiates the appropriate prefab.
 		switch (obj.type) 
 		{
 		case "voxel":
-			//tilePiece = Instantiate (tilePrefab, tileVector, Quaternion.identity);
 			tilePiece = ObjectPoolerScript.current.getPooledObject ();
 			if (tilePiece == null) {
 				Debug.LogWarning ("Ran out of voxels!");
@@ -245,9 +234,6 @@ public class MapController : MonoBehaviour
 				tilePiece.gameObject.SetActive (true);
 				tilePiece.transform.SetParent (modelLayer.transform);
 				colorize (tilePiece, obj.color);
-				/*rendererComponents = tilePiece.GetComponentsInChildren<Renderer> (true);
-			foreach (Renderer renderer in rendererComponents)
-				renderer.enabled = false;*/
 			}
 			break;
 		case "wall":
@@ -309,16 +295,14 @@ public class MapController : MonoBehaviour
 	static void colorize (Transform obj, String stringColor)
 	{
 		MeshRenderer[] meshes = obj.GetComponentsInChildren<MeshRenderer> ();
-		print ("Mesh Length: " + meshes.Length); 
 
 		foreach (MeshRenderer mesh in meshes)
 		{
-			print ("Mesh: " + mesh);
 			Color color;
 			if (ColorUtility.TryParseHtmlString (stringColor, out color)) 
 			{
-				Renderer renderer = mesh.GetComponent<Renderer> ();
-				renderer.material.color = color;
+				Material material = mesh.materials[1];
+				material.color = color;
 			}
 		}
 	}
