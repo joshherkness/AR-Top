@@ -124,8 +124,11 @@ public class Connector : MonoBehaviour {
 	public void LeaveRoomSession(){
 		print ("Room Code: " + roomCode["room"]);
 		if (roomCode["room"] != null) {
-			print ("sending " + roomCode + " to socket server."); 
-			socket.Emit ("leaveRoom", roomCode);
+			Dictionary<string, string> r = new Dictionary<string, string> ();
+			r ["roomToLeave"] = roomCode ["room"].ToString ().Replace ("\"", "");
+			JSONObject ro = new JSONObject (r);
+			print ("sending " + ro + " to socket server."); 
+			//socket.Emit ("leaveRoom", ro);
 		}
 	}
 }
