@@ -4,7 +4,7 @@ services:
         hostname: flask
         image: "oakland/flask"
         ports:
-            - "8443:8443"
+            - "5000:5000"
         links:
             - mongo:mongo
             - redis:redis
@@ -12,7 +12,7 @@ services:
         hostname: sockets
         image: "oakland/sockets"
         ports:
-            - "80:80"
+            - "5001:5001"
         links:
             - mongo:mongo
             - redis:redis
@@ -20,8 +20,16 @@ services:
         hostname: vue
         image: "oakland/vue"
         ports:
-            - "8081:8081"
+            - "8080:8080"
     mongo:
         image: "mongo:latest"
     redis:
         image: "redis:alpine"
+    web:
+        image: "nginx:stable-alpine"
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - "80:80"
+        links:
+            - vue

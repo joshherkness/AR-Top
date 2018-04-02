@@ -177,5 +177,4 @@ if __name__ == '__main__':
                         help="Insert a new user: takes username, password")
 
     app.register_blueprint(api)
-    app.run(ssl_context=('/app/cert.pem', '/app/privkey.pem'),
-            host='0.0.0.0', port=8443)
+    app.run(host='0.0.0.0', port=5000)

@@ -19,5 +19,5 @@ RUN npm install http-server -g
 
 RUN npm run build
 
-CMD [ "http-server", "dist", "-p", "8081" ]
+CMD [ "http-server", "dist", "-p", "8080" ]
 

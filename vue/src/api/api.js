@@ -37,13 +37,7 @@ export const generateConfig = data => {
   }
 }
 
-let API_ROOT = ''
-
-if (process.env.NODE_ENV === 'production') {
-  API_ROOT = 'https://artop.me:8443/api'
-} else {
-  API_ROOT = 'http://localhost:5000/api'
-}
+let API_ROOT = 'http://localhost:5000/api'
 
 const ENDPOINTS = {
   authenticate: `${API_ROOT}/auth`,
