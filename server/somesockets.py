@@ -75,16 +75,11 @@ def disconnect(room):
     close_room(room)
 
 
-@socket.on('leaveRoom')
-def leave_room(json):
-    try:
-        room = json['room']
-        leave_room(room)
-    except KeyError:
-        emit('error', {'data': 'Malformed request'})
-    except Exception as e:
-        app.logger.error(str(e))
-        emit('error', {'data': 'Internal server error'})
+# Leave room event should be here but we were unable to get it to work.
+# For some reason, flask-socketio was literally switching the type
+# of argument we received each time (once it was a string, next it
+# was a dict, etc.). We coulnd't fix it.
+
 
 if __name__ == "__main__":
     socket.run(app, debug=True, host='0.0.0.0', port=80)
