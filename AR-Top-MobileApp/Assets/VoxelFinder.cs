@@ -27,12 +27,13 @@ public class VoxelFinder : MonoBehaviour
 		if (hitObject != null) {
 			if (hitObject != prevHitObject) {
 				Vector3 offset = mapController.getOffset () * 10;
-				print (offset); 
 				Vector3 hitObjectPos = hitObject.transform.position * 10;
-				coordinatesText = "(" + Math.Round (hitObjectPos.x - offset.x) + ',';
-				coordinatesText += Math.Round (hitObjectPos.z - offset.z) + ",";
-				coordinatesText += Math.Round (hitObjectPos.y + 1) + ")";
-				displayTextBox.text = coordinatesText;
+				if (hitObject.GetComponentInParent <RaycastText> () != null) {
+					RaycastText raycastText = hitObject.GetComponentInParent <RaycastText> ();
+					coordinatesText = raycastText.getRaycastInfoText ();
+					displayTextBox.text = coordinatesText;
+				} 
+
 			}
 			prevHitObject = hitObject;
 		} else {
