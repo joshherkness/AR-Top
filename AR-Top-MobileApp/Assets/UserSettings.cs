@@ -20,11 +20,22 @@ public class UserSettings : MonoBehaviour {
 	public Button coordinateOnButton;
 	public Button coordinateOffButton;
 
+	private GameObject m_camera;
+	private GameObject mainlight;
+	private Vector3 lightingPosition;
+	private Vector3 lightingAngle;
+	public Button dynamicLightingOnButton;
+	public Button dynamicLightingOffButton;
+
 	// Use this for initialization
 	void Start () {
 		dropdowns = GetComponentsInChildren <TMP_Dropdown> ();
 		settingsPanel.gameObject.SetActive (false);
 		settingsIcon.sprite = settingsGear;
+		m_camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		mainlight = GameObject.FindGameObjectWithTag ("MainLight");
+		lightingPosition = mainlight.transform.position;
+		lightingAngle = mainlight.transform.eulerAngles;
 
 		if (PlayerPrefs.HasKey ("UserAA"))
 			QualitySettings.antiAliasing = PlayerPrefs.GetInt ("UserAA");
@@ -34,6 +45,7 @@ public class UserSettings : MonoBehaviour {
 		}
 
 		setDropdownValue ();
+		//toggleDynamicLighting ();
 	}
 
 	/**
@@ -120,6 +132,22 @@ public class UserSettings : MonoBehaviour {
 			coordinatesDisplayText.enabled = true;
 			coordinateOnButton.interactable = false;
 			coordinateOffButton.interactable = true;
+		}
+	}
+
+	public void toggleDynamicLighting(){
+		if (mainlight.transform.parent == null) {
+			mainlight.transform.SetParent (m_camera.transform);
+			mainlight.transform.localPosition = new Vector3 (0, 0, 0);
+			mainlight.transform.localEulerAngles = new Vector3 (0, 0, 0);
+			dynamicLightingOnButton.interactable = false;
+			dynamicLightingOffButton.interactable = true;
+		} else {
+			mainlight.transform.SetParent (null);
+			mainlight.transform.position = lightingPosition;
+			mainlight.transform.eulerAngles = lightingAngle;
+			dynamicLightingOnButton.interactable = true;
+			dynamicLightingOffButton.interactable = false;
 		}
 	}
 }
