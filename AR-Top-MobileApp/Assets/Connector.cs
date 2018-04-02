@@ -45,7 +45,7 @@ public class Connector : MonoBehaviour {
 
 	public void connection(JSONObject js){
 		roomCode = js;
-		socket.Emit ("joinRoom", js);
+		socket.Emit ("joinRoom", roomCode);
 	}
 
 	public void connected(SocketIOEvent e){

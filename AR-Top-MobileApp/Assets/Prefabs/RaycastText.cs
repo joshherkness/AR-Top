@@ -11,7 +11,6 @@ public class RaycastText : MonoBehaviour {
 	}
 
 	public string getRaycastInfoText(){
-		print ("RaycastText Found"); 
 		return raycastInfoText;
 	}
 

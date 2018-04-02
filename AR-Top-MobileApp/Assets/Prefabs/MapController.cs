@@ -239,71 +239,64 @@ public class MapController : MonoBehaviour
 				tilePiece.gameObject.SetActive (true);
 				tilePiece.transform.SetParent (modelLayer.transform);
 				colorize (tilePiece, obj.color);
-				rayCastText = tilePiece.GetComponent <RaycastText> ();
-				rayCastText.clearRaycastInfoText ();
-				rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-				rayCastText.appendRaycastInfoText (rayCastInfo);
+				setRaycastInfo (obj, tilePiece);
 			}
 			break;
 		case "wall":
 			tilePiece = Instantiate (wallPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
 			break;
 		case "floor":
 			tilePiece = Instantiate (floorPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (modelLayer.transform);
 			colorize (tilePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
 			break;
 		case "fighter":
 			tilePiece = Instantiate (fighterPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
 			break;
 		case "knight":
 			tilePiece = Instantiate (knightPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
 			break;
 		case "ranger":
 			tilePiece = Instantiate (rangerPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
 			break;
 		case "goblin":
 			tilePiece = Instantiate (goblinPrefab, tileVector, Quaternion.identity);
 			tilePiece.transform.SetParent (baseLayer.transform);
 			basePiece = tilePiece.transform.GetChild (1);
 			colorize (basePiece, obj.color);
-			rayCastText = tilePiece.GetComponent <RaycastText> ();
-			rayCastText.clearRaycastInfoText ();
-			rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
-			rayCastText.appendRaycastInfoText (rayCastInfo);
+			setRaycastInfo (obj, tilePiece);
+			break;
+		default:
+			throw new Exception ();
 			break;
 		}
+	}
+
+	private void setRaycastInfo (GridModel obj, GameObject tilePiece)
+	{
+		RaycastText rayCastText;
+		string rayCastInfo;
+
+		rayCastText = tilePiece.GetComponent<RaycastText> ();
+		rayCastText.clearRaycastInfoText ();
+		rayCastInfo = "(" + obj.position.x.ToString () + ", " + obj.position.z.ToString () + ", " + (obj.position.y + 1).ToString () + ")";
+		rayCastText.appendRaycastInfoText (rayCastInfo);
 	}
 
 	static void colorize (GameObject obj, String stringColor)
