@@ -9,17 +9,18 @@
         <p>
           Select 
           <i class="mdi mdi-cube-outline"></i>
-          or <b>1</b> to switch to voxel mode. Hover 
-          <i class="mdi mdi-cube-outline"></i>
-          to switch change voxel color
+          or <b>1</b> to switch to add mode.
         </p>
         <p>
           Select 
           <i class="mdi mdi-eraser"></i>
           or <b>2</b> to switch to erase mode.
         </p>
-        <p><b>Click</b> on the grid to use a tool.</p>
-        <p>Click on <b>Save</b> to save your progress.</p>
+        <p>
+          Select 
+          <i class="mdi mdi-cursor-move"></i>
+          or <b>3</b> to switch to move mode.
+        </p>
       </div>
     </div>
   </div>
