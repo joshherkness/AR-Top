@@ -3,7 +3,7 @@
   <nav class="navbar has-shadow" style="z-index: 1000">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
-        AR-Top
+        <img src="@/assets/artop-logo-hybrid.svg">
       </router-link>
       <router-link 
         class="navbar-item" 
