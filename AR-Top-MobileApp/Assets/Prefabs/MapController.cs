@@ -172,6 +172,7 @@ public class MapController : MonoBehaviour
 					tile.transform.SetParent (modelLayer.transform);
 					colorize (tile, obj.color);
 					RaycastText rayCastText = tile.GetComponent <RaycastText> ();
+					rayCastText.clearRaycastInfoText ();
 					string raycastInfo = "(" + i.ToString () + ", " + j.ToString () + ", 0)";
 					rayCastText.appendRaycastInfoText (raycastInfo);
 				}
