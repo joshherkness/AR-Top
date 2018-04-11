@@ -9,6 +9,10 @@ Second, a mobile application is used to join sessions and view those maps in an 
 1. [Setting up](#setup)
 	1. [Server deployment](#server-deployment)
 	2. [Getting the mobile app](#getting-the-mobile-app)
+		1. [Android] (#Android)
+			1. [Install APK] (#Install-APK)
+		2. [Build From Source] (#Build-From-Source)
+		3. [Install TextMeshPro] (#Install-TextMeshPro)
 2. [Usage](#running)
 3. [Group members](#group-members)
 
@@ -26,8 +30,61 @@ Server deployment
 Getting the Mobile App
 ----------------------
 
-1. Android users download the APK. iPhone users must build from source.
-2. Correct this cuz Im sure its wrong
+Android
+--------
+
+You may build from source or directly install the APK found in the Builds Folder
+
+Install APK
+--------
+1. Connect your Android device to your computer.
+2. Navigate to the Builds folder in the project source code.
+3. Copy the file "AR-Top.apk" and paste it into the folder for your Android device.
+4. Use any kind of file explorer app (such as "File Commander") to navigate to AR-Top.apk on your Android device. Select the file to install it.
+5. If prompted, you will need to enable the "Unknown sources" option to install AR-Top to your device.
+6. When the file runs, allow the permissions to "take pictures and record video" as well as "access photos, media, and files on your device". (These are the first two prompts that come up. You may deny everything else.) You only need to allow the permissions the first time you open the app.
+7. The app is now installed and able to run on your device.
+
+Build From Source
+--------
+1. Download Unity version 2017.3.1f1 (Follow all download instructions)
+2. On the Unity Project Page, select "Open"
+3. Navigate to the source folder and select AR-Top-MobileApp folder (Hit "Select Folder")
+4. Wait for the project to compile and open.
+5. See below section titled "Install TextMeshPro" to properly install the TextMeshPro Library to the project.
+6. Enable your device to be built to either Android or iOS
+	6.1 If you are using Android, go to the following webpage and follow all instructions for enabling your device for USB Debugging and enabling Unity to build to your device: (https://docs.unity3d.com/Manual/android-sdksetup.html)
+	6.2 (Note that you must be on a Mac to build to iOS devices). If you are using iOS, go to the following webpage and follow all instructions to enable Unity to build to your iOS device: (https://docs.unity3d.com/Manual/iphone-GettingStarted.html)
+7. After enabling your device, click File->Build Settings. In the Build settings menu select either Android or iOS underneath the Platform sub-window. Then click the "Switch Platform" button.
+	7.1 If in Android: Click the "Add" button for Xiaomi Mi Game Center under the "SDKs for App Stores".
+9. If you have not done so by now, connect your device to your computer by USB.
+10. Click the "Build and Run" button.
+11. Navigate to a folder above the AR-Top-MobileApp directory (any folder of your choosing but the "Builds" folder is recommended). Click "Save".
+12. If building to Android, the app should run after Unity is done building it. If you are building to iOS, some additional steps may be required.
+	12.1 JOSH PUT ANY ADDITIONAL STEPS FOR BUILDING TO IOS HERE!!!
+
+Install TextMeshPro
+---------
+1. In Unity, click Window->Asset Store.
+2. In the Asset Store Window, go to the search bar and type "TextMesh Pro".
+3. Select the first result that comes up (TextMesh Pro).
+4. Scroll down and click the "Import" button.
+5. In the "Import Unity Package" window, scroll down and uncheck the "Scenes" tick box.
+6. Make sure everything else is checked.
+7. Click "Import".
+
+Troubleshooting
+--------
+If you built from source and nothing renders on the Image Target after opening a session and connecting to the session on the Mobile App, follow these steps:
+
+1. Open the project in Unity.
+2. In the Project window pane, select the Assets/Resources folder.
+3. Click VuforiaConfiguration.
+4. In the Inspector window pane, find the "App License Key" box.
+5. If the box is empty, paste the following hash into the box.
+	AfeFN4f/////AAAAmWvCodxwZEKFuzyoDVdX5csviCPTDoyj/NS6dysYO6/8uEGWKEK/vz5CcIm5NV09A/5xJ+j6rJ+ykMaDAjowfF2OXoLCwuZYOdYSG1VF6rWPT/IebP+ImDvmVC20gXx9v0dCNGggSB4wN7EsVeSOTFvDMv+PNsR0EeFTWzpOCTBXu+OuzoAFuRsocuv9pJkSUq8Z2eWb3RwqhYOYGkqwRnxtDYl9N/8x0VDZyW9ttv7A4b7NXuPF7kf4j3c2ONTF4tbQmaYVvXaHbrlEXQeaetvBt4bb1K8mpuTm+978icC2utk3CsrkkbB5ynbC0ccw84kbAnT8hBIUGOe1pMPtWDepUiRy5ErXvemRCVh2ne58
+
+6. Rebuild the project to your device.
 
 Running
 =======
