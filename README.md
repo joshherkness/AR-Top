@@ -9,10 +9,11 @@ Second, a mobile application is used to join sessions and view those maps in an 
 1. [Setting up](#setup)
 	1. [Server deployment](#server-deployment)
 	2. [Getting the mobile app](#getting-the-mobile-app)
-		1. [Android] (#Android)
-			1. [Install APK] (#Install-APK)
-		2. [Build From Source] (#Build-From-Source)
-		3. [Install TextMeshPro] (#Install-TextMeshPro)
+		1. [Android] (#android)
+			1. [Install apk] (#install-apk)
+		2. [Build from source] (#build-from-source)
+		3. [Install textmeshpro] (#install-textmeshpro)
+		4. [Troubleshooting] (#troubleshooting)
 2. [Usage](#running)
 3. [Group members](#group-members)
 
@@ -56,12 +57,12 @@ Build From Source
 	6.1 If you are using Android, go to the following webpage and follow all instructions for enabling your device for USB Debugging and enabling Unity to build to your device: (https://docs.unity3d.com/Manual/android-sdksetup.html)
 	6.2 (Note that you must be on a Mac to build to iOS devices). If you are using iOS, go to the following webpage and follow all instructions to enable Unity to build to your iOS device: (https://docs.unity3d.com/Manual/iphone-GettingStarted.html)
 7. After enabling your device, click File->Build Settings. In the Build settings menu select either Android or iOS underneath the Platform sub-window. Then click the "Switch Platform" button.
-	7.1 If in Android: Click the "Add" button for Xiaomi Mi Game Center under the "SDKs for App Stores".
-9. If you have not done so by now, connect your device to your computer by USB.
-10. Click the "Build and Run" button.
-11. Navigate to a folder above the AR-Top-MobileApp directory (any folder of your choosing but the "Builds" folder is recommended). Click "Save".
-12. If building to Android, the app should run after Unity is done building it. If you are building to iOS, some additional steps may be required.
-	12.1 JOSH PUT ANY ADDITIONAL STEPS FOR BUILDING TO IOS HERE!!!
+	1. If in Android: Click the "Add" button for Xiaomi Mi Game Center under the "SDKs for App Stores".
+8. If you have not done so by now, connect your device to your computer by USB.
+9. Click the "Build and Run" button.
+10. Navigate to a folder above the AR-Top-MobileApp directory (any folder of your choosing but the "Builds" folder is recommended). Click "Save".
+11. If building to Android, the app should run after Unity is done building it. If you are building to iOS, some additional steps may be required.
+	1. JOSH PUT ANY ADDITIONAL STEPS FOR BUILDING TO IOS HERE!!!
 
 Install TextMeshPro
 ---------
