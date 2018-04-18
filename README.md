@@ -12,7 +12,7 @@ used to join sessions and view those maps in an augmented reality environment.
     2. [Build the viewer](#build-the-viewer)
         1. [Android](#android)
             1. [Install APK](#install-apk)
-        2. [Build from source](#build-from-source)
+            2. [Build from source](#build-from-source)
         3. [Install textmeshpro](#install-textmeshpro)
         4. [Troubleshooting](#troubleshooting)
 2. [Usage](#running)
