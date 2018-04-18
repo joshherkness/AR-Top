@@ -92,9 +92,8 @@ You may build from source or directly install the APK found in the Builds Folder
 4. Set the Edit > Project Settings > Player > Other Settings > Identification >
    Bundle Identifier to `artop.oakland.edu`.
 5. Ensure all dependencies are installed.
-6. Ensure the __Login__ scene is selected.
-7. Connect your iOS device.
-8. File > Build and run
+6. Connect your iOS device.
+7. File > Build and run
 
 
 ### Install TextMeshPro
