@@ -8,13 +8,13 @@ as well as host session for others to join.  Second, a mobile application is
 used to join sessions and view those maps in an augmented reality environment.
 
 1. [To run locally](#to-run-locally)
-  1. [Build and deploy the server](#build-and-deploy-the-server)
-  2. [Build the viewer](#build-the-viewer)
-    1. [Android](#android)
-      1. [Install APK](#install-apk)
-    2. [Build from source](#build-from-source)
-    3. [Install textmeshpro](#install-textmeshpro)
-    4. [Troubleshooting](#troubleshooting)
+    1. [Build and deploy the server](#build-and-deploy-the-server)
+    2. [Build the viewer](#build-the-viewer)
+        1. [Android](#android)
+            1. [Install APK](#install-apk)
+        2. [Build from source](#build-from-source)
+        3. [Install textmeshpro](#install-textmeshpro)
+        4. [Troubleshooting](#troubleshooting)
 2. [Usage](#running)
 3. [Group members](#group-members)
 
@@ -24,7 +24,7 @@ used to join sessions and view those maps in an augmented reality environment.
 
 1. Download [docker](https://docs.docker.com/install/) for your server.
 2. Run our `build-docker` script from the application root. 
-  1. Before you run it, you may want to [add docker to
+    1. Before you run it, you may want to [add docker to
      sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo?answertab=votes#tab-top),
      but this can pose a security risk on your machine. This step is optional.
 3. `docker-compose up` will start the server. Run with the `-d` flag to
