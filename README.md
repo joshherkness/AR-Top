@@ -7,11 +7,11 @@ two parts.  First, a web experience is used to edit maps within a 3D environment
 as well as host session for others to join.  Second, a mobile application is
 used to join sessions and view those maps in an augmented reality environment.
 
-1. [Setting up](#setup)
-  1. [Server deployment](#server-deployment)
-  2. [Getting the mobile app](#getting-the-mobile-app)
+1. [To run locally](#to-run-locally)
+  1. [Build and deploy the server](#build-and-deploy-the-server)
+  2. [Build the viewer](#build-the-viewer)
     1. [Android](#android)
-      1. [Install apk](#install-apk)
+      1. [Install APK](#install-apk)
     2. [Build from source](#build-from-source)
     3. [Install textmeshpro](#install-textmeshpro)
     4. [Troubleshooting](#troubleshooting)
