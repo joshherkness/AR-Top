@@ -13,6 +13,7 @@ used to join sessions and view those maps in an augmented reality environment.
         1. [Android](#android)
             1. [Install APK](#install-apk)
             2. [Build from source](#build-from-source)
+        2. [iOS](#ios)
         3. [Install textmeshpro](#install-textmeshpro)
         4. [Troubleshooting](#troubleshooting)
 2. [Usage](#running)
@@ -79,12 +80,22 @@ You may build from source or directly install the APK found in the Builds Folder
     your choosing but the "Builds" folder is recommended). Click "Save".
 11. If building to Android, the app should run after Unity is done building it.
     If you are building to iOS, some additional steps may be required.
-12. Ensure that Edit > Project Settings > Player > XR Settings > Vuforia
-    Augmented Reality is enabled
-13. Ensure that Edit > Project Settings > Player > Other Settings > Auto
-    Graphics API is disabled
-14. Ensure that Edit > Project Settings > Player > Other Settings > Graphics
-    API's is set to prefer OpenGLES2
+
+### iOS
+
+1. Ensure that Edit > Project Settings > Player > XR Settings > Vuforia
+    Augmented Reality is enabled.
+2. Ensure that Edit > Project Settings > Player > Other Settings > Auto
+    Graphics API is disabled.
+3. Ensure that Edit > Project Settings > Player > Other Settings > Graphics
+    API's is set to prefer OpenGLES2.
+4. Set the Edit > Project Settings > Player > Other Settings > Identification >
+   Bundle Identifier to `artop.oakland.edu`.
+5. Ensure all dependencies are installed.
+6. Ensure the __Login__ scene is selected.
+7. Connect your iOS device.
+8. File > Build and run
+
 
 ### Install TextMeshPro
 
